@@ -11,7 +11,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOG_OUT
-} from "./../../../src/store/actions/auth";
+} from "./../../../src/store/actions/auth_actions";
 import { logIn } from "./../../../src/store/actionCreators/auth";
 
 chai.use(chaiImmutable);

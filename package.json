@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/init_test.js  'test/**/*.@(js|jsx)'",
-    "test:jest": "jest",
+    "test:jest": "jest --watchAll",
     "test:watch": "npm run test -- --watch --watch-extensions jsx",
     "serve": "webpack-dev-server --hot --inline",
     "serve:rest": "nodemon server/server.js",

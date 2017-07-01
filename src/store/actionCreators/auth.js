@@ -7,7 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOG_OUT
-} from "./../actions/auth";
+} from "./../actions/auth_actions";
 
 const logIn = userInfo => dispatch => {
   return axios

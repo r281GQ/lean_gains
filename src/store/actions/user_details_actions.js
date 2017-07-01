@@ -1,0 +1,1 @@
+export const WRITE_USER_DETAILS = 'WRITE_USER_DETAILS';
