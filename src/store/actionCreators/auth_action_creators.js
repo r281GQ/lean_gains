@@ -1,6 +1,8 @@
 import Immutable from "immutable";
 import axios from "axios";
 
+const URL = 'http://localhost:4000/api/logIn'
+
 import {
   INIT_AUTH,
   CLOSE_AUTH,
@@ -11,7 +13,7 @@ import {
 
 const logIn = userInfo => dispatch => {
   return axios
-    .post(`http://localhost:3000/api/logIn`, userInfo)
+    .post(URL, userInfo)
     .then(respone => {
       dispatch({ type: INIT_AUTH });
       dispatch({ type: LOGIN_SUCCESS, payload: respone.data });

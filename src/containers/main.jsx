@@ -1,21 +1,16 @@
-import React, { Component } from "react";
-import Header from "./header";
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { PureComponent } from "react";
+import HeaderContainer from "./header";
+import {Card} from 'material-ui';
 
-class Main extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+class MainContainer extends PureComponent {
   render() {
     return (
-      <div className="container">
-        Main
-        <Header />
-        <RaisedButton label = 'def'/>
+      <div>
+        <HeaderContainer />
+        <Card></Card>
       </div>
     );
   }
 }
 
-export default Main;
+export default MainContainer;

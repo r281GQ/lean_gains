@@ -12,7 +12,7 @@ import {
   LOGIN_FAILED,
   LOG_OUT
 } from "./../../../src/store/actions/auth_actions";
-import { logIn } from "./../../../src/store/actionCreators/auth";
+import { logIn } from "./../../../src/store/actionCreators/auth_action_creators";
 
 chai.use(chaiImmutable);
 

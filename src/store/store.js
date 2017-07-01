@@ -7,10 +7,15 @@ import Immutable from "immutable";
 import auth from './reducers/auth';
 import { routing, routerMiddlewareInstance } from "./reducers/routing";
 
+import { reducer as reducerForm } from 'redux-form';
+
+
+
 const store = createStore(
   combineReducers({
     auth,
-    routing
+    routing,
+    form: reducerForm
   }),
   composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance))
 );

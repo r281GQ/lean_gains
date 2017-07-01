@@ -8,7 +8,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 
 import { store } from "./store/store";
 import { history } from "./store/reducers/routing";
-import Main from "./containers/main";
+import App from "./containers/app";
 
 injectTapEventPlugin();
 
@@ -19,7 +19,7 @@ render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/" component={Main} />
+          <Route path="/" component={App} />
         </Switch>
       </ConnectedRouter>
     </Provider>
