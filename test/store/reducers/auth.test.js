@@ -20,6 +20,8 @@ const INITIAL_STATE = Immutable.fromJS({
   token: undefined,
   failedAttempt: false,
   user: {
+    isNew: undefined,
+    lastLogin: undefined,
     name: undefined,
     email: undefined,
     _id: undefined

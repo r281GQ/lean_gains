@@ -9,6 +9,7 @@ import SignUpContainer from "./signup";
 import MainContainer from "./main";
 
 class App extends React.PureComponent {
+
   render() {
     return (
       <div className="container">

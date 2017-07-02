@@ -1,40 +1,23 @@
 import React from "react";
-import IconMenu from "material-ui/IconMenu";
-import IconButton from "material-ui/IconButton";
-import FontIcon from "material-ui/FontIcon";
-import MenuItem from "material-ui/MenuItem";
-import DropDownMenu from "material-ui/DropDownMenu";
-import RaisedButton from "material-ui/RaisedButton";
-import {
-  Toolbar,
-  ToolbarGroup,
-  ToolbarSeparator,
-  ToolbarTitle
-} from "material-ui/Toolbar";
-//name navigation kg macros kcal
-const HeaderContainer = ({  }) => {
+import Immutable from 'immutable';
+import {Link} from 'react-router-dom';
+//name navigation kg macros kcal, current macros fro  tuday later on when it is implemented
+const HeaderContainer = ({currentKcalPlan, currentWeight, isTrainingDay, todaysMacros}) => {
+
+  let w = todaysMacros.toJS();
+
   return (
     <div>
-      <Toolbar>
-        <ToolbarGroup>
-          <RaisedButton label="Whatever" primary={true} />
-          </ToolbarGroup>
-        <ToolbarGroup>
-          <ToolbarTitle text="Options" />
-          <FontIcon className="muidocs-icon-custom-sort" />
-          <ToolbarSeparator />
-          <RaisedButton label="Create Broadcast" primary={true} />
-          <IconMenu
-            iconButtonElement={
-              <IconButton touch={true}>
-              </IconButton>
-            }
-          >
-            <MenuItem primaryText="Download" />
-            <MenuItem primaryText="More Info" />
-          </IconMenu>
-        </ToolbarGroup>
-      </Toolbar>
+      <Link to='/sdfsdfsdfsdfsdf'><span>prevoius</span></Link>
+      <div>CurrentWeight: {currentWeight}</div>
+      <div>
+        {w.kcal}
+
+
+        <Link to='/main/workout'><span>workout</span></Link>
+        <Link to='/main/kcal'><span>kcal</span></Link>
+        <Link to='/main/daily_log'><span>daily_log</span></Link>
+      </div>
     </div>
   );
 };

@@ -1,12 +1,15 @@
-import Immutable from "immutable";
+import Immutable, {fromJS} from "immutable";
 import moment from "moment";
 
 import {
   WRITE_USER_DETAILS,
-  UNSET_PICTURE
+  UNSET_PICTURE,
+  WRITE_WORKOUT_TARGET,
 } from "./../actions/user_details_actions";
 
+
 export const INITIAL_STATE = Immutable.fromJS({
+  _id: undefined,
   dob: undefined,
   age: undefined,
   gender: undefined,
@@ -14,33 +17,47 @@ export const INITIAL_STATE = Immutable.fromJS({
   email: undefined,
   username: undefined,
   name: undefined,
+  weightDisplayPreference: undefined,
+  lengthDisplayPreference: undefined,
   supplements: [],
   workoutTargets: {
-    0: {}
+    0: {
+      startDate: undefined,
+      endDate: undefined,
+      isLatest: true,
+      mainTraining: {
+        startDayofTraining: undefined,
+        onEveryxDay: undefined,
+        onDays: [],
+        exercises: []
+      },
+      restDay : {
+        exercises: []
+      }
+    }
   },
   kcalTargets: {
     0: {
       startDate: undefined,
       endDate: undefined,
-      isLatest: undefined,
-      usage: undefined,
-      isCycling: false,
+      isLatest: true,
+      isCycling: true,
       flat: {
-        kcal: undefined,
+        kcal: 3000,
         protein: undefined,
         carbohydrate: undefined,
         fat: undefined,
         fiber: undefined
       },
       rest: {
-        kcal: undefined,
+        kcal: 1000,
         protein: undefined,
         carbohydrate: undefined,
         fat: undefined,
         fiber: undefined
       },
       training: {
-        kcal: undefined,
+        kcal: 2100,
         protein: undefined,
         carbohydrate: undefined,
         fat: undefined,
@@ -49,8 +66,20 @@ export const INITIAL_STATE = Immutable.fromJS({
     }
   },
   measurements: {
-    initial: {},
-    current: {}
+    0: {
+      date: undefined,
+      isLatest: true,
+      weight: 123,
+      chest: undefined,
+      rightArm: undefined,
+      leftArm: undefined,
+      aboveBelly: undefined,
+      belly: undefined,
+      belowBelly: undefined,
+      hips: undefined,
+      rightThigh: undefined,
+      leftThigh: undefined
+    }
   }
 });
 
@@ -68,8 +97,17 @@ const handleWriteUserDetails = (
   );
 };
 
+const handleWriteWorkoutTarget = (state, payload) =>{
+  return state.withMutations(state => state
+  .setIn(['workoutTargets',payload._id], fromJS(payload))
+
+  )
+}
+
 const userDetails = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case WRITE_WORKOUT_TARGET:
+      return handleWriteWorkoutTarget(state, payload);
     case UNSET_PICTURE:
       return state.set("picture", undefined);
     case WRITE_USER_DETAILS:

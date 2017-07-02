@@ -54,6 +54,8 @@ const auth = (state = INITIAL_STATE, { type, payload }) => {
         token: undefined,
         failedAttempt: false,
         user: {
+          isNew: undefined,
+          lastLogin: undefined,
           name: undefined,
           email: undefined,
           _id: undefined
