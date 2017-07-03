@@ -21,20 +21,26 @@ export const INITIAL_STATE = Immutable.fromJS({
   lengthDisplayPreference: undefined,
   supplements: [],
   workoutTargets: {
-    0: {
-      startDate: undefined,
-      endDate: undefined,
-      isLatest: true,
-      mainTraining: {
-        startDayofTraining: undefined,
+    // 0: {
+    //   isLatest: true,
+      0 : {
+        type: 'main',
+        startDayofTraining: moment('30-06-2017', 'DD-MM-YYYY'),
         onEveryxDay: undefined,
-        onDays: [],
-        exercises: []
-      },
-      restDay : {
-        exercises: []
+        onDays: [1,5],
+        exercises: ['dead']
       }
-    }
+      ,  2 : {
+          type: 'main',
+          startDayofTraining: undefined,
+          onEveryxDay: undefined,
+          onDays: [2,1],
+          exercises: ['squat']
+        }
+      // restDay : {
+      //   exercises: []
+      // }
+    // }
   },
   kcalTargets: {
     0: {

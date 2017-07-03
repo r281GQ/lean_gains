@@ -1,42 +1,45 @@
-import Immutable, { toJS } from "immutable";
+import Immutable, { List } from "immutable";
 import moment from "moment";
 import { createSelector } from "reselect";
 
-const isOnEveryDay = onEveryDayFlag => onEveryDayFlag !== undefined
-
-
-const currentWorkoutPlan = state =>
+const mainWorkouts = state =>
   state
     .getIn(["userDetails", "workoutTargets"])
-    .find(value => value.get("isLatest"));
+    .filter(value => value.get("type") === "main");
 
-const currentDay = () => moment().isoWeekday();
+const currentDate = () => moment();
 
-const isOnEveryxDay = state => state
-  .getIn(["userDetails", "workoutTargets"])
-  .find(value => value.get("isLatest")).getIn(['mainTraining', 'onEveryxDay'])!==(undefined) ;
+const reduceFixedToExrecises = currentDate => (list, value) =>
+  value.get("onDays").includes(currentDate.isoWeekday())
+    ? list.concat(value.get("exercises"))
+    : list;
 
-// const isTrainingDay = (currentWorkoutPlan,  currentDay, isOnEveryxDay) => {
-//   console.log(isOnEveryxDay);
-//   return currentWorkoutPlan.getIn(["mainTraining", "onDays"]).includes(currentDay);
-// }
-//
+const reduceIntervalToExrecises = currentDate => (list, value) => {
+  const interval = value.get("onEveryxDay");
 
-const calculateCurrentDayOnEveryDaySchedule = currentWorkoutPlan => {
-  const interval = currentWorkoutPlan.getIn(['mainTraining', 'onEveryxDay']);
-  const start = currentWorkoutPlan.getIn(['mainTraining', 'startDayofTraining']);
-  const currentDate = moment();
-  const difference = currentDate.diff(start, 'day');
-  console.log(difference);
-  console.log('INIT');
-  console.log(difference % interval === 0 );
-  return difference % interval === 0 ? true : false;
-}
+  const start = value.get("startDayofTraining");
 
-const isTrainingDay = (currentWorkoutPlan,  currentDay) =>
-  isOnEveryDay(currentWorkoutPlan.getIn(['mainTraining', 'onEveryxDay'])) ?   calculateCurrentDayOnEveryDaySchedule(currentWorkoutPlan) :
-   currentWorkoutPlan.getIn(["mainTraining", "onDays"]).includes(currentDay);
+  const differenceInDays = currentDate.diff(start, "day");
 
+  return differenceInDays % interval === 0
+    ? list.concat(value.get("exercises"))
+    : list;
+};
 
+const filterFixedDays = value => value.get("onEveryxDay") === undefined;
 
-export default createSelector(currentWorkoutPlan, currentDay, isTrainingDay);
+const filterIntervalDays = value => value.get("onEveryxDay") !== undefined;
+
+const getExercises = (mainWorkouts, currentDate) => {
+  const exercisesFromFixedDays = mainWorkouts
+    .filter(filterFixedDays)
+    .reduce(reduceFixedToExrecises(currentDate), List());
+
+  const exercisesFromIntervalDays = mainWorkouts
+    .filter(filterIntervalDays)
+    .reduce(reduceFixedToExrecises(currentDate), List());
+
+  return exercisesFromFixedDays.concat(exercisesFromIntervalDays);
+};
+
+export default createSelector(mainWorkouts, currentDate, getExercises);
