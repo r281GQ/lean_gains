@@ -1,4 +1,4 @@
-import Immutable, {fromJS} from "immutable";
+import Immutable, { fromJS } from "immutable";
 import chai, { expect } from "chai";
 import chaiImmutable from "chai-immutable";
 import moment from "moment";
@@ -9,12 +9,15 @@ import userDetails, {
 import {
   WRITE_USER_DETAILS,
   WRITE_WORKOUT_TARGET,
-  UNSET_PICTURE
+  UNSET_PICTURE,
+  DELETE_WORKOUT_TARGET
 } from "./../../../src/store/actions/user_details_actions";
 
 chai.use(chaiImmutable);
 
-describe.only("description", () => {
+describe("description", () => {
+  let stateWithWorkout;
+
   it("should get back the INITIAL_STATE", () => {
     const nextState = userDetails(undefined, {
       type: "nonexisting action type"
@@ -44,30 +47,31 @@ describe.only("description", () => {
     expect(nextState.get("username")).to.equal("kfbr392");
   });
 
-  it('should write the appropriate values', () => {
+  it("should write the appropriate values", () => {
     let workout = {
-      _id: 'someIDfromTheBackend',
+      _id: "someIDfromTheBackend",
       //current timestamp generated derived from the id
       // startDate: moment().valueOf(),
       //genratied by the backend, if it is latest then is undefinf
       // endDate: undefined,
       // isLatest: true,
-      mainTraining :{
-        startDayofTraining: moment(),
-        onEveryxDay: undefined,
-        onDays: [1,3,5],
-        exercises: [
-          'deadlift',
-          'military press',
-        ]
-      },
-      restDay: {
-        exercises: []
-      }
+      type: "main",
+      startDayofTraining: moment(),
+      onEveryxDay: undefined,
+      onDays: [1, 3, 5],
+      exercises: ["deadlift", "military press"]
     };
 
-      const nextState = userDetails(undefined, {type:  WRITE_WORKOUT_TARGET, payload: workout});
-      expect(nextState.getIn(['workoutTargets', workout._id])).to.equal(fromJS(workout));
+    const nextState = userDetails(undefined, {
+      type: WRITE_WORKOUT_TARGET,
+      payload: workout
+    });
+
+    stateWithWorkout = nextState;
+
+    expect(nextState.getIn(["workoutTargets", workout._id])).to.equal(
+      fromJS(workout)
+    );
   });
 
   describe("with some basic state", () => {
@@ -89,8 +93,20 @@ describe.only("description", () => {
     it("should remove set the picture to undefined on UNSET_PICTURE", () => {
       const nextState = userDetails(basicState, { type: UNSET_PICTURE });
       expect(nextState.get("picture")).to.be.undefined;
+      // expect(nextState.get("picture")).to.equal('sdfsdfsd');
     });
 
+    it("should remove workoutTarget", () => {
+      let payload = stateWithWorkout
+        .get("workoutTargets")
+        .findKey(value => true);
 
+      const nextState = userDetails(stateWithWorkout, {
+        type: DELETE_WORKOUT_TARGET,
+        payload
+      });
+
+      expect(nextState.getIn(["workoutTargets", payload])).to.be.undefined;
+    });
   });
 });

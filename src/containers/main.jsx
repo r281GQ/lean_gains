@@ -6,7 +6,7 @@ import * as _ from "lodash";
 import HeaderContainer from "./header";
 import currentKcalPlanSelector from "./../store/selectors/current_kcal";
 import currentWeightSelector from "./../store/selectors/current_weight";
-import isTrainingDay from "./../store/selectors/training_day";
+import isTrainingDay from "./../store/selectors/exercises";
 
 import todayMacros from './../store/selectors/current_macros';
 
@@ -19,15 +19,16 @@ class MainContainer extends PureComponent {
     return (
       <div>
         <HeaderContainer
-          currentKcalPlan={this.props.currentKcalPlan}
           currentWeight={this.props.currentWeight}
-          isTrainingDay = {this.props.isTrainingDay}
-          todaysMacros = {this.props.todaysMacros}
+          exercises = {this.props.exercises.toJS()}
+          todaysMacros = {this.props.todaysMacros.toJS()}
         />
       </div>
     );
   }
 }
+
+
 
 const mapStateToProps = state => {
   return {
@@ -35,7 +36,7 @@ const mapStateToProps = state => {
     currentKcalPlan: currentKcalPlanSelector(state),
     currentWeight: currentWeightSelector(state),
     todaysMacros: todayMacros(state),
-    isTrainingDay: isTrainingDay(state)
+    exercises: isTrainingDay(state)
   };
 };
 

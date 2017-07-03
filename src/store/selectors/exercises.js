@@ -30,6 +30,7 @@ const filterFixedDays = value => value.get("onEveryxDay") === undefined;
 
 const filterIntervalDays = value => value.get("onEveryxDay") !== undefined;
 
+
 const getExercises = (mainWorkouts, currentDate) => {
   const exercisesFromFixedDays = mainWorkouts
     .filter(filterFixedDays)
@@ -37,9 +38,14 @@ const getExercises = (mainWorkouts, currentDate) => {
 
   const exercisesFromIntervalDays = mainWorkouts
     .filter(filterIntervalDays)
-    .reduce(reduceFixedToExrecises(currentDate), List());
+    .reduce(reduceIntervalToExrecises(currentDate), List());
 
   return exercisesFromFixedDays.concat(exercisesFromIntervalDays);
 };
 
+/**
+ * Returns the exercises from the state for the given day. Empty if the current day is a rest day.
+ * @param  {Immutable.Collection} state [the application state]
+ * @return {Immutable.List}
+ */
 export default createSelector(mainWorkouts, currentDate, getExercises);

@@ -1,18 +1,20 @@
 import React from "react";
 import Immutable from 'immutable';
 import {Link} from 'react-router-dom';
+import * as _ from 'lodash';
 //name navigation kg macros kcal, current macros fro  tuday later on when it is implemented
-const HeaderContainer = ({currentKcalPlan, currentWeight, isTrainingDay, todaysMacros}) => {
+const HeaderContainer = ({ currentWeight, exercises, todaysMacros}) => {
 
-  let w = todaysMacros.toJS();
+  console.log( currentWeight);
+  console.log( exercises);
+  console.log( todaysMacros);
 
-  return (
+   return (
     <div>
       <Link to='/sdfsdfsdfsdfsdf'><span>prevoius</span></Link>
       <div>CurrentWeight: {currentWeight}</div>
       <div>
-        {w.kcal}
-
+          {_.map(exercises, exec => <div key={Math.random()}>{exec}</div> )}
 
         <Link to='/main/workout'><span>workout</span></Link>
         <Link to='/main/kcal'><span>kcal</span></Link>
@@ -20,6 +22,8 @@ const HeaderContainer = ({currentKcalPlan, currentWeight, isTrainingDay, todaysM
       </div>
     </div>
   );
+
 };
+
 
 export default HeaderContainer;
