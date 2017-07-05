@@ -2,6 +2,8 @@ import React from "react";
 import Immutable from 'immutable';
 import {Link} from 'react-router-dom';
 import * as _ from 'lodash';
+
+//loader indicator
 //name navigation kg macros kcal, current macros fro  tuday later on when it is implemented
 const HeaderContainer = ({ currentWeight, exercises, todaysMacros}) => {
 

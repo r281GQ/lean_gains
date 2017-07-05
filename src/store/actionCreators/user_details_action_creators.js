@@ -1,12 +1,18 @@
-const fetchUserDetails = () => (dispatch, getState) => {
-  const USERDETAILSRL = `http://localhost/4000/api/${USERDETAILSRL}`;
+import axios from 'axios';
 
-  let response = await axios({
+import {WRITE_USER_DETAILS} from './../actions/user_details_actions';
+
+
+const fetchUserDetails = () => (dispatch, getState) => {
+  const USERDETAILSRL = `http://localhost/4000/api/userDetails`;
+
+  axios({
     url: USERDETAILSRL,
     method: "GET",
     headers: { "x-auth": getState().auth.token }
-  });
-
-  console.log(response);
-
+  })
+    .then(response => {
+      dispatch({type: WRITE_USER_DETAILS, payload: response.data})
+    })
+    .catch(error => {});
 };

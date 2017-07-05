@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import Immutable, { toJS } from "immutable";
+import {Route} from 'react-router-dom';
 import * as _ from "lodash";
 
 import HeaderContainer from "./header";
@@ -13,6 +14,9 @@ import todayMacros from './../store/selectors/current_macros';
 const isImmutable = dataStructure =>
   Immutable.Iterable.isIterable(dataStructure);
 
+  const Shit= () =><div>geci{this.props.currentWeight}</div>
+const Shite= () =><div>geci1</div>
+
 class MainContainer extends PureComponent {
   render() {
     // console.log(this.props.isTrainingDay);
@@ -23,6 +27,7 @@ class MainContainer extends PureComponent {
           exercises = {this.props.exercises.toJS()}
           todaysMacros = {this.props.todaysMacros.toJS()}
         />
+      <Route path='/main/daily_log'  component={Shit} />
       </div>
     );
   }

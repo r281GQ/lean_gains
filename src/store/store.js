@@ -7,12 +7,14 @@ import Immutable from "immutable";
 
 import auth from './reducers/auth';
 import userDetails from './reducers/user_details';
+import dailyLog from './reducers/daily_log';
 import { routing, routerMiddlewareInstance } from "./reducers/routing";
 
 const store = createStore(
   combineReducers({
     auth,
     userDetails,
+    dailyLog,
     routing,
     form: reducerForm
   }),

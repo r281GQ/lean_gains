@@ -22,7 +22,7 @@ describe("Exercise selector", () => {
             type: "main",
             startDayofTraining: moment().subtract(3, "days"),
             onEveryxDay: undefined,
-            onDays: [1],
+            onDays: [moment().isoWeekday()],
             exercises: ["dead"]
           })
         )
@@ -32,7 +32,7 @@ describe("Exercise selector", () => {
             type: "main",
             startDayofTraining: moment().subtract(3, "days"),
             onEveryxDay: undefined,
-            onDays: [1],
+            onDays: [moment().isoWeekday()],
             exercises: ["squat"]
           })
         )

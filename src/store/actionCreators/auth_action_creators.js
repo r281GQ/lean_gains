@@ -21,23 +21,6 @@ import {
   LOG_OUT
 } from "./../actions/auth_actions";
 
-// const logIn = userInfo => dispatch => {
-//   dispatch({ type: INIT_AUTH });
-//
-//   let f = async function (){
-//    let response = await  axios.post(LOGIN, userInfo);
-//      handleWritingToStore( response, dispatch);
-//
-// }
-//    f();
-//     // .then(response => {
-//
-//     // .catch(error => {
-//     //   dispatch({ type: LOGIN_FAILED });
-//     //   dispatch({ type: CLOSE_AUTH });
-//     // });
-// };
-
 const logIn = userInfo => dispatch => {
   dispatch({ type: INIT_AUTH });
   return axios
@@ -56,7 +39,7 @@ const signUp = userInfo => dispatch => {
   return axios
     .post(SIGNUP, userInfo)
     .then(respone => {
-      handleWritingToStore(respone);
+      handleWritingToStore(respone, dispatch);
     })
     .catch(error => {
       dispatch({ type: LOGIN_FAILED });

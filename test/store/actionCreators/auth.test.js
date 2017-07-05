@@ -12,7 +12,7 @@ import {
   LOGIN_FAILED,
   LOG_OUT
 } from "./../../../src/store/actions/auth_actions";
-import { logIn } from "./../../../src/store/actionCreators/auth_action_creators";
+import { logIn, signUp } from "./../../../src/store/actionCreators/auth_action_creators";
 
 chai.use(chaiImmutable);
 
@@ -32,25 +32,69 @@ const INITIAL_STATE = Immutable.fromJS({
 
 let middlewares, mockStore, store;
 
-xdescribe("AuthActionCreators", () => {
+describe.only("AuthActionCreators", () => {
   beforeEach(() => {
     middlewares = [thunk];
     mockStore = configureStore(middlewares);
     store = mockStore(INITIAL_STATE);
   });
 
+
   axios.post = jest.fn().mockImplementation(() => {
     return Promise.resolve({
+      headers: {
+        "x-auth": "randomToken"
+      },
       data: {
-        _id: "idnumber",
-        token: "randomtoken"
+        _id: "randomId",
+        name: "Endre",
+        email: "endre@mail.com"
       }
     });
   });
 
-  it("should return", async () => {
+  it("should return INIT_AUTH and LOGIN_SUCCESS", async () => {
+    axios.post = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        headers: {
+          "x-auth": "randomToken"
+        },
+        data: {
+          _id: "randomId",
+          name: "Endre",
+          email: "endre@mail.com"
+        }
+      });
+    });
+    await store.dispatch(signUp());
+    expect(store.getActions()[0].type).to.equal(INIT_AUTH);
+    expect(store.getActions()[1].type).to.equal(LOGIN_SUCCESS);
+  });
+  it("should return INIT_AUTH and LOGIN_SUCCESS", async () => {
+    axios.post = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        headers: {
+          "x-auth": "randomToken"
+        },
+        data: {
+          _id: "randomId",
+          name: "Endre",
+          email: "endre@mail.com"
+        }
+      });
+    });
     await store.dispatch(logIn());
     expect(store.getActions()[0].type).to.equal(INIT_AUTH);
     expect(store.getActions()[1].type).to.equal(LOGIN_SUCCESS);
   });
+  it("should return INIT_AUTH and LOGIN_FAILED and CLOSE_AUTH", async () => {
+    axios.post = jest.fn().mockImplementation(() => {
+      return Promise.reject();
+    });
+    await store.dispatch(logIn());
+    expect(store.getActions()[0].type).to.equal(INIT_AUTH);
+    expect(store.getActions()[1].type).to.equal(LOGIN_FAILED);
+    expect(store.getActions()[2].type).to.equal(CLOSE_AUTH);
+  });
+
 });

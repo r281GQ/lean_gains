@@ -29,14 +29,14 @@ export const INITIAL_STATE = Immutable.fromJS({
     //   exercises: [string]
     // }
     //
-      0 : {
-        _id: 0,
-        type: 'main',
-        startDayofTraining: undefined,
-        onEveryxDay: undefined,
-        onDays: [1],
-        exercises: ['string']
-      }
+      // 0 : {
+      //   _id: 0,
+      //   type: 'main',
+      //   startDayofTraining: undefined,
+      //   onEveryxDay: undefined,
+      //   onDays: [1],
+      //   exercises: ['string']
+      // }
   },
   kcalTargets: {
     0: {
