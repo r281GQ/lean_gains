@@ -109,7 +109,12 @@ app.get("/api/kcaltargets", (request, response) => {
   response.status(200).send(targets);
 });
 
-app.get("/api/measurements", (request, response) => {});
+app.post("/api/dailylog", (request, response) => {
+  console.log("Endpoint /api/dailylog reached with body: ", request.body);
+  let dailyLog = request.body;
+  dailyLog._id = 'randomId';
+  return response.status(201).send(dailyLog);
+});
 
 app.post("/api/signUp", (request, response) => {
   console.log("Endpoint /api/logIn reached with body: ", request.body);
@@ -130,5 +135,5 @@ app.post("/api/signUp", (request, response) => {
 });
 
 app.listen(4000, () => {
-  console.log("Server started on port: 4000");
+  console.log("Mockserver started on port: 4000");
 });

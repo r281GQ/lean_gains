@@ -67,11 +67,9 @@ export const INITIAL_STATE = Immutable.fromJS({
       }
     }
   },
-  measurements: {
-    0: {
-      _id: 0,
-      date: moment(),
-      isLatest: true,
+  latestMeasurements: {
+
+
       weight: 123,
       chest: undefined,
       rightArm: undefined,
@@ -82,22 +80,8 @@ export const INITIAL_STATE = Immutable.fromJS({
       hips: 45,
       rightThigh: undefined,
       leftThigh: undefined
-    },
-    1: {
-      _id: 1,
-      date: moment('03-05-2017','DD-MM-YYYY'),
-      isLatest: false,
-      weight: 145,
-      chest: 23,
-      rightArm: undefined,
-      leftArm: undefined,
-      aboveBelly: undefined,
-      belly: undefined,
-      belowBelly: undefined,
-      hips: undefined,
-      rightThigh: undefined,
-      leftThigh: undefined
-    }
+
+
   }
 });
 

@@ -11,11 +11,24 @@ import isTrainingDay from "./../store/selectors/exercises";
 
 import todayMacros from './../store/selectors/current_macros';
 
+import DailyLogContainer from './daily_log';
+import WorkoutLogContainer from './workout_log';
+
 const isImmutable = dataStructure =>
   Immutable.Iterable.isIterable(dataStructure);
 
   const Shit= () =><div>geci{this.props.currentWeight}</div>
 const Shite= () =><div>geci1</div>
+
+const workoutRoutes = [{
+  path: '/workoutlog/create',
+  component: ()=> <div>ige</div>
+}];
+
+const exercises = [{name: 'dead', repetitions: []}, {name: 'squat'}]
+// const exercises = [{name: 'dead', repetitions: []}]
+
+const WK = () => <WorkoutLogContainer exercises={exercises} />
 
 class MainContainer extends PureComponent {
   render() {
@@ -27,7 +40,8 @@ class MainContainer extends PureComponent {
           exercises = {this.props.exercises.toJS()}
           todaysMacros = {this.props.todaysMacros.toJS()}
         />
-      <Route path='/main/daily_log'  component={Shit} />
+      <Route path='/dailylog'  component={DailyLogContainer} />
+      <Route path='/workoutlog/create'  component={WK} />
       </div>
     );
   }

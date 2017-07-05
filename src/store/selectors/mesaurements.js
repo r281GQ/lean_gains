@@ -1,6 +1,8 @@
 import { createSelector } from "reselect";
 import { Map } from "immutable";
 
+
+//TODO: this will needs to be replaxced by a server endpoint let the server make the calculations
 const measurements = state =>
   state.getIn(["dailyLog"]).sortBy(value => value.date);
 

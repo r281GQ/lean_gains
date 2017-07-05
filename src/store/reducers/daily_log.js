@@ -1,6 +1,8 @@
 import Immutable, { fromJS } from "immutable";
 import moment from "moment";
 
+import { WRITE_DAILY_LOG } from "./../actions/daily_log_actions";
+
 //TODO: report creation later on
 //TODO: creae undo option with higher order reducers
 const INITIAL_STATE = fromJS({
@@ -60,8 +62,13 @@ const INITIAL_STATE = fromJS({
   }
 });
 
+const handleWriteDailylog = (state, payload) =>
+  state.set(payload._id, fromJS(payload));
+
 const dailyLog = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case WRITE_DAILY_LOG:
+      return handleWriteDailylog(state, payload);
     default:
       return state;
   }

@@ -15,7 +15,7 @@ class App extends React.PureComponent {
       <div className="container">
         <Route path="/login" component={LoginContainer} />
         <Route path="/signup" component={SignUpContainer} />
-        <Route path="/main" component={MainContainer} />
+        <Route path="/" component={MainContainer} />
       </div>
     );
   }

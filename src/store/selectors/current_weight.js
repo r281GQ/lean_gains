@@ -5,7 +5,5 @@ export default createSelector(
   state => state,
   state =>
     state
-      .getIn(["userDetails", "measurements"])
-      .find(value => value.get("isLatest"))
-      .get("weight")
+      .getIn(["userDetails", "latestMeasurements", "weight"])
 );

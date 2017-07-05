@@ -1,0 +1,1 @@
+export const WRITE_DAILY_LOG = 'WRITE_DAILY_LOG';

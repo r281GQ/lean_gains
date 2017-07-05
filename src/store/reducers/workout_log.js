@@ -9,7 +9,7 @@ const INITIAL_STATE = fromJS({
     exercises: [
       {
         name: "",
-        id: "",
+        _id: "",
         repetitions: [
           {
             _id: "",

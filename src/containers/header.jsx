@@ -18,10 +18,11 @@ const HeaderContainer = ({ currentWeight, exercises, todaysMacros}) => {
       <div>
           {_.map(exercises, exec => <div key={Math.random()}>{exec}</div> )}
 
-        <Link to='/main/workout'><span>workout</span></Link>
-        <Link to='/main/kcal'><span>kcal</span></Link>
-        <Link to='/main/daily_log'><span>daily_log</span></Link>
+        <Link to='/workoutlog/create'><span>workoutlog</span></Link>
+        <Link to='/kcal'><span>kcal</span></Link>
+        <Link to='/dailylog'><span>daily_log</span></Link>
       </div>
+      <div>Loaderindicatro</div>
     </div>
   );
 
