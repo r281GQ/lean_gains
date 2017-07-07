@@ -1,69 +1,47 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Route } from "react-router-dom";
 import { FlatButton } from "material-ui";
-import { Field, FieldArray, reduxForm } from "redux-form/immutable";
-import * as _ from "lodash";
+import { FieldArray, reduxForm, formValueSelector } from "redux-form/immutable";
 
-class WorkoutLogContainer extends React.PureComponent {
+import ExerciseFieldArray from "./../components/exercies_field_array";
+
+class WorkoutLogContainer extends React.Component {
+  componentWillMount() {
+    this.props.change("exercises", this.props.exercises);
+  }
+
   render() {
-    let { handleSubmit } = this.props;
+    let { change, handleSubmit, handlerR } = this.props;
     return (
       <div>
         <form
-          onSubmit={handleSubmit(formprops =>
-            console.log("submitted", formprops)
-          )}
+          onSubmit={handleSubmit(formprops => {
+            handlerR(formprops.exercises);
+            console.log("submitted", formprops);
+          })}
         >
           Create workout log
-          <div key={this.props.exercises[0].name}>
-            <span>{this.props.exercises[0].name}</span>
-            <Field name="exercise" type="text" component="input" placeholder='exercise'/>
-            <Field name="notes" type="text" component="input" placeholder='notes' />
+          <div>
             <FieldArray
-              name="sets"
-              component={sets => {
-                let d = sets.fields.getAll();
-                return (
-                  <div>
-                    <ul>
-                      <li>
-                        <FlatButton
-                          onTouchTap={() => {
-                            console.log("clicked");
-                            sets.fields.push({});
-                          }}
-                          label="add"
-                        />
-                      </li>
-                      {sets.fields.map((item, index) =>
-                        <li key={index}>
-                          <Field
-                            name={`${item}.weight`}
-                            type="number"
-                            placeholder="weight"
-                            component="input"
-                          />
-                          <Field
-                            name={`${item}.reps`}
-                            type="number"
-                            placeholder="reps"
-                            component="input"
-                          />
-                          {item.weight}
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                );
-              }}
+              name="exercises"
+              component={ExerciseFieldArray}
+              values={this.props.formValues}
             />
-            <button type="submit">add</button>
+            <FlatButton type="submit" label={`Create workout log`} />
           </div>
         </form>
       </div>
     );
   }
 }
+const selector = formValueSelector("workoutLog");
 
-export default connect()(reduxForm({ form: "wrokt" })(WorkoutLogContainer));
+WorkoutLogContainer = connect(state => ({
+  formValues: selector(state, "exercises")
+}))(WorkoutLogContainer);
+
+export default connect()(
+  reduxForm({
+    form: "workoutLog"
+  })(WorkoutLogContainer)
+);

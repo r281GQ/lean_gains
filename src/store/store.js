@@ -1,13 +1,14 @@
 import { createStore, applyMiddleware } from "redux";
 import { combineReducers } from "redux-immutable";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { reducer as reducerForm } from 'redux-form';
+import { reducer as reducerForm } from "redux-form";
 import thunk from "redux-thunk";
 import Immutable from "immutable";
 
-import auth from './reducers/auth';
-import userDetails from './reducers/user_details';
-import dailyLog from './reducers/daily_log';
+import auth from "./reducers/auth";
+import userDetails from "./reducers/user_details";
+import dailyLog from "./reducers/daily_log";
+import workoutLogs from "./reducers/workout_log";
 import { routing, routerMiddlewareInstance } from "./reducers/routing";
 
 const store = createStore(
@@ -16,6 +17,7 @@ const store = createStore(
     userDetails,
     dailyLog,
     routing,
+    workoutLogs,
     form: reducerForm
   }),
   composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance))

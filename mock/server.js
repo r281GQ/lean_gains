@@ -78,43 +78,146 @@ app.get("/api/workouttargets", (request, response) => {
 });
 
 app.get("/api/kcaltargets", (request, response) => {
-  let targets = [{
-    _id: 'sdf7sdfsd',
-    startDate: moment("05-05-2017", "DD-MM-YYYY"),
-    endDate: undefined,
-    isLatest: true,
-    isCycling: true,
-    flat: {
-      kcal: 3000,
-      protein: 100,
-      carbohydrate: 130,
-      fat: 60,
-      fiber: 20
-    },
-    rest: {
-      kcal: 1000,
-      protein: 100,
-      carbohydrate: 30,
-      fat: 80,
-      fiber: 20
-    },
-    training: {
-      kcal: 2100,
-      protein: 110,
-      carbohydrate: 210,
-      fat: 30,
-      fiber: 20
+  let targets = [
+    {
+      _id: "sdf7sdfsd",
+      startDate: moment("05-05-2017", "DD-MM-YYYY"),
+      endDate: undefined,
+      isLatest: true,
+      isCycling: true,
+      flat: {
+        kcal: 3000,
+        protein: 100,
+        carbohydrate: 130,
+        fat: 60,
+        fiber: 20
+      },
+      rest: {
+        kcal: 1000,
+        protein: 100,
+        carbohydrate: 30,
+        fat: 80,
+        fiber: 20
+      },
+      training: {
+        kcal: 2100,
+        protein: 110,
+        carbohydrate: 210,
+        fat: 30,
+        fiber: 20
+      }
     }
-  }];
+  ];
   response.status(200).send(targets);
 });
 
-app.post("/api/dailylog", (request, response) => {
-  console.log("Endpoint /api/dailylog reached with body: ", request.body);
+app.post("/api/dailylogs", (request, response) => {
+  console.log("Endpoint POST /api/dailylog reached with body: ", request.body);
   let dailyLog = request.body;
-  dailyLog._id = 'randomId';
+  dailyLog._id = "randomId";
   return response.status(201).send(dailyLog);
 });
+
+app.post("/api/workoutlogs", (request, response) => {
+  console.log("Endpoint /api/workoutlogs reached with body: ", request.body);
+  let h ={
+    _id: "rereter",
+    date: moment(),
+    exercises: [
+      {
+        name: "dead",
+        _id: "sdefsd",
+        sets: [
+          {
+            _id: "sdfsd",
+            reps: 5,
+            kg: 5465
+          }
+        ]
+      },
+
+    ]
+  };
+  return response.status(201).send(h);
+});
+
+app.delete("/api/workoutlogs/:id", (request, response) => {
+  return response.status(200).send({});
+});
+
+
+app.put("/api/workoutlogs", (request, response) => {
+  console.log("Endpoint /api/workoutlogs reached with body: ", request.query);
+  let h ={
+    _id: "rereter",
+    date: moment(),
+    exercises: [
+      {
+        name: "dead",
+        _id: "sdefsd",
+        sets: [
+          {
+            _id: "sdfsd",
+            reps: 5,
+            kg: 5465
+          }
+        ]
+      },
+
+    ]
+  };
+  return response.status(201).send(h);
+});
+
+app.get("/api/workoutlogs", (request, response) => {
+  console.log("Endpoint /api/workoutlogs reached with body: ", request.query);
+  let dailyLog = request.body;
+  dailyLog._id = "randomId";
+
+  let workoutlogs = [
+    {
+      _id: "rereter",
+      date: moment(),
+      exercises: [
+        {
+          name: "dead",
+          _id: "sdefsd",
+          sets: [
+            {
+              _id: "sdfsd",
+              reps: 5,
+              kg: 5465
+            }
+          ]
+        },
+
+      ]
+    },
+
+    {
+      _id: "4dghrt",
+      date: moment(),
+      exercises: [
+        {
+          name: "sqau",
+          _id: "sdefsd",
+          sets: [
+            {
+              _id: "sdfsd",
+              reps: 5,
+              kg: 5465
+            }
+          ]
+        },
+
+      ]
+    }
+  ];
+  return response.status(200).send(workoutlogs);
+});
+
+
+
 
 app.post("/api/signUp", (request, response) => {
   console.log("Endpoint /api/logIn reached with body: ", request.body);

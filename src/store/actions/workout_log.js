@@ -1,1 +1,0 @@
-export const WRITE_WORKOUT_LOG = 'WRITE_WORKOUT_LOG'; 

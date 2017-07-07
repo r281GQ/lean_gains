@@ -1,5 +1,6 @@
 import React from "react";
-import { Field } from "redux-form";
+import { Field } from "redux-form/immutable";
+import {TextField} from 'redux-form-material-ui';
 
 const DailyLogForm = ({ createLogHandler }) => {
   return (
@@ -9,28 +10,28 @@ const DailyLogForm = ({ createLogHandler }) => {
         <Field
           name="protein"
           label="Protein"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="proteing"
         />
         <Field
           name="carbohydrate"
           label="Carbohydrate"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="carbohydrate"
         />
         <Field
           name="fat"
           label="Fat"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="fat"
         />
         <Field
           name="fibre"
           label="Fibre"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="fibre"
         />
@@ -40,30 +41,32 @@ const DailyLogForm = ({ createLogHandler }) => {
         <Field
           name="sleepIssues"
           label="Sleeping issues"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="sleeping issues"
         />
         <Field
           name="stressIssues"
           label="Stress issues"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="stress issues"
         />
         <Field
           name="hungerIssues"
           label="Hunger issues"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="hunger issues"
         />
         <Field
           name="fatigueLethargy"
           label="Fatigue and lethargy issues"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="fatigue and lethargy"
+          min={1}
+          max={5}
         />
       </div>
       <div>
@@ -71,70 +74,70 @@ const DailyLogForm = ({ createLogHandler }) => {
         <Field
           name="weight"
           label="Weight"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="weight"
         />
         <Field
           name="chest"
           label="Chest"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="chest"
         />
         <Field
           name="rightArm"
           label="Right arm"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="right arm"
         />
         <Field
           name="leftArm"
           label="Left arm"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="left arm"
         />
         <Field
           name="aboveBelly"
           label="Above belly"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="above belly"
         />
         <Field
           name="belly"
           label="Belly"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="belly"
         />
         <Field
           name="belowBelly"
           label="Below belly"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="below belly"
         />
         <Field
           name="hips"
           label="Hips"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="hip"
         />
         <Field
           name="leftThigh"
           label="Left thigh"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="left thigh"
         />
         <Field
           name="rightThigh"
           label="Right thigh"
-          component="input"
+          component={TextField}
           type="number"
           placeholder="right thigh"
         />
