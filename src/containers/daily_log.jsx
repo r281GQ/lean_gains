@@ -4,18 +4,23 @@ import { reduxForm } from "redux-form/immutable";
 import { Route, Link } from "react-router-dom";
 
 import DailyLogForm from "./../components/daily_log_form";
+import DailyLogPicker from './daily_log_picker';
 
 import { createLog } from "./../store/actionCreators/daily_log_action_creators";
 
 class DailyLogContainer extends PureComponent {
   constructor(props) {
     super(props);
+    this.state= {selected: 0}
   }
+
+  change = (f,d,g) => this.setState({selected: g})
 
   render() {
     const { handleSubmit, createLog, reset } = this.props;
     return (
       <div>
+        <Route exact path='/dailyLog' component={()=><DailyLogPicker selected={this.state.selected} change={this.change} logs={this.props.logs} />}  />
         <Route path="/dailylog/create" component={DailyLogForm} />
         <Link to="/dailylog/create">
           <span>sdfsd</span>

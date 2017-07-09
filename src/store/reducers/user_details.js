@@ -66,7 +66,8 @@ export const INITIAL_STATE = Immutable.fromJS({
         fiber: undefined
       }
     }
-  },
+  }
+  ,
   latestMeasurements: {
 
 

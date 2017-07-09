@@ -118,9 +118,72 @@ app.post("/api/dailylogs", (request, response) => {
   return response.status(201).send(dailyLog);
 });
 
+// app.get("api/dailylogs/latest", )
+
+app.get("api/dailylogs", (request, response) => {
+  console.log("Endpoint GET /api/dailylog reached with body: ", request.query);
+
+  let list = [
+    {
+      _id: 0,
+      date: moment("04-04-2017", "DD-MM-YYYY"),
+      macros: {
+        protein: 110,
+        carbohydrate: 90,
+        fat: 60,
+        fibre: 30
+      },
+      measurements: {
+        weight: 123,
+        chest: undefined,
+        rightArm: undefined,
+        leftArm: undefined,
+        aboveBelly: undefined,
+        belly: undefined,
+        belowBelly: undefined,
+        hips: 45,
+        rightThigh: undefined,
+        leftThigh: undefined
+      },
+      sleepIssues: 4,
+      stressIssues: 5,
+      hungerIssues: 2,
+      fatigueLethargy: 1
+    },
+    {
+      _id: 1,
+      date: moment("03-05-2017", "DD-MM-YYYY"),
+      macros: {
+        protein: 103,
+        carbohydrate: 30,
+        fat: 90,
+        fibre: 20
+      },
+      measurements: {
+        weight: 145,
+        chest: 23,
+        rightArm: undefined,
+        leftArm: undefined,
+        aboveBelly: undefined,
+        belly: undefined,
+        belowBelly: undefined,
+        hips: undefined,
+        rightThigh: undefined,
+        leftThigh: undefined
+      },
+      sleepIssues: 1,
+      stressIssues: 2,
+      hungerIssues: 3,
+      fatigueLethargy: 4
+    }
+  ];
+
+  return response.status(200).send(list);
+});
+
 app.post("/api/workoutlogs", (request, response) => {
   console.log("Endpoint /api/workoutlogs reached with body: ", request.body);
-  let h ={
+  let h = {
     _id: "rereter",
     date: moment(),
     exercises: [
@@ -134,8 +197,7 @@ app.post("/api/workoutlogs", (request, response) => {
             kg: 5465
           }
         ]
-      },
-
+      }
     ]
   };
   return response.status(201).send(h);
@@ -145,10 +207,9 @@ app.delete("/api/workoutlogs/:id", (request, response) => {
   return response.status(200).send({});
 });
 
-
 app.put("/api/workoutlogs", (request, response) => {
   console.log("Endpoint /api/workoutlogs reached with body: ", request.query);
-  let h ={
+  let h = {
     _id: "rereter",
     date: moment(),
     exercises: [
@@ -162,8 +223,7 @@ app.put("/api/workoutlogs", (request, response) => {
             kg: 5465
           }
         ]
-      },
-
+      }
     ]
   };
   return response.status(201).send(h);
@@ -189,8 +249,7 @@ app.get("/api/workoutlogs", (request, response) => {
               kg: 5465
             }
           ]
-        },
-
+        }
       ]
     },
 
@@ -208,16 +267,12 @@ app.get("/api/workoutlogs", (request, response) => {
               kg: 5465
             }
           ]
-        },
-
+        }
       ]
     }
   ];
   return response.status(200).send(workoutlogs);
 });
-
-
-
 
 app.post("/api/signUp", (request, response) => {
   console.log("Endpoint /api/logIn reached with body: ", request.body);

@@ -1,6 +1,6 @@
 import React from "react";
 import { Field } from "redux-form/immutable";
-import {TextField} from 'redux-form-material-ui';
+import { TextField } from "redux-form-material-ui";
 
 const DailyLogForm = ({ createLogHandler }) => {
   return (
@@ -77,6 +77,20 @@ const DailyLogForm = ({ createLogHandler }) => {
           component={TextField}
           type="number"
           placeholder="weight"
+        />
+        <Field
+          name="bf"
+          label="body fat percentage"
+          component={TextField}
+          type="number"
+          placeholder="body fat percentage"
+        />
+        <Field
+          name="height"
+          label="height"
+          component={TextField}
+          type="number"
+          placeholder="height"
         />
         <Field
           name="chest"

@@ -23,9 +23,7 @@ export const INITIAL_STATE = fromJS({
   }
 });
 
-
 import workoutlog, {
-  
 } from "./../../../src/store/reducers/workout_log";
 import {
   WRITE_WORKOUT_LOG,

@@ -16,35 +16,77 @@ import {
 import { MenuItem, FlatButton } from "material-ui";
 import { connect } from "react-redux";
 
+// _id : {
+//   _id: objectID
+//   type: 'main' || 'rest',
+//   startDayofTraining: date,
+//   onEveryxDay: number,
+//   onDays: [number],
+//   exercises: [string]
+// }
+//
+
+const handler = ({
+  onEveryXDayFlag,
+  onEveryxDay,
+  name,
+  type,
+  startDayofTraining,
+  exercises,
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday
+}) => {
+  let d;
+  if (onEveryXDayFlag) {
+    d = { name, type, startDayofTraining, exercises, onEveryxDay };
+  } else {
+    let onDays = [
+      monday ? 1 : undefined,
+      tuesday ? 2 : undefined,
+      wednesday ? 3 : undefined,
+      thursday ? 4 : undefined,
+      friday ? 5 : undefined,
+      saturday ? 6 : undefined,
+      sunday ? 7 : undefined
+    ];
+   d = { name, type, exercises, onDays };
+  }
+};
+
 const WorkoutTarget = ({ handleSubmit, onEveryXDayFlag }) =>
   <div>
-    <form onSubmit={handleSubmit(formprops => console.log(formprops))}>
+    <form onSubmit={handleSubmit(handler)}>
       <div>
-      <Field
-        name="onEveryXDayFlag"
-        label={`Happens of every x day`}
-        component={Toggle}
-        labelPosition={"right"}
-      />
-    </div>
-    <div>
-      <Field
-        name="name"
-        hintText="workout name"
-        type="text"
-        component={TextField}
-      />
-    </div>
-    <div>
-      <Field
-        name="type"
-        component={SelectField}
-        value="main"
-        floatingLabelText="Frequency"
-      >
-        <MenuItem value="main" primaryText="Main" />
-        <MenuItem value="rest" primaryText="Rest" />
-      </Field>
+        <Field
+          name="onEveryXDayFlag"
+          label={`Happens of every x day`}
+          component={Toggle}
+          labelPosition={"right"}
+        />
+      </div>
+      <div>
+        <Field
+          name="name"
+          hintText="workout name"
+          type="text"
+          component={TextField}
+        />
+      </div>
+      <div>
+        <Field
+          name="type"
+          component={SelectField}
+          value="main"
+          floatingLabelText="Frequency"
+        >
+          <MenuItem value="main" primaryText="Main" />
+          <MenuItem value="rest" primaryText="Rest" />
+        </Field>
       </div>
       <Field
         name="startDayofTraining"
@@ -104,7 +146,7 @@ const WorkoutTarget = ({ handleSubmit, onEveryXDayFlag }) =>
       />
 
       <FieldArray
-        name="exec"
+        name="exercises"
         component={({ fields: { map, push, remove } }) => {
           return (
             <div>

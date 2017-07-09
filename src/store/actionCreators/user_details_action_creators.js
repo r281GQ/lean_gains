@@ -16,3 +16,7 @@ const fetchUserDetails = () => (dispatch, getState) => {
     })
     .catch(error => {});
 };
+
+const updateUserDetails = userDetails => dispatch => dispatch({type: WRITE_USER_DETAILS, payload: userDetails})
+
+export {updateUserDetails};
