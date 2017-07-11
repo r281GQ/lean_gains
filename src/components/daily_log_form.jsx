@@ -1,5 +1,5 @@
 import React from "react";
-import { Field } from "redux-form/immutable";
+import { Field, reduxForm } from "redux-form/immutable";
 import { TextField } from "redux-form-material-ui";
 
 const DailyLogForm = ({ createLogHandler }) => {
@@ -79,18 +79,18 @@ const DailyLogForm = ({ createLogHandler }) => {
           placeholder="weight"
         />
         <Field
-          name="bf"
-          label="body fat percentage"
-          component={TextField}
-          type="number"
-          placeholder="body fat percentage"
-        />
-        <Field
           name="height"
           label="height"
           component={TextField}
           type="number"
           placeholder="height"
+        />
+      <Field
+        name="neck"
+        label="neck"
+        component={TextField}
+        type="number"
+        placeholder="neck"
         />
         <Field
           name="chest"

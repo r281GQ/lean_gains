@@ -57,24 +57,70 @@ app.get("/api/userdetails", (request, response) => {
 app.get("/api/workouttargets", (request, response) => {
   let targets = [
     {
-      _id: 0,
+      _id: '0workoutTarget',
       type: "main",
-      startDayofTraining: undefined,
-      onEveryxDay: undefined,
+      name: 'first',
       onDays: [1],
       exercises: ["deadlift"]
     },
     {
-      _id: 4,
+      _id: '1workoutTarget',
       type: "main",
+        name: 'second',
       startDayofTraining: moment("05-05-2017", "DD-MM-YYYY"),
-      onEveryxDay: 4,
-      onDays: [],
+      onEveryxDay: 1,
       exercises: ["bench"]
     }
   ];
 
   response.status(200).send(targets);
+});
+
+app.get('/api/latestmeasurements', (request, response)=> {
+
+
+  const measurements= {
+    height: 175,
+    neck: 36,
+    weight: 67,
+    chest: 90,
+    rightArm: 40,
+    leftArm: 41,
+    aboveBelly: 81,
+    belly: 82,
+    belowBelly: 87,
+    hips: 92,
+    rightThigh: 50,
+    leftThigh: 50
+  };
+  return response.status(200).send(measurements);
+
+});
+
+app.post("/api/workouttargets", (request, response) => {
+  console.log(request.body);
+  let g = request.body;
+  g._id = '34564545';
+  // let targets = [
+  //   {
+  //     _id: 0,
+  //     type: "main",
+  //     startDayofTraining: undefined,
+  //     onEveryxDay: undefined,
+  //     onDays: [1],
+  //     exercises: ["deadlift"]
+  //   },
+  //   {
+  //     _id: 4,
+  //     type: "main",
+  //     startDayofTraining: moment("05-05-2017", "DD-MM-YYYY"),
+  //     onEveryxDay: 4,
+  //     onDays: [],
+  //     exercises: ["bench"]
+  //   }
+  // ];
+
+  response.status(200).send(g);
 });
 
 app.get("/api/kcaltargets", (request, response) => {
@@ -85,13 +131,6 @@ app.get("/api/kcaltargets", (request, response) => {
       endDate: undefined,
       isLatest: true,
       isCycling: true,
-      flat: {
-        kcal: 3000,
-        protein: 100,
-        carbohydrate: 130,
-        fat: 60,
-        fiber: 20
-      },
       rest: {
         kcal: 1000,
         protein: 100,
@@ -111,10 +150,55 @@ app.get("/api/kcaltargets", (request, response) => {
   response.status(200).send(targets);
 });
 
+app.post('/api/kcaltarget', (request, response) => {
+  console.log('ENDPOINT REACHED : KCALTARGET POST', request.body);
+  const {rest, training} = request.body;
+
+  const sendBack = {
+    _id: '45645645',
+    startDate: moment(),
+    endDate: undefined,
+    isLatest: true,
+    isCycling: true,
+    rest,
+    training
+  }
+
+  let prev =  {
+    _id: "4567fgfg",
+    startDate: undefined,
+    endDate: undefined,
+    isLatest: false,
+    isCycling: true,
+    // flat: {
+    //   kcal: 3000,
+    //   protein: undefined,
+    //   carbohydrate: undefined,
+    //   fat: undefined,
+    //   fiber: undefined
+    // },
+    rest: {
+      kcal: 1000,
+      protein: undefined,
+      carbohydrate: undefined,
+      fat: undefined
+    },
+    training: {
+      kcal: 2100,
+      protein: undefined,
+      carbohydrate: undefined,
+      fat: undefined
+    }
+  }
+  console.log('PAYLOAF', [prev, sendBack]);
+  return response.status(201).send([sendBack, prev]);
+})
+
 app.post("/api/dailylogs", (request, response) => {
   console.log("Endpoint POST /api/dailylog reached with body: ", request.body);
   let dailyLog = request.body;
   dailyLog._id = "randomId";
+  dailyLog.date = moment();
   return response.status(201).send(dailyLog);
 });
 
@@ -130,10 +214,10 @@ app.get("api/dailylogs", (request, response) => {
       macros: {
         protein: 110,
         carbohydrate: 90,
-        fat: 60,
-        fibre: 30
+        fat: 60
       },
       measurements: {
+        neck: undefined,
         weight: 123,
         chest: undefined,
         rightArm: undefined,
@@ -156,10 +240,10 @@ app.get("api/dailylogs", (request, response) => {
       macros: {
         protein: 103,
         carbohydrate: 30,
-        fat: 90,
-        fibre: 20
+        fat: 90
       },
       measurements: {
+        neck: undefined,
         weight: 145,
         chest: 23,
         rightArm: undefined,

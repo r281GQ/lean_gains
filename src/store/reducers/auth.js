@@ -5,7 +5,9 @@ import {
   CLOSE_AUTH,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  LOG_OUT
+  LOG_OUT,
+  INIT_API,
+  CLOSE_API
 } from "./../actions/auth_actions";
 
 const INITIAL_STATE = Immutable.fromJS({
@@ -39,6 +41,10 @@ const handleCloseAuth = state => state.set("isLoading", false);
 
 const auth = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case INIT_API:
+      return state.set('isLoading', true);
+    case CLOSE_API:
+      return state.set('isLoading', false);
     case LOGIN_SUCCESS:
       return handleLoginSuccess(state, payload);
     case LOGIN_FAILED:

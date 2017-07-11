@@ -5,7 +5,8 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn
+  TableRowColumn,
+  FlatButton
 } from "material-ui";
 
 const KcalTargetResult = ({
@@ -20,54 +21,54 @@ const KcalTargetResult = ({
     <div>
       <div>
 
-        <Table>
+        <div style={{textAlign: 'center'}}>
+        <FlatButton disabled={true} label= {`Calculated calories for ${label}day: ${kCalTarget}`}/>
+</div>
+      <Table>
         <TableHeader displaySelectAll={false}>
-          <TableRow selectable={false}>
-            <TableHeaderColumn>Calculated calories for {label}day: {kCalTarget}{" "}</TableHeaderColumn>
 
-          </TableRow>
           <TableRow selectable={false}>
-            <TableHeaderColumn>rest/traing</TableHeaderColumn>
+            <TableHeaderColumn></TableHeaderColumn>
             <TableHeaderColumn>Protein</TableHeaderColumn>
-            <TableHeaderColumn>Fat</TableHeaderColumn>
             <TableHeaderColumn>Carbohydrate</TableHeaderColumn>
+            <TableHeaderColumn>Fat</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
           <TableRow selectable={false}>
             <TableRowColumn >
-              {" "}{label} kcal
+              {" "} Calories
             </TableRowColumn>
             <TableRowColumn >
-              {" "}{proteinTarget}
-            </TableRowColumn>
-            <TableRowColumn >
-              {" "}{method === "percentage"
-                ? kCalTarget * (percentage / 100)
-                : fatTarget * 9}
+              {" "}{_.ceil(proteinTarget)}
             </TableRowColumn>
             <TableRowColumn>
               {" "}{method === "percentage"
-                ? kCalTarget - proteinTarget - kCalTarget  * (percentage / 100)
-                : kCalTarget - proteinTarget - fatTarget * 9}
+              ? kCalTarget - proteinTarget - kCalTarget  * (percentage / 100) > 0? _.ceil(kCalTarget - proteinTarget - kCalTarget  * (percentage / 100)) : 0
+              : kCalTarget - proteinTarget - fatTarget * 9 > 0 ? _.ceil(kCalTarget - proteinTarget - fatTarget * 9) : 0}
+            </TableRowColumn>
+            <TableRowColumn >
+              {" "}{method === "percentage"
+                ? _.ceil(kCalTarget * (percentage / 100))
+                : fatTarget * 9}
             </TableRowColumn>
           </TableRow>
           <TableRow selectable={false}>
             <TableRowColumn >
-              {" "}{label} grams
+              {" "} Grams
             </TableRowColumn>
             <TableRowColumn >
-              {" "}{proteinTarget/4}
-            </TableRowColumn>
-            <TableRowColumn >
-              {" "}{(method === "percentage"
-                ? kCalTarget * (percentage / 100)
-                : fatTarget * 9)/9}
+              {" "}{_.ceil(proteinTarget/4)}
             </TableRowColumn>
             <TableRowColumn>
               {" "}{method === "percentage"
-                ? kCalTarget - proteinTarget - kCalTarget * (percentage / 100) > 0 ?kCalTarget - proteinTarget - kCalTarget * (percentage / 100) : 0
-                : (kCalTarget - proteinTarget - fatTarget * 9)/4 > 0 ? (kCalTarget - proteinTarget - fatTarget * 9)/4 : 0 } 
+              ? (kCalTarget - proteinTarget - kCalTarget  * (percentage / 100))/4 > 0 ? _.ceil((kCalTarget - proteinTarget - kCalTarget  * (percentage / 100))/4) : 0
+              : (kCalTarget - proteinTarget - fatTarget * 9)/4 > 0 ? _.ceil((kCalTarget - proteinTarget - fatTarget * 9)/4) : 0 }
+            </TableRowColumn>
+            <TableRowColumn >
+              {" "}{method === "percentage"
+                ? _.ceil((kCalTarget * (percentage / 100)/9))
+                : fatTarget * 9/9}
             </TableRowColumn>
           </TableRow>
         </TableBody>

@@ -9,7 +9,6 @@ const INITIAL_STATE = fromJS({
   0: {
     _id: 0,
     date: moment(),
-    isLatest: true,
     macros: {
       protein: undefined,
       carbohydrate: undefined,
@@ -18,6 +17,7 @@ const INITIAL_STATE = fromJS({
     },
     measurements: {
       weight: 123,
+      neck: undefined,
       chest: undefined,
       rightArm: undefined,
       leftArm: undefined,
@@ -36,7 +36,6 @@ const INITIAL_STATE = fromJS({
   1: {
     _id: 1,
     date: moment("03-05-2017", "DD-MM-YYYY"),
-    isLatest: false,
     macros: {
       protein: undefined,
       carbohydrate: undefined,

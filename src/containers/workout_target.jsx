@@ -9,72 +9,84 @@ import {
 import {
   TextField,
   SelectField,
-  Checkbox,
+Checkbox,
   Toggle,
   DatePicker
 } from "redux-form-material-ui";
-import { MenuItem, FlatButton } from "material-ui";
+import { MenuItem, FlatButton
+
+ } from "material-ui";
 import { connect } from "react-redux";
 
-// _id : {
-//   _id: objectID
-//   type: 'main' || 'rest',
-//   startDayofTraining: date,
-//   onEveryxDay: number,
-//   onDays: [number],
-//   exercises: [string]
-// }
-//
+import { createWorkoutTarget } from "./../store/actionCreators/user_details_action_creators";
 
-const handler = ({
-  onEveryXDayFlag,
-  onEveryxDay,
-  name,
-  type,
-  startDayofTraining,
-  exercises,
-  monday,
-  tuesday,
-  wednesday,
-  thursday,
-  friday,
-  saturday,
-  sunday
-}) => {
-  let d;
-  if (onEveryXDayFlag) {
-    d = { name, type, startDayofTraining, exercises, onEveryxDay };
-  } else {
-    let onDays = [
-      monday ? 1 : undefined,
-      tuesday ? 2 : undefined,
-      wednesday ? 3 : undefined,
-      thursday ? 4 : undefined,
-      friday ? 5 : undefined,
-      saturday ? 6 : undefined,
-      sunday ? 7 : undefined
-    ];
-   d = { name, type, exercises, onDays };
-  }
-};
-
-const WorkoutTarget = ({ handleSubmit, onEveryXDayFlag }) =>
+const WorkoutTarget = ({
+  handleSubmit,
+  isCycledTraining,
+  createWorkoutTarget,
+  reset
+}) =>
   <div>
-    <form onSubmit={handleSubmit(handler)}>
+    <form
+      onSubmit={handleSubmit(
+        ({
+          isCycledTraining,
+          onEveryxDay,
+          name,
+          type,
+          startDayofTraining,
+          exercises,
+          monday,
+          tuesday,
+          wednesday,
+          thursday,
+          friday,
+          saturday,
+          sunday
+        }) => {
+          let workoutTarget = isCycledTraining
+            ? { name, type, startDayofTraining, exercises, onEveryxDay }
+            : {
+                name,
+                type,
+                exercises,
+                onDays: _.filter(
+                  [
+                    monday ? 1 : undefined,
+                    tuesday ? 2 : undefined,
+                    wednesday ? 3 : undefined,
+                    thursday ? 4 : undefined,
+                    friday ? 5 : undefined,
+                    saturday ? 6 : undefined,
+                    sunday ? 7 : undefined
+                  ],
+                  item => item !== undefined
+                )
+              };
+          createWorkoutTarget(workoutTarget);
+          reset();
+        }
+      )}
+    >
       <div>
         <Field
-          name="onEveryXDayFlag"
-          label={`Happens of every x day`}
-          component={Toggle}
-          labelPosition={"right"}
-        />
+          name="isCycledTraining"
+          component={SelectField}
+          fullWidth={true}
+          floatingLabelText="Training type: should it happen on fixed days like every monday or rather on every for example 5 days?"
+        >
+          <MenuItem value={true} primaryText="Cycled training" />
+          <MenuItem value={false} primaryText="On fixed days" />
+        </Field>
       </div>
       <div>
         <Field
           name="name"
-          hintText="workout name"
+          floatingLabelText="Workout name"
+          hintText="name"
           type="text"
           component={TextField}
+          fullWidth={true}
         />
       </div>
       <div>
@@ -82,71 +94,47 @@ const WorkoutTarget = ({ handleSubmit, onEveryXDayFlag }) =>
           name="type"
           component={SelectField}
           value="main"
-          floatingLabelText="Frequency"
+          fullWidth={true}
+          floatingLabelText="Will it be on a training day or a rest day?"
         >
           <MenuItem value="main" primaryText="Main" />
           <MenuItem value="rest" primaryText="Rest" />
         </Field>
       </div>
-      <Field
-        name="startDayofTraining"
-        disabled={!onEveryXDayFlag}
-        component={DatePicker}
-        format={(value, name) => (value === "" ? 0 : value)}
-      />
-      <Field
-        name="onEveryxDay"
-        disabled={!onEveryXDayFlag}
-        type="number"
-        component={TextField}
-        hintText="happens on every x days"
-      />
+      {isCycledTraining
+        ? <div>
+            <Field
+              name="startDayofTraining"
+              component={DatePicker}
+              floatingLabelText="starting date of the trainging"
+              fullWidth={true}
+              format={(value, name) => (value === "" ? 0 : value)}
+            />
+            <Field
+              name="onEveryxDay"
+              type="number"
+              component={TextField}
+              fullWidth={true}
+              hintText="happens on every x days"
+            />
+          </div>
+        : null}
 
-      <Field
-        name="monday"
-        label="Monday"
-        disabled={onEveryXDayFlag}
-        component={Checkbox}
-      />
-      <Field
-        name="tuesday"
-        label="Tuesday"
-        disabled={onEveryXDayFlag}
-        component={Checkbox}
-      />
-      <Field
-        name="wednesday"
-        label="Wednesday"
-        disabled={onEveryXDayFlag}
-        component={Checkbox}
-      />
-      <Field
-        name="thursday"
-        label="Thursday"
-        disabled={onEveryXDayFlag}
-        component={Checkbox}
-      />
-      <Field
-        name="friday"
-        label="Friday"
-        disabled={onEveryXDayFlag}
-        component={Checkbox}
-      />
-      <Field
-        name="saturday"
-        label="Saturday"
-        disabled={onEveryXDayFlag}
-        component={Checkbox}
-      />
-      <Field
-        name="sunday"
-        label="Sunday"
-        disabled={onEveryXDayFlag}
-        component={Checkbox}
-      />
-
+      {!isCycledTraining
+        ? <div  style={{position: 'relative'}}>
+            <Field name="monday" label="Monday" component={Checkbox} style={{marginLeft: '47.5%'}} />
+            <Field name="tuesday" label="Tuesday" component={Checkbox} style={{marginLeft: '47.5%'}}/>
+            <Field name="wednesday" label="Wednesday" component={Checkbox} style={{marginLeft: '47.5%'}}/>
+            <Field name="thursday" label="Thursday" component={Checkbox} style={{marginLeft: '47.5%'}}/>
+            <Field name="friday" label="Friday" component={Checkbox} style={{marginLeft: '47.5%'}}/>
+            <Field name="saturday" label="Saturday" component={Checkbox} style={{marginLeft: '47.5%'}}/>
+            <Field name="sunday" label="Sunday" component={Checkbox} style={{marginLeft: '47.5%'}}/>
+          </div>
+        : null}
+        <div style={{ textAlign: 'center'}}>
       <FieldArray
         name="exercises"
+
         component={({ fields: { map, push, remove } }) => {
           return (
             <div>
@@ -162,8 +150,10 @@ const WorkoutTarget = ({ handleSubmit, onEveryXDayFlag }) =>
                     hintText="exercise name"
                     component={TextField}
                     type="text"
+                    fullWidth={true}
                   />
                   <FlatButton
+                      style={{ textAlign: 'center'}}
                     onTouchTap={() => remove(index)}
                     label={`Remove exercise`}
                   />
@@ -172,13 +162,20 @@ const WorkoutTarget = ({ handleSubmit, onEveryXDayFlag }) =>
             </div>
           );
         }}
-      />
-      <FlatButton type="submit" label={`Create workout`} />
-    </form>
+      /></div>
+    <div style={{ textAlign: 'center'}}>
+      <FlatButton  type="submit" label={`Create workout`} />
+</div>
+  </form>
   </div>;
 
-export default connect()(
-  reduxForm({ form: "workouttarget" })(
-    formValues("onEveryXDayFlag")(WorkoutTarget)
-  )
+const mapDispatchToProps = dispatch => ({
+  createWorkoutTarget: workoutLog => dispatch(createWorkoutTarget(workoutLog))
+});
+
+export default connect(null, mapDispatchToProps)(
+  reduxForm({
+    form: "create-workout-target",
+    initialValues: { type: "main", isCycledTraining: false }
+  })(formValues("isCycledTraining")(WorkoutTarget))
 );

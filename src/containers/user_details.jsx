@@ -12,7 +12,7 @@ const UserDetailsContainer = ({ userDetails, submitHandler, handleSubmit }) => {
   console.log(userDetails);
   return (
     <div>
-      <form onSubmit={handleSubmit(submitHandler)}>
+      <form onSubmit={handleSubmit((submitHandler)=>console.log())}>
         <Field
           name="dob"
           component={DatePicker}
