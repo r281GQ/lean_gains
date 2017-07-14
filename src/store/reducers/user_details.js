@@ -41,17 +41,22 @@ export const INITIAL_STATE = Immutable.fromJS({
 
 const handleWriteUserDetails = (
   state,
-  { name, dob, gender, picture, username }
+  { name, dob, gender, picture, username, earliestWorkoutLog, earliestDailyLog }
 ) => {
-  return state.withMutations(state =>
+  const f =  state.withMutations(state =>
     state
       .set("picture", picture)
       .set("username", username)
-      .set("name", name)
-      .set("dob", moment(dob, "DD-MM-YYYY").valueOf())
+      .set("dob", moment(dob).valueOf())
       .set("gender", gender)
+      .update('earliestDailyLog', value => earliestDailyLog ? earliestDailyLog : value  )
+      .update('earliestWorkoutLog', value => earliestWorkoutLog ? earliestWorkoutLog : value  )
   );
+  return f;
 };
+
+
+
 
 const handleWriteKcalTargets = (state, payload) => {
   payload = _.keyBy(payload, "_id");

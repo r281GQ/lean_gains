@@ -15,7 +15,7 @@ const DailyLogPicker = ({ selected, change, logs }) => {
   return (
     <div>
       <div>
-        <SelectField value={selected} onChange={change}>
+        <SelectField value={0} onChange={change}>
           <MenuItem value={0} primaryText="jamn" />
           <MenuItem value={1} primaryText="jamn1" />
         </SelectField>

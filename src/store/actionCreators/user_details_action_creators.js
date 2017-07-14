@@ -60,6 +60,7 @@ const getKcalTargets = kCalTarget => (dispatch, getState) => {
     .catch(error => {});
 };
 
+//TODO: add fethcing current months workoutLogs
 const initFetch = () => (dispatch, getState) => {
   const USERDETAILSRL = `http://localhost:4000/api/userDetails`;
   dispatch({ type: INIT_API });

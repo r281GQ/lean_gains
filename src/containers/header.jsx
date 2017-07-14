@@ -1,6 +1,7 @@
 import React from "react";
 import Immutable from "immutable";
 import { Link } from "react-router-dom";
+import {connect} from 'react-redux';
 import * as _ from "lodash";
 import { FlatButton, IconButton, FontIcon } from "material-ui";
 import {
@@ -14,17 +15,19 @@ import {
   CircularProgress
 } from "material-ui";
 import ActionHome from "material-ui/svg-icons/action/home";
+import Done from "material-ui/svg-icons/action/done";
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import ContentFilter from "material-ui/svg-icons/content/filter-list";
 
 //TODO show the current route and page
+//TODO connect to redux on its own
 const HeaderContainer = ({
   currentWeight,
   exercises,
   todaysMacros,
   setter,
-  loading
+  isLoading,userName, goBack
 }) => {
-  if(loading) return null;
   return (
     <Toolbar>
       <ToolbarGroup firstChild={true}>
@@ -33,7 +36,13 @@ const HeaderContainer = ({
         </IconButton>
       </ToolbarGroup>
       <ToolbarGroup>
-        <ToolbarTitle text={`Welcome User `} />
+        <IconButton  onTouchTap={goBack} tooltip={`Go back`}>
+          <ArrowBack/>
+
+        </IconButton>
+      </ToolbarGroup>
+      <ToolbarGroup>
+        <ToolbarTitle text={`Welcome ${userName} `} />
       </ToolbarGroup>
       <ToolbarGroup>
         <ToolbarTitle text={`CurrentWeight ${currentWeight}`} />
@@ -44,7 +53,10 @@ const HeaderContainer = ({
       </ToolbarGroup>
 
       <ToolbarGroup>
-        <CircularProgress />
+        {isLoading ?
+          <CircularProgress />
+: <Done/>
+        }
       </ToolbarGroup>
       <ToolbarGroup>
         {" "}<ToolbarTitle text="Exercies for today" />
@@ -71,4 +83,4 @@ const HeaderContainer = ({
   );
 };
 
-export default HeaderContainer;
+export default connect() (HeaderContainer);

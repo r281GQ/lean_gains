@@ -102,51 +102,6 @@ class DailyLogContainer extends PureComponent {
     );
   }
 }
-// <DailyLogForm
-//   createLogHandler={handleSubmit(
-//     ({
-//       protein,
-//       carbohydrate,
-//       fat,
-//       fibre,
-//       chest,
-//       weight,
-//       rightArm,
-//       leftArm,
-//       aboveBelly,
-//       belly,
-//       belowBelly,
-//       hips,
-//       rightThigh,
-//       leftThigh,
-//       sleepIssues,
-//       stressIssues,
-//       hungerIssues,
-//       fatigueLethargy
-//     }) => {
-//       createLog({
-//         macros: { protein, carbohydrate, fat, fibre },
-//         measurements: {
-//           chest,
-//           weight,
-//           rightArm,
-//           leftArm,
-//           aboveBelly,
-//           belly,
-//           belowBelly,
-//           hips,
-//           rightThigh,
-//           leftThigh
-//         },
-//         sleepIssues,
-//         stressIssues,
-//         hungerIssues,
-//         fatigueLethargy
-//       });
-//       reset();
-//     }
-//   )}
-// />
 
 const mapStateToProps = state => {
   return {};

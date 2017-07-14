@@ -18,29 +18,20 @@ import {
   calculateBodyFat
 } from "./../services/kcal_service";
 
+
+//TODO need to be removed to validators seeice
 const unlessItsAbovezero = value =>
   _.isNumber(value) && value > 0 ? value : 0.1;
 
+
+//TODO: all logic shoudl be implemented here, make component out of the dom tree
+//TODO: refactor
 class KcalTargerContainer extends React.Component {
-  // componentWillMount() {
-  //   this.props.change("providedBf", this.props.bf);
-  //   this.props.change("restDay", -20);
-  //   this.props.change("trainingDay", 20);
-  //   this.props.change("restFatGrams", 0);
-  //   this.props.change("trainingFatGrams", 0);
-  //   this.props.change("restFatPercentage", 0);
-  //   this.props.change("trainingFatPercentage", 0);
-  //   this.props.change("fatMethod", "grams");
-  //   this.props.change("activity", 1.2);
-  //   this.props.change("protein", 2);
-  //   this.props.change("kcalsplit", "recomp");
-  //   this.props.change("method", "harris-benedict");
-  // }
   componentDidMount() {
     const { height, weight, neck, belly } = this.props.latestMeasurements;
     console.log(height, weight, neck, belly);
     this.props.change(
-      "providedBf",
+      "bodyFat",
       !_.isNaN(calculateBodyFat(height, weight, "male", neck, belly))
         ? calculateBodyFat(height, weight, "male", neck, belly)
         : 0
@@ -55,7 +46,7 @@ class KcalTargerContainer extends React.Component {
     this.props.change("activity", 1.2);
     this.props.change("protein", 2);
     this.props.change("kcalsplit", "recomp");
-    this.props.change("method", "harris-benedict");
+    this.props.change("bmrCalculationMethod", "harris-benedict");
   }
 
   componentWillReceiveProps(nextProps, s) {
@@ -74,21 +65,32 @@ class KcalTargerContainer extends React.Component {
     }
 
     let tdee = tdeeCalculator(
-      nextProps.method,
-      nextProps.weight,
-      nextProps.height,
-      nextProps.age,
-      nextProps.gender,
-      nextProps.activity,
-      nextProps.providedBf
+      nextProps.bmrCalculationMethod,
+        nextProps.latestMeasurements.weight,
+        nextProps.latestMeasurements.height,
+        nextProps.age,
+        nextProps.sex,
+        nextProps.activity,
+        nextProps.bodyFat
     );
+
+
+    console.log('params',   nextProps.bmrCalculationMethod,
+      nextProps.latestMeasurements.weight,
+      nextProps.latestMeasurements.height,
+      nextProps.age,
+      nextProps.sex,
+      nextProps.activity,
+      nextProps.bodyFat);
+
+
     console.log(tdee);
 
     let Nproteincal = calulateProteinTarget(
-      nextProps.providedBf,
-      nextProps.method,
+      nextProps.bodyFat,
+      nextProps.bmrCalculationMethod,
       nextProps.protein,
-      nextProps.weight
+      nextProps.latestMeasurements.weight
     );
 
     let minCalorie = -1 * _.ceil((tdee - Nproteincal) / tdee * 100);
@@ -108,11 +110,13 @@ class KcalTargerContainer extends React.Component {
     let NrestDayKcal =
       tdee * ((100 + Number.parseFloat(nextProps.restDay)) / 100);
     let Ner = (NrestDayKcal - Nproteincal) / NrestDayKcal * 100;
-
+    console.log('tdee form updatte', tdee);
     let NtraKcal =
       tdee * ((100 + Number.parseFloat(nextProps.trainingDay)) / 100);
     let NFer = (NtraKcal - Nproteincal) / NtraKcal * 100;
-    console.log(NFer);
+    console.log('ntrackal', NtraKcal);
+    console.log('nproteing', Nproteincal);
+    console.log('nfeer', NFer);
 
     let Nergram = (NrestDayKcal - Nproteincal) / 9;
     let Ntgram = (NtraKcal - Nproteincal) / 9;
@@ -139,40 +143,42 @@ class KcalTargerContainer extends React.Component {
 
   render() {
     let {
-      weight,
-      height,
-      gender,
-      bf,
+      sex,
+latestMeasurements: {
+  weight,
+  height
+},
       age,
       activity,
       kcalsplit,
       handleSubmit,
       protein,
-      providedBf,
-      method,
+      bodyFat,
+      bmrCalculationMethod,
       change
     } = this.props;
 
-    console.log('LOG', method, weight, height, age, gender, activity, providedBf);
+    console.log('LOG', bmrCalculationMethod, weight, height, age, sex, activity, bodyFat);
 
     let tdee = tdeeCalculator(
-      method,
+      bmrCalculationMethod,
       weight,
       height,
       age,
-      gender,
+      sex,
       activity,
-      providedBf
+      bodyFat
     );
+    console.log('tdee:', tdee);
     // (bodyFat, method, protein, weight) =>
     // let proteincal =
     //   method === "katch-mcardle"
     //     ? leanmass * Number.parseFloat(protein) * 4
     //     : weight * Number.parseFloat(protein) * 4;
     let proteincal = !_.isNaN(
-      calulateProteinTarget(providedBf, method, protein, weight)
+      calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
     )
-      ? calulateProteinTarget(providedBf, method, protein, weight)
+      ? calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
       : 11;
     // method === "katch-mcardle"
     //   ? leanmass * Number.parseFloat(protein) * 4
@@ -231,14 +237,12 @@ class KcalTargerContainer extends React.Component {
             };
 
             this.props.createKcalTarget(kCalTarget);
-            // this.props.reset()
-            // this.props.go('/')
             console.log(kCalTarget);
           })}
         >
           <div>
             <Field
-              name="method"
+              name="bmrCalculationMethod"
               component={SelectField}
               fullWidth={true}
               floatingLabelText="Select your bmr calculation method"
@@ -252,10 +256,10 @@ class KcalTargerContainer extends React.Component {
                 primaryText="Based on lean body mass (Katch-Mcardle)"
               />
             </Field>
-            {method === "katch-mcardle"
+            {bmrCalculationMethod === "katch-mcardle"
               ? <div>
                   <Field
-                    name="providedBf"
+                    name="bodyFat"
                     floatingLabelText="You can manually enter your bodyfat %"
                     component={TextField}
                     type="number"
@@ -440,12 +444,14 @@ class KcalTargerContainer extends React.Component {
   }
 }
 
+//TODO: needs to connect to redux by its own
+
 const selector = formValueSelector("kcal-target");
 const KcalTargerContainer1 = connect(state => ({
   activity: selector(state, "activity"),
   kcalsplit: selector(state, "kcalsplit"),
   protein: selector(state, "protein"),
-  method: selector(state, "method"),
+  bmrCalculationMethod: selector(state, "bmrCalculationMethod"),
   trainingDay: selector(state, "trainingDay"),
   trainingFatGrams: selector(state, "trainingFatGrams"),
   restFatGrams: selector(state, "restFatGrams"),
@@ -453,7 +459,7 @@ const KcalTargerContainer1 = connect(state => ({
   restFatPercentage: selector(state, "restFatPercentage"),
   restDay: selector(state, "restDay"),
   fatMethod: selector(state, "fatMethod"),
-  providedBf: selector(state, "providedBf")
+  bodyFat: selector(state, "bodyFat")
 }))(KcalTargerContainer);
 const enchanced = reduxForm({ form: "kcal-target" })(KcalTargerContainer1);
 const mapDispatchToProps = dispatch => {

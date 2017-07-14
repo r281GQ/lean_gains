@@ -5,6 +5,8 @@ import { Route } from "react-router-dom";
 import { initialize } from "redux-form/immutable";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
+import { goBack } from "react-router-redux";
+import moment from "moment";
 
 import { Drawer, MenuItem, FlatButton, LinearProgress } from "material-ui";
 
@@ -14,8 +16,11 @@ import currentWeightSelector from "./../store/selectors/current_weight";
 import isTrainingDay from "./../store/selectors/exercises";
 
 import todayMacros from "./../store/selectors/current_macros";
+import calculateAge from "./../store/selectors/age";
+import todaysLog from "./../store/selectors/today_log";
+import months from "./../store/selectors/workout_months";
 
-import DailyLogContainer from "./daily_log";
+import DailyLogContainer from "./daily_log_picker";
 import WorkoutLogContainer from "./workout_log";
 import WorkoutLogPicker from "./workout_log_picker";
 import {
@@ -25,7 +30,14 @@ import {
 import WorkoutTarget from "./workout_target";
 import KcalTargerContainer from "./kcal_target";
 import UserDetailsContainer from "./user_details";
-import { updateUserDetails, getWorkoutTargets, fetchUserDetails, getKcalTargets, initFetch } from "./../store/actionCreators/user_details_action_creators";
+import KcalLog from "./kcal_tracker";
+import {
+  updateUserDetails,
+  getWorkoutTargets,
+  fetchUserDetails,
+  getKcalTargets,
+  initFetch
+} from "./../store/actionCreators/user_details_action_creators";
 
 const isImmutable = dataStructure =>
   Immutable.Iterable.isIterable(dataStructure);
@@ -47,13 +59,13 @@ const WK = () => <WorkoutLogContainer exercises={exercises} />;
 //TODO when main loads it should fetch workouttarget kcaltarget and UserDetails
 //TODO implement grapsh and charts
 class MainContainer extends PureComponent {
-  componentWillMount(){
+  componentWillMount() {
     this.props.initFetch();
     // this.props.fetchUserDetails();
     // this.props.getKcalTargets();
   }
   onHandler = (event, index, value) => {
-    this.setState({ selected: value });
+    this.setState({ selected: moment(value).format("MM-YYYY") });
     this.props.get1(value);
   };
 
@@ -65,7 +77,7 @@ class MainContainer extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { selected: 1, open: false };
+    this.state = { selected: moment().format("MM-YYYY"), open: false };
   }
   withInitialValues = exercises => props => {
     let g = _.map(exercises, exercise => ({
@@ -82,19 +94,25 @@ class MainContainer extends PureComponent {
     );
   };
 
+  updateHandler = formProps => {
+    this.props.uD(formProps);
+  };
+
   closeSideBar = () => this.setState({ open: false });
   render() {
-    console.log(this.props.isLoading);
-    if(this.props.isLoading)
-      return <LinearProgress mode="indeterminate" />;
+    console.log(this.props.todayslog.toJS());
+    // if(this.props.isLoading)
+    //   return <LinearProgress mode="indeterminate" />;
     return (
       <div>
         <HeaderContainer
-          loading={this.props.loading}
+          goBack={this.props.back}
+          isLoading={this.props.isLoading}
           setter={() => this.setState({ open: !this.state.open })}
           currentWeight={this.props.currentWeight}
           exercises={this.props.exercises.toJS()}
           todaysMacros={this.props.todaysMacros.toJS()}
+          userName={this.props.username}
         />
         <Drawer
           open={this.state.open}
@@ -106,40 +124,52 @@ class MainContainer extends PureComponent {
           </MenuItem>
 
           <Link
-            to="/workoutlog/create"
-            onClick={this.closeSideBar}
+            to="/workoutlogs"
             style={{ textDecoration: "none" }}
+            onClick={this.closeSideBar}
           >
-            <MenuItem>workoutlog</MenuItem>
+            <MenuItem>Workout logs</MenuItem>
           </Link>
-          <Link to="/workoutlog" style={{ textDecoration: "none" }}   onClick={this.closeSideBar}>
-            <MenuItem>Picker</MenuItem>
+          <Link
+            to="/KcalLog"
+            style={{ textDecoration: "none" }}
+            onClick={this.closeSideBar}
+          >
+            <MenuItem>kolrialog</MenuItem>
           </Link>
-          <Link to="/workoutlog/edit/7" style={{ textDecoration: "none" }}   onClick={this.closeSideBar}>
-            <MenuItem>workoutloged</MenuItem>
-          </Link>
-          <Link to="/kcal" style={{ textDecoration: "none" }}   onClick={this.closeSideBar}>
+          <Link
+            to="/dailylogs"
+            style={{ textDecoration: "none" }}
+            onClick={this.closeSideBar}
+          >
             <MenuItem>
-              {" "}<span>kcal</span>
-            </MenuItem>
-          </Link>
-          <Link to="/dailylog" style={{ textDecoration: "none" }}   onClick={this.closeSideBar}>
-            <MenuItem>
-              <span>daily_log</span>
+              <span>Daily logs</span>
             </MenuItem>
           </Link>
 
-          <Link to="/workouttarget" style={{ textDecoration: "none" }}   onClick={this.closeSideBar}>
+          <Link
+            to="/workouttarget"
+            style={{ textDecoration: "none" }}
+            onClick={this.closeSideBar}
+          >
             <MenuItem>
               {" "}<span>workouttarget</span>
             </MenuItem>
           </Link>
-          <Link to="/userdetails" style={{ textDecoration: "none" }}   onClick={this.closeSideBar}>
+          <Link
+            to="/userdetails"
+            style={{ textDecoration: "none" }}
+            onClick={this.closeSideBar}
+          >
             <MenuItem>
               {" "}<span>userdetails</span>
             </MenuItem>
           </Link>
-          <Link to="/kcaltarget" style={{ textDecoration: "none" }}   onClick={this.closeSideBar} >
+          <Link
+            to="/kcaltarget"
+            style={{ textDecoration: "none" }}
+            onClick={this.closeSideBar}
+          >
             <MenuItem>
               {" "}<span>kl</span>
             </MenuItem>
@@ -147,19 +177,21 @@ class MainContainer extends PureComponent {
         </Drawer>
 
         <Route
-          path="/dailylog"
+          path="/dailylogs"
           render={props =>
             <DailyLogContainer {...props} logs={this.props.dailyLogs.toJS()} />}
         />
         <Route
           exact
-          path="/workoutlog"
+          path="/workoutlogs"
           render={props =>
             <WorkoutLogPicker
               {...props}
               what={45}
+              months={this.props.months}
               selected={this.state.selected}
               handler={this.onHandler}
+              todaysLog={this.props.todayslog.toJS()}
               logs={
                 !this.props.monthlyLogs.isEmpty()
                   ? this.props.monthlyLogs.toJS()
@@ -168,44 +200,76 @@ class MainContainer extends PureComponent {
             />}
         />
         <Route
-          path="/workoutlog/create"
+          path="/workoutlogs/create"
+          exact
           render={props => {
+            console.log(this.props.exercises.toJS());
             let g = _.map(
-              this.props.workoutLog.isEmpty()
-                ? this.props.workoutLog.toJS()
-                : [],
+              this.props.exercises.isEmpty() ? [] : this.props.exercises.toJS(),
               exercise => ({
-                name: exercise.name,
+                name: exercise,
                 note: "",
+                marker: false,
                 sets: []
               })
             );
             return (
               <WorkoutLogContainer
                 {...props}
-                exercises={g}
+                forCurrent={true}
+                exercisesF={g}
+                handlerR={this.props.handler}
+              />
+            );
+          }}
+        />
+
+        <Route
+          path="/workoutlogs/create/before"
+          exact
+          render={props => {
+            console.log(this.props.exercises.toJS());
+            let g = _.map(
+              this.props.exercises.isEmpty() ? [] : this.props.exercises.toJS(),
+              exercise => ({
+                name: exercise,
+                note: "",
+                marker: false,
+                sets: []
+              })
+            );
+            return (
+              <WorkoutLogContainer
+                {...props}
+                forCurrent={false}
+                exercisesF={g}
                 handlerR={this.props.handler}
               />
             );
           }}
         />
         <Route
-          path="/workoutlog/edit/:id"
+          path="/KcalLog"
+          exact
           render={props => {
-            let g = _.map(
-              this.props.workoutLog.isEmpty()
-                ? this.props.workoutLog.toJS()
-                : [],
-              exercise => ({
-                name: exercise.name,
-                note: "",
-                sets: []
-              })
-            );
+            return <KcalLog {...props} />;
+          }}
+        />
+        <Route
+          exact
+          path="/workoutlogs/edit/:id"
+          render={props => {
+            let toedit = this.props.workoutLog
+              .find((value, key) =>
+                _.includes(this.props.location.pathname, key)
+              )
+              .get("exercises")
+              .toJS();
+
             return (
               <WorkoutLogContainer
                 {...props}
-                exercises={g}
+                exercisesF={toedit}
                 handlerR={this.props.handler}
               />
             );
@@ -217,21 +281,26 @@ class MainContainer extends PureComponent {
           render={props =>
             <KcalTargerContainer
               {...props}
-              weight={67}
-              height={175}
-              gender="male"
-              age={29}
-              bf={17.5}
+              sex={this.props.sex}
+              age={this.props.age}
               latestMeasurements={this.props.latestMeasurements.toJS()}
             />}
         />
         <Route
           path="/userdetails"
-          render={props =>
-            <UserDetailsContainer
-              {...props}
-              userDetails={this.props.userD.toJS()}
-            />}
+          render={props => {
+            props.initialValues = {};
+            props.initialValues.username = "sdfsdfsdfsd";
+            return (
+              <UserDetailsContainer
+                {...props}
+                sex={this.props.sex}
+                userName={this.props.username}
+                dob={this.props.dob}
+                updateHandler={this.updateHandler}
+              />
+            );
+          }}
         />
       </div>
     );
@@ -240,8 +309,12 @@ class MainContainer extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    latestMeasurements : state.getIn(['userDetails','latestMeasurements']),
-    isLoading: state.getIn(['auth','isLoading']),
+    todayslog: todaysLog(state),
+    dob: state.getIn(["userDetails", "dob"]),
+    age: calculateAge(state),
+    sex: state.getIn(["userDetails", "gender"]),
+    latestMeasurements: state.getIn(["userDetails", "latestMeasurements"]),
+    isLoading: state.getIn(["auth", "isLoading"]),
     username: state.getIn(["userDetails", "username"]),
     userD: state.get("userDetails"),
     currentKcalPlan: currentKcalPlanSelector(state),
@@ -250,22 +323,24 @@ const mapStateToProps = state => {
     dailyLogs: state.get("dailyLog"),
     workoutLog: state.get("workoutLogs"),
     monthlyLogs: state.get("workoutLogs"),
-    exercises: isTrainingDay(state)
+    exercises: isTrainingDay(state),
+    months: months(state)
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    back: () => dispatch(goBack()),
     get1: month => dispatch(getWorkoutLogsForMonth(month)),
     initFetch: () => dispatch(initFetch()),
-    getWorkoutTargets : () => dispatch(getWorkoutTargets()),
-    fetchUserDetails : () => dispatch(fetchUserDetails()),
-    getKcalTargets : () => dispatch(getKcalTargets()),
+    getWorkoutTargets: () => dispatch(getWorkoutTargets()),
+    fetchUserDetails: () => dispatch(fetchUserDetails()),
+    getKcalTargets: () => dispatch(getKcalTargets()),
     handler: log => dispatch(createWorkoutLog(log)),
     uD: userDetails => dispatch(updateUserDetails(userDetails)),
     initForm: values =>
       dispatch(
-        initialize("kcal-target", fromJS({ initialValues: { providedBf: 18 } }))
+        initialize("userdetails", { initialValues: { name: "dsdfsdfsdfsd" } })
       )
   };
 };

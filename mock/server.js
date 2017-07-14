@@ -3,6 +3,7 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const moment = require("moment");
+const  _  =require('lodash');
 
 const app = express();
 
@@ -39,6 +40,10 @@ app.post("/api/logIn", (request, response) => {
   return response.status(401).send({ error: "" });
 });
 
+app.get('/api/workoutDates', (request, response) => {
+  return response.status(200).send([moment('02-01-2017','DD-MM-YYYY'), moment('01-01-2017','DD-MM-YYYY')])
+})
+
 app.get("/api/userdetails", (request, response) => {
   let userDetails = {
     _id: "sdf7asifnsa",
@@ -48,7 +53,9 @@ app.get("/api/userdetails", (request, response) => {
     email: "endre@mail.com",
     username: "kfbr392",
     weightDisplayPreference: "kg",
-    lengthDisplayPreference: "m"
+    lengthDisplayPreference: "m",
+    earliestWorkoutLog: (moment('01-01-2016', 'DD-MM-YYYY')),
+    earliestDailyLog:  (moment('01-01-2016', 'DD-MM-YYYY'))
   };
 
   response.status(200).send(userDetails);
@@ -76,18 +83,20 @@ app.get("/api/workouttargets", (request, response) => {
   response.status(200).send(targets);
 });
 
+
+
 app.get('/api/latestmeasurements', (request, response)=> {
 
 
   const measurements= {
     height: 175,
     neck: 36,
-    weight: 67,
+    weight: 66.8,
     chest: 90,
     rightArm: 40,
     leftArm: 41,
     aboveBelly: 81,
-    belly: 82,
+    belly: 81,
     belowBelly: 87,
     hips: 92,
     rightThigh: 50,
@@ -266,6 +275,30 @@ app.get("api/dailylogs", (request, response) => {
 });
 
 app.post("/api/workoutlogs", (request, response) => {
+
+  console.log("Endpoint /api/workoutlogs reached with body: ", request.body);
+  let df = request.body;
+  let exercises = _.map(df, exex => {
+    return {
+      name: exex.name,
+      note: exex.note,
+      marker: false,
+      sets: exex.sets
+    }
+  });
+  let h = {
+    _id: "rereter1",
+    date: moment(),
+    exercises
+  };
+  return response.status(201).send(h);
+});
+
+app.delete("/api/workoutlogs/:id", (request, response) => {
+  return response.status(200).send({});
+});
+
+app.put("/api/workoutlogs", (request, response) => {
   console.log("Endpoint /api/workoutlogs reached with body: ", request.body);
   let h = {
     _id: "rereter",
@@ -278,33 +311,7 @@ app.post("/api/workoutlogs", (request, response) => {
           {
             _id: "sdfsd",
             reps: 5,
-            kg: 5465
-          }
-        ]
-      }
-    ]
-  };
-  return response.status(201).send(h);
-});
-
-app.delete("/api/workoutlogs/:id", (request, response) => {
-  return response.status(200).send({});
-});
-
-app.put("/api/workoutlogs", (request, response) => {
-  console.log("Endpoint /api/workoutlogs reached with body: ", request.query);
-  let h = {
-    _id: "rereter",
-    date: moment(),
-    exercises: [
-      {
-        name: "dead",
-        _id: "sdefsd",
-        sets: [
-          {
-            _id: "sdfsd",
-            reps: 5,
-            kg: 5465
+            weight: 5465
           }
         ]
       }
@@ -315,13 +322,11 @@ app.put("/api/workoutlogs", (request, response) => {
 
 app.get("/api/workoutlogs", (request, response) => {
   console.log("Endpoint /api/workoutlogs reached with body: ", request.query);
-  let dailyLog = request.body;
-  dailyLog._id = "randomId";
 
   let workoutlogs = [
     {
       _id: "rereter",
-      date: moment(),
+      date: moment('01-07-2017', 'DD-MM-YYYY'),
       exercises: [
         {
           name: "dead",
@@ -330,7 +335,7 @@ app.get("/api/workoutlogs", (request, response) => {
             {
               _id: "sdfsd",
               reps: 5,
-              kg: 5465
+              weight: 5465
             }
           ]
         }
@@ -339,7 +344,7 @@ app.get("/api/workoutlogs", (request, response) => {
 
     {
       _id: "4dghrt",
-      date: moment(),
+      date: moment('02-07-2017', 'DD-MM-YYYY'),
       exercises: [
         {
           name: "sqau",
@@ -348,7 +353,7 @@ app.get("/api/workoutlogs", (request, response) => {
             {
               _id: "sdfsd",
               reps: 5,
-              kg: 5465
+              weight: 5465
             }
           ]
         }
