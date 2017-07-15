@@ -21,8 +21,6 @@ import todaysLog from "./../store/selectors/today_log";
 import months from "./../store/selectors/workout_months";
 
 import DailyLogContainer from "./daily_log_picker";
-import WorkoutLogContainer from "./workout_log";
-import WorkoutLogPicker from "./workout_log_picker";
 import {
   getWorkoutLogsForMonth,
   createWorkoutLog
@@ -39,21 +37,12 @@ import {
   initFetch
 } from "./../store/actionCreators/user_details_action_creators";
 
+import WorkoutLogsRouter from "./workout_logs/workout_logs_router";
+
 const isImmutable = dataStructure =>
   Immutable.Iterable.isIterable(dataStructure);
 
-const withRoutes = components => props => {
-  return (
-    <div>
-      <Route path="/workoutlog/create" component={components} />
-      <Route path="/workoutlog/edit" component={components} />
-    </div>
-  );
-};
 
-const exercises = [{ name: "dead", repetitions: [] }, { name: "squat" }];
-
-const WK = () => <WorkoutLogContainer exercises={exercises} />;
 
 //TODO router hoc
 //TODO when main loads it should fetch workouttarget kcaltarget and UserDetails
@@ -100,7 +89,6 @@ class MainContainer extends PureComponent {
 
   closeSideBar = () => this.setState({ open: false });
   render() {
-    console.log(this.props.todayslog.toJS());
     // if(this.props.isLoading)
     //   return <LinearProgress mode="indeterminate" />;
     return (
@@ -176,105 +164,14 @@ class MainContainer extends PureComponent {
           </Link>
         </Drawer>
 
+        <Route path={"/workoutlogs"} component={WorkoutLogsRouter} />
+
         <Route
           path="/dailylogs"
           render={props =>
             <DailyLogContainer {...props} logs={this.props.dailyLogs.toJS()} />}
         />
-        <Route
-          exact
-          path="/workoutlogs"
-          render={props =>
-            <WorkoutLogPicker
-              {...props}
-              what={45}
-              months={this.props.months}
-              selected={this.state.selected}
-              handler={this.onHandler}
-              todaysLog={this.props.todayslog.toJS()}
-              logs={
-                !this.props.monthlyLogs.isEmpty()
-                  ? this.props.monthlyLogs.toJS()
-                  : []
-              }
-            />}
-        />
-        <Route
-          path="/workoutlogs/create"
-          exact
-          render={props => {
-            console.log(this.props.exercises.toJS());
-            let g = _.map(
-              this.props.exercises.isEmpty() ? [] : this.props.exercises.toJS(),
-              exercise => ({
-                name: exercise,
-                note: "",
-                marker: false,
-                sets: []
-              })
-            );
-            return (
-              <WorkoutLogContainer
-                {...props}
-                forCurrent={true}
-                exercisesF={g}
-                handlerR={this.props.handler}
-              />
-            );
-          }}
-        />
 
-        <Route
-          path="/workoutlogs/create/before"
-          exact
-          render={props => {
-            console.log(this.props.exercises.toJS());
-            let g = _.map(
-              this.props.exercises.isEmpty() ? [] : this.props.exercises.toJS(),
-              exercise => ({
-                name: exercise,
-                note: "",
-                marker: false,
-                sets: []
-              })
-            );
-            return (
-              <WorkoutLogContainer
-                {...props}
-                forCurrent={false}
-                exercisesF={g}
-                handlerR={this.props.handler}
-              />
-            );
-          }}
-        />
-        <Route
-          path="/KcalLog"
-          exact
-          render={props => {
-            return <KcalLog {...props} />;
-          }}
-        />
-        <Route
-          exact
-          path="/workoutlogs/edit/:id"
-          render={props => {
-            let toedit = this.props.workoutLog
-              .find((value, key) =>
-                _.includes(this.props.location.pathname, key)
-              )
-              .get("exercises")
-              .toJS();
-
-            return (
-              <WorkoutLogContainer
-                {...props}
-                exercisesF={toedit}
-                handlerR={this.props.handler}
-              />
-            );
-          }}
-        />
         <Route path="/workouttarget" component={WorkoutTarget} />
         <Route
           path="/kcaltarget"
@@ -286,22 +183,7 @@ class MainContainer extends PureComponent {
               latestMeasurements={this.props.latestMeasurements.toJS()}
             />}
         />
-        <Route
-          path="/userdetails"
-          render={props => {
-            props.initialValues = {};
-            props.initialValues.username = "sdfsdfsdfsd";
-            return (
-              <UserDetailsContainer
-                {...props}
-                sex={this.props.sex}
-                userName={this.props.username}
-                dob={this.props.dob}
-                updateHandler={this.updateHandler}
-              />
-            );
-          }}
-        />
+        <Route path="/userdetails" component={UserDetailsContainer} />
       </div>
     );
   }
@@ -309,13 +191,12 @@ class MainContainer extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    todayslog: todaysLog(state),
     dob: state.getIn(["userDetails", "dob"]),
     age: calculateAge(state),
     sex: state.getIn(["userDetails", "gender"]),
     latestMeasurements: state.getIn(["userDetails", "latestMeasurements"]),
     isLoading: state.getIn(["auth", "isLoading"]),
-    username: state.getIn(["userDetails", "username"]),
+    username: state.getIn(["userDetails", "userName"]),
     userD: state.get("userDetails"),
     currentKcalPlan: currentKcalPlanSelector(state),
     currentWeight: currentWeightSelector(state),
@@ -328,6 +209,13 @@ const mapStateToProps = state => {
   };
 };
 
+// <Route
+//   path="/KcalLog"
+//   exact
+//   render={props => {
+//     return <KcalLog {...props} />;
+//   }}
+// />
 const mapDispatchToProps = dispatch => {
   return {
     back: () => dispatch(goBack()),

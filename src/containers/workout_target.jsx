@@ -19,7 +19,7 @@ import { connect } from "react-redux";
 import { required } from "./../services/validators";
 import { createWorkoutTarget } from "./../store/actionCreators/user_details_action_creators";
 
-//TODO should be able to delete workouttargers
+//TODO should be able to delete and edit  workouttargers
 const WorkoutTarget = ({
   handleSubmit,
   isCycledTraining,

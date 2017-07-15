@@ -3,8 +3,6 @@ import moment from "moment";
 
 import { WRITE_DAILY_LOG } from "./../actions/daily_log_actions";
 
-//TODO: report creation later on
-//TODO: creae undo option with higher order reducers
 const INITIAL_STATE = fromJS({
   0: {
     _id: 0,

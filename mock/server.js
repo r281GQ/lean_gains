@@ -40,8 +40,8 @@ app.post("/api/logIn", (request, response) => {
   return response.status(401).send({ error: "" });
 });
 
-app.get('/api/workoutDates', (request, response) => {
-  return response.status(200).send([moment('02-01-2017','DD-MM-YYYY'), moment('01-01-2017','DD-MM-YYYY')])
+app.get('/api/workoutLogDates', (request, response) => {
+  return response.status(200).send([moment('02-01-2017','DD-MM-YYYY'), moment('01-01-2017','DD-MM-YYYY'),  moment('01-07-2017','DD-MM-YYYY')])
 })
 
 app.get("/api/userdetails", (request, response) => {
@@ -51,7 +51,7 @@ app.get("/api/userdetails", (request, response) => {
     gender: "male",
     picture: undefined,
     email: "endre@mail.com",
-    username: "kfbr392",
+    userName: "kfbr392",
     weightDisplayPreference: "kg",
     lengthDisplayPreference: "m",
     earliestWorkoutLog: (moment('01-01-2016', 'DD-MM-YYYY')),
@@ -277,8 +277,8 @@ app.get("api/dailylogs", (request, response) => {
 app.post("/api/workoutlogs", (request, response) => {
 
   console.log("Endpoint /api/workoutlogs reached with body: ", request.body);
-  let df = request.body;
-  let exercises = _.map(df, exex => {
+  let {exercises} = request.body;
+  let exercises1 = _.map(exercises, exex => {
     return {
       name: exex.name,
       note: exex.note,
@@ -287,9 +287,9 @@ app.post("/api/workoutlogs", (request, response) => {
     }
   });
   let h = {
-    _id: "rereter1",
-    date: moment(),
-    exercises
+    _id: "rereter12",
+    date: request.body.date ? request.body.date : moment(),
+    exercises: exercises1
   };
   return response.status(201).send(h);
 });
@@ -317,7 +317,7 @@ app.put("/api/workoutlogs", (request, response) => {
       }
     ]
   };
-  return response.status(201).send(h);
+  return response.status(200).send(h);
 });
 
 app.get("/api/workoutlogs", (request, response) => {
@@ -335,7 +335,7 @@ app.get("/api/workoutlogs", (request, response) => {
             {
               _id: "sdfsd",
               reps: 5,
-              weight: 5465
+              weight: 54.5
             }
           ]
         }
@@ -353,7 +353,7 @@ app.get("/api/workoutlogs", (request, response) => {
             {
               _id: "sdfsd",
               reps: 5,
-              weight: 5465
+              weight: 60.5
             }
           ]
         }
@@ -366,9 +366,9 @@ app.get("/api/workoutlogs", (request, response) => {
 app.post("/api/signUp", (request, response) => {
   console.log("Endpoint /api/logIn reached with body: ", request.body);
 
-  let { email, password, name, username } = request.body;
+  let { email, password, name, userName } = request.body;
 
-  if (!email || !password || !name || !username)
+  if (!email || !password || !name || !userName)
     return response.status(422).send({ error: "" });
 
   if (email === `endre@mail.com` && password && name) {

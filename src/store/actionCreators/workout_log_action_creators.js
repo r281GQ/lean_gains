@@ -9,9 +9,10 @@ import {
   DELETE_WORKOUT_LOG
 } from "./../actions/workout_log_actions";
 
+//TODO refetch workoutdates after creation and deletion
 const getWorkoutLogsForMonth = month => (dispatch, getState) => {
   axios
-    .get(`${config.url.base}${config.url.workoutlog}`, {
+    .get(`${config.tracker.url.base}${config.tracker.url.workoutlog}`, {
       params: {
         month
       }
@@ -22,7 +23,6 @@ const getWorkoutLogsForMonth = month => (dispatch, getState) => {
     })
     .catch(error => console.log(error));
 };
-
 const createWorkoutLog = workoutLog => (dispatch, getState) => {
   axios
     .post("http://localhost:4000/api/workoutlogs", workoutLog)
@@ -34,7 +34,7 @@ const createWorkoutLog = workoutLog => (dispatch, getState) => {
 
 const updateWorkoutLog = workoutLog => (dispatch, getState) => {
   axios
-    .put("http://localhost:4000/api/workoutlogs")
+    .put("http://localhost:4000/api/workoutlogs", workoutLog)
     .then(response => dispatch({ type: WRITE_WORKOUT_LOG, payload: response.data }))
     .catch(error => {
       console.log(error);

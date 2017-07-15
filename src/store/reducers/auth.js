@@ -42,9 +42,9 @@ const handleCloseAuth = state => state.set("isLoading", false);
 const auth = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
     case INIT_API:
-      return state.set('isLoading', true);
+      return state.set("isLoading", true);
     case CLOSE_API:
-      return state.set('isLoading', false);
+      return state.set("isLoading", false);
     case LOGIN_SUCCESS:
       return handleLoginSuccess(state, payload);
     case LOGIN_FAILED:
@@ -54,19 +54,7 @@ const auth = (state = INITIAL_STATE, { type, payload }) => {
     case CLOSE_AUTH:
       return state.set("isLoading", false);
     case LOG_OUT:
-      return Immutable.fromJS({
-        authenticated: false,
-        isLoading: false,
-        token: undefined,
-        failedAttempt: false,
-        user: {
-          isNew: undefined,
-          lastLogin: undefined,
-          name: undefined,
-          email: undefined,
-          _id: undefined
-        }
-      });
+      return INITIAL_STATE;
     default:
       return state;
   }

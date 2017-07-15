@@ -1,4 +1,4 @@
-import Immutable, { fromJS } from "immutable";
+import Immutable, { fromJS, Set } from "immutable";
 import moment from "moment";
 import * as _ from "lodash";
 
@@ -9,23 +9,25 @@ import {
   WRITE_WORKOUT_TARGET,
   DELETE_WORKOUT_TARGET,
   WRITE_KCAL_TARGETS,
-  WRITE_LATEST
+  WRITE_LATEST,
+  WRITE_WORKOUT_LOG_DATES
 } from "./../actions/user_details_actions";
 
 export const INITIAL_STATE = Immutable.fromJS({
   _id: undefined,
   dob: undefined,
-  gender: undefined,
+  sex: undefined,
   picture: undefined,
   email: undefined,
-  username: undefined,
+  userName: undefined,
   weightDisplayPreference: undefined,
   lengthDisplayPreference: undefined,
+  workoutLogDates: [],
   supplements: [],
   workoutTargets: {},
   kcalTargets: {},
   latestMeasurements: {
-    weight: 123,
+    weight: undefined,
     neck: undefined,
     chest: undefined,
     rightArm: undefined,
@@ -33,7 +35,7 @@ export const INITIAL_STATE = Immutable.fromJS({
     aboveBelly: undefined,
     belly: undefined,
     belowBelly: undefined,
-    hips: 45,
+    hips: undefined,
     rightThigh: undefined,
     leftThigh: undefined
   }
@@ -41,26 +43,26 @@ export const INITIAL_STATE = Immutable.fromJS({
 
 const handleWriteUserDetails = (
   state,
-  { name, dob, gender, picture, username, earliestWorkoutLog, earliestDailyLog }
-) => {
-  const f =  state.withMutations(state =>
+  { name, dob, sex, picture, userName, earliestWorkoutLog, earliestDailyLog }
+) =>
+  state.withMutations(state =>
     state
       .set("picture", picture)
-      .set("username", username)
+      .set("userName", userName)
       .set("dob", moment(dob).valueOf())
-      .set("gender", gender)
-      .update('earliestDailyLog', value => earliestDailyLog ? earliestDailyLog : value  )
-      .update('earliestWorkoutLog', value => earliestWorkoutLog ? earliestWorkoutLog : value  )
+      .set("sex", sex)
+      .update(
+        "earliestDailyLog",
+        value => (earliestDailyLog ? earliestDailyLog : value)
+      )
+      .update(
+        "earliestWorkoutLog",
+        value => (earliestWorkoutLog ? earliestWorkoutLog : value)
+      )
   );
-  return f;
-};
-
-
-
 
 const handleWriteKcalTargets = (state, payload) => {
   payload = _.keyBy(payload, "_id");
-  console.log("from reducer", payload);
   return state.withMutations(map =>
     map.delete("kcalTargets").set("kcalTargets", fromJS(payload))
   );
@@ -68,7 +70,6 @@ const handleWriteKcalTargets = (state, payload) => {
 
 const handleWriteWorkoutTargets = (state, payload) => {
   payload = _.keyBy(payload, "_id");
-  console.log("from reducer", payload);
   return state.withMutations(map =>
     map.delete("workoutTargets").set("workoutTargets", fromJS(payload))
   );
@@ -79,8 +80,10 @@ const handleWriteWorkoutTarget = (state, payload) =>
 
 const userDetails = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case WRITE_WORKOUT_LOG_DATES:
+      return state.set("workoutLogDates", Set(fromJS(payload)));
     case WRITE_LATEST:
-      return state.set('latestMeasurements', fromJS(payload));
+      return state.set("latestMeasurements", fromJS(payload));
     case WRITE_KCAL_TARGETS:
       return handleWriteKcalTargets(state, payload);
     case DELETE_WORKOUT_TARGET:

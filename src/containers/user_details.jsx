@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form/immutable";
 import { connect } from "react-redux";
 import {
@@ -9,25 +9,24 @@ import {
 import { RadioButton, FlatButton } from "material-ui";
 import moment from "moment";
 
-import {required} from './../services/validators';
+import { updateUserDetails } from "./../store/actionCreators/user_details_action_creators";
+import { required } from "./../services/validators";
 
-
-
-//TODO implement measerment prefernce changes
-class UserDetailsContainer extends React.Component {
+class UserDetailsContainer extends Component {
   componentWillMount() {
-    this.props.change("username", this.props.userName);
-    this.props.change("dob", moment(this.props.dob).toDate());
-    this.props.change("gender", this.props.sex);
+    const { userName, dob, sex } = this.props;
+    this.props.change("username", userName);
+    this.props.change("dob", moment(dob).toDate());
+    this.props.change("gender", sex);
   }
 
   render() {
-    const { updateHandler, handleSubmit } = this.props;
+    const { userName, dob, sex, updateUserDetails, handleSubmit } = this.props;
     return (
       <div>
         <form
           onSubmit={handleSubmit(formProps => {
-            updateHandler(formProps);
+            updateUserDetails(formProps);
           })}
         >
           <Field
@@ -46,20 +45,26 @@ class UserDetailsContainer extends React.Component {
                 formatDate={value => moment(value).format("DD-MM-YYYY")}
               />}
           />
-          <Field name="gender" component={RadioButtonGroup}>
+          <Field name="sex" component={RadioButtonGroup}>
             <RadioButton value="male" label="Male" />
             <RadioButton value="female" label="Female" />
           </Field>
-          <FlatButton type="submit" label={`update`} />
+          <FlatButton type="submit" label={`Update`} />
         </form>
       </div>
     );
   }
 }
 
-//TODO: it is a container so it should reatin his own props from redux directyl
-//TODO: gender, dob, name
-export default connect()(
+const mapStateToProps = state => ({
+  sex: state.getIn(["userDetails", "sex"]),
+  dob: state.getIn(["userDetails", "dob"]),
+  userName: state.getIn(["userDetails", "userName"])
+});
+
+export default connect(mapStateToProps, dispatch => ({
+  updateUserDetails: userDetails => dispatch(updateUserDetails())
+}))(
   reduxForm({
     form: "userdetails"
   })(UserDetailsContainer)
