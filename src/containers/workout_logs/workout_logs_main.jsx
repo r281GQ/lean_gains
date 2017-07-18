@@ -19,7 +19,7 @@ import moment from "moment";
 
 import { getWorkoutLogDates } from "./../../store/actionCreators/user_details_action_creators";
 import {
-  selectMonth,
+  setSelectedMonthForWorkoutLogs,
   openWorkoutModal,
   closeWorkoutModal,
   setSelectedWorkoutLog
@@ -32,16 +32,17 @@ import monthsWithWorkoutLogs from "./../../store/selectors/month_workout_log";
 import workoutLogsForMonth from "./../../store/selectors/monhtworkoutselecelt";
 import isTodaysLogExists from "./../../store/selectors/today_log";
 
+//TODO implement a way as in daily logs
 class WorkoutLogsMainContainer extends Component {
   componentWillMount() {
     this.props.getWorkoutLogDates();
     this.props.getWorkoutLogsForMonth(moment().format("MM-YYYY"));
-    this.props.selectMonth(this.props.monthsWithWorkoutLogs.last());
+    this.props.setSelectedMonthForWorkoutLogs(this.props.monthsWithWorkoutLogs.last());
   }
 
   componentWillReceiveProps(nextProps, nextState) {
     this.props.monthsWithWorkoutLogs.isEmpty()
-      ? this.props.selectMonth(nextProps.monthsWithWorkoutLogs.last())
+      ? this.props.setSelectedMonthForWorkoutLogs(nextProps.monthsWithWorkoutLogs.last())
       : null;
   }
 
@@ -55,7 +56,7 @@ class WorkoutLogsMainContainer extends Component {
           value={this.props.selectedMonth}
           onChange={(event, key, value) => {
             this.props.getWorkoutLogsForMonth(value);
-            this.props.selectMonth(value);
+            this.props.setSelectedMonthForWorkoutLogs(value);
             this.props.getWorkoutLogDates();
           }}
         >
@@ -178,7 +179,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getWorkoutLogsForMonth: month => dispatch(getWorkoutLogsForMonth(month)),
   getWorkoutLogDates: () => dispatch(getWorkoutLogDates()),
-  selectMonth: month => dispatch(selectMonth(month)),
+  setSelectedMonthForWorkoutLogs: month => dispatch(setSelectedMonthForWorkoutLogs(month)),
   deleteWorkoutLog: _id => dispatch(deleteWorkoutLog(_id)),
   openWorkoutModal: () => dispatch(openWorkoutModal()),
   closeWorkoutModal: () => dispatch(closeWorkoutModal()),

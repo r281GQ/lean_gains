@@ -15,18 +15,44 @@ import {
 } from "redux-form-material-ui";
 import { MenuItem, FlatButton } from "material-ui";
 import { connect } from "react-redux";
-
+import moment from 'moment'
 import { required } from "./../../services/validators";
 import { createWorkoutTarget } from "./../../store/actionCreators/user_details_action_creators";
 
 //TODO should be able to delete and edit  workouttargers
-const WorkoutTarget = ({
-  handleSubmit,
-  isCycledTraining,
-  createWorkoutTarget,
-  reset
-}) =>
-  <div>
+// const WorkoutTarget = ({
+//   handleSubmit,
+//   isCycledTraining,
+//   createWorkoutTarget,
+//   reset
+// }) => {
+//
+class WorkoutTarget extends React.Component {
+  componentWillMount(){
+    if(this.props.defaultValue){
+      const {name, onDays, type, exercises, startDayofTraining, onEveryxDay} = this.props.defaultValue;
+      this.props.change('name', name);
+      this.props.change('type', type);
+      this.props.change('exercises', exercises);
+      this.props.change('isCycledTraining', onDays ? false: true)
+      this.props.change('monday', _.find(onDays, e => e === 1));
+      this.props.change('tuesday', _.find(onDays, e => e === 2));
+      this.props.change('wednesday', _.find(onDays, e => e === 3));
+      this.props.change('thursday', _.find(onDays, e => e === 4));
+      this.props.change('friday', _.find(onDays, e => e === 5));
+      this.props.change('saturday', _.find(onDays, e => e === 6));
+      this.props.change('sunday', _.find(onDays, e => e === 7));
+      this.props.change('onEveryxDay', onEveryxDay);
+      this.props.change('startDayofTraining', moment(startDayofTraining).toDate());
+
+      // console.log();
+
+    }
+  }
+
+  render(){
+    const {handleSubmit, isCycledTraining, createWorkoutTarget, reset} = this.props;
+  return (<div>
     <form
       onSubmit={handleSubmit(
         ({
@@ -227,7 +253,10 @@ const WorkoutTarget = ({
         <FlatButton type="submit" label={`Create workout`} />
       </div>
     </form>
-  </div>;
+  </div>);
+}}
+
+
 
 const mapDispatchToProps = dispatch => ({
   createWorkoutTarget: workoutLog => dispatch(createWorkoutTarget(workoutLog))
