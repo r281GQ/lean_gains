@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import { Map, List } from "immutable";
 
-import WorkoutLogsMainContainer from "./workout_log_main";
+import WorkoutLogsMainContainer from "./workout_logs_main";
 import WorkoutLogFormContainer from "./workout_log_form";
 import isTrainingDay from "./../../store/selectors/exercises";
 

@@ -15,7 +15,6 @@ const months = state => {
     dates.push(iterate.valueOf());
       iterate = moment(iterate).add(1, 'month');
   }
-  console.log(dates);
   return dates;
 }
 

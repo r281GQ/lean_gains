@@ -20,7 +20,7 @@ const config = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: ["react-hot-loader", "babel-loader?plugins[]=transform-class-properties"]
+        loaders: ["react-hot-loader", "babel-loader?plugins[]=transform-class-properties", "eslint-loader"]
       },
       {
         use: extract.extract({

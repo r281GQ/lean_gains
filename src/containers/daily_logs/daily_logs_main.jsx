@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from 'react-redux'
 import {
   SelectField,
   MenuItem,
@@ -14,6 +15,7 @@ import moment from "moment";
 const DailyLogPicker = ({ selected, change, logs }) => {
   return (
     <div>
+      gg
       <div>
         <SelectField value={0} onChange={change}>
           <MenuItem value={0} primaryText="jamn" />
@@ -45,4 +47,6 @@ const DailyLogPicker = ({ selected, change, logs }) => {
   );
 };
 
-export default DailyLogPicker;
+export default connect(state => ({
+  logs: state.get('dailyLog').toJS()
+}))( DailyLogPicker);

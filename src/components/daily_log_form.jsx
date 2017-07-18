@@ -1,11 +1,14 @@
-import React from "react";
-import { Field, reduxForm } from "redux-form/immutable";
-import { TextField } from "redux-form-material-ui";
+import React from 'react';
+import { Field } from 'redux-form/immutable';
 
-const DailyLogForm = ({ createLogHandler }) => {
+import { TextField, DatePicker } from 'redux-form-material-ui';
+
+const DailyLogForm = ({ createDailyLogHandler, label, renderDatepicker }) => {
   return (
-    <form onSubmit={createLogHandler}>
+    <form onSubmit={createDailyLogHandler}>
       <div>
+        datePicker
+        {renderDatepicker ? <Field name="date" component={DatePicker}  /> : null}
         Macros
         <Field
           name="protein"
@@ -27,13 +30,6 @@ const DailyLogForm = ({ createLogHandler }) => {
           component={TextField}
           type="number"
           placeholder="fat"
-        />
-        <Field
-          name="fibre"
-          label="Fibre"
-          component={TextField}
-          type="number"
-          placeholder="fibre"
         />
       </div>
       <div>
@@ -85,12 +81,12 @@ const DailyLogForm = ({ createLogHandler }) => {
           type="number"
           placeholder="height"
         />
-      <Field
-        name="neck"
-        label="neck"
-        component={TextField}
-        type="number"
-        placeholder="neck"
+        <Field
+          name="neck"
+          label="neck"
+          component={TextField}
+          type="number"
+          placeholder="neck"
         />
         <Field
           name="chest"
@@ -156,7 +152,9 @@ const DailyLogForm = ({ createLogHandler }) => {
           placeholder="right thigh"
         />
       </div>
-      <button type="submit">Create</button>
+      <button type="submit">
+        {label}
+      </button>
     </form>
   );
 };

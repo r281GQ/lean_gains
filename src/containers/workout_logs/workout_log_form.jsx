@@ -82,6 +82,7 @@ class WorkoutLogFormContainer extends Component {
 
 const selector = formValueSelector("workoutLog");
 
+//TODO own props needs to be moved to the bottom connect
 WorkoutLogFormContainer = connect(
   state => ({
     datesWithWorkoutLogs: state.getIn(["userDetails", "workoutLogDates"]),

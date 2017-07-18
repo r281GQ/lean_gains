@@ -16,8 +16,8 @@ import {
 import { MenuItem, FlatButton } from "material-ui";
 import { connect } from "react-redux";
 
-import { required } from "./../services/validators";
-import { createWorkoutTarget } from "./../store/actionCreators/user_details_action_creators";
+import { required } from "./../../services/validators";
+import { createWorkoutTarget } from "./../../store/actionCreators/user_details_action_creators";
 
 //TODO should be able to delete and edit  workouttargers
 const WorkoutTarget = ({

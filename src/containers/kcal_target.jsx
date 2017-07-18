@@ -9,7 +9,6 @@ import {
 } from "redux-form-material-ui";
 import { MenuItem, RadioButton, FlatButton } from "material-ui";
 import * as _ from "lodash";
-import { push } from "react-router-redux";
 import { createKcalTarget } from "./../store/actionCreators/user_details_action_creators";
 import KcalTargetResult from "./../components/kcal_target_result";
 import {
@@ -18,10 +17,8 @@ import {
   calculateBodyFat
 } from "./../services/kcal_service";
 
-
-//TODO need to be removed to validators seeice
-const unlessItsAbovezero = value =>
-  _.isNumber(value) && value > 0 ? value : 0.1;
+import age from './../store/selectors/age'
+import {unlessItsAbovezero} from './../services/validators';
 
 
 //TODO: all logic shoudl be implemented here, make component out of the dom tree
@@ -29,13 +26,17 @@ const unlessItsAbovezero = value =>
 class KcalTargerContainer extends React.Component {
   componentDidMount() {
     const { height, weight, neck, belly } = this.props.latestMeasurements;
-    console.log(height, weight, neck, belly);
     this.props.change(
       "bodyFat",
-      !_.isNaN(calculateBodyFat(height, weight, "male", neck, belly))
-        ? calculateBodyFat(height, weight, "male", neck, belly)
-        : 0
-    );
+      calculateBodyFat(height, weight, "male", neck, belly))
+
+    // );
+    // this.props.change(
+    //   "bodyFat",
+    //   !_.isNaN(calculateBodyFat(height, weight, "male", neck, belly))
+    //     ? calculateBodyFat(height, weight, "male", neck, belly)
+    //     : 0
+    // );
     this.props.change("restDay", -20);
     this.props.change("trainingDay", 20);
     this.props.change("restFatGrams", 0);
@@ -75,16 +76,6 @@ class KcalTargerContainer extends React.Component {
     );
 
 
-    console.log('params',   nextProps.bmrCalculationMethod,
-      nextProps.latestMeasurements.weight,
-      nextProps.latestMeasurements.height,
-      nextProps.age,
-      nextProps.sex,
-      nextProps.activity,
-      nextProps.bodyFat);
-
-
-    console.log(tdee);
 
     let Nproteincal = calulateProteinTarget(
       nextProps.bodyFat,
@@ -110,20 +101,14 @@ class KcalTargerContainer extends React.Component {
     let NrestDayKcal =
       tdee * ((100 + Number.parseFloat(nextProps.restDay)) / 100);
     let Ner = (NrestDayKcal - Nproteincal) / NrestDayKcal * 100;
-    console.log('tdee form updatte', tdee);
     let NtraKcal =
       tdee * ((100 + Number.parseFloat(nextProps.trainingDay)) / 100);
     let NFer = (NtraKcal - Nproteincal) / NtraKcal * 100;
-    console.log('ntrackal', NtraKcal);
-    console.log('nproteing', Nproteincal);
-    console.log('nfeer', NFer);
 
     let Nergram = (NrestDayKcal - Nproteincal) / 9;
     let Ntgram = (NtraKcal - Nproteincal) / 9;
 
-    console.log("before", unlessItsAbovezero(Nergram));
     if (this.props.restFatGrams > unlessItsAbovezero(Nergram)) {
-      console.log("in rec", unlessItsAbovezero(Nergram));
       this.props.change("restFatGrams", _.floor(unlessItsAbovezero(Nergram)));
     }
     if (this.props.trainingFatGrams > unlessItsAbovezero(Ntgram))
@@ -158,7 +143,6 @@ latestMeasurements: {
       change
     } = this.props;
 
-    console.log('LOG', bmrCalculationMethod, weight, height, age, sex, activity, bodyFat);
 
     let tdee = tdeeCalculator(
       bmrCalculationMethod,
@@ -169,20 +153,21 @@ latestMeasurements: {
       activity,
       bodyFat
     );
-    console.log('tdee:', tdee);
-    // (bodyFat, method, protein, weight) =>
-    // let proteincal =
-    //   method === "katch-mcardle"
-    //     ? leanmass * Number.parseFloat(protein) * 4
-    //     : weight * Number.parseFloat(protein) * 4;
-    let proteincal = !_.isNaN(
+
+
+
+    let proteincal =
       calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
-    )
-      ? calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
-      : 11;
-    // method === "katch-mcardle"
-    //   ? leanmass * Number.parseFloat(protein) * 4
-    //   : weight * Number.parseFloat(protein) * 4;
+
+
+      // let proteincal = !_.isNaN(
+      //   calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
+      // )
+      //   ? calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
+      //   : 11;
+
+
+
     let restDayKcal =
       tdee * ((100 + Number.parseFloat(this.props.restDay)) / 100);
     let er = (restDayKcal - proteincal) / restDayKcal * 100;
@@ -190,16 +175,10 @@ latestMeasurements: {
       tdee * ((100 + Number.parseFloat(this.props.trainingDay)) / 100);
 
     let minCalorie;
-    console.log("tdee", tdee);
-    console.log("restDayKcal", restDayKcal);
-    console.log("protecincal", proteincal);
     minCalorie = -1 * _.floor((tdee - proteincal) / tdee * 100);
     //ha kcal -proteinTarger < 0
-    console.log("minrest", minCalorie);
     let Ter = (traniningDayKcal - proteincal) / traniningDayKcal * 100;
     let ergram = (restDayKcal - proteincal) / 9;
-    console.log("in render", ergram);
-    console.log("flor", _.floor(unlessItsAbovezero(ergram)));
     let Tergram = (traniningDayKcal - proteincal) / 9;
     return (
       <div>
@@ -447,7 +426,9 @@ latestMeasurements: {
 //TODO: needs to connect to redux by its own
 
 const selector = formValueSelector("kcal-target");
+
 const KcalTargerContainer1 = connect(state => ({
+
   activity: selector(state, "activity"),
   kcalsplit: selector(state, "kcalsplit"),
   protein: selector(state, "protein"),
@@ -464,8 +445,15 @@ const KcalTargerContainer1 = connect(state => ({
 const enchanced = reduxForm({ form: "kcal-target" })(KcalTargerContainer1);
 const mapDispatchToProps = dispatch => {
   return {
-    createKcalTarget: kCalTarget => dispatch(createKcalTarget(kCalTarget)),
-    go: route => dispatch(push(route))
+    createKcalTarget: kCalTarget => dispatch(createKcalTarget(kCalTarget))
   };
 };
-export default connect(null, mapDispatchToProps)(enchanced);
+export default connect(state => ({
+
+  sex: state.getIn(['userDetails', 'sex']),
+  age: age(state),
+  latestMeasurements: state.getIn(['userDetails', 'latestMeasurements']).toJS()
+
+
+
+}), mapDispatchToProps)(enchanced);
