@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
-const logs = state => state.getIn(['dailyLog', 'data']);
+const logs = state => state.getIn(['dailyLogs', 'data']);
 
 const selectedMonth = state =>
   state.getIn(['app', 'selectedMonthForDailyLogs']);

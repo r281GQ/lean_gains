@@ -1,9 +1,8 @@
-import moment from "moment";
-import { createSelector } from "reselect";
+import moment from 'moment';
+import { createSelector } from 'reselect';
 
-const state = state => state;
+const dob = state => state.getIn(['userDetails', 'dob']);
 
-const calculateAge = state =>
-  moment().diff(moment(state.getIn(["userDetails", "dob"])), "years");
+const calculateAge = dob => moment().diff(moment(dob), 'years');
 
-export default createSelector(state, calculateAge);
+export default createSelector(dob, calculateAge);

@@ -2,10 +2,10 @@ import { List } from 'immutable';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
-const mainWorkouts = state =>
+const restWorkouts = state =>
   state
     .getIn(['userDetails', 'workoutTargets'])
-    .filter(value => value.get('type') === 'main');
+    .filter(value => value.get('type') === 'rest');
 
 const currentDate = () => moment();
 
@@ -30,16 +30,16 @@ const filterFixedDays = value => value.get('onEveryxDay') === undefined;
 
 const filterIntervalDays = value => value.get('onEveryxDay') !== undefined;
 
-const getExercises = (mainWorkouts, currentDate) => {
-  const exercisesFromFixedDays = mainWorkouts
+const getExercises = (restWorkouts, currentDate) => {
+  const exercisesFromFixedDays = restWorkouts
     .filter(filterFixedDays)
     .reduce(reduceFixedToExercises(currentDate), List());
 
-  const exercisesFromIntervalDays = mainWorkouts
+  const exercisesFromIntervalDays = restWorkouts
     .filter(filterIntervalDays)
     .reduce(reduceIntervalToExercises(currentDate), List());
 
   return exercisesFromFixedDays.concat(exercisesFromIntervalDays);
 };
 
-export default createSelector(mainWorkouts, currentDate, getExercises);
+export default createSelector(restWorkouts, currentDate, getExercises);

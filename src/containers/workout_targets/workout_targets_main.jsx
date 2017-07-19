@@ -1,72 +1,69 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+
 import {
-  List,
-  ListItem,
-  FlatButton,
-  DropDownMenu,
-  MenuItem,
-  Card,
-  CardHeader,
-  CardText,
-  FloatingActionButton,
-  Dialog
-} from 'material-ui';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import { Link } from 'react-router-dom';
-import * as _ from "lodash";
-import {connect} from 'react-redux';
+  setSelectedWorkoutTarget,
+  openWorkoutModal,
+  closeWorkoutModal
+} from './../../store/actionCreators/app_action_creators';
+import { deleteWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
+import CardList from './../../components/card_list';
+import CreateButton from './../../components/create_button';
+import ConfirmDelete from './../../components/confirm_delete';
+import LoadingScreen from './../../components/loading';
 
-class WorkoutTargetsMainContainer extends Component {
-  render() {
-    return (
-      <div>
-        <List>
-        {_.map(this.props.workoutTargets.toJS(), g =>{
-          return <ListItem disabled={true} key={Math.random()}>
+const renderMainScreen = ({
+  isModalOpen,
+  closeWorkoutModal,
+  deleteWorkoutTarget,
+  selectedWorkoutTarget,
+  workoutTargets,
+  openWorkoutModal,
+  setSelectedWorkoutTarget
+}) =>
+  <div>
+    <ConfirmDelete
+      title="Sure you want to delete this workout?"
+      isOpen={this.props.isModalOpen}
+      close={this.props.closeWorkoutModal}
+      deleteActions={[
+        () => this.props.deleteWorkoutTarget(this.props.selectedWorkoutTarget)
+      ]}
+    />
 
-            <Card
-              title={g.name}
-              >
-              <CardHeader
+    <CardList
+      editLink="/workouttargets/edit/"
+      collection={this.props.workoutTargets.toJS()}
+      onModalStateChange={this.props.openWorkoutModal}
+      setSelectedItem={this.props.setSelectedWorkoutTarget}
+    />
 
-                title={g.name}
-                actAsExpander={false}
-                showExpandableButton={true}
-                />
+    <CreateButton link={`/workouttargets/create`} />
+  </div>;
 
-              <CardText>
-                {_.map(g.exercises, e => <div>{e}</div>)}
-<Link to={`/workouttargets/edit/${g._id}`}>
-<FlatButton onTouchTap={()=> console.log('modiy')} label='modifiy' />
-  </Link>              <FlatButton onTouchTap={()=> console.log('delete')} label='delete' />
-              </CardText>
-
-            </Card>
-
-
-          </ListItem>
-        })}
-</List>
-        <Link to="/workouttargets/create">
-          <FloatingActionButton
-            style={{
-              position: 'fixed',
-              bottom: 20,
-              right: 20
-            }}
-          >
-            <ContentAdd />
-          </FloatingActionButton>
-        </Link>
-      </div>
-    );
-  }
+class WorkoutTargetsMainContainer extends PureComponent {
+  render = () =>
+    this.props.isLoading ? <LoadingScreen /> : renderMainScreen(this.props);
 }
 
 const mapStateToProps = state => {
   return {
-    workoutTargets: state.getIn(['userDetails', 'workoutTargets'])
+    isLoading: state.getIn(['app', 'isLoading']),
+    workoutTargets: state.getIn(['userDetails', 'workoutTargets']),
+    isModalOpen: state.getIn(['app', 'isWorkoutLogModalOpen']),
+    selectedWorkoutTarget: state.getIn(['app', 'selectedWorkoutTarget'])
   };
-}
+};
 
-export default connect(mapStateToProps) (WorkoutTargetsMainContainer);
+const mapDispatchToProps = dispatch => {
+  return {
+    setSelectedWorkoutTarget: _id => dispatch(setSelectedWorkoutTarget(_id)),
+    openWorkoutModal: () => dispatch(openWorkoutModal()),
+    closeWorkoutModal: () => dispatch(closeWorkoutModal()),
+    deleteWorkoutTarget: _id => dispatch(deleteWorkoutTarget(_id))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  WorkoutTargetsMainContainer
+);

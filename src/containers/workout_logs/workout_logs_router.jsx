@@ -1,21 +1,25 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Route } from "react-router-dom";
-import { Map, List } from "immutable";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
+import { Map, List } from 'immutable';
+import moment from 'moment';
 
-import WorkoutLogsMainContainer from "./workout_logs_main";
-import WorkoutLogFormContainer from "./workout_log_form";
-import isTrainingDay from "./../../store/selectors/exercises";
+import WorkoutLogsMainContainer from './workout_logs_main';
+import WorkoutLogFormContainer from './workout_log_form';
+import isTrainingDay from './../../store/selectors/exercises';
 
 const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
   <div>
-    <Route exact path={"/workoutlogs"} component={WorkoutLogsMainContainer} />
+    <Route exact path={'/workoutlogs'} component={WorkoutLogsMainContainer} />
 
     <Route
       exact
-      path={"/workoutlogs/create/before"}
+      path={'/workoutlogs/create/before'}
       render={props => {
-        return <WorkoutLogFormContainer {...props} type={`createBefore`} />;
+        let defaultValue = {
+          date: moment().toDate()
+        };
+        return <WorkoutLogFormContainer {...props} type={`createBefore`} defaultValue={defaultValue} />;
       }}
     />
 
@@ -25,7 +29,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
       render={props => {
         const defaultValue = workoutLogs
           .find((value, key) => props.match.params.id === key)
-          .get("exercises");
+          .get('exercises');
 
         return (
           <WorkoutLogFormContainer
@@ -39,15 +43,15 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
 
     <Route
       exact
-      path={"/workoutlogs/create"}
+      path={'/workoutlogs/create'}
       render={props => {
         const defaultValue = exercises.map(value =>
           Map().withMutations(map =>
             map
-              .set("name", value)
-              .set("note", "")
-              .set("marker", false)
-              .set("sets", List())
+              .set('name', value)
+              .set('note', '')
+              .set('marker', false)
+              .set('sets', List())
           )
         );
         return (
@@ -62,6 +66,6 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
   </div>;
 
 export default connect(state => ({
-  workoutLogs: state.get("workoutLogs"),
+  workoutLogs: state.getIn(['workoutLogs', 'data']),
   exercises: isTrainingDay(state)
 }))(WorkoutLogsRouter);

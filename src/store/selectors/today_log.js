@@ -1,11 +1,10 @@
-import { createSelector } from "reselect";
-import moment from "moment";
+import { createSelector } from 'reselect';
+import moment from 'moment';
 
-const datesWithWorkoutLogs = state =>
-  state.getIn(["userDetails", "workoutLogDates"]);
+const datesWithWorkoutLogs = state => state.getIn(['workoutLogs', 'dates']);
 
 const isTodaysLogExists = datesWithWorkoutLogs =>
-  datesWithWorkoutLogs.find(value => moment(value).isSame(moment(), "day"))
+  datesWithWorkoutLogs.find(value => moment(value).isSame(moment(), 'day'))
     ? true
     : false;
 

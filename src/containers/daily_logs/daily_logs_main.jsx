@@ -24,7 +24,7 @@ import { setSelectedMonthForDailyLogs } from './../../store/actionCreators/app_a
 
 import monthsWithDailyLogs from './../../store/selectors/month_daily_log';
 
-import dailyLogsForMonth from './../../store/selectors/daily_logs_month' ;
+import dailyLogsForMonth from './../../store/selectors/daily_log_selector' ;
 
 class DailyLogPicker extends Component {
   componentWillMount = () => this.props.getDailyLogDates();
@@ -72,9 +72,9 @@ class DailyLogPicker extends Component {
                     <CardText expandable={true}>
                       {log._id}
                       <Link to={`/dailylogs/edit/${log._id}`}>
-                      <FlatButton onTouchTap={()=>console.log()} label='modify'  />
-</Link>
-                    <FlatButton onTouchTap={()=>console.log()} label='delete'  />
+                        <FlatButton onTouchTap={()=>console.log()} label='modify'  />
+                      </Link>
+                      <FlatButton onTouchTap={()=>console.log()} label='delete'  />
                     </CardText>
                   </Card>
                 </ListItem>
@@ -119,7 +119,7 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   state => ({
-    logs: state.getIn(['dailyLog', 'data']).toJS(),
+    logs: state.getIn(['dailyLogs', 'data']).toJS(),
     selectedMonth: state.getIn(['app', 'selectedMonthForDailyLogs']),
     monthsWithDailyLogs: monthsWithDailyLogs(state),
     dailyLogsForMonth: dailyLogsForMonth(state)

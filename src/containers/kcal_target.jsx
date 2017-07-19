@@ -30,6 +30,9 @@ class KcalTargerContainer extends React.Component {
       "bodyFat",
       calculateBodyFat(height, weight, "male", neck, belly))
 
+
+
+    
     // );
     // this.props.change(
     //   "bodyFat",

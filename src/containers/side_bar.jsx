@@ -23,7 +23,7 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar }) => {
         <MenuItem>Workout logs</MenuItem>
       </Link>
       <Link
-        to="/KcalLog"
+        to="/kcaltarget"
         style={{ textDecoration: "none" }}
         onClick={() => closeSideBar()}
       >

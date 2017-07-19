@@ -7,7 +7,8 @@ import {
   WRITE_WORKOUT_TARGET,
   WRITE_WORKOUT_TARGETS,
   WRITE_LATEST,
-  WRITE_WORKOUT_LOG_DATES
+  WRITE_WORKOUT_LOG_DATES,
+  DELETE_WORKOUT_TARGET
 } from "./../actions/user_details_actions";
 // import {WRITE_USER_DETAILS, WRITE_KCAL_TARGETS} from './../actions/user_details_actions';
 
@@ -61,13 +62,10 @@ const getKcalTargets = kCalTarget => (dispatch, getState) => {
     .catch(error => {});
 };
 
-const getWorkoutLogDates = month => (dispatch,getState) => {
-  axios.get('http://localhost:4000/api/workoutLogDates')
-  .then(response =>
-    dispatch({ type: WRITE_WORKOUT_LOG_DATES, payload: response.data })
-  )
-  .catch(error => {});
+const deleteWorkoutTarget = _id => (dispatch,getState) => {
+  dispatch({type: DELETE_WORKOUT_TARGET, payload:_id})
 }
+
 
 //TODO: add fethcing current months workoutLogs
 const initFetch = () => (dispatch, getState) => {
@@ -112,6 +110,5 @@ export {
   getWorkoutTargets,
   fetchUserDetails,
   getKcalTargets,
-  initFetch,
-  getWorkoutLogDates
+  initFetch,deleteWorkoutTarget
 };

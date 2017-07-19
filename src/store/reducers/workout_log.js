@@ -1,20 +1,33 @@
-import Immutable, { fromJS, Map } from "immutable";
-import * as _ from "lodash";
+import Immutable, { fromJS, Map, List, Set } from 'immutable';
+import * as _ from 'lodash';
 
 import {
   DELETE_WORKOUT_LOG,
   WRITE_WORKOUT_LOG,
-  WRITE_WORKOUT_LOGS
-} from "./../actions/workout_log_actions";
+  WRITE_WORKOUT_LOGS,
+  WRITE_WORKOUT_LOG_DATES,
+  WRITE_WORKOUT_LOG_DATE
+} from './../actions/workout_log_actions';
 
-const workoutLog = (state = Map(), { type, payload }) => {
+const INITIAL_STATE = Map().withMutations(map =>
+  map.set('data', Map()).set('dates', List())
+);
+
+//TODO: every time needs to be consisntently converted to timesatamps
+const workoutLog = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case WRITE_WORKOUT_LOG_DATES:
+      return state.set('dates', Set(fromJS(payload)));
+    case WRITE_WORKOUT_LOG_DATE:
+      return state.update('dates', set => set.add(payload));
     case DELETE_WORKOUT_LOG:
-      return state.delete(payload);
+      return state.deleteIn(['data', payload]);
     case WRITE_WORKOUT_LOGS:
-      return state.concat(fromJS(_.keyBy(payload, "_id")));
+      return state.update('data', map =>
+        map.concat(fromJS(_.keyBy(payload, '_id')))
+      );
     case WRITE_WORKOUT_LOG:
-      return state.set(payload._id, fromJS(payload));
+      return state.setIn(['data', payload._id], fromJS(payload));
     default:
       return state;
   }

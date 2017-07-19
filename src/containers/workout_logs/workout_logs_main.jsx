@@ -1,189 +1,114 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link, Route } from "react-router-dom";
-import {
-  List,
-  ListItem,
-  FlatButton,
-  DropDownMenu,
-  MenuItem,
-  Card,
-  CardHeader,
-  CardText,
-  FloatingActionButton,
-  Dialog
-} from "material-ui";
-import ContentAdd from "material-ui/svg-icons/content/add";
-import * as _ from "lodash";
-import moment from "moment";
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
-import { getWorkoutLogDates } from "./../../store/actionCreators/user_details_action_creators";
 import {
   setSelectedMonthForWorkoutLogs,
   openWorkoutModal,
   closeWorkoutModal,
   setSelectedWorkoutLog
-} from "./../../store/actionCreators/app_action_creators";
+} from './../../store/actionCreators/app_action_creators';
 import {
   getWorkoutLogsForMonth,
-  deleteWorkoutLog
-} from "./../../store/actionCreators/workout_log_action_creators";
-import monthsWithWorkoutLogs from "./../../store/selectors/month_workout_log";
-import workoutLogsForMonth from "./../../store/selectors/monhtworkoutselecelt";
-import isTodaysLogExists from "./../../store/selectors/today_log";
+  deleteWorkoutLog,
+  getWorkoutLogDates
+} from './../../store/actionCreators/workout_log_action_creators';
+import monthsWithWorkoutLogs from './../../store/selectors/month_workout_log';
+import workoutLogsForMonth from './../../store/selectors/workout_log_selector';
+import isTodaysLogExists from './../../store/selectors/today_log';
 
-//TODO implement a way as in daily logs
-class WorkoutLogsMainContainer extends Component {
-  componentWillMount() {
-    this.props.getWorkoutLogDates();
-    this.props.getWorkoutLogsForMonth(moment().format("MM-YYYY"));
-    this.props.setSelectedMonthForWorkoutLogs(this.props.monthsWithWorkoutLogs.last());
-  }
+import CreateButton from './../../components/create_button';
+import CreateButtonMinified from './../../components/create_button_minified';
+import ConfirmDelete from './../../components/confirm_delete';
+import CardListLog from './../../components/card_list_log';
+import DateSelector from './../../components/date_selector';
+import LoadingScreen from './../../components/loading';
 
-  componentWillReceiveProps(nextProps, nextState) {
-    this.props.monthsWithWorkoutLogs.isEmpty()
-      ? this.props.setSelectedMonthForWorkoutLogs(nextProps.monthsWithWorkoutLogs.last())
-      : null;
-  }
+const renderMainScreen = ({
+  monthsWithWorkoutLogs,
+  selectedMonth,
+  getWorkoutLogsForMonth,
+  setSelectedMonthForWorkoutLogs,
+  isModalOpen,
+  closeWorkoutModal,
+  deleteWorkoutLog,
+  workoutLogsForMonth,
+  setSelectedWorkoutLog,
+  openWorkoutModal,
+  isTodaysLogExists,
+  selectedWorkoutLog
+}) =>
+  <div>
+    <DateSelector
+      months={monthsWithWorkoutLogs.toJS()}
+      selectedMonth={selectedMonth}
+      fetchDataForSelectedMonth={getWorkoutLogsForMonth}
+      setSelectedMonth={setSelectedMonthForWorkoutLogs}
+    />
 
-  _disableIfTodaysLogAlreadyExists = event =>
-    this.props.isTodaysLogExists ? event.preventDefault() : null;
+    <ConfirmDelete
+      title="Sure you want to delete this log?"
+      isOpen={isModalOpen}
+      close={closeWorkoutModal}
+      deleteActions={[() => deleteWorkoutLog(selectedWorkoutLog)]}
+    />
 
-  render() {
-    return (
-      <div>
-        <DropDownMenu
-          value={this.props.selectedMonth}
-          onChange={(event, key, value) => {
-            this.props.getWorkoutLogsForMonth(value);
-            this.props.setSelectedMonthForWorkoutLogs(value);
-            this.props.getWorkoutLogDates();
-          }}
-        >
-          {_.map(this.props.monthsWithWorkoutLogs.toJS(), month => {
-            return <MenuItem key={month} value={month} primaryText={month} />;
-          })}
-        </DropDownMenu>
-        <Dialog
-          title="Sure you want to delete this log?"
-          modal={true}
-          open={this.props.isWorkoutLogModalOpen}
-          actions={[
-            <FlatButton
-              label="cancel"
-              onTouchTap={() => this.props.closeWorkoutModal()}
-            />,
-            <FlatButton
-              label="delete"
-              onTouchTap={() => {
-                this.props.closeWorkoutModal();
-                this.props.deleteWorkoutLog(this.props.selectedWorkoutLog);
-                // this.props.getWorkoutLogDates();
-                this.props.getWorkoutLogsForMonth(this.props.selectedMonth);
-              }}
-            />
-          ]}
-        />
-        <List>
-          {_.map(this.props.workoutLogsForMonth.toJS(), log =>
-            <ListItem key={log._id} disabled={true}>
-              <Card>
-                <CardHeader
-                  title={moment(log.date).format("DD-MM-YYYY")}
-                  actAsExpander={false}
-                  showExpandableButton={true}
-                />
-                <CardText expandable={true}>
-                  {_.map(log.exercises, exercise => {
-                    return (
-                      <div
-                        key={`${log._id}.${log.exercises.indexOf(exercise)}`}
-                      >
-                        Exercise: {exercise.name}
-                        <br />
-                        Sets:
-                        {_.map(exercise.sets, set => {
-                          return (
-                            <div
-                              key={`${log._id}.${log.exercises.indexOf(
-                                exercise
-                              )}.${exercise.sets.indexOf(set)}`}
-                            >
-                              Repetitions: {set.reps} Weight: {set.weight}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
-                </CardText>
-                <Link to={`/workoutlogs/edit/${log._id}`}>
-                  <FlatButton label={`Modify`} />
-                </Link>
-                <FlatButton
-                  label={`Delete`}
-                  onTouchTap={() => {
-                    this.props.setSelectedWorkoutLog(log._id);
-                    this.props.openWorkoutModal();
-                  }}
-                />
-              </Card>
-            </ListItem>
-          )}
-        </List>
+    <CardListLog
+      workoutLogs={workoutLogsForMonth.toJS()}
+      editLink="/workoutlogs/edit/"
+      setSelectedItem={setSelectedWorkoutLog}
+      onModalStateChange={openWorkoutModal}
+    />
 
-        <div>
-          <Link to="/workoutlogs/create/before">
-            <FloatingActionButton
-              mini={true}
-              style={{
-                position: "fixed",
-                bottom: 20,
-                right: 100
-              }}
-            >
-              <ContentAdd />
-            </FloatingActionButton>
-          </Link>
-          <Link
-            to="/workoutlogs/create"
-            onClick={this._disableIfTodaysLogAlreadyExists}
-          >
-            <FloatingActionButton
-              disabled={this.props.isTodaysLogExists}
-              style={{
-                position: "fixed",
-                bottom: 20,
-                right: 20
-              }}
-            >
-              <ContentAdd />
-            </FloatingActionButton>
-          </Link>
-        </div>
-      </div>
+    <CreateButtonMinified link="/workoutlogs/create/before" />
+
+    <CreateButton link="/workoutlogs/create" disabled={isTodaysLogExists} />
+  </div>;
+
+class WorkoutLogsMainContainer extends PureComponent {
+  componentWillMount = () => {
+    if (this.props.datesWithWorkoutLogs.isEmpty())
+      this.props.getWorkoutLogDates();
+    if (this.props.workoutLogsForMonth.isEmpty())
+      this.props.getWorkoutLogsForMonth(moment().format('MM-YYYY'));
+    this.props.setSelectedMonthForWorkoutLogs(
+      this.props.monthsWithWorkoutLogs.last()
     );
-  }
+  };
+
+  componentWillReceiveProps = (nextProps, nextState) =>
+    this.props.monthsWithWorkoutLogs.isEmpty()
+      ? this.props.setSelectedMonthForWorkoutLogs(
+          nextProps.monthsWithWorkoutLogs.last()
+        )
+      : null;
+
+  render = () =>
+    this.props.isLoading ? <LoadingScreen /> : renderMainScreen(this.props);
 }
 
 const mapStateToProps = state => ({
+  isLoading: state.getIn(['app', 'isLoading']),
   monthsWithWorkoutLogs: monthsWithWorkoutLogs(state),
   isTodaysLogExists: isTodaysLogExists(state),
   workoutLogsForMonth: workoutLogsForMonth(state),
-  datesWithWorkoutLogs: state.getIn(["userDetails", "workoutLogDates"]),
-  selectedMonth: state.getIn(["app", "selectedMonthForWorkoutLogs"]),
-  isWorkoutLogModalOpen: state.getIn(["app", "isWorkoutLogModalOpen"]),
-  selectedWorkoutLog: state.getIn(["app", "selectedWorkoutLog"])
+  datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates']),
+  selectedMonth: state.getIn(['app', 'selectedMonthForWorkoutLogs']),
+  isModalOpen: state.getIn(['app', 'isWorkoutLogModalOpen']),
+  selectedWorkoutLog: state.getIn(['app', 'selectedWorkoutLog'])
 });
 
 const mapDispatchToProps = dispatch => ({
   getWorkoutLogsForMonth: month => dispatch(getWorkoutLogsForMonth(month)),
   getWorkoutLogDates: () => dispatch(getWorkoutLogDates()),
-  setSelectedMonthForWorkoutLogs: month => dispatch(setSelectedMonthForWorkoutLogs(month)),
+  setSelectedMonthForWorkoutLogs: month =>
+    dispatch(setSelectedMonthForWorkoutLogs(month)),
   deleteWorkoutLog: _id => dispatch(deleteWorkoutLog(_id)),
   openWorkoutModal: () => dispatch(openWorkoutModal()),
   closeWorkoutModal: () => dispatch(closeWorkoutModal()),
   setSelectedWorkoutLog: _id => dispatch(setSelectedWorkoutLog(_id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutLogsMainContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  WorkoutLogsMainContainer
+);

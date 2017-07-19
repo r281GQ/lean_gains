@@ -54,7 +54,7 @@ app.get('/api/userdetails', (request, response) => {
   let userDetails = {
     _id: 'sdf7asifnsa',
     dob: moment('22-05-1988', 'DD-MM-YYYY'),
-    gender: 'male',
+    sex: 'male',
     picture: undefined,
     email: 'endre@mail.com',
     userName: 'kfbr392',

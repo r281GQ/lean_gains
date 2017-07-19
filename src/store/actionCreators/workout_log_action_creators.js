@@ -6,7 +6,9 @@ import config from './../../../config.json';
 import {
   WRITE_WORKOUT_LOGS,
   WRITE_WORKOUT_LOG,
-  DELETE_WORKOUT_LOG
+  DELETE_WORKOUT_LOG,
+  WRITE_WORKOUT_LOG_DATES,
+  WRITE_WORKOUT_LOG_DATE
 } from "./../actions/workout_log_actions";
 
 //TODO refetch workoutdates after creation and deletion
@@ -23,10 +25,25 @@ const getWorkoutLogsForMonth = month => (dispatch, getState) => {
     })
     .catch(error => console.log(error));
 };
+
+
+const getWorkoutLogDates = month => (dispatch,getState) => {
+  axios.get('http://localhost:4000/api/workoutLogDates')
+  .then(response =>
+    dispatch({ type: WRITE_WORKOUT_LOG_DATES, payload: response.data })
+  )
+  .catch(error => {});
+}
+
 const createWorkoutLog = workoutLog => (dispatch, getState) => {
   axios
     .post("http://localhost:4000/api/workoutlogs", workoutLog)
-    .then(response => dispatch({ type: WRITE_WORKOUT_LOG, payload: response.data }))
+    .then(response =>
+
+{
+  dispatch({ type: WRITE_WORKOUT_LOG, payload: response.data })
+  dispatch({ type: WRITE_WORKOUT_LOG_DATE, payload: response.data.date })
+})
     .catch(error => {
       console.log(error);
     });
@@ -54,5 +71,6 @@ export {
   getWorkoutLogsForMonth,
   createWorkoutLog,
   updateWorkoutLog,
-  deleteWorkoutLog
+  deleteWorkoutLog,
+  getWorkoutLogDates
 };

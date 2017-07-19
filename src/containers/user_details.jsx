@@ -17,7 +17,7 @@ class UserDetailsContainer extends Component {
     const { userName, dob, sex } = this.props;
     this.props.change("username", userName);
     this.props.change("dob", moment(dob).toDate());
-    this.props.change("gender", sex);
+    this.props.change("sex", sex);
   }
 
   render() {

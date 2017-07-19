@@ -122,11 +122,20 @@ const searchForNutrition = query =>
 
 // .catch(error => console.log(error));
 
+let interv;
+
 //TODO fav like kalbaz, illetve recentsearches, illetve recpetek
+//TODO autoSave functionanilty refactore to a service
 class KcalLog extends React.PureComponent {
   componentDidMount(){
-    const interv = setInterval( ()=>this.props.h(), 2000);
+    interv = setInterval( ()=>this.props.h(), 2000);
+    console.log(interv);
   }
+
+  componentWillUnmount(){
+    clearInterval(interv);
+  }
+
   render() {
     const total =_.reduce(
       this.props.cals ? this.props.cals : [],
