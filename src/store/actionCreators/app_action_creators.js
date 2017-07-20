@@ -21,6 +21,9 @@ const setSelectedWorkoutLog = _id => dispatch =>
 
 const setSelectedWorkoutTarget = _id => dispatch =>
   dispatch({ type: APP.SET_SELECTED_WORKOUT_TARGET, payload: _id });
+  
+const setSelectedDailyLog = _id => dispatch =>
+  dispatch({ type: APP.SET_SELECTED_DAILY_LOG, payload: _id });
 
 export {
   setSelectedMonthForDailyLogs,
@@ -30,5 +33,6 @@ export {
   setSelectedWorkoutLog,
   openSideBar,
   closeSideBar,
-  setSelectedWorkoutTarget
+  setSelectedWorkoutTarget,
+  setSelectedDailyLog
 };

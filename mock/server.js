@@ -222,7 +222,7 @@ app.get('/api/dailylogs', (request, response) => {
 
   let list = [
     {
-      _id: 0,
+      _id: 'sdfsd',
       date: moment('04-04-2017', 'DD-MM-YYYY'),
       macros: {
         protein: 110,
@@ -248,7 +248,7 @@ app.get('/api/dailylogs', (request, response) => {
       fatigueLethargy: 1
     },
     {
-      _id: 1,
+      _id: '1',
       date: moment('03-05-2017', 'DD-MM-YYYY'),
       macros: {
         protein: 103,

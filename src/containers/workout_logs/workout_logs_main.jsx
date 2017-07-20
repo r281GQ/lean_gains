@@ -15,7 +15,7 @@ import {
 } from './../../store/actionCreators/workout_log_action_creators';
 import monthsWithWorkoutLogs from './../../store/selectors/month_workout_log';
 import workoutLogsForMonth from './../../store/selectors/workout_log_selector';
-import isTodaysLogExists from './../../store/selectors/today_log';
+import isTodaysWorkoutLogExists from './../../store/selectors/today_log';
 
 import CreateButton from './../../components/create_button';
 import CreateButtonMinified from './../../components/create_button_minified';
@@ -35,7 +35,7 @@ const renderMainScreen = ({
   workoutLogsForMonth,
   setSelectedWorkoutLog,
   openWorkoutModal,
-  isTodaysLogExists,
+  isTodaysWorkoutLogExists,
   selectedWorkoutLog
 }) =>
   <div>
@@ -62,7 +62,7 @@ const renderMainScreen = ({
 
     <CreateButtonMinified link="/workoutlogs/create/before" />
 
-    <CreateButton link="/workoutlogs/create" disabled={isTodaysLogExists} />
+    <CreateButton link="/workoutlogs/create" disabled={isTodaysWorkoutLogExists} />
   </div>;
 
 class WorkoutLogsMainContainer extends PureComponent {
@@ -90,7 +90,7 @@ class WorkoutLogsMainContainer extends PureComponent {
 const mapStateToProps = state => ({
   isLoading: state.getIn(['app', 'isLoading']),
   monthsWithWorkoutLogs: monthsWithWorkoutLogs(state),
-  isTodaysLogExists: isTodaysLogExists(state),
+  isTodaysWorkoutLogExists: isTodaysWorkoutLogExists(state),
   workoutLogsForMonth: workoutLogsForMonth(state),
   datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates']),
   selectedMonth: state.getIn(['app', 'selectedMonthForWorkoutLogs']),

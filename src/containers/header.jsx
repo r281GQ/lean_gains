@@ -37,7 +37,8 @@ const HeaderContainer = ({
   goBack
 }) => {
   return (
-    <Toolbar>
+    
+    <Toolbar >
       <ToolbarGroup firstChild={true}>
         <IconButton tooltip="Main menu" onTouchTap={() => openSideBar()}>
           <ActionHome />
@@ -63,7 +64,7 @@ const HeaderContainer = ({
         {isLoading ? <CircularProgress /> : <Done />}
       </ToolbarGroup>
       <ToolbarGroup>
-        {" "}<ToolbarTitle text="Exercies for today" />
+        <ToolbarTitle text="Exercies for today" />
         <IconMenu
           value={`0`}
           onChange={() => console.log()}

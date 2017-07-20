@@ -24,6 +24,8 @@ const app = (state = INITIAL_STATE, { type, payload }) => {
       return state.set('isWorkoutLogModalOpen', false);
     case APP.SET_SELECTED_WORKOUT_LOG:
       return state.set('selectedWorkoutLog', payload);
+      case APP.SET_SELECTED_DAILY_LOG:
+        return state.set('selectedDailyLog', payload);
     case APP.SET_SELECTED_WORKOUT_TARGET:
       return state.set('selectedWorkoutTarget', payload);
     default:

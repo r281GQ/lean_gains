@@ -46,7 +46,7 @@ const handleWriteUserDetails = (
       state
         .set('picture', picture)
         .set('userName', userName)
-        .set('dob', moment(dob).valueOf())
+        .set('dob', dob)
         .set('sex', sex)
   );
 

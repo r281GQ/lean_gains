@@ -3,7 +3,8 @@ const SIGNUP = "http://localhost:4000/api/dailylogs";
 import {
   WRITE_DAILY_LOG,
   WRITE_DAILY_LOGS,
-  WRITE_DAILY_LOG_DATES
+  WRITE_DAILY_LOG_DATES,
+  DELETE_DAILY_LOG
 } from "./../actions/daily_log_actions";
 
 const createLog = dailyLog => (dispatch, getState) => {
@@ -47,6 +48,8 @@ const getDailyLogDates = () => (dispatch, getState) => {
 
 const updateDailyLog = dailyLog => dispatch => {}
 
-const deleteDailyLog = dailyLog => dispatch => {}
+const deleteDailyLog = _id => dispatch => {
+  dispatch({type: DELETE_DAILY_LOG, payload: _id})
+}
 
 export { createLog, getLogsForSelectedMonth, getDailyLogDates, updateDailyLog, deleteDailyLog };

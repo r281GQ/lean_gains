@@ -16,6 +16,7 @@ const INITIAL_STATE = Map().withMutations(map =>
 //TODO: every time needs to be consisntently converted to timesatamps
 const workoutLog = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    
     case WRITE_WORKOUT_LOG_DATES:
       return state.set('dates', Set(fromJS(payload)));
     case WRITE_WORKOUT_LOG_DATE:

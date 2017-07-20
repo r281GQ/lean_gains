@@ -29,22 +29,20 @@ describe("description", () => {
     const nextState = userDetails(undefined, {
       type: WRITE_USER_DETAILS,
       payload: {
-        name: "Endre",
-        dob: "22-05-1988",
-        gender: "male",
+        dob: moment('22-05-1988', 'DD-MM-YYYY').valueOf(),
+        sex: "male",
         picture: `https://somerandomurl/pictureid`,
-        username: "kfbr392"
+        userName: "kfbr392"
       }
     });
-    expect(nextState.get("name")).to.equal("Endre");
-    expect(nextState.get("gender")).to.equal("male");
+    expect(nextState.get("sex")).to.equal("male");
     expect(nextState.get("picture")).to.equal(
       `https://somerandomurl/pictureid`
     );
     expect(nextState.get("dob")).to.equal(
       moment("22-05-1988", "DD-MM-YYYY").valueOf()
     );
-    expect(nextState.get("username")).to.equal("kfbr392");
+    expect(nextState.get("userName")).to.equal("kfbr392");
   });
 
   it("should write the appropriate values", () => {
@@ -80,11 +78,10 @@ describe("description", () => {
       const nextState = userDetails(undefined, {
         type: WRITE_USER_DETAILS,
         payload: {
-          name: "Endre",
           dob: "22-05-1988",
-          gender: "male",
+          sex: "male",
           picture: `https://somerandomurl/pictureid`,
-          username: "kfbr392"
+          userName: "kfbr392"
         }
       });
       basicState = nextState;
