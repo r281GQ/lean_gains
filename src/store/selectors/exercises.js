@@ -7,6 +7,13 @@ const mainWorkouts = state =>
     .getIn(['userDetails', 'workoutTargets'])
     .filter(value => value.get('type') === 'main');
 
+const restWorkouts = state =>
+  state
+    .getIn(['userDetails', 'workoutTargets'])
+    .filter(value => value.get('type') === 'rest');
+
+const workouts = state => state.getIn(['userDetails', 'workoutTargets']);
+
 const currentDate = () => moment();
 
 const reduceFixedToExercises = currentDate => (list, value) =>
@@ -42,4 +49,17 @@ const getExercises = (mainWorkouts, currentDate) => {
   return exercisesFromFixedDays.concat(exercisesFromIntervalDays);
 };
 
-export default createSelector(mainWorkouts, currentDate, getExercises);
+const factory = type => {
+  switch (type) {
+    case 'main':
+      return createSelector(mainWorkouts, currentDate, getExercises);
+    case 'rest':
+      return createSelector(restWorkouts, currentDate, getExercises);
+    case 'all':
+      return createSelector(workouts, currentDate, getExercises);
+    default:
+      return new Error('Not supported type!');
+  }
+};
+
+export default factory;

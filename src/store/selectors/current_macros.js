@@ -1,10 +1,12 @@
 import { Map } from 'immutable';
 import { createSelector } from 'reselect';
 
-import currentKcalSelector from './current_kcal';
-import isTrainingDay from './exercises';
+import currentKcalSelector from './current_kcal_target';
+import exercises from './exercises';
 
-const isTraingingDay = state => !isTrainingDay(state).isEmpty();
+const mainExercises = exercises('main');
+
+const isTraingingDay = state => !mainExercises(state).isEmpty();
 
 const currentKcal = state => currentKcalSelector(state);
 

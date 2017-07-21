@@ -5,8 +5,20 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 const _ = require('lodash');
 
-const app = express();
+const {
+  workoutLogs,
+  workoutLogDates,
+  workoutTargets,
+  latestMeasurements,
+  userDetails,
+  kcalTargets,
+  auth,
+  dailyLogs,
+  dailyLogDates
+} = require('./../shared/test_constants');
 
+const app = express();
+//TODO: every time needs to be consisntently converted to timesatamps
 const corsConfig = {
   origin: '*',
   allowedHeaders: [
@@ -30,81 +42,26 @@ app.post('/api/logIn', (request, response) => {
 
   if (!email || !password) return response.status(422).send({ error: '' });
 
-  if (email === `endre@mail.com` && password) {
-    let name = 'Endre';
-    let email = 'endre@mail.com';
-    let _id = '34575756';
-    let token = 'jinlefno239484';
-    return response.set('x-auth', token).status(200).send({ name, email, _id });
-  }
-  return response.status(401).send({ error: '' });
+  return response
+    .set('x-auth', auth.token)
+    .status(200)
+    .send(_.omit(auth, ['token']));
 });
 
-app.get('/api/workoutLogDates', (request, response) => {
-  return response
-    .status(200)
-    .send([
-      moment('02-01-2017', 'DD-MM-YYYY'),
-      moment('01-01-2017', 'DD-MM-YYYY'),
-      moment('01-07-2017', 'DD-MM-YYYY')
-    ]);
+app.get('/api/workoutlogs/dates', (request, response) => {
+  return response.status(200).send(workoutLogDates);
 });
 
 app.get('/api/userdetails', (request, response) => {
-  let userDetails = {
-    _id: 'sdf7asifnsa',
-    dob: moment('22-05-1988', 'DD-MM-YYYY'),
-    sex: 'male',
-    picture: undefined,
-    email: 'endre@mail.com',
-    userName: 'kfbr392',
-    weightDisplayPreference: 'kg',
-    lengthDisplayPreference: 'm',
-    earliestWorkoutLog: moment('01-01-2016', 'DD-MM-YYYY'),
-    earliestDailyLog: moment('01-01-2016', 'DD-MM-YYYY')
-  };
-
-  response.status(200).send(userDetails);
+  return response.status(200).send(userDetails);
 });
 
 app.get('/api/workouttargets', (request, response) => {
-  let targets = [
-    {
-      _id: '0workoutTarget',
-      type: 'main',
-      name: 'first',
-      onDays: [1],
-      exercises: ['deadlift']
-    },
-    {
-      _id: '1workoutTarget',
-      type: 'main',
-      name: 'second',
-      startDayofTraining: moment('05-05-2017', 'DD-MM-YYYY'),
-      onEveryxDay: 1,
-      exercises: ['bench']
-    }
-  ];
-
-  response.status(200).send(targets);
+  return response.status(200).send(workoutTargets);
 });
 
 app.get('/api/latestmeasurements', (request, response) => {
-  const measurements = {
-    height: 175,
-    neck: 36,
-    weight: 66.8,
-    chest: 90,
-    rightArm: 40,
-    leftArm: 41,
-    aboveBelly: 81,
-    belly: 81,
-    belowBelly: 87,
-    hips: 92,
-    rightThigh: 50,
-    leftThigh: 50
-  };
-  return response.status(200).send(measurements);
+  return response.status(200).send(latestMeasurements);
 });
 
 app.post('/api/workouttargets', (request, response) => {
@@ -134,30 +91,7 @@ app.post('/api/workouttargets', (request, response) => {
 });
 
 app.get('/api/kcaltargets', (request, response) => {
-  let targets = [
-    {
-      _id: 'sdf7sdfsd',
-      startDate: moment('05-05-2017', 'DD-MM-YYYY'),
-      endDate: undefined,
-      isLatest: true,
-      isCycling: true,
-      rest: {
-        kcal: 1000,
-        protein: 100,
-        carbohydrate: 30,
-        fat: 80,
-        fiber: 20
-      },
-      training: {
-        kcal: 2100,
-        protein: 110,
-        carbohydrate: 210,
-        fat: 30,
-        fiber: 20
-      }
-    }
-  ];
-  response.status(200).send(targets);
+  response.status(200).send(kcalTargets);
 });
 
 app.post('/api/kcaltarget', (request, response) => {
@@ -205,89 +139,30 @@ app.post('/api/kcaltarget', (request, response) => {
 });
 
 app.post('/api/dailylogs', (request, response) => {
-  console.log('Endpoint POST /api/dailylog reached with body: ', request.body);
+  console.log('Endpoint POST /api/dailylogs reached with body: ', request.body);
   let dailyLog = request.body;
   dailyLog._id = 'randomId';
   dailyLog.date = moment();
   return response.status(201).send(dailyLog);
 });
 
-// app.get("api/dailylogs/latest", )
-
 app.get('/api/dailylogs', (request, response) => {
   console.log(
-    'Endpoint GET /api/dailylog reached with body: ',
+    'Endpoint GET /api/dailylogs reached with query: ',
     request.query.month
   );
 
-  let list = [
-    {
-      _id: 'sdfsd',
-      date: moment('04-04-2017', 'DD-MM-YYYY'),
-      macros: {
-        protein: 110,
-        carbohydrate: 90,
-        fat: 60
-      },
-      measurements: {
-        neck: undefined,
-        weight: 123,
-        chest: undefined,
-        rightArm: undefined,
-        leftArm: undefined,
-        aboveBelly: undefined,
-        belly: undefined,
-        belowBelly: undefined,
-        hips: 45,
-        rightThigh: undefined,
-        leftThigh: undefined
-      },
-      sleepIssues: 4,
-      stressIssues: 5,
-      hungerIssues: 2,
-      fatigueLethargy: 1
-    },
-    {
-      _id: '1',
-      date: moment('03-05-2017', 'DD-MM-YYYY'),
-      macros: {
-        protein: 103,
-        carbohydrate: 30,
-        fat: 90
-      },
-      measurements: {
-        neck: undefined,
-        weight: 145,
-        chest: 23,
-        rightArm: undefined,
-        leftArm: undefined,
-        aboveBelly: undefined,
-        belly: undefined,
-        belowBelly: undefined,
-        hips: undefined,
-        rightThigh: undefined,
-        leftThigh: undefined
-      },
-      sleepIssues: 1,
-      stressIssues: 2,
-      hungerIssues: 3,
-      fatigueLethargy: 4
-    }
-  ];
-
-  return response.status(200).send(list);
+  return response.status(200).send(dailyLogs);
 });
 
 app.get('/api/dailylogs/dates', (request, response) => {
-  console.log('Endpoint GET /api/dailylog reached with body: ');
+  console.log('Endpoint GET /api/dailylogs/dates reached');
 
-  let list = [moment('03-05-2017', 'DD-MM-YYYY'), moment()];
-
-  return response.status(200).send(list);
+  return response.status(200).send(dailyLogDates);
 });
 
 app.post('/api/workoutlogs', (request, response) => {
-  console.log('Endpoint /api/workoutlogs reached with body: ', request.body);
+  console.log('Endpoint POST /api/workoutlogs reached with body: ', request.body);
   let { exercises } = request.body;
   let exercises1 = _.map(exercises, exex => {
     return {
@@ -332,46 +207,12 @@ app.put('/api/workoutlogs', (request, response) => {
 });
 
 app.get('/api/workoutlogs', (request, response) => {
-  console.log('Endpoint /api/workoutlogs reached with body: ', request.query);
+  console.log(
+    'Endpoint GET: /api/workoutlogs reached with query[month]: ',
+    request.query.month
+  );
 
-  let workoutlogs = [
-    {
-      _id: 'rereter',
-      date: moment('01-07-2017', 'DD-MM-YYYY'),
-      exercises: [
-        {
-          name: 'dead',
-          _id: 'sdefsd',
-          sets: [
-            {
-              _id: 'sdfsd',
-              reps: 5,
-              weight: 54.5
-            }
-          ]
-        }
-      ]
-    },
-
-    {
-      _id: '4dghrt',
-      date: moment('02-07-2017', 'DD-MM-YYYY'),
-      exercises: [
-        {
-          name: 'sqau',
-          _id: 'sdefsd',
-          sets: [
-            {
-              _id: 'sdfsd',
-              reps: 5,
-              weight: 60.5
-            }
-          ]
-        }
-      ]
-    }
-  ];
-  return response.status(200).send(workoutlogs);
+  return response.status(200).send(workoutLogs);
 });
 
 app.post('/api/signUp', (request, response) => {

@@ -1,63 +1,36 @@
-import Immutable from "immutable";
+import { fromJS } from 'immutable';
 
-import {
-  INIT_AUTH,
-  CLOSE_AUTH,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  LOG_OUT,
-  INIT_API,
-  CLOSE_API
-} from "./../actions/auth_actions";
+import * as auth from './../actions/auth_actions';
 
-const INITIAL_STATE = Immutable.fromJS({
+const INITIAL_STATE = fromJS({
   authenticated: false,
   isLoading: false,
   token: undefined,
-  failedAttempt: false,
-  user: {
-    isNew: undefined,
-    lastLogin: undefined,
-    name: undefined,
-    email: undefined,
-    _id: undefined
-  }
 });
 
-const handleLoginSuccess = (state, { token, name, email, _id }) =>
+const handleLoginSuccess = (state, { token, email, _id, lastLogin }) =>
   state.withMutations(map =>
     map
-      .set("authenticated", true)
-      .set("failedAttempt", false)
-      .set("token", token)
-      .setIn(["user", "name"], name)
-      .setIn(["user", "email"], email)
-      .setIn(["user", "_id"], _id)
+      .set('authenticated', true)
+      .set('token', token)
+      .setIn(['user', '_id'], _id)
+      .setIn(['user', 'lastLogin'], lastLogin)
+      .setIn(['user', 'email'], email)
   );
 
-const handleInitAuth = state => state.set("isLoading", true);
-
-const handleCloseAuth = state => state.set("isLoading", false);
-
-const auth = (state = INITIAL_STATE, { type, payload }) => {
+const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-    case INIT_API:
-      return state.set("isLoading", true);
-    case CLOSE_API:
-      return state.set("isLoading", false);
-    case LOGIN_SUCCESS:
+    case auth.LOGIN_SUCCESS:
       return handleLoginSuccess(state, payload);
-    case LOGIN_FAILED:
-      return state.set("failedAttempt", true);
-    case INIT_AUTH:
-      return state.set("isLoading", true);
-    case CLOSE_AUTH:
-      return state.set("isLoading", false);
-    case LOG_OUT:
+    case auth.INIT_AUTH:
+      return state.set('isLoading', true);
+    case auth.CLOSE_AUTH:
+      return state.set('isLoading', false);
+    case auth.LOG_OUT:
       return INITIAL_STATE;
     default:
       return state;
   }
 };
 
-export default auth;
+export default reducer;

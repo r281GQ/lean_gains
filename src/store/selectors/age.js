@@ -3,6 +3,6 @@ import { createSelector } from 'reselect';
 
 const dob = state => state.getIn(['userDetails', 'dob']);
 
-const calculateAge = dob => moment().diff(moment(dob), 'years');
+const calculateAge = dob => (dob ? moment().diff(moment(dob), 'years') : 0);
 
 export default createSelector(dob, calculateAge);
