@@ -1,6 +1,5 @@
-import * as _ from "lodash";
-const unlessItsAbovezero = value =>
-  value > 0 ? value : 0.1;
+import * as _ from 'lodash';
+const unlessItsAbovezero = value => (value > 0 ? value : 0.1);
 const maleBodyFat = (height, neck, belly) =>
   _.round(
     86.01 * Math.log10(belly * 0.39 - neck * 0.39) -
@@ -19,23 +18,23 @@ const areArgsDefined = args =>
 
 const calculateBodyFat = (height, weight, sex, neck, belly) =>
   areArgsDefined([height, weight, sex, neck, belly])
-    ? sex === "male" ? maleBodyFat(height, neck, belly) : femaleBodyFat()
+    ? sex === 'male' ? maleBodyFat(height, neck, belly) : femaleBodyFat()
     : 0;
 
 const tdeeCalculator = (method, weight, height, age, sex, activity, bodyFat) =>
-  method === "harris-benedict"
+  method === 'harris-benedict'
     ? harrisBenedict(weight, height, age, sex) * Number.parseFloat(activity)
     : katchMcardle(leanMass(weight, bodyFat)) * Number.parseFloat(activity);
 
 const calulateProteinTarget = (bodyFat, method, protein, weight) =>
   areArgsDefined([bodyFat, method, protein, weight])
-    ? method === "katch-mcardle"
+    ? method === 'katch-mcardle'
       ? leanMass(weight, bodyFat) * Number.parseFloat(protein) * 4
       : weight * Number.parseFloat(protein) * 4
     : 0;
 
 const harrisBenedict = (weight, height, age, sex) =>
-  sex === "male"
+  sex === 'male'
     ? 88 + 13.4 * weight + 4.8 * height - 5.7 * age
     : 447 + 9.27 * weight + 3.1 * height - 4.3 * age;
 
@@ -75,7 +74,6 @@ const leanMass = (weight, bodyFat) =>
 //   (weight, bodyFat) => weight * ((100 - Number.parseFloat(bodyFat)) / 100),
 //   args => [args[0], args[1]]
 // );
-
 
 const initValues = ({ change, sex, latestMeasurements }) => {
   change(
@@ -127,7 +125,6 @@ const maxFatGram = (dayCalorie, proteinCalorie) =>
   (dayCalorie - proteinCalorie) / 9;
 
 const dayCalorie = (tdee, day) => tdee * ((100 + day) / 100);
-
 
 const adjustFatRatio = (
   {
@@ -213,7 +210,6 @@ const adjustFatRatio = (
     );
 };
 
-
 const deleteCache = () =>
   _.forEach(
     [
@@ -226,5 +222,96 @@ const deleteCache = () =>
     fn => (fn.Cache = {})
   );
 
+  const calculateFinalFat = (fatMethod, tdee, dayCalorieV, percentage, gram) =>
+    fatMethod === 'percentage'
+      ? _.ceil(dayCalorie(tdee, dayCalorieV) * (percentage / 100) / 9)
+      : _.ceil(gram * 9) / 9;
 
-export { tdeeCalculator, calulateProteinTarget, calculateBodyFat, deleteCache, initValues, adjustFatRatio, adjustCaloriePercentage, minCalorie,maxFatPercentage,maxFatGram,dayCalorie};
+  const calculateFinalCalorie = (tdee, dayCalorieV) =>
+    _.ceil(dayCalorie(tdee, dayCalorieV));
+
+  const calculateFinalProtein = proteinCalorie => _.ceil(proteinCalorie / 4);
+
+  const calculateFinalCarbohydrate = (
+    tdee,
+    dayCalorieV,
+    proteinCalorie,
+    fatMethod,
+    percentage,
+    gram
+  ) =>
+    _.ceil(
+      (dayCalorie(tdee, dayCalorieV) -
+        calculateFinalFat(fatMethod, tdee, dayCalorieV, percentage, gram) * 9 -
+        proteinCalorie) /
+        4
+    );
+
+  const createFinalValues = (
+    tdee,
+    proteinCalorie,
+    {
+      restDay,
+      trainingDay,
+      fatMethod,
+      restFatPercentage,
+      restFatGrams,
+      trainingFatGrams,
+      trainingFatPercentage
+    }
+  ) => ({
+    rest: {
+      calorie: calculateFinalCalorie(tdee, restDay),
+      protein: calculateFinalProtein(proteinCalorie),
+      carbohydrate: calculateFinalCarbohydrate(
+        tdee,
+        restDay,
+        proteinCalorie,
+        fatMethod,
+        restFatPercentage,
+        restFatGrams
+      ),
+      fat: calculateFinalFat(
+        fatMethod,
+        tdee,
+        restDay,
+        restFatPercentage,
+        restFatGrams
+      )
+    },
+    training: {
+      calorie: calculateFinalCalorie(tdee, trainingDay),
+      protein: calculateFinalProtein(proteinCalorie),
+      carbohydrate: calculateFinalCarbohydrate(
+        tdee,
+        trainingDay,
+        proteinCalorie,
+        fatMethod,
+        trainingFatPercentage,
+        trainingFatGrams
+      ),
+      fat: calculateFinalFat(
+        fatMethod,
+        tdee,
+        trainingDay,
+        trainingFatPercentage,
+        trainingFatGrams
+      )
+    }
+  });
+
+export {
+  tdeeCalculator,
+  calulateProteinTarget,
+  calculateBodyFat,
+  deleteCache,
+  initValues,
+  adjustFatRatio,
+  adjustCaloriePercentage,
+  unlessItsAbovezero,
+  minCalorie,
+  maxFatPercentage,
+  maxFatGram,
+  dayCalorie,
+  createFinalValues
+};
