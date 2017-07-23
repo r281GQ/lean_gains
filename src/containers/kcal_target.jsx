@@ -1,201 +1,227 @@
-import React from "react";
-import { Field, reduxForm, formValueSelector } from "redux-form/immutable";
-import { connect } from "react-redux";
+import React, { PureComponent } from 'react';
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable';
+import { connect } from 'react-redux';
 import {
   SelectField,
   TextField,
   RadioButtonGroup,
   Slider
-} from "redux-form-material-ui";
-import { MenuItem, RadioButton, FlatButton } from "material-ui";
-import * as _ from "lodash";
-import { createKcalTarget } from "./../store/actionCreators/user_details_action_creators";
-import KcalTargetResult from "./../components/kcal_target_result";
+} from 'redux-form-material-ui';
+import { MenuItem, RadioButton, FlatButton } from 'material-ui';
+import * as _ from 'lodash';
+import { createKcalTarget } from './../store/actionCreators/user_details_action_creators';
+import KcalTargetResult from './../components/kcal_target_result';
 import {
   tdeeCalculator,
   calulateProteinTarget,
-  calculateBodyFat
-} from "./../services/kcal_service";
+  calculateBodyFat,
+  adjustFatRatio,
+  adjustCaloriePercentage,
+  initValues,
+  minCalorie,maxFatPercentage,maxFatGram,dayCalorie
+} from './../services/kcal_service';
 
-import age from './../store/selectors/age'
-import {unlessItsAbovezero} from './../services/validators';
+import age from './../store/selectors/age';
+import { unlessItsAbovezero } from './../services/validators';
 
-
-//TODO: all logic shoudl be implemented here, make component out of the dom tree
 //TODO: refactor
-class KcalTargerContainer extends React.Component {
-  componentDidMount() {
-    const { height, weight, neck, belly } = this.props.latestMeasurements;
-    this.props.change(
-      "bodyFat",
-      calculateBodyFat(height, weight, "male", neck, belly))
 
+// const initValues = ({ change, sex, latestMeasurements }) => {
+//   change(
+//     'bodyFat',
+//     calculateBodyFat(
+//       latestMeasurements.get('height'),
+//       latestMeasurements.get('weight'),
+//       sex,
+//       latestMeasurements.get('neck'),
+//       latestMeasurements.get('belly')
+//     )
+//   );
+//   change('restDay', -20);
+//   change('trainingDay', 20);
+//   change('restFatGrams', 0);
+//   change('trainingFatGrams', 0);
+//   change('restFatPercentage', 0);
+//   change('trainingFatPercentage', 0);
+//   change('fatMethod', 'grams');
+//   change('activity', 1.2);
+//   change('protein', 2);
+//   change('calorieSplit', 'recomp');
+//   change('bmrCalculationMethod', 'harris-benedict');
+// };
+//
+// const adjustCaloriePercentage = (props, nextProps) => {
+//   const { calorieSplit } = nextProps;
+//   const { change } = props;
+//   if (calorieSplit === 'slowbulk') {
+//     change('restDay', -10);
+//     change('trainingDay', 30);
+//   }
+//   if (calorieSplit === 'cut') {
+//     change('restDay', -30);
+//     change('trainingDay', 10);
+//   }
+//   if (calorieSplit === 'recomp') {
+//     change('restDay', -20);
+//     change('trainingDay', 20);
+//   }
+// };
+// const minCalorie = (tdee, proteinCalorie) =>
+//   -1 * _.floor((tdee - proteinCalorie) / tdee * 100);
+//
+// const maxFatPercentage = (dayCalorie, proteinCalorie) =>
+//   (dayCalorie - proteinCalorie) / dayCalorie * 100;
+//
+// const maxFatGram = (dayCalorie, proteinCalorie) =>
+//   (dayCalorie - proteinCalorie) / 9;
+//
+// const dayCalorie = (tdee, day) => tdee * ((100 + day) / 100);
+//
+// const adjustFatRatio = (
+//   {
+//     change,
+//     restDay,
+//     trainingDay,
+//     restFatGrams,
+//     restFatPercentage,
+//     trainingFatGrams,
+//     trainingFatPercentage
+//   },
+//   nextProps
+// ) => {
+//   let tdee = tdeeCalculator(
+//     nextProps.bmrCalculationMethod,
+//     nextProps.latestMeasurements.get('weight'),
+//     nextProps.latestMeasurements.get('height'),
+//     nextProps.age,
+//     nextProps.sex,
+//     nextProps.activity,
+//     nextProps.bodyFat
+//   );
+//
+//   let nextProteinCalorie = calulateProteinTarget(
+//     nextProps.bodyFat,
+//     nextProps.bmrCalculationMethod,
+//     nextProps.protein,
+//     nextProps.latestMeasurements.get('weight')
+//   );
+//
+//   let nextMinimumCaloriePercentage = minCalorie(tdee, nextProteinCalorie);
+//
+//   if (restDay < nextMinimumCaloriePercentage) {
+//     change('restDay', nextMinimumCaloriePercentage);
+//     change('restFatGrams', 0);
+//     change('restFatPercentage', 0);
+//   }
+//
+//   if (trainingDay < nextMinimumCaloriePercentage) {
+//     change('trainingDay', nextMinimumCaloriePercentage);
+//     change('trainingFatGrams', 0);
+//     change('trainingFatPercentage', 0);
+//   }
+//
+//   let nextRestDayCalorie = dayCalorie(tdee, nextProps.restDay);
+//
+//   let nextMaxRestFatPercentage = maxFatPercentage(
+//     nextRestDayCalorie,
+//     nextProteinCalorie
+//   );
+//
+//   let nextTrainingDayCalorie = dayCalorie(tdee, nextProps.trainingDay);
+//
+//   let nextMaxTrainingFatPercentage = maxFatPercentage(
+//     nextTrainingDayCalorie,
+//     nextProteinCalorie
+//   );
+//
+//   let nextMaxRestFatGram = maxFatGram(nextRestDayCalorie, nextProteinCalorie);
+//   let nextMaxTrainingFatGram = maxFatGram(
+//     nextTrainingDayCalorie,
+//     nextProteinCalorie
+//   );
+//
+//   if (restFatGrams > unlessItsAbovezero(nextMaxRestFatGram)) {
+//     change('restFatGrams', _.floor(unlessItsAbovezero(nextMaxRestFatGram)));
+//   }
+//   if (trainingFatGrams > unlessItsAbovezero(nextMaxTrainingFatGram))
+//     change(
+//       'trainingFatGrams',
+//       _.floor(unlessItsAbovezero(nextMaxTrainingFatGram))
+//     );
+//
+//   if (restFatPercentage > unlessItsAbovezero(nextMaxRestFatPercentage))
+//     change(
+//       'restFatPercentage',
+//       _.floor(unlessItsAbovezero(nextMaxRestFatPercentage))
+//     );
+//   if (trainingFatPercentage > unlessItsAbovezero(nextMaxTrainingFatPercentage))
+//     change(
+//       'trainingFatPercentage',
+//       _.floor(unlessItsAbovezero(nextMaxTrainingFatPercentage))
+//     );
+// };
 
+class KcalTargerContainer extends PureComponent {
+  componentDidMount = () => initValues(this.props);
 
-    
-    // );
-    // this.props.change(
-    //   "bodyFat",
-    //   !_.isNaN(calculateBodyFat(height, weight, "male", neck, belly))
-    //     ? calculateBodyFat(height, weight, "male", neck, belly)
-    //     : 0
-    // );
-    this.props.change("restDay", -20);
-    this.props.change("trainingDay", 20);
-    this.props.change("restFatGrams", 0);
-    this.props.change("trainingFatGrams", 0);
-    this.props.change("restFatPercentage", 0);
-    this.props.change("trainingFatPercentage", 0);
-    this.props.change("fatMethod", "grams");
-    this.props.change("activity", 1.2);
-    this.props.change("protein", 2);
-    this.props.change("kcalsplit", "recomp");
-    this.props.change("bmrCalculationMethod", "harris-benedict");
-  }
+  componentWillReceiveProps = (nextProps, nextState) => {
+    const { submitting } = this.props;
+    if (submitting) return;
+    adjustCaloriePercentage(this.props, nextProps);
+    adjustFatRatio(this.props, nextProps);
+  };
 
-  componentWillReceiveProps(nextProps, s) {
-    if (this.props.submitting) return;
-    if (nextProps.kcalsplit === "slowbulk") {
-      this.props.change("restDay", -10);
-      this.props.change("trainingDay", 30);
-    }
-    if (nextProps.kcalsplit === "cut") {
-      this.props.change("restDay", -30);
-      this.props.change("trainingDay", 10);
-    }
-    if (nextProps.kcalsplit === "recomp") {
-      this.props.change("restDay", -20);
-      this.props.change("trainingDay", 20);
-    }
-
-    let tdee = tdeeCalculator(
-      nextProps.bmrCalculationMethod,
-        nextProps.latestMeasurements.weight,
-        nextProps.latestMeasurements.height,
-        nextProps.age,
-        nextProps.sex,
-        nextProps.activity,
-        nextProps.bodyFat
-    );
-
-
-
-    let Nproteincal = calulateProteinTarget(
-      nextProps.bodyFat,
-      nextProps.bmrCalculationMethod,
-      nextProps.protein,
-      nextProps.latestMeasurements.weight
-    );
-
-    let minCalorie = -1 * _.ceil((tdee - Nproteincal) / tdee * 100);
-
-    if (this.props.restDay < minCalorie) {
-      this.props.change("restDay", minCalorie);
-      this.props.change("restFatGrams", 0);
-      this.props.change("restFatPercentage", 0);
-    }
-    if (this.props.trainingDay < minCalorie) {
-      c;
-      this.props.change("trainingDay", minCalorie);
-      this.props.change("trainingFatGrams", 0);
-      this.props.change("trainingFatPercentage", 0);
-    }
-
-    let NrestDayKcal =
-      tdee * ((100 + Number.parseFloat(nextProps.restDay)) / 100);
-    let Ner = (NrestDayKcal - Nproteincal) / NrestDayKcal * 100;
-    let NtraKcal =
-      tdee * ((100 + Number.parseFloat(nextProps.trainingDay)) / 100);
-    let NFer = (NtraKcal - Nproteincal) / NtraKcal * 100;
-
-    let Nergram = (NrestDayKcal - Nproteincal) / 9;
-    let Ntgram = (NtraKcal - Nproteincal) / 9;
-
-    if (this.props.restFatGrams > unlessItsAbovezero(Nergram)) {
-      this.props.change("restFatGrams", _.floor(unlessItsAbovezero(Nergram)));
-    }
-    if (this.props.trainingFatGrams > unlessItsAbovezero(Ntgram))
-      this.props.change(
-        "trainingFatGrams",
-        _.floor(unlessItsAbovezero(Ntgram))
-      );
-
-    if (this.props.restFatPercentage > unlessItsAbovezero(Ner))
-      this.props.change("restFatPercentage", _.floor(unlessItsAbovezero(Ner)));
-    if (this.props.trainingFatPercentage > unlessItsAbovezero(NFer))
-      this.props.change(
-        "trainingFatPercentage",
-        _.floor(unlessItsAbovezero(NFer))
-      );
-  }
-
-  render() {
+  render = () => {
     let {
       sex,
-latestMeasurements: {
-  weight,
-  height
-},
+      latestMeasurements,
       age,
+      fatMethod,
       activity,
-      kcalsplit,
+      calorieSplit,
       handleSubmit,
       protein,
       bodyFat,
       bmrCalculationMethod,
-      change
+      change,
+      restDay,
+      trainingDay
     } = this.props;
 
-
-    let tdee = tdeeCalculator(
+    const tdee = tdeeCalculator(
       bmrCalculationMethod,
-      weight,
-      height,
+      latestMeasurements.get('weight'),
+      latestMeasurements.get('height'),
       age,
       sex,
       activity,
       bodyFat
     );
 
+    const proteinCalorie = calulateProteinTarget(
+      bodyFat,
+      bmrCalculationMethod,
+      protein,
+      latestMeasurements.get('weight')
+    );
 
-
-    let proteincal =
-      calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
-
-
-      // let proteincal = !_.isNaN(
-      //   calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
-      // )
-      //   ? calulateProteinTarget(bodyFat, bmrCalculationMethod, protein, weight)
-      //   : 11;
-
-
-
-    let restDayKcal =
-      tdee * ((100 + Number.parseFloat(this.props.restDay)) / 100);
-    let er = (restDayKcal - proteincal) / restDayKcal * 100;
-    let traniningDayKcal =
-      tdee * ((100 + Number.parseFloat(this.props.trainingDay)) / 100);
-
-    let minCalorie;
-    minCalorie = -1 * _.floor((tdee - proteincal) / tdee * 100);
-    //ha kcal -proteinTarger < 0
-    let Ter = (traniningDayKcal - proteincal) / traniningDayKcal * 100;
-    let ergram = (restDayKcal - proteincal) / 9;
-    let Tergram = (traniningDayKcal - proteincal) / 9;
     return (
       <div>
         <form
           onSubmit={handleSubmit(({}) => {
             let rf =
-              this.props.fatMethod === "percentage"
-                ? _.ceil(restDayKcal * (this.props.restFatPercentage / 100) / 9)
+              fatMethod === 'percentage'
+                ? _.ceil(
+                    dayCalorie(tdee, restDay) *
+                      (this.props.restFatPercentage / 100) /
+                      9
+                  )
                 : _.ceil(this.props.restFatGrams * 9) / 9;
 
             let tf =
-              this.props.fatMethod === "percentage"
+              fatMethod === 'percentage'
                 ? _.ceil(
-                    traniningDayKcal *
+                    dayCalorie(tdee, trainingDay) *
                       (this.props.trainingFatPercentage / 100) /
                       9
                   )
@@ -203,23 +229,24 @@ latestMeasurements: {
 
             const kCalTarget = {
               rest: {
-                kcal: _.ceil(restDayKcal),
-                protein: _.ceil(proteincal / 4),
-                carbohydrate: _.ceil((restDayKcal - rf * 9 - proteincal) / 4),
+                calorie: _.ceil(dayCalorie(tdee, restDay)),
+                protein: _.ceil(proteinCalorie / 4),
+                carbohydrate: _.ceil(
+                  (dayCalorie(tdee, restDay) - rf * 9 - proteinCalorie) / 4
+                ),
                 fat: rf
               },
               training: {
-                kcal: _.ceil(traniningDayKcal),
-                protein: _.ceil(proteincal / 4),
+                calorie: _.ceil(dayCalorie(tdee, trainingDay)),
+                protein: _.ceil(proteinCalorie / 4),
                 carbohydrate: _.ceil(
-                  (traniningDayKcal - tf * 9 - proteincal) / 4
+                  (dayCalorie(tdee, trainingDay) - tf * 9 - proteinCalorie) / 4
                 ),
                 fat: tf
               }
             };
 
             this.props.createKcalTarget(kCalTarget);
-            console.log(kCalTarget);
           })}
         >
           <div>
@@ -238,7 +265,7 @@ latestMeasurements: {
                 primaryText="Based on lean body mass (Katch-Mcardle)"
               />
             </Field>
-            {bmrCalculationMethod === "katch-mcardle"
+            {bmrCalculationMethod === 'katch-mcardle'
               ? <div>
                   <Field
                     name="bodyFat"
@@ -249,7 +276,7 @@ latestMeasurements: {
                     fullWidth={true}
                     max={50}
                     step={0.1}
-                  />{" "}
+                  />{' '}
                 </div>
               : null}
             <Field
@@ -268,7 +295,7 @@ latestMeasurements: {
 
           <div>
             <Field
-              name="kcalsplit"
+              name="calorieSplit"
               component={SelectField}
               fullWidth={true}
               floatingLabelText="Select your macro target"
@@ -282,31 +309,39 @@ latestMeasurements: {
               <MenuItem value="custom" primaryText="Custom values" />
             </Field>
           </div>
-          {kcalsplit === "custom"
+          {calorieSplit === 'custom'
             ? <div>
-                {" "}<div>
-                  {" "}<Field
+                {' '}<div>
+                  {' '}<Field
                     fullWidth={true}
                     name="restDay"
                     floatingLabelText="Rest day %"
                     type="number"
-                    min={minCalorie}
+                    min={minCalorie(tdee, proteinCalorie)}
                     max={200}
+                    normalize={value =>
+                      typeof value !== Number
+                        ? Number.parseFloat(value)
+                        : value}
                     step={0.5}
                     component={TextField}
                   />
-                </div>{" "}
+                </div>{' '}
                 <div>
-                  {" "}<Field
+                  {' '}<Field
                     fullWidth={true}
                     name="trainingDay"
                     floatingLabelText="Trainging day %"
                     component={TextField}
                     type="number"
                     step={0.5}
-                    min={minCalorie}
+                    normalize={value =>
+                      typeof value !== Number
+                        ? Number.parseFloat(value)
+                        : value}
+                    min={minCalorie(tdee, proteinCalorie)}
                     max={200}
-                  />{" "}
+                  />{' '}
                 </div>
               </div>
             : null}
@@ -330,18 +365,23 @@ latestMeasurements: {
               <MenuItem value="grams" primaryText="In grams" />
               <MenuItem value="percentage" primaryText="In % of kcals" />
             </Field>
-            {this.props.fatMethod === "grams"
+            {this.props.fatMethod === 'grams'
               ? <div>
                   <Field
                     name="restFatGrams"
                     component={Slider}
                     type="number"
-                    format={(value, name) => (value === "" ? 0 : value)}
+                    format={(value, name) => (value === '' ? 0 : value)}
                     min={0}
-                    max={_.floor(unlessItsAbovezero(ergram), 1)}
+                    max={_.floor(
+                      unlessItsAbovezero(
+                        maxFatGram(dayCalorie(tdee, restDay), proteinCalorie)
+                      ),
+                      1
+                    )}
                     step={1}
                   />
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <FlatButton
                       disabled={true}
                       label={`Rest day fat: ${this.props.restFatGrams} grams`}
@@ -351,112 +391,139 @@ latestMeasurements: {
               : <div>
                   <Field
                     name="restFatPercentage"
-                    format={(value, name) => (value === "" ? 0 : value)}
+                    format={(value, name) => (value === '' ? 0 : value)}
                     component={Slider}
                     type="number"
                     min={0}
-                    max={_.floor(unlessItsAbovezero(er), 1)}
+                    max={_.floor(
+                      unlessItsAbovezero(
+                        maxFatPercentage(
+                          dayCalorie(tdee, restDay),
+                          proteinCalorie
+                        )
+                      ),
+                      1
+                    )}
                     step={0.1}
                   />
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <FlatButton
                       disabled={true}
                       label={`Rest day fat: ${this.props.restFatPercentage} %`}
                     />
                   </div>
                 </div>}
-            {this.props.fatMethod === "grams"
+            {this.props.fatMethod === 'grams'
               ? <div>
                   <Field
-                    format={(value, name) => (value === "" ? 0 : value)}
+                    format={(value, name) => (value === '' ? 0 : value)}
                     name="trainingFatGrams"
                     component={Slider}
                     type="number"
                     min={0}
-                    max={_.floor(unlessItsAbovezero(Tergram), 1)}
+                    max={_.floor(
+                      unlessItsAbovezero(
+                        maxFatGram(
+                          dayCalorie(tdee, trainingDay),
+                          proteinCalorie
+                        )
+                      ),
+                      1
+                    )}
                     step={1}
                   />
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <FlatButton
                       disabled={true}
-                      label={`Training day fat: ${this.props.trainingFatGrams} grams`}
+                      label={`Training day fat: ${this.props
+                        .trainingFatGrams} grams`}
                     />
                   </div>
                 </div>
               : <div>
                   <Field
-                    format={(value, name) => (value === "" ? 0 : value)}
+                    format={(value, name) => (value === '' ? 0 : value)}
                     name="trainingFatPercentage"
                     component={Slider}
                     type="number"
                     min={0}
-                    max={_.floor(unlessItsAbovezero(Ter), 1)}
+                    max={_.floor(
+                      unlessItsAbovezero(
+                        maxFatPercentage(
+                          dayCalorie(tdee, trainingDay),
+                          proteinCalorie
+                        )
+                      ),
+                      1
+                    )}
                     step={0.1}
-                  /><div style={{ textAlign: "center" }}>
+                  />
+                  <div style={{ textAlign: 'center' }}>
                     <FlatButton
                       disabled={true}
-                      label={`Training day fat: ${this.props.trainingFatPercentage} %`}
+                      label={`Training day fat: ${this.props
+                        .trainingFatPercentage} %`}
                     />
                   </div>
                 </div>}
           </div>
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: 'center' }}>
             <FlatButton type="submit" label="Create calorie target" />
           </div>
         </form>
         <KcalTargetResult
           percentage={this.props.restFatPercentage}
-          proteinTarget={proteincal}
-          fatTarget={Number.parseInt(this.props.restFatGrams)}
+          proteinTarget={proteinCalorie}
+          fatTarget={this.props.restFatGrams}
           method={this.props.fatMethod}
-          kCalTarget={_.round(restDayKcal)}
+          kCalTarget={_.round(dayCalorie(tdee, restDay))}
           label="rest"
         />
 
         <KcalTargetResult
           percentage={this.props.trainingFatPercentage}
-          proteinTarget={proteincal}
-          fatTarget={Number.parseInt(this.props.trainingFatGrams)}
+          proteinTarget={proteinCalorie}
+          fatTarget={this.props.trainingFatGrams}
           method={this.props.fatMethod}
-          kCalTarget={_.round(traniningDayKcal)}
+          kCalTarget={_.round(dayCalorie(tdee, trainingDay))}
           label="training"
         />
       </div>
     );
-  }
+  };
 }
 
-//TODO: needs to connect to redux by its own
+const selector = formValueSelector('kcal-target');
 
-const selector = formValueSelector("kcal-target");
-
-const KcalTargerContainer1 = connect(state => ({
-
-  activity: selector(state, "activity"),
-  kcalsplit: selector(state, "kcalsplit"),
-  protein: selector(state, "protein"),
-  bmrCalculationMethod: selector(state, "bmrCalculationMethod"),
-  trainingDay: selector(state, "trainingDay"),
-  trainingFatGrams: selector(state, "trainingFatGrams"),
-  restFatGrams: selector(state, "restFatGrams"),
-  trainingFatPercentage: selector(state, "trainingFatPercentage"),
-  restFatPercentage: selector(state, "restFatPercentage"),
-  restDay: selector(state, "restDay"),
-  fatMethod: selector(state, "fatMethod"),
-  bodyFat: selector(state, "bodyFat")
+KcalTargerContainer = connect(state => ({
+  activity: selector(state, 'activity'),
+  calorieSplit: selector(state, 'calorieSplit'),
+  protein: selector(state, 'protein'),
+  bmrCalculationMethod: selector(state, 'bmrCalculationMethod'),
+  trainingDay: selector(state, 'trainingDay'),
+  trainingFatGrams: selector(state, 'trainingFatGrams'),
+  restFatGrams: selector(state, 'restFatGrams'),
+  trainingFatPercentage: selector(state, 'trainingFatPercentage'),
+  restFatPercentage: selector(state, 'restFatPercentage'),
+  restDay: selector(state, 'restDay'),
+  fatMethod: selector(state, 'fatMethod'),
+  bodyFat: selector(state, 'bodyFat')
 }))(KcalTargerContainer);
-const enchanced = reduxForm({ form: "kcal-target" })(KcalTargerContainer1);
+
+const mapStateToProps = state => {
+  return {
+    sex: state.getIn(['userDetails', 'sex']),
+    age: age(state),
+    latestMeasurements: state.getIn(['userDetails', 'latestMeasurements'])
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     createKcalTarget: kCalTarget => dispatch(createKcalTarget(kCalTarget))
   };
 };
-export default connect(state => ({
 
-  sex: state.getIn(['userDetails', 'sex']),
-  age: age(state),
-  latestMeasurements: state.getIn(['userDetails', 'latestMeasurements']).toJS()
-
-
-
-}), mapDispatchToProps)(enchanced);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  reduxForm({ form: 'kcal-target' })(KcalTargerContainer)
+);

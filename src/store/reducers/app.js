@@ -7,7 +7,7 @@ const INITIAL_STATE = fromJS({
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
-  message: null
+  message: ''
 });
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {

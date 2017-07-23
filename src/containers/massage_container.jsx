@@ -14,7 +14,7 @@ const withMessageBar = WrappedComponent => {
         open={isMessageBarOpen}
         message={message}
         onRequestClose={closeMessageBar}
-        autoHideDuration={3000}
+        autoHideDuration={5000}
       />
     </div>;
   return connect(

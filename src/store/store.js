@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { reducer as form } from 'redux-form';
+import { reducer as form } from 'redux-form/immutable';
 import thunk from 'redux-thunk';
 import Immutable from 'immutable';
 

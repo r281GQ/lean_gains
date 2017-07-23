@@ -1,25 +1,23 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
-import { reduxForm } from "redux-form/immutable";
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form/immutable';
 
-import SignUpComponent from "./../components/signup";
-import { signUp } from "./../store/actionCreators/auth_action_creators";
+import SignUpComponent from './../components/signup';
+import { signUp } from './../store/actionCreators/auth_action_creators';
 
 class SignUpContainer extends PureComponent {
-  render() {
-    return (
-      <div>
-        <SignUpComponent {...this.props}
-          signUpHandler={this.props.handleSubmit(
-            ({ name, username, email, password }) => {
-              this.props.signUp({ name, username, email, password });
-              this.props.reset();
-            }
-          )}
-        />
-      </div>
-    );
-  }
+  render = () =>
+    <div>
+      <SignUpComponent
+        {...this.props}
+        signUpHandler={this.props.handleSubmit(
+          ({ name, username, email, password }) => {
+            this.props.signUp({ name, username, email, password });
+            this.props.reset();
+          }
+        )}
+      />
+    </div>;
 }
 
 const mapDispatchToProps = dispatch => {
@@ -29,5 +27,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(null, mapDispatchToProps)(
-  reduxForm({ form: "signup" })(SignUpContainer)
+  reduxForm({ form: 'signup' })(SignUpContainer)
 );

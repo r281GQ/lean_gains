@@ -4,7 +4,7 @@ import * as userDetails from './../actions/user_details_actions';
 
 const createKcalTarget = calorieTarget => dispatch =>
   axios
-    .post('http://localhost:4000/api/kcaltarget', calorieTarget)
+    .post('http://localhost:4000/api/kcaltargets', calorieTarget)
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_KCAL_TARGETS,
@@ -15,7 +15,7 @@ const createKcalTarget = calorieTarget => dispatch =>
 
 const createWorkoutTarget = workoutLog => dispatch =>
   axios
-    .post('http://localhost:4000/api/workoutTargets', workoutLog)
+    .post('http://localhost:4000/api/workouttargets', workoutLog)
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_WORKOUT_TARGET,
@@ -26,7 +26,7 @@ const createWorkoutTarget = workoutLog => dispatch =>
 
 const deleteWorkoutTarget = _id => dispatch =>
   axios
-    .delete(`http://localhost:4000/api/workoutTargets/${_id}`)
+    .delete(`http://localhost:4000/api/workouttargets/${_id}`)
     .then(({ data }) =>
       dispatch({ type: userDetails.DELETE_WORKOUT_TARGET, payload: _id })
     )
@@ -40,14 +40,14 @@ const initFetch = () => dispatch => {
         type: userDetails.WRITE_KCAL_TARGETS,
         payload: data
       });
-      return axios.get('http://localhost:4000/api/workoutTargets');
+      return axios.get('http://localhost:4000/api/workouttargets');
     })
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_WORKOUT_TARGETS,
         payload: data
       });
-      return axios.get(`http://localhost:4000/api/userDetails`);
+      return axios.get(`http://localhost:4000/api/userdetails`);
     })
     .then(({ data }) => {
       dispatch({
@@ -62,9 +62,9 @@ const initFetch = () => dispatch => {
     .catch(error => console.log(error));
 };
 
-const updateUserDetails = userDetails => dispatch =>
+const updateUserDetails = userDetailsInfo => dispatch =>
   axios
-    .put(`http://localhost:4000/api/userDetails`, userDetails)
+    .put(`http://localhost:4000/api/userdetails`, userDetailsInfo)
     .then(({ data }) =>
       dispatch({ type: userDetails.WRITE_USER_DETAILS, payload: data })
     )

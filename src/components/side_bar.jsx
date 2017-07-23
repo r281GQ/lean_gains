@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Drawer, MenuItem, FlatButton } from 'material-ui';
 
@@ -11,8 +10,7 @@ import styled from 'styled-components';
 const LinkWithoutUnderLine = styled(Link)`
   text-decoration: none;
 `;
-
-const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
+const SideBarComponent = () => {
   return (
     <Drawer
       open={isSideBarOpen}
@@ -56,15 +54,7 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
       <MenuItem onClick={() => logOut()} primaryText="Log out" />
     </Drawer>
   );
-};
+}
 
-const mapStateToProps = state => ({
-  isSideBarOpen: state.getIn(['app', 'isSideBarOpen'])
-});
 
-const mapDispatchToProps = dispatch => ({
-  closeSideBar: () => dispatch(closeSideBar()),
-  logOut: () => dispatch(logOut())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideBarContainer);
+export default SideBarComponent;

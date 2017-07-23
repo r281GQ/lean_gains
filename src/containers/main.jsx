@@ -18,8 +18,7 @@ import WorkoutTargetRouter from './workout_targets/workout_targets_router';
 import withMessageBar from './massage_container';
 import withLoadingScreen from './loading_container';
 
-//TODO route gourd to all routes, not allow going here if the required data doesnt exist íyet
-//TODO implement grapsh and charts
+//TODO implement graphs and charts
 class MainContainer extends PureComponent {
   componentWillMount = () => this.props.initFetch();
 
