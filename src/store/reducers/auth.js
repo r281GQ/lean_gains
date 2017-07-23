@@ -2,10 +2,16 @@ import { fromJS } from 'immutable';
 
 import * as auth from './../actions/auth_actions';
 
+const INITIAL_STATE_MOCK = fromJS({
+  authenticated: true,
+  isLoading: false,
+  token: null,
+});
+
 const INITIAL_STATE = fromJS({
   authenticated: false,
   isLoading: false,
-  token: undefined,
+  token: null,
 });
 
 const handleLoginSuccess = (state, { token, email, _id, lastLogin }) =>
@@ -18,7 +24,9 @@ const handleLoginSuccess = (state, { token, email, _id, lastLogin }) =>
       .setIn(['user', 'email'], email)
   );
 
-const reducer = (state = INITIAL_STATE, { type, payload }) => {
+
+//TODO clear mockstate
+const reducer = (state = INITIAL_STATE_MOCK, { type, payload }) => {
   switch (type) {
     case auth.LOGIN_SUCCESS:
       return handleLoginSuccess(state, payload);

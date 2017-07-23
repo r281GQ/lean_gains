@@ -27,6 +27,7 @@ import todayMacros from "./../store/selectors/current_macros";
 
 //TODO show the current route and page
 //TODO connect to redux on its own
+//TODO just saving indicator
 const HeaderContainer = ({
   currentWeight,
   exercises,
@@ -37,7 +38,7 @@ const HeaderContainer = ({
   goBack
 }) => {
   return (
-    
+
     <Toolbar >
       <ToolbarGroup firstChild={true}>
         <IconButton tooltip="Main menu" onTouchTap={() => openSideBar()}>
@@ -54,7 +55,7 @@ const HeaderContainer = ({
       </ToolbarGroup>
       <ToolbarGroup>
         <ToolbarTitle text={`CurrentWeight ${currentWeight}`} />
-        <ToolbarTitle text={`Macros: ${todaysMacros.kcal}`} />
+        <ToolbarTitle text={`Macros: ${todaysMacros.calorie}`} />
         <ToolbarTitle
           text={`P: ${todaysMacros.protein} C: ${todaysMacros.carbohydrate} F: ${todaysMacros.fat}`}
         />
@@ -89,9 +90,9 @@ const HeaderContainer = ({
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.getIn(["auth", "isLoading"]),
+  isLoading: state.getIn(["app", "isLoading"]),
   currentWeight: currentWeightSelector(state),
-  exercises: isTrainingDay(state).toJS(),
+  exercises: isTrainingDay('main')(state).toJS(),
   todaysMacros: todayMacros(state).toJS(),
   userName: state.getIn(["userDetails", "userName"])
 });

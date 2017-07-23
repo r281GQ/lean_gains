@@ -1,114 +1,79 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { INIT_API, CLOSE_API } from "./../actions/auth_actions";
-import {
-  WRITE_USER_DETAILS,
-  WRITE_KCAL_TARGETS,
-  WRITE_WORKOUT_TARGET,
-  WRITE_WORKOUT_TARGETS,
-  WRITE_LATEST,
-  WRITE_WORKOUT_LOG_DATES,
-  DELETE_WORKOUT_TARGET
-} from "./../actions/user_details_actions";
-// import {WRITE_USER_DETAILS, WRITE_KCAL_TARGETS} from './../actions/user_details_actions';
+import * as userDetails from './../actions/user_details_actions';
 
-const fetchUserDetails = () => (dispatch, getState) => {
-  const USERDETAILSRL = `http://localhost:4000/api/userDetails`;
-
-  axios({
-    url: USERDETAILSRL,
-    method: "GET",
-    headers: { "x-auth": undefined }
-  })
-    .then(response => {
-      dispatch({ type: WRITE_USER_DETAILS, payload: response.data });
-    })
-    .catch(error => {});
-};
-
-const createKcalTarget = kCalTarget => (dispatch, getState) => {
+const createKcalTarget = calorieTarget => dispatch =>
   axios
-    .post("http://localhost:4000/api/kcaltarget", kCalTarget)
-    .then(response => {
-      dispatch({ type: WRITE_KCAL_TARGETS, payload: response.data });
-    })
-    .catch(error => {});
-};
-
-const createWorkoutTarget = workoutLog => (dispatch, getState) => {
-  axios
-    .post("http://localhost:4000/api/workoutTargets", workoutLog)
-    .then(response => {
-      dispatch({ type: WRITE_WORKOUT_TARGET, payload: response.data });
-    })
-    .catch(error => {});
-};
-
-const getWorkoutTargets = () => (dispatch, getState) => {
-  axios
-    .get("http://localhost:4000/api/workoutTargets")
-    .then(response => {
-      dispatch({ type: WRITE_WORKOUT_TARGETS, payload: response.data });
-    })
-    .catch(error => {});
-};
-
-const getKcalTargets = kCalTarget => (dispatch, getState) => {
-  axios
-    .get("http://localhost:4000/api/kcaltargets")
-    .then(response =>
-      dispatch({ type: WRITE_KCAL_TARGETS, payload: response.data })
-    )
-    .catch(error => {});
-};
-
-const deleteWorkoutTarget = _id => (dispatch,getState) => {
-  dispatch({type: DELETE_WORKOUT_TARGET, payload:_id})
-}
-
-
-//TODO: add fethcing current months workoutLogs
-const initFetch = () => (dispatch, getState) => {
-  const USERDETAILSRL = `http://localhost:4000/api/userDetails`;
-  dispatch({ type: INIT_API });
-  axios
-    .get("http://localhost:4000/api/kcaltargets")
-    .then(response => {
-      dispatch({ type: WRITE_KCAL_TARGETS, payload: response.data });
-      return axios.get("http://localhost:4000/api/workoutTargets");
-    })
-    .then(response => {
-      dispatch({ type: WRITE_WORKOUT_TARGETS, payload: response.data });
-      return axios({
-        url: USERDETAILSRL,
-        method: "GET",
-        headers: { "x-auth": undefined }
+    .post('http://localhost:4000/api/kcaltarget', calorieTarget)
+    .then(({ data }) => {
+      dispatch({
+        type: userDetails.WRITE_KCAL_TARGETS,
+        payload: data
       });
     })
-    .then(response => {
-      dispatch({ type: WRITE_USER_DETAILS, payload: response.data });
+    .catch(error => console.log(error));
+
+const createWorkoutTarget = workoutLog => dispatch =>
+  axios
+    .post('http://localhost:4000/api/workoutTargets', workoutLog)
+    .then(({ data }) => {
+      dispatch({
+        type: userDetails.WRITE_WORKOUT_TARGET,
+        payload: data
+      });
+    })
+    .catch(error => console.log(error));
+
+const deleteWorkoutTarget = _id => dispatch =>
+  axios
+    .delete(`http://localhost:4000/api/workoutTargets/${_id}`)
+    .then(({ data }) =>
+      dispatch({ type: userDetails.DELETE_WORKOUT_TARGET, payload: _id })
+    )
+    .catch(error => console.log(error));
+
+const initFetch = () => dispatch => {
+  axios
+    .get('http://localhost:4000/api/kcaltargets')
+    .then(({ data }) => {
+      dispatch({
+        type: userDetails.WRITE_KCAL_TARGETS,
+        payload: data
+      });
+      return axios.get('http://localhost:4000/api/workoutTargets');
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: userDetails.WRITE_WORKOUT_TARGETS,
+        payload: data
+      });
+      return axios.get(`http://localhost:4000/api/userDetails`);
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: userDetails.WRITE_USER_DETAILS,
+        payload: data
+      });
       return axios.get('http://localhost:4000/api/latestmeasurements');
     })
-    .then(response => {
-      console.log(response.data);
-      dispatch({type: WRITE_LATEST , payload: response.data})
-      dispatch({ type: CLOSE_API });
+    .then(({ data }) => {
+      dispatch({ type: userDetails.WRITE_LATEST, payload: data });
     })
-    .catch(error => {
-      console.log('ERROR', error);
-      dispatch({ type: CLOSE_API });
-    });
+    .catch(error => console.log(error));
 };
 
 const updateUserDetails = userDetails => dispatch =>
-  dispatch({ type: WRITE_USER_DETAILS, payload: userDetails });
+  axios
+    .put(`http://localhost:4000/api/userDetails`, userDetails)
+    .then(({ data }) =>
+      dispatch({ type: userDetails.WRITE_USER_DETAILS, payload: data })
+    )
+    .catch(error => console.log(error));
 
 export {
+  initFetch,
   updateUserDetails,
   createKcalTarget,
   createWorkoutTarget,
-  getWorkoutTargets,
-  fetchUserDetails,
-  getKcalTargets,
-  initFetch,deleteWorkoutTarget
+  deleteWorkoutTarget
 };

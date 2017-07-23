@@ -8,13 +8,14 @@ import WorkoutLogsMainContainer from './workout_logs_main';
 import WorkoutLogFormContainer from './workout_log_form';
 import isTrainingDay from './../../store/selectors/exercises';
 
+//TODO: floatng action button move to hoc
 const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
   <div>
-    <Route exact path={'/workoutlogs'} component={WorkoutLogsMainContainer} />
+    <Route exact path={'/app/workoutlogs'} component={WorkoutLogsMainContainer} />
 
     <Route
       exact
-      path={'/workoutlogs/create/before'}
+      path={'/app/workoutlogs/create/before'}
       render={props => {
         let defaultValue = {
           date: moment().toDate()
@@ -25,7 +26,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
 
     <Route
       exact
-      path="/workoutlogs/edit/:id"
+      path="/app/workoutlogs/edit/:id"
       render={props => {
         const defaultValue = workoutLogs
           .find((value, key) => props.match.params.id === key)
@@ -43,7 +44,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
 
     <Route
       exact
-      path={'/workoutlogs/create'}
+      path={'/app/workoutlogs/create'}
       render={props => {
         const defaultValue = exercises.map(value =>
           Map().withMutations(map =>
@@ -67,5 +68,5 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
 
 export default connect(state => ({
   workoutLogs: state.getIn(['workoutLogs', 'data']),
-  exercises: isTrainingDay(state)
+  exercises: isTrainingDay('main')(state)
 }))(WorkoutLogsRouter);

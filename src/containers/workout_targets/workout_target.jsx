@@ -252,6 +252,8 @@ class WorkoutTarget extends React.Component {
       <div style={{ textAlign: "center" }}>
         <FlatButton type="submit" label={`Create workout`} />
       </div>
+
+
     </form>
   </div>);
 }}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Prompt } from 'react-router-dom';
 import {
   SelectField,
   MenuItem,
@@ -23,12 +23,11 @@ import DateSelector from './../../components/date_selector';
 
 import CardListDailyLog from './../../components/card_list_daily_log';
 
-import isTodaysDailyLogExists from './../../store/selectors/today_daily_log';
+import isTodaysLogExists from './../../store/selectors/todays_log';
 import {
   getDailyLogDates,
   getLogsForSelectedMonth,
   deleteDailyLog
-
 } from './../../store/actionCreators/daily_log_action_creators';
 import {
   setSelectedMonthForDailyLogs,
@@ -37,15 +36,18 @@ import {
   setSelectedDailyLog
 } from './../../store/actionCreators/app_action_creators';
 
-import monthsWithDailyLogs from './../../store/selectors/month_daily_log';
+import monthLogs from './../../store/selectors/month_log';
 
-import dailyLogsForMonth from './../../store/selectors/daily_log_selector';
+import logsForMonth from './../../store/selectors/log_selector';
 
+const dailyLogsForMonth = logsForMonth('dailyLogs');
+const isTodaysDailyLogExists = isTodaysLogExists('dailyLogs');
+const monthsWithDailyLogs = monthLogs('dailyLogs');
+
+//TODO deletecofnrim model to hoc just as snackbar
 class DailyLogPicker extends Component {
-  componentWillMount = () =>
-  {
-    if (this.props.datesWithDailyLogs.isEmpty())
-      this.props.getDailyLogDates();
+  componentWillMount = () => {
+    if (this.props.datesWithDailyLogs.isEmpty()) this.props.getDailyLogDates();
     if (this.props.dailyLogsForMonth.isEmpty())
       this.props.getLogsForSelectedMonth(moment().format('MM-YYYY'));
     this.props.setSelectedMonthForDailyLogs(
@@ -54,37 +56,39 @@ class DailyLogPicker extends Component {
   };
 
   componentWillReceiveProps = nextProps =>
-    this.props.monthsWithDailyLogs.isEmpty() &&
-    !nextProps.monthsWithDailyLogs.isEmpty()
-      ? this.props.setSelectedMonthForDailyLogs(nextProps.monthsWithDailyLogs.last())
+    (this.props.monthsWithDailyLogs.isEmpty() &&
+      !nextProps.monthsWithDailyLogs.isEmpty()) ||
+    nextProps.monthsWithDailyLogs.find(
+      value => value === this.props.selectedMonth
+    ) === undefined
+      ? this.props.setSelectedMonthForDailyLogs(
+          nextProps.monthsWithDailyLogs.last()
+        )
       : null;
 
   render() {
+    console.log(this.props);
     const {
       getLogsForSelectedMonth,
       selectedMonth,
       monthsWithDailyLogs,
       setSelectedMonthForDailyLogs,
       logs,
-      isModalOpen,
-      selectedDailyLog,
-      closeWorkoutModal,
       deleteDailyLog
     } = this.props;
     return (
       <div>
+        <Prompt
+         when={true}
+         message={location => (
+           `Are you sure you want to go to ${location.pathname}`
+         )}
+       />
         <DateSelector
           months={monthsWithDailyLogs.toJS()}
           selectedMonth={selectedMonth}
           fetchDataForSelectedMonth={getLogsForSelectedMonth}
           setSelectedMonth={setSelectedMonthForDailyLogs}
-        />
-
-        <ConfirmDelete
-          title="Sure you want to delete this log?"
-          deleteActions={[() => deleteDailyLog(selectedDailyLog)]}
-          close={closeWorkoutModal}
-          isOpen={isModalOpen}
         />
 
         <CardListDailyLog
@@ -93,9 +97,9 @@ class DailyLogPicker extends Component {
           setSelectedItem={this.props.setSelectedDailyLog}
         />
 
-        <CreateButtonMinified link="/dailylogs/create/before" />
+        <CreateButtonMinified link="/app/dailylogs/create/before" />
         <CreateButton
-          link="/dailylogs/create"
+          link="/app/dailylogs/create"
           disabled={this.props.isTodaysDailyLogExists}
         />
       </div>
@@ -106,9 +110,7 @@ class DailyLogPicker extends Component {
 const mapStateToProps = state => {
   return {
     datesWithDailyLogs: state.getIn(['dailyLogs', 'dates']),
-    isModalOpen: state.getIn(['app', 'isWorkoutLogModalOpen']),
     selectedMonth: state.getIn(['app', 'selectedMonthForDailyLogs']),
-    selectedDailyLog: state.getIn(['app', 'selectedDailyLog']),
     isTodaysDailyLogExists: isTodaysDailyLogExists(state),
     monthsWithDailyLogs: monthsWithDailyLogs(state),
     dailyLogsForMonth: dailyLogsForMonth(state)
@@ -116,7 +118,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  closeWorkoutModal: () => dispatch(closeWorkoutModal()),
   openWorkoutModal: () => dispatch(openWorkoutModal()),
   setSelectedMonthForDailyLogs: month =>
     dispatch(setSelectedMonthForDailyLogs(month)),

@@ -1,29 +1,41 @@
-import * as APP from './../actions/app_actions';
+import * as app from './../actions/app_actions';
 
-const setSelectedMonthForWorkoutLogs = month => dispatch =>
-  dispatch({ type: APP.SELECT_WORKOUT_LOG_MONTH, payload: month });
+const setSelectedMonthForWorkoutLogs = month => ({
+  type: app.SELECT_WORKOUT_LOG_MONTH,
+  payload: month
+});
 
-const setSelectedMonthForDailyLogs = month => dispatch =>
-  dispatch({ type: APP.SELECT_DAILY_LOG_MONTH, payload: month });
+const setSelectedMonthForDailyLogs = month => ({
+  type: app.SELECT_DAILY_LOG_MONTH,
+  payload: month
+});
 
-const openWorkoutModal = () => dispatch =>
-  dispatch({ type: APP.OPEN_WORKOUT_LOG_MODAL });
+const openWorkoutModal = () => ({ type: app.OPEN_CONFIRM_DELETE_MODAL });
 
-const closeWorkoutModal = () => dispatch =>
-  dispatch({ type: APP.CLOSE_WORKOUT_LOG_MODAL });
+const closeWorkoutModal = () => ({ type: app.CLOSE_CONFIRM_DELETE_MODAL });
 
-const openSideBar = () => dispatch => dispatch({ type: APP.OPEN_SIDE_BAR });
+const openSideBar = () => ({ type: app.OPEN_SIDE_BAR });
 
-const closeSideBar = () => dispatch => dispatch({ type: APP.CLOSE_SIDE_BAR });
+const closeSideBar = () => ({ type: app.CLOSE_SIDE_BAR });
 
-const setSelectedWorkoutLog = _id => dispatch =>
-  dispatch({ type: APP.SET_SELECTED_WORKOUT_LOG, payload: _id });
+const setSelectedWorkoutLog = _id => ({
+  type: app.SET_SELECTED_WORKOUT_LOG,
+  payload: _id
+});
 
-const setSelectedWorkoutTarget = _id => dispatch =>
-  dispatch({ type: APP.SET_SELECTED_WORKOUT_TARGET, payload: _id });
-  
-const setSelectedDailyLog = _id => dispatch =>
-  dispatch({ type: APP.SET_SELECTED_DAILY_LOG, payload: _id });
+const setSelectedWorkoutTarget = _id => ({
+  type: app.SET_SELECTED_WORKOUT_TARGET,
+  payload: _id
+});
+
+const setSelectedDailyLog = _id => ({
+  type: app.SET_SELECTED_DAILY_LOG,
+  payload: _id
+});
+
+const openMessageBar = () => ({ type: app.OPEN_MESSAGE_BAR });
+
+const closeMessageBar = () => ({ type: app.CLOSE_MESSAGE_BAR });
 
 export {
   setSelectedMonthForDailyLogs,
@@ -34,5 +46,7 @@ export {
   openSideBar,
   closeSideBar,
   setSelectedWorkoutTarget,
-  setSelectedDailyLog
+  setSelectedDailyLog,
+  openMessageBar,
+  closeMessageBar
 };

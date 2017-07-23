@@ -13,9 +13,9 @@ import {
   deleteWorkoutLog,
   getWorkoutLogDates
 } from './../../store/actionCreators/workout_log_action_creators';
-import monthsWithWorkoutLogs from './../../store/selectors/month_workout_log';
-import workoutLogsForMonth from './../../store/selectors/workout_log_selector';
-import isTodaysWorkoutLogExists from './../../store/selectors/today_log';
+import monthLogs from './../../store/selectors/month_log';
+import logsForMonth from './../../store/selectors/log_selector';
+import isTodaysLogExists from './../../store/selectors/todays_log';
 
 import CreateButton from './../../components/create_button';
 import CreateButtonMinified from './../../components/create_button_minified';
@@ -23,6 +23,10 @@ import ConfirmDelete from './../../components/confirm_delete';
 import CardListLog from './../../components/card_list_log';
 import DateSelector from './../../components/date_selector';
 import LoadingScreen from './../../components/loading';
+
+const isTodaysWorkoutLogExists = isTodaysLogExists('workoutLogs');
+const workoutLogsForMonth = logsForMonth('workoutLogs');
+const monthsWithWorkoutLogs = monthLogs('workoutLogs');
 
 const renderMainScreen = ({
   monthsWithWorkoutLogs,
@@ -55,14 +59,17 @@ const renderMainScreen = ({
 
     <CardListLog
       workoutLogs={workoutLogsForMonth.toJS()}
-      editLink="/workoutlogs/edit/"
+      editLink="/app/workoutlogs/edit/"
       setSelectedItem={setSelectedWorkoutLog}
       onModalStateChange={openWorkoutModal}
     />
 
-    <CreateButtonMinified link="/workoutlogs/create/before" />
+    <CreateButtonMinified link="/app/workoutlogs/create/before" />
 
-    <CreateButton link="/workoutlogs/create" disabled={isTodaysWorkoutLogExists} />
+    <CreateButton
+      link="/app/workoutlogs/create"
+      disabled={isTodaysWorkoutLogExists}
+    />
   </div>;
 
 class WorkoutLogsMainContainer extends PureComponent {
@@ -77,24 +84,26 @@ class WorkoutLogsMainContainer extends PureComponent {
   };
 
   componentWillReceiveProps = (nextProps, nextState) =>
-    this.props.monthsWithWorkoutLogs.isEmpty()
+    (this.props.monthsWithWorkoutLogs.isEmpty() &&
+      !nextProps.monthsWithWorkoutLogs.isEmpty()) ||
+    nextProps.monthsWithWorkoutLogs.find(
+      value => value === this.props.selectedMonth
+    ) === undefined
       ? this.props.setSelectedMonthForWorkoutLogs(
           nextProps.monthsWithWorkoutLogs.last()
         )
       : null;
 
-  render = () =>
-    this.props.isLoading ? <LoadingScreen /> : renderMainScreen(this.props);
+  render = () => renderMainScreen(this.props);
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.getIn(['app', 'isLoading']),
   monthsWithWorkoutLogs: monthsWithWorkoutLogs(state),
   isTodaysWorkoutLogExists: isTodaysWorkoutLogExists(state),
   workoutLogsForMonth: workoutLogsForMonth(state),
   datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates']),
   selectedMonth: state.getIn(['app', 'selectedMonthForWorkoutLogs']),
-  isModalOpen: state.getIn(['app', 'isWorkoutLogModalOpen']),
+  isModalOpen: state.getIn(['app', 'isConfirmDeleteModalOpen']),
   selectedWorkoutLog: state.getIn(['app', 'selectedWorkoutLog'])
 });
 

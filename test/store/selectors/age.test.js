@@ -16,9 +16,9 @@ describe('age selector', () => {
     expect(age).to.equal(moment().diff(moment(userDetails.dob), 'years'));
   });
 
-  it('should get back 0 if there is no dob', () => {
+  it('should get back undefined if there is no dob', () => {
     const withoutDOB = state.setIn(['userDetails', 'dob'], undefined);
     const age = selector(withoutDOB);
-    expect(age).to.equal(0);
+    expect(age).to.be.undefined;
   });
 });

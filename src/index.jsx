@@ -1,18 +1,18 @@
-import React from "react";
-import { render } from "react-dom";
-import { Provider } from "react-redux";
-import { ConnectedRouter } from "react-router-redux";
-import { Switch, Route } from "react-router-dom";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import injectTapEventPlugin from "react-tap-event-plugin";
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import { Switch, Route } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import { store } from "./store/store";
-import { history } from "./store/reducers/routing";
-import App from "./containers/app";
+import { store } from './store/store';
+import { history } from './store/reducers/routing';
+import App from './containers/app';
 
 injectTapEventPlugin();
 
-const DOCUMENT_ROOT = document.getElementById("root");
+const DOCUMENT_ROOT = document.getElementById('root');
 
 render(
   <MuiThemeProvider>

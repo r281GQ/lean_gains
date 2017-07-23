@@ -5,11 +5,19 @@ import * as app from './../actions/app_actions';
 const INITIAL_STATE = fromJS({
   isConfirmDeleteModalOpen: false,
   isSideBarOpen: false,
-  isLoading: false
+  isLoading: false,
+  isMessageBarOpen: false,
+  message: null
 });
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case app.SET_MESSAGE:
+      return state.set('message', payload);
+    case app.OPEN_MESSAGE_BAR:
+      return state.set('isMessageBarOpen', true);
+    case app.CLOSE_MESSAGE_BAR:
+      return state.set('isMessageBarOpen', false);
     case app.INIT_API:
       return state.set('isLoading', true);
     case app.CLOSE_API:

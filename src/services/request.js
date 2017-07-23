@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+import { getToken } from './local_storage';
 
-export default factory = (method, data, params) => {
+const client = getToken => () =>
+  getToken() !== null
+    ? axios.create({
+        headers: {
+          'x-auth': getToken()
+        }
+      })
+    : null;
 
-
-} 
+export default client(getToken);

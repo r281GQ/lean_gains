@@ -53,7 +53,7 @@ describe('auth reducer', () => {
           map
             .set('authenticated', false)
             .set('isLoading', false)
-            .set('token', undefined)
+            .set('token', null)
         )
       );
     });

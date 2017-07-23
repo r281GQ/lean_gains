@@ -1,11 +1,11 @@
 const moment = require('moment');
 
-export const dailyLogDates = [
+const dailyLogDates = [
   moment('04-04-2017', 'DD-MM-YYYY').valueOf(),
   moment('03-05-2017', 'DD-MM-YYYY').valueOf()
 ];
 
-export const dailyLogs = [
+const dailyLogs = [
   {
     _id: '0_daily_log',
     date: moment('04-04-2017', 'DD-MM-YYYY').valueOf(),
@@ -60,7 +60,7 @@ export const dailyLogs = [
   }
 ];
 
-export const auth = {
+const auth = {
   isNew: false,
   email: 'endre@mail.com',
   _id: 'randomId',
@@ -68,7 +68,7 @@ export const auth = {
   lastLogin: moment('05-07-2017', 'DD-MM-YYYY').valueOf()
 };
 
-export const kcalTargets = [
+const kcalTargets = [
   {
     _id: '0_kcal_target',
     startDate: moment('05-05-2017', 'DD-MM-YYYY').valueOf(),
@@ -107,14 +107,14 @@ export const kcalTargets = [
   }
 ];
 
-export const userDetails = {
+const userDetails = {
   dob: moment('22-05-1988', 'DD-MM-YYYY').valueOf(),
   sex: 'male',
   picture: `https://somerandomurl/pictureid`,
   userName: 'kfbr392'
 };
 
-export const latestMeasurements = {
+const latestMeasurements = {
   height: 175,
   neck: 36,
   weight: 66.8,
@@ -129,7 +129,7 @@ export const latestMeasurements = {
   leftThigh: 50
 };
 
-export const workoutTargets = [
+const workoutTargets = [
   {
     _id: '0_workout_target',
     type: 'main',
@@ -147,13 +147,13 @@ export const workoutTargets = [
   }
 ];
 
-export const workoutLogDates = [
+const workoutLogDates = [
   moment('02-07-2017', 'DD-MM-YYYY').valueOf(),
   moment('01-01-2017', 'DD-MM-YYYY').valueOf(),
   moment('01-07-2017', 'DD-MM-YYYY').valueOf()
 ];
 
-export const workoutLogs = [
+const workoutLogs = [
   {
     _id: '0_workout_log',
     date: moment('01-07-2017', 'DD-MM-YYYY').valueOf(),
@@ -216,3 +216,15 @@ export const workoutLogs = [
     ]
   }
 ];
+
+module.exports = {
+  dailyLogDates,
+  dailyLogs,
+  auth,
+  kcalTargets,
+  userDetails,
+  workoutTargets,
+  latestMeasurements,
+  workoutLogDates,
+  workoutLogs
+};

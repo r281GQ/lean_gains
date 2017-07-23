@@ -1,50 +1,40 @@
-import Immutable from "immutable";
-import axios from "axios";
-import { push } from "react-router-redux";
+import axios from 'axios';
 
-const LOGIN = "http://localhost:4000/api/logIn";
-const SIGNUP = "http://localhost:4000/api/signUp";
+import * as auth from './../actions/auth_actions';
 
 const handleWritingToStore = (response, dispatch) => {
   let { name, email, _id } = response.data;
-  let token = response.headers["x-auth"];
-  dispatch({ type: LOGIN_SUCCESS, payload: { name, email, _id, token } });
-  dispatch({ type: CLOSE_AUTH });
-  dispatch(push("/main"));
+  let token = response.headers['x-auth'];
+  dispatch({ type: auth.LOGIN_SUCCESS, payload: { name, email, _id, token } });
+  dispatch({ type: auth.CLOSE_AUTH });
 };
 
-import {
-  INIT_AUTH,
-  CLOSE_AUTH,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  LOG_OUT
-} from "./../actions/auth_actions";
-
 const logIn = userInfo => dispatch => {
-  dispatch({ type: INIT_AUTH });
+  dispatch({ type: auth.INIT_AUTH });
   return axios
-    .post(LOGIN, userInfo)
+    .post('http://localhost:4000/api/logIn', userInfo)
     .then(response => {
       handleWritingToStore(response, dispatch);
     })
     .catch(error => {
-      dispatch({ type: LOGIN_FAILED });
-      dispatch({ type: CLOSE_AUTH });
+      dispatch({ type: auth.LOGIN_FAILED });
+      dispatch({ type: auth.CLOSE_AUTH });
     });
 };
 
 const signUp = userInfo => dispatch => {
-  dispatch({ type: INIT_AUTH });
+  dispatch({ type: auth.INIT_AUTH });
   return axios
-    .post(SIGNUP, userInfo)
+    .post('http://localhost:4000/api/signUp', userInfo)
     .then(respone => {
       handleWritingToStore(respone, dispatch);
     })
     .catch(error => {
-      dispatch({ type: LOGIN_FAILED });
-      dispatch({ type: CLOSE_AUTH });
+      dispatch({ type: auth.LOGIN_FAILED });
+      dispatch({ type: auth.CLOSE_AUTH });
     });
 };
 
-export { logIn, signUp };
+const logOut = () => ({ type: auth.LOG_OUT });
+
+export { logIn, signUp, logOut };

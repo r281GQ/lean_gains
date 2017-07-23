@@ -5,11 +5,6 @@ import * as _ from 'lodash';
 import * as userDetails from './../actions/user_details_actions';
 
 export const INITIAL_STATE = fromJS({
-  dob: undefined,
-  sex: undefined,
-  picture: undefined,
-  email: undefined,
-  userName: undefined,
   workoutTargets: {},
   kcalTargets: {},
   latestMeasurements: {}

@@ -24,21 +24,21 @@ const renderMainScreen = ({
   <div>
     <ConfirmDelete
       title="Sure you want to delete this workout?"
-      isOpen={this.props.isModalOpen}
-      close={this.props.closeWorkoutModal}
+      isOpen={isModalOpen}
+      close={closeWorkoutModal}
       deleteActions={[
-        () => this.props.deleteWorkoutTarget(this.props.selectedWorkoutTarget)
+        () => deleteWorkoutTarget(selectedWorkoutTarget)
       ]}
     />
 
     <CardList
-      editLink="/workouttargets/edit/"
-      collection={this.props.workoutTargets.toJS()}
-      onModalStateChange={this.props.openWorkoutModal}
-      setSelectedItem={this.props.setSelectedWorkoutTarget}
+      editLink="/app/workouttargets/edit/"
+      collection={workoutTargets.toJS()}
+      onModalStateChange={openWorkoutModal}
+      setSelectedItem={setSelectedWorkoutTarget}
     />
 
-    <CreateButton link={`/workouttargets/create`} />
+    <CreateButton link={`/app/workouttargets/create`} />
   </div>;
 
 class WorkoutTargetsMainContainer extends PureComponent {
@@ -50,7 +50,7 @@ const mapStateToProps = state => {
   return {
     isLoading: state.getIn(['app', 'isLoading']),
     workoutTargets: state.getIn(['userDetails', 'workoutTargets']),
-    isModalOpen: state.getIn(['app', 'isWorkoutLogModalOpen']),
+    isModalOpen: state.getIn(['app', 'isConfirmDeleteModalOpen']),
     selectedWorkoutTarget: state.getIn(['app', 'selectedWorkoutTarget'])
   };
 };

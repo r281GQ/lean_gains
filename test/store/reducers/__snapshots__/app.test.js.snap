@@ -5,6 +5,8 @@ Immutable.Map {
   isConfirmDeleteModalOpen: false,
   isSideBarOpen: false,
   isLoading: false,
+  isMessageBarOpen: false,
+  message: null,
 }
 `;
 
@@ -13,6 +15,8 @@ Immutable.Map {
   isConfirmDeleteModalOpen: true,
   isSideBarOpen: false,
   isLoading: false,
+  isMessageBarOpen: false,
+  message: null,
 }
 `;
 
@@ -21,6 +25,8 @@ Immutable.Map {
   isConfirmDeleteModalOpen: false,
   isSideBarOpen: false,
   isLoading: false,
+  isMessageBarOpen: false,
+  message: null,
 }
 `;
 
@@ -29,6 +35,8 @@ Immutable.Map {
   isConfirmDeleteModalOpen: false,
   isSideBarOpen: false,
   isLoading: true,
+  isMessageBarOpen: false,
+  message: null,
 }
 `;
 
@@ -37,6 +45,8 @@ Immutable.Map {
   isConfirmDeleteModalOpen: false,
   isSideBarOpen: false,
   isLoading: false,
+  isMessageBarOpen: false,
+  message: null,
 }
 `;
 
@@ -45,5 +55,7 @@ Immutable.Map {
   isConfirmDeleteModalOpen: false,
   isSideBarOpen: true,
   isLoading: false,
+  isMessageBarOpen: false,
+  message: null,
 }
 `;

@@ -58,7 +58,7 @@ const factory = type => {
     case 'all':
       return createSelector(workouts, currentDate, getExercises);
     default:
-      return new Error('Not supported type!');
+      return new Error('Type not supported!');
   }
 };
 

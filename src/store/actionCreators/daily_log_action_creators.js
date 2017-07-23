@@ -1,55 +1,67 @@
-import axios from "axios";
-const SIGNUP = "http://localhost:4000/api/dailylogs";
-import {
-  WRITE_DAILY_LOG,
-  WRITE_DAILY_LOGS,
-  WRITE_DAILY_LOG_DATES,
-  DELETE_DAILY_LOG
-} from "./../actions/daily_log_actions";
+import axios from 'axios';
+import client from './../../services/request';
 
-const createLog = dailyLog => (dispatch, getState) => {
+import * as dailyLogs from './../actions/daily_logs_actions';
+
+const createLog = dailyLog => (dispatch, getState) =>
   axios
-    .post(SIGNUP, dailyLog)
+    .post('http://localhost:4000/api/dailylogs', dailyLog)
     .then(response => {
-      dispatch({ type: WRITE_DAILY_LOG, payload: response.data });
-      return axios
-        .get("http://localhost:4000/api/dailylogs");
+      dispatch({ type: dailyLogs.WRITE_DAILY_LOG, payload: response.data });
+      dispatch({
+        type: dailyLogs.WRITE_DAILY_LOG_DATES,
+        payload: response.data
+      });
     })
-    .then(response => {
-      dispatch({ type: WRITE_DAILY_LOGS, payload: response.data });
-      return axios
-        .get("http://localhost:4000/api/dailylogs/dates");
-    })
-    .then(response => {
-      dispatch({ type: WRITE_DAILY_LOG_DATES, payload: response.data });
-    })
-    .catch(error => {});
-  console.log(dailyLog);
-};
+    .catch(error => console.log(error));
 
 const getLogsForSelectedMonth = month => (dispatch, getState) => {
   axios
-    .get("http://localhost:4000/api/dailylogs")
+    .get('http://localhost:4000/api/dailylogs')
     .then(response => {
-      dispatch({ type: WRITE_DAILY_LOGS, payload: response.data });
+      dispatch({ type: dailyLogs.WRITE_DAILY_LOGS, payload: response.data });
     })
     .catch(error => {});
 };
 
-const getDailyLogDates = () => (dispatch, getState) => {
+const getDailyLogDates = () => (dispatch, getState) =>
   axios
-    .get("http://localhost:4000/api/dailylogs/dates")
+    .get('http://localhost:4000/api/dailylogs/dates')
     .then(response => {
-      console.log(response.data);
-      dispatch({ type: WRITE_DAILY_LOG_DATES, payload: response.data });
+      dispatch({
+        type: dailyLogs.WRITE_DAILY_LOG_DATES,
+        payload: response.data
+      });
     })
-    .catch(error => {});
+    .catch(error => console.log(error));
+
+const updateDailyLog = dailyLog => dispatch =>
+  axios
+    .put(`http://localhost:4000/api/dailylogs/`, dailyLog)
+    .then(({ data }) => {
+      dispatch({
+        type: dailyLogs.WRITE_DAILY_LOG,
+        payload: data.date
+      });
+    })
+    .catch(error => console.log(error));
+
+const deleteDailyLog = _id => dispatch =>
+  axios
+    .delete(`http://localhost:4000/api/dailylogs/${_id}`)
+    .then(({ data }) => {
+      dispatch({
+        type: dailyLogs.DELETE_DAILY_LOG_DATE,
+        payload: data.date
+      });
+      dispatch({ type: dailyLogs.DELETE_DAILY_LOG, payload: _id });
+    })
+    .catch(error => console.log(error));
+
+export {
+  createLog,
+  getLogsForSelectedMonth,
+  getDailyLogDates,
+  updateDailyLog,
+  deleteDailyLog
 };
-
-const updateDailyLog = dailyLog => dispatch => {}
-
-const deleteDailyLog = _id => dispatch => {
-  dispatch({type: DELETE_DAILY_LOG, payload: _id})
-}
-
-export { createLog, getLogsForSelectedMonth, getDailyLogDates, updateDailyLog, deleteDailyLog };

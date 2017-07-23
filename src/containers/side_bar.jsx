@@ -1,81 +1,70 @@
-import React from "react";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Drawer, MenuItem, FlatButton } from 'material-ui';
 
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Drawer, MenuItem, FlatButton } from "material-ui";
+import { closeSideBar } from './../store/actionCreators/app_action_creators';
+import { logout } from './../store/actionCreators/auth_action_creators';
 
-import { closeSideBar } from "./../store/actionCreators/app_action_creators";
+import styled from 'styled-components';
 
-const SideBarContainer = ({ isSideBarOpen, closeSideBar }) => {
+const LinkWithoutUnderLine = styled(Link)`
+  text-decoration: none;
+`;
+
+const SideBarContainer = ({ isSideBarOpen, closeSideBar, logout, links }) => {
   return (
     <Drawer
       open={isSideBarOpen}
       docked={false}
       onRequestChange={() => closeSideBar()}
     >
-      <MenuItem onClick={() => closeSideBar()}>Close</MenuItem>
+      <MenuItem onClick={() => closeSideBar()} primaryText="Close" />
 
-      <Link
-        to="/workoutlogs"
-        style={{ textDecoration: "none" }}
+      <LinkWithoutUnderLine
+        to="/app/workoutlogs"
         onClick={() => closeSideBar()}
       >
-        <MenuItem>Workout logs</MenuItem>
-      </Link>
-      <Link
-        to="/kcaltarget"
-        style={{ textDecoration: "none" }}
-        onClick={() => closeSideBar()}
-      >
-        <MenuItem>kolrialog</MenuItem>
-      </Link>
-      <Link
-        to="/dailylogs"
-        style={{ textDecoration: "none" }}
-        onClick={() => closeSideBar()}
-      >
-        <MenuItem>
-          <span>Daily logs</span>
-        </MenuItem>
-      </Link>
+        <MenuItem primaryText="Workout logs" />
+      </LinkWithoutUnderLine>
+      <LinkWithoutUnderLine to="/app/kcaltarget" onClick={() => closeSideBar()}>
+        <MenuItem primaryText="Set calorie target" />
+      </LinkWithoutUnderLine>
+      <LinkWithoutUnderLine to="/app/dailylogs" onClick={() => closeSideBar()}>
+        <MenuItem primaryText="Daily logs" />
+      </LinkWithoutUnderLine>
 
-      <Link
-        to="/workouttargets"
-        style={{ textDecoration: "none" }}
+      <LinkWithoutUnderLine
+        to="/app/workouttargets"
         onClick={() => closeSideBar()}
       >
-        <MenuItem>
-          {" "}<span>workouttarget</span>
-        </MenuItem>
-      </Link>
-      <Link
-        to="/userdetails"
-        style={{ textDecoration: "none" }}
+        <MenuItem primaryText="Set workout target" />
+      </LinkWithoutUnderLine>
+      <LinkWithoutUnderLine
+        to="/app/userdetails"
         onClick={() => closeSideBar()}
       >
-        <MenuItem>
-          {" "}<span>userdetails</span>
-        </MenuItem>
-      </Link>
-      <Link
-        to="/kcaltracker"
-        style={{ textDecoration: "none" }}
+        <MenuItem primaryText="Change user details" />
+      </LinkWithoutUnderLine>
+      <LinkWithoutUnderLine
+        to="/app/kcaltracker"
         onClick={() => closeSideBar()}
       >
-        <MenuItem>
-          {" "}<span>kl</span>
-        </MenuItem>
-      </Link>
+        <MenuItem primaryText="Track calories" />
+      </LinkWithoutUnderLine>
+
+      <MenuItem onClick={() => logout()} primaryText="Log out" />
     </Drawer>
   );
 };
 
 const mapStateToProps = state => ({
-  isSideBarOpen: state.getIn(["app", "isSideBarOpen"])
+  isSideBarOpen: state.getIn(['app', 'isSideBarOpen'])
 });
 
 const mapDispatchToProps = dispatch => ({
-  closeSideBar: () => dispatch(closeSideBar())
+  closeSideBar: () => dispatch(closeSideBar()),
+  logout: () => dispatch(logout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarContainer);

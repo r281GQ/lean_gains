@@ -9,7 +9,7 @@ class SignUpContainer extends PureComponent {
   render() {
     return (
       <div>
-        <SignUpComponent
+        <SignUpComponent {...this.props}
           signUpHandler={this.props.handleSubmit(
             ({ name, username, email, password }) => {
               this.props.signUp({ name, username, email, password });

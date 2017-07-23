@@ -146,6 +146,8 @@ app.post('/api/dailylogs', (request, response) => {
   return response.status(201).send(dailyLog);
 });
 
+
+
 app.get('/api/dailylogs', (request, response) => {
   console.log(
     'Endpoint GET /api/dailylogs reached with query: ',
@@ -162,7 +164,10 @@ app.get('/api/dailylogs/dates', (request, response) => {
 });
 
 app.post('/api/workoutlogs', (request, response) => {
-  console.log('Endpoint POST /api/workoutlogs reached with body: ', request.body);
+  console.log(
+    'Endpoint POST /api/workoutlogs reached with body: ',
+    request.body
+  );
   let { exercises } = request.body;
   let exercises1 = _.map(exercises, exex => {
     return {
@@ -181,7 +186,17 @@ app.post('/api/workoutlogs', (request, response) => {
 });
 
 app.delete('/api/workoutlogs/:id', (request, response) => {
-  return response.status(200).send({});
+  console.log();
+  return response
+    .status(200)
+    .send(_.find(workoutLogs, log => log._id === request.params.id));
+});
+
+app.delete('/api/dailylogs/:id', (request, response) => {
+  console.log();
+  return response
+    .status(200)
+    .send(_.find(dailyLogs, log => log._id === request.params.id));
 });
 
 app.put('/api/workoutlogs', (request, response) => {

@@ -19,6 +19,7 @@ class DailyLogFormContainer extends Component {
         createDailyLogHandler={() => null}
         label={this.props.type === 'edit' ? 'update' : 'create'}
         renderDatepicker={this.props.renderDatepicker}
+        {...this.props}
       />
     );
   };

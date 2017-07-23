@@ -12,7 +12,7 @@ const currentKcal = state => currentKcalSelector(state);
 
 const currentMacros = (isTraingingDay, currentKcal) =>
   isTraingingDay
-    ? currentKcal ? currentKcal.get('training') : Map()
-    : currentKcal ? currentKcal.get('rest') : Map();
+    ? !currentKcal.isEmpty() ? currentKcal.get('training') : Map()
+    : !currentKcal.isEmpty() ? currentKcal.get('rest') : Map();
 
 export default createSelector(isTraingingDay, currentKcal, currentMacros);

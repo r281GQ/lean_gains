@@ -26,6 +26,7 @@ import { TextField as Tx } from 'redux-form-material-ui';
 // import { searchForNutrition } from './../store/actionCreators/kcal_action_creators';
 import * as _ from 'lodash';
 import temp from './temp';
+import {INIT_API, CLOSE_API} from './../store/actions/app_actions';
 
 // import { WRITE_SEARCH_RESULTS } from './../actions/kcal_action';
 
@@ -181,8 +182,13 @@ class KcalLog extends React.PureComponent {
               if (event.key === 'Enter') {
                 console.log(event);
                 // this.props.feth(event.target.value)
+                this.props.dispatch({type: INIT_API})
                 searchForNutrition(event.target.value).then(stuff =>
-                  this.props.j(stuff[0])
+
+{
+  this.props.dispatch({type: CLOSE_API})
+  return this.props.j(stuff[0])
+}
                 );
                 event.target.value = '  ';
               }
