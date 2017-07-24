@@ -32,15 +32,15 @@ const getWorkoutLogDates = month => dispatch =>
 
 const createWorkoutLog = workoutLog => dispatch =>
   axios
-    .post('http://localhost:4000/api/workoutlogs', workoutLog)
-    .then(({ data }) => {
-      dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data });
-      dispatch({
-        type: workoutLogs.WRITE_WORKOUT_LOG_DATE,
-        payload: data.date
-      });
-    })
-    .catch(error => console.log(error));
+  .post('http://localhost:4000/api/workoutlogs', workoutLog)
+  .then(({ data }) => {
+    dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data });
+    dispatch({
+      type: workoutLogs.WRITE_WORKOUT_LOG_DATE,
+      payload: data.date
+    });
+  })
+  .catch(error => console.log(error));
 
 const updateWorkoutLog = workoutLog => dispatch =>
   axios

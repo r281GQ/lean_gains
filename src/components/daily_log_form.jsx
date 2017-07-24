@@ -3,9 +3,9 @@ import { Field } from 'redux-form/immutable';
 
 import { TextField, DatePicker } from 'redux-form-material-ui';
 
-const DailyLogForm = ({ createDailyLogHandler, label, renderDatepicker }) => {
+const DailyLogForm = ({handleSubmit, createDailyLogHandler, label, renderDatepicker }) => {
   return (
-    <form onSubmit={createDailyLogHandler}>
+    <form onSubmit={handleSubmit(createDailyLogHandler)}>
       <div>
         datePicker
         {renderDatepicker ? <Field name="date" component={DatePicker}  /> : null}

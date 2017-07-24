@@ -16,7 +16,7 @@ class DailyLogFormContainer extends Component {
   render = () => {
     return (
       <DailyLogFormComponent
-        createDailyLogHandler={() => null}
+        createDailyLogHandler={p => console.log(p)}
         label={this.props.type === 'edit' ? 'update' : 'create'}
         renderDatepicker={this.props.renderDatepicker}
         {...this.props}
@@ -24,6 +24,7 @@ class DailyLogFormContainer extends Component {
     );
   };
 }
+
 export default connect()(
   reduxForm({ form: 'daily-log' })(DailyLogFormContainer)
 );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, FieldArray } from "redux-form/immutable";
 import { FlatButton } from "material-ui";
-import { List, ListItem } from "material-ui/List";
+import { List, ListItem } from "material-ui";
 import { Checkbox } from "redux-form-material-ui";
 
 import NoteField from "./../components/note_field";
@@ -31,12 +31,12 @@ const ExerciseFieldArray = ({ fields: { push, map, remove }, values }) =>
           onTouchTap={() => remove(index)}
           label={`Remove exercise`}
         />
-        {item.marker
+        {values[index].marker
           ? null
           : <FieldArray
               name={`${item}.sets`}
               component={SetsFieldArray}
-              exercise={item[index]}
+              sets={values[index].sets}
             />}
       </ListItem>
     )}

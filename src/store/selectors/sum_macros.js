@@ -1,10 +1,10 @@
-import Immutable from 'immutable';
+import { fromJS, List } from 'immutable';
 import { createSelector } from 'reselect';
 import { formValueSelector } from 'redux-form/immutable';
 
-const selector = formValueSelector('kcal-k');
+const selector = formValueSelector('calorie-track');
 
-const foods = state => selector(state, 'foods') || Immutable.List();
+const foods = state => selector(state, 'foods') || List();
 
 const calories = foods =>
   foods.reduce((sum, item) => {
@@ -25,7 +25,7 @@ const calories = foods =>
                 item.get('quantity'))
         )
         .update(
-          'carb',
+          'carbohydrate',
           value =>
             value +
             item.get('nf_total_carbohydrate') *
@@ -52,6 +52,6 @@ const calories = foods =>
                 item.get('quantity'))
         )
     );
-  }, Immutable.fromJS({ calories: 0, protein: 0, carb: 0, fat: 0 }));
+  }, fromJS({ calories: 0, protein: 0, carbohydrate: 0, fat: 0 }));
 
 export default createSelector(foods, calories);

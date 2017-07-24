@@ -44,7 +44,6 @@ const dailyLogsForMonth = logsForMonth('dailyLogs');
 const isTodaysDailyLogExists = isTodaysLogExists('dailyLogs');
 const monthsWithDailyLogs = monthLogs('dailyLogs');
 
-//TODO deletecofnrim model to hoc just as snackbar
 class DailyLogPicker extends Component {
   componentWillMount = () => {
     if (this.props.datesWithDailyLogs.isEmpty()) this.props.getDailyLogDates();
@@ -78,12 +77,7 @@ class DailyLogPicker extends Component {
     } = this.props;
     return (
       <div>
-        <Prompt
-         when={true}
-         message={location => (
-           `Are you sure you want to go to ${location.pathname}`
-         )}
-       />
+
         <DateSelector
           months={monthsWithDailyLogs.toJS()}
           selectedMonth={selectedMonth}

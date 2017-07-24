@@ -9,9 +9,13 @@ import WorkoutLogFormContainer from './workout_log_form';
 import isTrainingDay from './../../store/selectors/exercises';
 
 //TODO: floatng action button move to hoc
-const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
+const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
   <div>
-    <Route exact path={'/app/workoutlogs'} component={WorkoutLogsMainContainer} />
+    <Route
+      exact
+      path={'/app/workoutlogs'}
+      component={WorkoutLogsMainContainer}
+    />
 
     <Route
       exact
@@ -20,7 +24,13 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
         let defaultValue = {
           date: moment().toDate()
         };
-        return <WorkoutLogFormContainer {...props} type={`createBefore`} defaultValue={defaultValue} />;
+        return (
+          <WorkoutLogFormContainer
+            {...props}
+            type={`createBefore`}
+            defaultValue={defaultValue}
+          />
+        );
       }}
     />
 
@@ -55,6 +65,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
               .set('sets', List())
           )
         );
+
         return (
           <WorkoutLogFormContainer
             {...props}
