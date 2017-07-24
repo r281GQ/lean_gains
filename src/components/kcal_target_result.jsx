@@ -41,13 +41,13 @@ const KcalTargetResult = ({
               {" "} Calories
             </TableRowColumn>
             <TableRowColumn >
-              {" "}{calorieTarget.training.protein*4}
+              {" "}{calorieTarget[label].protein*4}
             </TableRowColumn>
             <TableRowColumn>
-              {" "}{calorieTarget.training.carbohydrate*4}
+              {" "}{calorieTarget[label].carbohydrate*4}
             </TableRowColumn>
             <TableRowColumn >
-              {" "}{calorieTarget.training.fat*9}
+              {" "}{calorieTarget[label].fat*9}
             </TableRowColumn>
           </TableRow>
           <TableRow selectable={false}>
@@ -55,13 +55,13 @@ const KcalTargetResult = ({
               {" "} Grams
             </TableRowColumn>
             <TableRowColumn >
-              {" "}{calorieTarget.training.protein}
+              {" "}{calorieTarget[label].protein}
             </TableRowColumn>
             <TableRowColumn>
-              {" "}{calorieTarget.training.carbohydrate}
+              {" "}{calorieTarget[label].carbohydrate}
             </TableRowColumn>
             <TableRowColumn >
-              {" "}{calorieTarget.training.fat}
+              {" "}{calorieTarget[label].fat}
             </TableRowColumn>
           </TableRow>
         </TableBody>

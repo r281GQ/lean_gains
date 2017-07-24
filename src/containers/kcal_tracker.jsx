@@ -4,7 +4,8 @@ import {
   Field,
   FieldArray,
   formValueSelector,
-  arrayPush, submit
+  arrayPush,
+  submit
 } from 'redux-form/immutable';
 import {
   AutoComplete,
@@ -21,13 +22,14 @@ import {
   CardTitle,
   CardText
 } from 'material-ui';
+import { Map, fromJS, List as ImmutableList } from 'immutable';
 import { connect } from 'react-redux';
 import { TextField as Tx } from 'redux-form-material-ui';
 // import { searchForNutrition } from './../store/actionCreators/kcal_action_creators';
 import * as _ from 'lodash';
-import temp from './temp';
-import {INIT_API, CLOSE_API} from './../store/actions/app_actions';
-
+import temp from './nutritions';
+import { INIT_API, CLOSE_API } from './../store/actions/app_actions';
+import calories1 from './../store/selectors/calorie_track';
 // import { WRITE_SEARCH_RESULTS } from './../actions/kcal_action';
 
 import axios from 'axios';
@@ -128,81 +130,51 @@ let interv;
 //TODO fav like kalbaz, illetve recentsearches, illetve recpetek
 //TODO autoSave functionanilty refactore to a service
 class KcalLog extends React.PureComponent {
-  componentDidMount(){
-    interv = setInterval( ()=>this.props.h(), 2000);
-    console.log(interv);
-  }
-
-  componentWillUnmount(){
-    clearInterval(interv);
-  }
-
   render() {
-    const total =_.reduce(
-      this.props.cals ? this.props.cals : [],
-      (sum, item) => {
-        const { serving_weight } = _.find(
-          item.alt_measures,
-          alt => alt.measure === item.serving_unit
-        );
-
-        sum.protein =
-          +item.nf_protein *
-          (serving_weight / item.serving_weight_grams) *
-          item.quantity;
-
-        sum.carb =
-          +item.nf_total_carbohydrate *
-          (serving_weight / item.serving_weight_grams) *
-          item.quantity;
-
-        sum.fat =
-          +item.nf_total_fat *
-          (serving_weight / item.serving_weight_grams) *
-          item.quantity;
-
-        sum.calories =
-          +item.nf_calories *
-          (serving_weight / item.serving_weight_grams) *
-          item.quantity;
-
-        return sum;
-      },
-      { calories: 0, protein: 0, carb: 0, fat: 0 }
-    )
+    const {total} = this.props;
     return (
       <div>
-        <FlatButton label='g' onTouchTap={()=>this.props.h()} />
-        Calories so far {total.calories} P: {total.protein} C: {total.carb} F: {total.fat}
+        Calories so far {total.get('calories')} P: {total.get('protein')} C:
+        {total.get('carb')} F: {total.get('fat')}
+        }
+        <TextField
+          fullWidth={true}
+          name="search"
+          onKeyPress={event => {
+            if (event.key === 'Enter') {
+              console.log(event);
+              this.props.dispatch({ type: INIT_API });
+              searchForNutrition(event.target.value)
+                .then(stuff => {
+                  this.props.dispatch({ type: CLOSE_API });
+                  console.log(stuff[0]);
+                  return this.props.pushToFoods(fromJS(stuff[0]));
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              event.target.value = '  ';
+            }
+          }}
+        />
+        <FlatButton
+          label="Remote submit"
+          onTouchTap={() => this.props.remoteSubmit()}
+        />
         <form onSubmit={this.props.handleSubmit(form => console.log(form))}>
-          <TextField
-            fullWidth={true}
-            name="search"
-            onKeyPress={event => {
-              if (event.key === 'Enter') {
-                console.log(event);
-                // this.props.feth(event.target.value)
-                this.props.dispatch({type: INIT_API})
-                searchForNutrition(event.target.value).then(stuff =>
-
-{
-  this.props.dispatch({type: CLOSE_API})
-  return this.props.j(stuff[0])
-}
-                );
-                event.target.value = '  ';
-              }
-            }}
+          <FlatButton label="Update day" type="submit" />
+          <FieldArray
+            name="foods"
+            component={temp}
+            values={this.props.cals1.toJS()}
           />
-        <FlatButton label='g' type='submit' />
-          <FieldArray name="cals" component={temp} cals={this.props.cals} />
         </form>
       </div>
     );
   }
 }
 
-// }
+const selector = formValueSelector('kcal-k');
 const mapDispatchToProps = dispatch => {
   return {
     feth: query => dispatch(searchForNutrition(query))
@@ -211,21 +183,21 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
+    total: calories1(state),
     results: state.getIn(['kcal', 'searchResults'])
   };
 };
-const selector = formValueSelector('kcal-k');
-KcalLog = connect(state => ({
-  cals: selector(state, 'cals')
+KcalLog = connect((state, props) => ({
+  cals1: selector(state, 'foods') || ImmutableList()
 }))(KcalLog);
 
 export default connect(mapStateToProps, dispatch => ({
-  j: f => dispatch(arrayPush('kcal-k', 'cals', f))
-  ,h: f => dispatch(submit('kcal-k'))
+  pushToFoods: food => dispatch(arrayPush('kcal-k', 'foods', food)),
+  remoteSubmit: () => dispatch(submit('kcal-k'))
 }))(
   reduxForm({
     form: 'kcal-k',
     shouldValidate: () => true,
-    onSubmit:form => console.log(form)
+    onSubmit: form => console.log(form)
   })(KcalLog)
 );

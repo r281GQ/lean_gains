@@ -7,7 +7,7 @@ import * as calorie from './../services/kcal_service';
 import age from './../store/selectors/age';
 import { createKcalTarget } from './../store/actionCreators/user_details_action_creators';
 
-import KcalTargetResult from './../components/kcal_target_result';
+import CalorieTargetPanel from './../components/kcal_target_result';
 import BMRCalculationSelector from './../components/bmr_calculation_selector';
 import BodyFatField from './../components/body_fat_field';
 import ActivityLevelSelecor from './../components/activity_level_selector';
@@ -18,18 +18,8 @@ import FatMethodSelector from './../components/fat_mathod_selector';
 import FatSelector from './../components/fat_selector';
 import CenteredSubmitButton from './../components/centered_submit_button';
 
-const calculateMax = (tdee, dayCalorie, proteinCalorie, type) =>
-  _.floor(
-    calorie.unlessItsAbovezero(
-      calorie[type === 'percentage' ? 'maxFatPercentage' : 'maxFatGram'](
-        calorie.dayCalorie(tdee, dayCalorie),
-        proteinCalorie
-      )
-    ),
-    1
-  );
-
 //TODO debounce on sliders
+//TODO moving the logic from the component to a selector
 class KcalTargerContainer extends PureComponent {
   componentDidMount = () => calorie.initValues(this.props);
 
@@ -96,25 +86,25 @@ class KcalTargerContainer extends PureComponent {
           <FatMethodSelector />
           <FatSelector
             fatMethod={fatMethod}
-            maxRestFatGrams={calculateMax(
+            maxRestFatGrams={calorie.calculateMax(
               tdee,
               restDay,
               proteinCalorie,
               'gram'
             )}
-            maxRestFatPercentage={calculateMax(
+            maxRestFatPercentage={calorie.calculateMax(
               tdee,
               restDay,
               proteinCalorie,
               'percentage'
             )}
-            maxTrainingFatGrams={calculateMax(
+            maxTrainingFatGrams={calorie.calculateMax(
               tdee,
               trainingDay,
               proteinCalorie,
               'gram'
             )}
-            maxTrainingFatPercentage={calculateMax(
+            maxTrainingFatPercentage={calorie.calculateMax(
               tdee,
               trainingDay,
               proteinCalorie,
@@ -127,7 +117,8 @@ class KcalTargerContainer extends PureComponent {
           />
           <CenteredSubmitButton label="Create calorie target" />
         </form>
-        <KcalTargetResult calorieTarget={calorieTarget} label="training" />
+        <CalorieTargetPanel calorieTarget={calorieTarget} label='rest' />
+        <CalorieTargetPanel calorieTarget={calorieTarget} label='training' />
       </div>
     );
   };

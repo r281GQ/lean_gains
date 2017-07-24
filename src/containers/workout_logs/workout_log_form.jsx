@@ -17,9 +17,10 @@ import {
 import ExerciseFieldArray from './../../components/exercies_field_array';
 
 class WorkoutLogFormContainer extends Component {
-  componentDidMount() {
+  componentWillMount() {
+    console.log(this.props);
     if (this.props.type !== 'createBefore')
-      this.props.change('exercises', this.props.defaultValue.toJS());
+      this.props.change('exercises', this.props.defaultValue);
     this.props.change('date', moment().toDate());
   }
 
@@ -31,6 +32,7 @@ class WorkoutLogFormContainer extends Component {
       : false;
 
   render() {
+    console.log(this.props);
     let { createWorkoutLog, handleSubmit, updateWorkoutLog } = this.props;
     return (
       <div>
@@ -67,7 +69,6 @@ class WorkoutLogFormContainer extends Component {
             <FieldArray
               name="exercises"
               component={ExerciseFieldArray}
-              values={this.props.exercises}
             />
             <FlatButton
               type="submit"
@@ -83,18 +84,29 @@ class WorkoutLogFormContainer extends Component {
 const selector = formValueSelector('workoutLog');
 
 //TODO own props needs to be moved to the bottom connect
-WorkoutLogFormContainer = connect(
+// WorkoutLogFormContainer = connect(
+//   state => ({
+//     datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates']),
+//     exercise1s: selector(state, 'exercises')
+//   }),
+//   dispatch => ({
+//     createWorkoutLog: workoutLog => dispatch(createWorkoutLog(workoutLog)),
+//     updateWorkoutLog: workoutLog => dispatch(updateWorkoutLog(workoutLog))
+//   })
+// )(WorkoutLogFormContainer);
+
+export default connect(
   state => ({
-    datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates']),
-    exercises: selector(state, 'exercises')
-  }),
+    datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates'])
+  })
+
+,
   dispatch => ({
     createWorkoutLog: workoutLog => dispatch(createWorkoutLog(workoutLog)),
     updateWorkoutLog: workoutLog => dispatch(updateWorkoutLog(workoutLog))
   })
-)(WorkoutLogFormContainer);
 
-export default connect()(
+)(
   reduxForm({
     form: 'workoutLog'
   })(WorkoutLogFormContainer)

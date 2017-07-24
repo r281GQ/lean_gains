@@ -6,7 +6,7 @@ import { List, ListItem } from "material-ui/List";
 import WeightField from "./../components/weight_field";
 import RepsField from "./../components/reps_field";
 
-const SetsFieldArray = ({ fields: { push, map, remove }, exercise }) =>
+const SetsFieldArray = ({ fields: { push, map, remove }}) =>
   <List>
     <ListItem disabled={true}>
       <FlatButton
@@ -18,7 +18,7 @@ const SetsFieldArray = ({ fields: { push, map, remove }, exercise }) =>
     </ListItem>
     {map((item, index) =>
       <ListItem key={index} disabled={true}>
-        <WeightField item={item} currentValue={exercise.sets[index].weight} />
+        <WeightField item={item} currentValue={item[index].weight} />
         <RepsField item={item} />
         <FlatButton onTouchTap={() => remove(index)} label={`Remove set`} />
       </ListItem>

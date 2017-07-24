@@ -31,12 +31,12 @@ const ExerciseFieldArray = ({ fields: { push, map, remove }, values }) =>
           onTouchTap={() => remove(index)}
           label={`Remove exercise`}
         />
-        {values[index].marker
+        {item.marker
           ? null
           : <FieldArray
               name={`${item}.sets`}
               component={SetsFieldArray}
-              exercise={values[index]}
+              exercise={item[index]}
             />}
       </ListItem>
     )}

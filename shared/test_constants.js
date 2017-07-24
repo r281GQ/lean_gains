@@ -24,6 +24,7 @@ const dailyLogs = [
       belly: undefined,
       belowBelly: undefined,
       hips: 45,
+      waist: undefined,
       rightThigh: undefined,
       leftThigh: undefined
     },
@@ -50,6 +51,7 @@ const dailyLogs = [
       belly: undefined,
       belowBelly: undefined,
       hips: undefined,
+      waist: undefined,
       rightThigh: undefined,
       leftThigh: undefined
     },
@@ -125,6 +127,7 @@ const latestMeasurements = {
   belly: 81,
   belowBelly: 87,
   hips: 92,
+  waist: 96,
   rightThigh: 50,
   leftThigh: 50
 };

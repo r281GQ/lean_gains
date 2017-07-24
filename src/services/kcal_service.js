@@ -1,5 +1,7 @@
 import * as _ from 'lodash';
+
 const unlessItsAbovezero = value => (value > 0 ? value : 0.1);
+
 const maleBodyFat = (height, neck, belly) =>
   _.round(
     86.01 * Math.log10(belly * 0.39 - neck * 0.39) -
@@ -8,17 +10,20 @@ const maleBodyFat = (height, neck, belly) =>
     1
   );
 
-//TODO needs provide a way to measure these as well
 const femaleBodyFat = (height, neck, waist, hip) =>
-  // 163.205 x log10(waist + hip – neck) – 97.684 x log10(height) – 78.387
-  _.round(0, 1);
+  _.round(
+    163.205 * log10(waist + hip - neck) - 97.684 * log10(height) - 78.387,
+    1
+  );
 
 const areArgsDefined = args =>
   _.every(args, argument => argument !== undefined || argument !== null);
 
-const calculateBodyFat = (height, weight, sex, neck, belly) =>
+const calculateBodyFat = (height, weight, sex, neck, belly, waist, hip) =>
   areArgsDefined([height, weight, sex, neck, belly])
-    ? sex === 'male' ? maleBodyFat(height, neck, belly) : femaleBodyFat()
+    ? sex === 'male'
+      ? maleBodyFat(height, neck, belly)
+      : femaleBodyFat(height, neck, waist, hip)
     : 0;
 
 const tdeeCalculator = (method, weight, height, age, sex, activity, bodyFat) =>
@@ -83,7 +88,9 @@ const initValues = ({ change, sex, latestMeasurements }) => {
       latestMeasurements.get('weight'),
       sex,
       latestMeasurements.get('neck'),
-      latestMeasurements.get('belly')
+      latestMeasurements.get('belly'),
+      latestMeasurements.get('waist'),
+      latestMeasurements.get('hip')
     )
   );
   change('restDay', -20);
@@ -222,83 +229,93 @@ const deleteCache = () =>
     fn => (fn.Cache = {})
   );
 
-  const calculateFinalFat = (fatMethod, tdee, dayCalorieV, percentage, gram) =>
-    fatMethod === 'percentage'
-      ? _.ceil(dayCalorie(tdee, dayCalorieV) * (percentage / 100) / 9)
-      : _.ceil(gram * 9) / 9;
+const calculateFinalFat = (fatMethod, tdee, dayCalorieV, percentage, gram) =>
+  fatMethod === 'percentage'
+    ? _.ceil(dayCalorie(tdee, dayCalorieV) * (percentage / 100) / 9)
+    : _.ceil(gram * 9) / 9;
 
-  const calculateFinalCalorie = (tdee, dayCalorieV) =>
-    _.ceil(dayCalorie(tdee, dayCalorieV));
+const calculateFinalCalorie = (tdee, dayCalorieV) =>
+  _.ceil(dayCalorie(tdee, dayCalorieV));
 
-  const calculateFinalProtein = proteinCalorie => _.ceil(proteinCalorie / 4);
+const calculateFinalProtein = proteinCalorie => _.ceil(proteinCalorie / 4);
 
-  const calculateFinalCarbohydrate = (
-    tdee,
-    dayCalorieV,
-    proteinCalorie,
+const calculateFinalCarbohydrate = (
+  tdee,
+  dayCalorieV,
+  proteinCalorie,
+  fatMethod,
+  percentage,
+  gram
+) =>
+  _.ceil(
+    (dayCalorie(tdee, dayCalorieV) -
+      calculateFinalFat(fatMethod, tdee, dayCalorieV, percentage, gram) * 9 -
+      proteinCalorie) /
+      4
+  );
+
+const createFinalValues = (
+  tdee,
+  proteinCalorie,
+  {
+    restDay,
+    trainingDay,
     fatMethod,
-    percentage,
-    gram
-  ) =>
-    _.ceil(
-      (dayCalorie(tdee, dayCalorieV) -
-        calculateFinalFat(fatMethod, tdee, dayCalorieV, percentage, gram) * 9 -
-        proteinCalorie) /
-        4
-    );
-
-  const createFinalValues = (
-    tdee,
-    proteinCalorie,
-    {
+    restFatPercentage,
+    restFatGrams,
+    trainingFatGrams,
+    trainingFatPercentage
+  }
+) => ({
+  rest: {
+    calorie: calculateFinalCalorie(tdee, restDay),
+    protein: calculateFinalProtein(proteinCalorie),
+    carbohydrate: calculateFinalCarbohydrate(
+      tdee,
       restDay,
-      trainingDay,
+      proteinCalorie,
       fatMethod,
       restFatPercentage,
-      restFatGrams,
-      trainingFatGrams,
-      trainingFatPercentage
-    }
-  ) => ({
-    rest: {
-      calorie: calculateFinalCalorie(tdee, restDay),
-      protein: calculateFinalProtein(proteinCalorie),
-      carbohydrate: calculateFinalCarbohydrate(
-        tdee,
-        restDay,
-        proteinCalorie,
-        fatMethod,
-        restFatPercentage,
-        restFatGrams
-      ),
-      fat: calculateFinalFat(
-        fatMethod,
-        tdee,
-        restDay,
-        restFatPercentage,
-        restFatGrams
-      )
-    },
-    training: {
-      calorie: calculateFinalCalorie(tdee, trainingDay),
-      protein: calculateFinalProtein(proteinCalorie),
-      carbohydrate: calculateFinalCarbohydrate(
-        tdee,
-        trainingDay,
-        proteinCalorie,
-        fatMethod,
-        trainingFatPercentage,
-        trainingFatGrams
-      ),
-      fat: calculateFinalFat(
-        fatMethod,
-        tdee,
-        trainingDay,
-        trainingFatPercentage,
-        trainingFatGrams
-      )
-    }
-  });
+      restFatGrams
+    ),
+    fat: calculateFinalFat(
+      fatMethod,
+      tdee,
+      restDay,
+      restFatPercentage,
+      restFatGrams
+    )
+  },
+  training: {
+    calorie: calculateFinalCalorie(tdee, trainingDay),
+    protein: calculateFinalProtein(proteinCalorie),
+    carbohydrate: calculateFinalCarbohydrate(
+      tdee,
+      trainingDay,
+      proteinCalorie,
+      fatMethod,
+      trainingFatPercentage,
+      trainingFatGrams
+    ),
+    fat: calculateFinalFat(
+      fatMethod,
+      tdee,
+      trainingDay,
+      trainingFatPercentage,
+      trainingFatGrams
+    )
+  }
+});
+
+const calculateMax = (tdee, dayCalorieV, proteinCalorie, type) =>
+  _.floor(
+    unlessItsAbovezero(
+      type === 'percentage'
+        ? maxFatPercentage(dayCalorie(tdee, dayCalorieV), proteinCalorie)
+        : maxFatGram(dayCalorie(tdee, dayCalorieV), proteinCalorie)
+    ),
+    1
+  );
 
 export {
   tdeeCalculator,
@@ -313,5 +330,6 @@ export {
   maxFatPercentage,
   maxFatGram,
   dayCalorie,
-  createFinalValues
+  createFinalValues,
+  calculateMax
 };
