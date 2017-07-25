@@ -6,7 +6,7 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
-  message: null,
+  message: "",
 }
 `;
 
@@ -16,7 +16,7 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
-  message: null,
+  message: "",
 }
 `;
 
@@ -26,7 +26,7 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
-  message: null,
+  message: "",
 }
 `;
 
@@ -36,7 +36,7 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: true,
   isMessageBarOpen: false,
-  message: null,
+  message: "",
 }
 `;
 
@@ -46,7 +46,7 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
-  message: null,
+  message: "",
 }
 `;
 
@@ -56,6 +56,6 @@ Immutable.Map {
   isSideBarOpen: true,
   isLoading: false,
   isMessageBarOpen: false,
-  message: null,
+  message: "",
 }
 `;

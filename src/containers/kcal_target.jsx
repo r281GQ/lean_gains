@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 
 import * as calorie from './../services/kcal_service';
 import age from './../store/selectors/age';
+import calorieTarget from './../store/selectors/calorie_target';
 import { createKcalTarget } from './../store/actionCreators/user_details_action_creators';
 
 import CalorieTargetPanel from './../components/kcal_target_result';
@@ -20,7 +21,8 @@ import CenteredSubmitButton from './../components/centered_submit_button';
 
 //TODO debounce on sliders
 //TODO moving the logic from the component to a selector
-class KcalTargerContainer extends PureComponent {
+//TODO checking if every data is avaliable for the calculations, if not error page
+class CalorieTargetContainer extends PureComponent {
   componentDidMount = () => calorie.initValues(this.props);
 
   componentWillReceiveProps = (nextProps, nextState) => {
@@ -68,12 +70,16 @@ class KcalTargerContainer extends PureComponent {
       proteinCalorie,
       this.props
     );
+    console.log(this.props.calorieTarget.toJS());
     return (
       <div>
         <form onSubmit={handleSubmit(() => createCalorieTarget(calorieTarget))}>
           <BMRCalculationSelector />
           <BodyFatField bmrCalculationMethod={bmrCalculationMethod} />
-          <ActivityLevelSelecor />
+          <ActivityLevelSelecor
+            normalize={value =>
+              typeof value !== Number ? Number.parseFloat(value) : value}
+          />
           <CalorieSplitSelector />
           <CustomCalorieField
             calorieSplit={calorieSplit}
@@ -117,16 +123,16 @@ class KcalTargerContainer extends PureComponent {
           />
           <CenteredSubmitButton label="Create calorie target" />
         </form>
-        <CalorieTargetPanel calorieTarget={calorieTarget} label='rest' />
-        <CalorieTargetPanel calorieTarget={calorieTarget} label='training' />
+        <CalorieTargetPanel calorieTarget={calorieTarget} label="rest" />
+        <CalorieTargetPanel calorieTarget={calorieTarget} label="training" />
       </div>
     );
   };
 }
 
-const selector = formValueSelector('kcal-target');
+const selector = formValueSelector('calorie-target');
 
-KcalTargerContainer = connect(state => ({
+CalorieTargetContainer = connect(state => ({
   activity: selector(state, 'activity'),
   calorieSplit: selector(state, 'calorieSplit'),
   protein: selector(state, 'protein'),
@@ -139,13 +145,14 @@ KcalTargerContainer = connect(state => ({
   restDay: selector(state, 'restDay'),
   fatMethod: selector(state, 'fatMethod'),
   bodyFat: selector(state, 'bodyFat')
-}))(KcalTargerContainer);
+}))(CalorieTargetContainer);
 
 const mapStateToProps = state => {
   return {
     sex: state.getIn(['userDetails', 'sex']),
     age: age(state),
-    latestMeasurements: state.getIn(['userDetails', 'latestMeasurements'])
+    latestMeasurements: state.getIn(['userDetails', 'latestMeasurements']),
+    calorieTarget: calorieTarget(state)
   };
 };
 
@@ -157,5 +164,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  reduxForm({ form: 'kcal-target' })(KcalTargerContainer)
+  reduxForm({ form: 'calorie-target' })(CalorieTargetContainer)
 );

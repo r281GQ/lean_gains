@@ -24,17 +24,22 @@ class CalorieTrackerContainer extends PureComponent {
 
   _roundAndConvertSum = sum => _.mapValues(sum.toJS(), value => _.round(value));
 
-  render = () =>
-    <div>
-      <CalorieTrackerSummary sum={this._roundAndConvertSum(this.props.sum)} />
-      <NutritionSearchBar onKeyPressHandler={this._onKeyPressHandler} />
-      <form
-        onSubmit={this.props.handleSubmit(form => console.log(form.toJS()))}
-      >
-        <CenteredSubmitButton label="Update day" />
-        <FoodsFieldArray values={this.props.values.toJS()} />
-      </form>
-    </div>;
+  render = () =>{
+    console.log(this.props.values);
+    return (
+      <div>
+        <CalorieTrackerSummary sum={this._roundAndConvertSum(this.props.sum)} />
+        <NutritionSearchBar onKeyPressHandler={this._onKeyPressHandler} />
+        <form
+          onSubmit={this.props.handleSubmit(form => console.log(form.toJS()))}
+          >
+            <CenteredSubmitButton label="Update day" />
+            <FoodsFieldArray values={this.props.values.toJS()} />
+          </form>
+        </div>
+
+    );
+  }
 }
 
 const selector = formValueSelector('calorie-track');

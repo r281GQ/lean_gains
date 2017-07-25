@@ -1,4 +1,136 @@
+import { createSelector } from 'reselect';
+import { List, fromJS } from 'immutable';
+import { formValueSelector } from 'redux-form/immutable';
+import age1 from './age';
+
+const selector = formValueSelector('calorie-target');
+
 import * as _ from 'lodash';
+
+const age = state => age1(state);
+
+const sex = state => state.getIn(['userDetails', 'sex']);
+
+const latestMeasurements = state =>
+  state.getIn(['userDetails', 'latestMeasurements']);
+
+const formValues = state =>
+  fromJS(
+    selector(
+      state,
+      'activity',
+      'calorieSplit',
+      'protein',
+      'bmrCalculationMethod',
+      'trainingDay',
+      'trainingFatGrams',
+      'restFatGrams',
+      'trainingFatPercentage',
+      'restFatPercentage',
+      'restDay',
+      'bodyFat',
+      'fatMethod'
+    )
+  );
+// method, weight, height, age, sex, activity, bodyFat
+const values = (age, sex, latestMeasurements, formValues) => {
+  const bodyFat = calculateBodyFat(
+    latestMeasurements.get('height'),
+    latestMeasurements.get('weight'),
+    sex,
+    latestMeasurements.get('neck'),
+    latestMeasurements.get('belly'),
+    latestMeasurements.get('waist'),
+    latestMeasurements.get('hip')
+  );
+  const proteinTarget = calulateProteinTarget(
+    bodyFat,
+    formValues.get('bmrCalculationMethod'),
+    formValues.get('protein'),
+    latestMeasurements.get('weight')
+  );
+
+  const tdee = tdeeCalculator(
+    formValues.get('bmrCalculationMethod'),
+    latestMeasurements.get('weight'),
+    latestMeasurements.get('height'),
+    age,
+    sex,
+    formValues.get('activity'),
+    bodyFat
+  );
+  const restDayCalories = dayCalorie(tdee, formValues.get('restDay'));
+  const trainingDayCalories = dayCalorie(tdee, formValues.get('trainingDay'));
+
+  const finalProtein = calculateFinalProtein(proteinTarget);
+
+  const finalFatRest = calculateFinalFat(
+    formValues.get('fatMethod'),
+    tdee,
+    formValues.get('restDay'),
+    formValues.get('restFatPercentage'),
+    formValues.get('restFatGrams')
+  );
+
+  const finalFatTraining = calculateFinalFat(
+    formValues.get('fatMethod'),
+    tdee,
+    formValues.get('trainingDay'),
+    formValues.get('trainingFatPercentage'),
+    formValues.get('trainingFatGrams')
+  );
+  // tdee,
+  // restDay,
+  // proteinCalorie,
+  // fatMethod,
+  // restFatPercentage,
+  // restFatGrams
+  const finalRestCarbohydrate = calculateFinalCarbohydrate(
+    tdee,
+    formValues.get('restDay'),
+    proteinTarget,
+    formValues.get('fatMethod'),
+    formValues.get('restFatPercentage'),
+    formValues.get('restFatGrams')
+  );
+
+  const finalTrainingCarbohydrate = calculateFinalCarbohydrate(
+    tdee,
+    formValues.get('trainingDay'),
+    proteinTarget,
+    formValues.get('fatMethod'),
+    formValues.get('trainingFatPercentage'),
+    formValues.get('trainingFatGrams')
+  );
+
+  const finalCalorieRest = calculateFinalCalorie(
+    tdee,
+    formValues.get('restDay')
+  );
+  const finalCalorieTraining = calculateFinalCalorie(
+    tdee,
+    formValues.get('trainingDay')
+  );
+
+  return fromJS({
+    rest: {
+      calorie: finalCalorieRest,
+      carbohydrate: finalRestCarbohydrate,
+      fat: finalFatRest,
+      protein: finalProtein
+    },
+    training: {
+      calorie: finalCalorieTraining,
+      carbohydrate: finalTrainingCarbohydrate,
+      fat: finalFatTraining,
+      protein: finalProtein
+    }
+  });
+};
+
+//calculate
+//
+//maxrestfatgrams, and etc
 
 const unlessItsAbovezero = value => (value > 0 ? value : 0.1);
 
@@ -131,7 +263,8 @@ const maxFatPercentage = (dayCalorie, proteinCalorie) =>
 const maxFatGram = (dayCalorie, proteinCalorie) =>
   (dayCalorie - proteinCalorie) / 9;
 
-const dayCalorie = (tdee, dayPercentage) => tdee * ((100 + dayPercentage) / 100);
+const dayCalorie = (tdee, dayPercentage) =>
+  tdee * ((100 + dayPercentage) / 100);
 
 const adjustFatRatio = (
   {
@@ -317,19 +450,4 @@ const calculateMax = (tdee, dayCalorieV, proteinCalorie, type) =>
     1
   );
 
-export {
-  tdeeCalculator,
-  calulateProteinTarget,
-  calculateBodyFat,
-  deleteCache,
-  initValues,
-  adjustFatRatio,
-  adjustCaloriePercentage,
-  unlessItsAbovezero,
-  minCalorie,
-  maxFatPercentage,
-  maxFatGram,
-  dayCalorie,
-  createFinalValues,
-  calculateMax
-};
+export default createSelector(age, sex, latestMeasurements, formValues, values);
