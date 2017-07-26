@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
-import { reduxForm, formValueSelector } from 'redux-form/immutable';
+import { reduxForm, formValueSelector, initialize } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
+import { Map } from 'immutable';
 
-import * as calorie from './../services/kcal_service';
-import age from './../store/selectors/age';
-import calorieTarget from './../store/selectors/calorie_target';
 import { createKcalTarget } from './../store/actionCreators/user_details_action_creators';
+
+import calorieTarget from './../store/selectors/calorie_target';
 
 import CalorieTargetPanel from './../components/kcal_target_result';
 import BMRCalculationSelector from './../components/bmr_calculation_selector';
@@ -20,60 +20,75 @@ import FatSelector from './../components/fat_selector';
 import CenteredSubmitButton from './../components/centered_submit_button';
 
 //TODO debounce on sliders
-//TODO moving the logic from the component to a selector
 //TODO checking if every data is avaliable for the calculations, if not error page
 class CalorieTargetContainer extends PureComponent {
-  componentDidMount = () => calorie.initValues(this.props);
+  _adjustCaloriePercentage = (props, nextProps) => {
+    const { calorieSplit } = nextProps;
+    const { change } = props;
+    if (calorieSplit === 'slowbulk') {
+      change('restDay', -10);
+      change('trainingDay', 30);
+    }
+    if (calorieSplit === 'cut') {
+      change('restDay', -30);
+      change('trainingDay', 10);
+    }
+    if (calorieSplit === 'recomp') {
+      change('restDay', -20);
+      change('trainingDay', 20);
+    }
+  };
+
+  _adjustFatRatio = (
+    {
+      change,
+      restFatGrams,
+      restFatPercentage,
+      trainingFatGrams,
+      trainingFatPercentage
+    },
+    { calorieTarget }
+  ) => {
+    const maxRestGram = calorieTarget.getIn('max', 'maxRestGram');
+    const maxTrainingGram = calorieTarget.getIn('max', 'maxTrainingGram');
+    const maxRestPercentage = calorieTarget.getIn('max', 'maxRestPercentage');
+    const maxTrainingPercentage = calorieTarget.getIn(
+      'max',
+      'maxTrainingPercentage'
+    );
+
+    if (restFatGrams > maxRestGram)
+      change('restFatGrams', _.floor(maxRestGram));
+
+    if (trainingFatGrams > maxTrainingGram)
+      change('trainingFatGrams', _.floor(maxTrainingGram));
+
+    if (restFatPercentage > maxRestPercentage)
+      change('restFatPercentage', _.floor(maxRestPercentage));
+    if (trainingFatPercentage > maxTrainingPercentage)
+      change('trainingFatPercentage', _.floor(maxTrainingPercentage));
+  };
+
+  componentDidMount = () => this.props.initializeForm(this.props);
 
   componentWillReceiveProps = (nextProps, nextState) => {
-    calorie.adjustCaloriePercentage(this.props, nextProps);
-    calorie.adjustFatRatio(this.props, nextProps);
+    this._adjustCaloriePercentage(this.props, nextProps);
+    this._adjustFatRatio(this.props, nextProps);
   };
 
   render = () => {
     const {
-      sex,
-      latestMeasurements,
-      age,
       fatMethod,
-      activity,
       calorieSplit,
       handleSubmit,
-      protein,
-      bodyFat,
       bmrCalculationMethod,
-      change,
-      restDay,
-      trainingDay,
-      createCalorieTarget
+      createCalorieTarget,
+      calorieTarget
     } = this.props;
-
-    const tdee = calorie.tdeeCalculator(
-      bmrCalculationMethod,
-      latestMeasurements.get('weight'),
-      latestMeasurements.get('height'),
-      age,
-      sex,
-      activity,
-      bodyFat
-    );
-
-    const proteinCalorie = calorie.calulateProteinTarget(
-      bodyFat,
-      bmrCalculationMethod,
-      protein,
-      latestMeasurements.get('weight')
-    );
-
-    const calorieTarget = calorie.createFinalValues(
-      tdee,
-      proteinCalorie,
-      this.props
-    );
-    console.log(this.props.calorieTarget.toJS());
+    console.log(this.props.f);
     return (
       <div>
-        <form onSubmit={handleSubmit(() => createCalorieTarget(calorieTarget))}>
+        <form onSubmit={handleSubmit(() => createCalorieTarget())}>
           <BMRCalculationSelector />
           <BodyFatField bmrCalculationMethod={bmrCalculationMethod} />
           <ActivityLevelSelecor
@@ -83,8 +98,8 @@ class CalorieTargetContainer extends PureComponent {
           <CalorieSplitSelector />
           <CustomCalorieField
             calorieSplit={calorieSplit}
-            minRest={calorie.minCalorie(tdee, proteinCalorie)}
-            minTraining={calorie.minCalorie(tdee, proteinCalorie)}
+            minRest={calorieTarget.toJS().minCalorie}
+            minTraining={calorieTarget.toJS().minCalorie}
             normalize={value =>
               typeof value !== Number ? Number.parseFloat(value) : value}
           />
@@ -92,30 +107,19 @@ class CalorieTargetContainer extends PureComponent {
           <FatMethodSelector />
           <FatSelector
             fatMethod={fatMethod}
-            maxRestFatGrams={calorie.calculateMax(
-              tdee,
-              restDay,
-              proteinCalorie,
-              'gram'
-            )}
-            maxRestFatPercentage={calorie.calculateMax(
-              tdee,
-              restDay,
-              proteinCalorie,
-              'percentage'
-            )}
-            maxTrainingFatGrams={calorie.calculateMax(
-              tdee,
-              trainingDay,
-              proteinCalorie,
-              'gram'
-            )}
-            maxTrainingFatPercentage={calorie.calculateMax(
-              tdee,
-              trainingDay,
-              proteinCalorie,
-              'percentage'
-            )}
+            maxRestFatGrams={calorieTarget.getIn(['max', 'maxRestGram'])}
+            maxRestFatPercentage={calorieTarget.getIn([
+              'max',
+              'maxRestPercentage'
+            ])}
+            maxTrainingFatGrams={calorieTarget.getIn([
+              'max',
+              'maxTrainingGram'
+            ])}
+            maxTrainingFatPercentage={calorieTarget.getIn([
+              'max',
+              'maxTrainingPercentage'
+            ])}
             restFatGrams={this.props.restFatGrams}
             restFatPercentage={this.props.restFatPercentage}
             trainingFatGrams={this.props.trainingFatGrams}
@@ -123,8 +127,14 @@ class CalorieTargetContainer extends PureComponent {
           />
           <CenteredSubmitButton label="Create calorie target" />
         </form>
-        <CalorieTargetPanel calorieTarget={calorieTarget} label="rest" />
-        <CalorieTargetPanel calorieTarget={calorieTarget} label="training" />
+        <CalorieTargetPanel
+          calorieTarget={calorieTarget.get('finalValues').toJS()}
+          label="rest"
+        />
+        <CalorieTargetPanel
+          calorieTarget={calorieTarget.get('finalValues').toJS()}
+          label="training"
+        />
       </div>
     );
   };
@@ -133,31 +143,74 @@ class CalorieTargetContainer extends PureComponent {
 const selector = formValueSelector('calorie-target');
 
 CalorieTargetContainer = connect(state => ({
-  activity: selector(state, 'activity'),
   calorieSplit: selector(state, 'calorieSplit'),
-  protein: selector(state, 'protein'),
   bmrCalculationMethod: selector(state, 'bmrCalculationMethod'),
-  trainingDay: selector(state, 'trainingDay'),
   trainingFatGrams: selector(state, 'trainingFatGrams'),
   restFatGrams: selector(state, 'restFatGrams'),
   trainingFatPercentage: selector(state, 'trainingFatPercentage'),
   restFatPercentage: selector(state, 'restFatPercentage'),
-  restDay: selector(state, 'restDay'),
   fatMethod: selector(state, 'fatMethod'),
-  bodyFat: selector(state, 'bodyFat')
+  f: selector(
+    state,
+    'activity',
+    'calorieSplit',
+    'protein',
+    'bmrCalculationMethod',
+    'trainingDay',
+    'trainingFatGrams',
+    'restFatGrams',
+    'trainingFatPercentage',
+    'restFatPercentage',
+    'restDay',
+    'bodyFat',
+    'fatMethod'
+  )
 }))(CalorieTargetContainer);
 
 const mapStateToProps = state => {
   return {
-    sex: state.getIn(['userDetails', 'sex']),
-    age: age(state),
-    latestMeasurements: state.getIn(['userDetails', 'latestMeasurements']),
     calorieTarget: calorieTarget(state)
+    // f: selector(
+    //   state,
+    //   'activity',
+    //   'calorieSplit',
+    //   'protein',
+    //   'bmrCalculationMethod',
+    //   'trainingDay',
+    //   'trainingFatGrams',
+    //   'restFatGrams',
+    //   'trainingFatPercentage',
+    //   'restFatPercentage',
+    //   'restDay',
+    //   'bodyFat',
+    //   'fatMethod'
+    // )
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    initializeForm: ({ calorieTarget }) =>
+      dispatch(
+        initialize(
+          'calorie-target',
+          Map().withMutations(map =>
+            map
+              .set('bodyFat', calorieTarget.get('bodyFat'))
+              .set('restDay', -20)
+              .set('trainingDay', 20)
+              .set('restFatGrams', 0)
+              .set('trainingFatGrams', 0)
+              .set('restFatPercentage', 0)
+              .set('trainingFatPercentage', 0)
+              .set('fatMethod', 'grams')
+              .set('activity', 1.2)
+              .set('protein', 2)
+              .set('calorieSplit', 'recomp')
+              .set('bmrCalculationMethod', 'harris-benedict')
+          )
+        )
+      ),
     createCalorieTarget: calorieTarget =>
       dispatch(createKcalTarget(calorieTarget))
   };

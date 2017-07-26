@@ -17,10 +17,15 @@ import WorkoutTargetRouter from './workout_targets/workout_targets_router';
 
 import withMessageBar from './massage_container';
 import withLoadingScreen from './loading_container';
+import withDataCheck from './with_data_check';
+
+const Error = ({errors}) => <div>{errors.map(item => <div>{`${item} is missing First you need to provide this`}</div>)}</div>
 
 //TODO implement graphs and charts
+//TODO proptypes
+//TODO tests
 class MainContainer extends PureComponent {
-  componentWillMount = () => this.props.initFetch();
+  componentDidMount = () => this.props.initFetch();
 
   render = () =>
     <div>
@@ -30,7 +35,7 @@ class MainContainer extends PureComponent {
       <Route path="/app/workoutlogs" component={withLoadingScreen(withMessageBar(WorkoutLogsRouter))} />
       <Route path="/app/dailylogs" component={DailyLogsRouter} />
       <Route path="/app/workouttargets" component={WorkoutTargetRouter} />
-      <Route path="/app/kcaltarget" component={KcalTargerContainer} />
+      <Route path="/app/kcaltarget" component={withDataCheck(KcalTargerContainer, [{name:'sex', path:['userDetails', 'sex']}],Error )} />
       <Route path="/app/kcaltracker" component={KcalTracker} />
     </div>;
 }
