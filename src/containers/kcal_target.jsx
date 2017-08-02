@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { reduxForm, formValueSelector, initialize } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
@@ -19,9 +19,7 @@ import FatMethodSelector from './../components/fat_mathod_selector';
 import FatSelector from './../components/fat_selector';
 import CenteredSubmitButton from './../components/centered_submit_button';
 
-//TODO debounce on sliders
-//TODO checking if every data is avaliable for the calculations, if not error page
-class CalorieTargetContainer extends PureComponent {
+class CalorieTargetContainer extends Component {
   _adjustCaloriePercentage = (props, nextProps) => {
     const { calorieSplit } = nextProps;
     const { change } = props;
@@ -156,10 +154,6 @@ class CalorieTargetContainer extends PureComponent {
               'max',
               'trainingPercentage'
             ])}
-            restFatGrams={restFatGrams}
-            restFatPercentage={restFatPercentage}
-            trainingFatGrams={trainingFatGrams}
-            trainingFatPercentage={trainingFatPercentage}
           />
           <CenteredSubmitButton label="Create calorie target" />
         </form>

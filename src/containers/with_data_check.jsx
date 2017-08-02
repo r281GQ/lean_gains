@@ -7,17 +7,14 @@ const mapToValueNamePair = props => path => ({
   name: path.name
 });
 
-const isUndefined = item => typeof item.value === 'undefined';
-
-const mapToName = item => item.name;
-
-const mapToGetter = state => value => state.getIn(value.path);
-
 const withDataCheck = (WrappedComponent, paths, ErrorComponent) => {
   const DataCheck = props => {
     const errors = _.map(
-      _.filter(_.map(paths, mapToValueNamePair(props)),item => typeof item.value === 'undefined'),
-      mapToName
+      _.filter(
+        _.map(paths, mapToValueNamePair(props)),
+        item => typeof item.value === 'undefined'
+      ),
+      item => item.name
     );
     return _.isEmpty(errors)
       ? <WrappedComponent />
@@ -25,7 +22,7 @@ const withDataCheck = (WrappedComponent, paths, ErrorComponent) => {
   };
 
   const mapStateToProps = state =>
-    _.mapValues(_.keyBy(paths, 'name'), mapToGetter(state));
+    _.mapValues(_.keyBy(paths, 'name'), value => state.getIn(value.path));
 
   return connect(mapStateToProps)(DataCheck);
 };

@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { Map, List } from 'immutable';
+import { Map } from 'immutable';
 import moment from 'moment';
 
 import WorkoutLogsMainContainer from './workout_logs_main';
 import WorkoutLogFormContainer from './workout_log_form';
 import isTrainingDay from './../../store/selectors/exercises';
 
-//TODO: floatng action button move to hoc
 const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
   <div>
     <Route
@@ -21,16 +20,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
       exact
       path={'/app/workoutlogs/create/before'}
       render={props => {
-        // let defaultValue = {
-        //   date: moment().toDate()
-        // };
-        // defaultValue={defaultValue}
-        return (
-          <WorkoutLogFormContainer
-            {...props}
-            type={`createBefore`}
-          />
-        );
+        return <WorkoutLogFormContainer {...props} type={`createBefore`} />;
       }}
     />
 

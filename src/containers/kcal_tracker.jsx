@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { reduxForm, formValueSelector, submit } from 'redux-form/immutable';
+import { reduxForm, submit } from 'redux-form/immutable';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
@@ -22,27 +22,22 @@ class CalorieTrackerContainer extends PureComponent {
     }
   };
 
-  _roundAndConvertSum = sum => _.mapValues(sum.toJS(), value => _.round(value));
+  _roundAndConvertSum = sum => sum.map(value => _.round(value));
 
-  render = () =>{
-    console.log(this.props.values);
-    return (
-      <div>
-        <CalorieTrackerSummary sum={this._roundAndConvertSum(this.props.sum)} />
-        <NutritionSearchBar onKeyPressHandler={this._onKeyPressHandler} />
-        <form
-          onSubmit={this.props.handleSubmit(form => console.log(form.toJS()))}
-          >
-            <CenteredSubmitButton label="Update day" />
-            <FoodsFieldArray values={this.props.values.toJS()} />
-          </form>
-        </div>
-
-    );
-  }
+  render = () =>
+    <div>
+      <CalorieTrackerSummary
+        sum={this._roundAndConvertSum(this.props.sum).toJS()}
+      />
+      <NutritionSearchBar onKeyPressHandler={this._onKeyPressHandler} />
+      <form
+        onSubmit={this.props.handleSubmit(form => console.log(form.toJS()))}
+      >
+        <CenteredSubmitButton label="Update day" />
+        <FoodsFieldArray />
+      </form>
+    </div>;
 }
-
-const selector = formValueSelector('calorie-track');
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -52,14 +47,9 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    sum: sumMacros(state),
-    results: state.getIn(['kcal', 'searchResults'])
+    sum: sumMacros(state)
   };
 };
-
-CalorieTrackerContainer = connect(state => ({
-  values: selector(state, 'foods') || List()
-}))(CalorieTrackerContainer);
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   reduxForm({

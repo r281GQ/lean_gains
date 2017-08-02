@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-// import { Map, List } from 'immutable';
 
 import WorkoutTarget from './workout_target';
 import WorkoutTargetMain from './workout_targets_main';
-import Authentication from './../authentication';
 
 const WorkoutTargetsRouter = ({ workoutTargets }) =>
   <div>
-    <Route exact path={'/app/workouttargets/create'} component={Authentication(WorkoutTarget)} />
+    <Route
+      exact
+      path={'/app/workouttargets/create'}
+      component={WorkoutTarget}
+    />
 
     <Route
       exact
@@ -20,10 +22,7 @@ const WorkoutTargetsRouter = ({ workoutTargets }) =>
         );
 
         return (
-          <WorkoutTarget
-            {...props}
-            defaultValue={selectedWorkoutTarget.toJS()}
-          />
+          <WorkoutTarget {...props} defaultValue={selectedWorkoutTarget} />
         );
       }}
     />

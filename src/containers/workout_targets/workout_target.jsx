@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Field,
   FieldArray,
@@ -17,34 +17,54 @@ import { MenuItem, FlatButton } from 'material-ui';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { required } from './../../services/validators';
+import { fromJS } from 'immutable';
 import { createWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
 
-class WorkoutTarget extends React.Component {
-  componentWillMount() {
+class WorkoutTarget extends Component {
+  componentDidMount() {
     if (this.props.defaultValue) {
-      const {
-        name,
-        onDays,
-        type,
-        exercises,
-        startDayofTraining,
-        onEveryxDay
-      } = this.props.defaultValue;
-      this.props.change('name', name);
-      this.props.change('type', type);
-      this.props.change('exercises', exercises);
-      this.props.change('isCycledTraining', onDays ? false : true);
-      this.props.change('monday', _.find(onDays, e => e === 1));
-      this.props.change('tuesday', _.find(onDays, e => e === 2));
-      this.props.change('wednesday', _.find(onDays, e => e === 3));
-      this.props.change('thursday', _.find(onDays, e => e === 4));
-      this.props.change('friday', _.find(onDays, e => e === 5));
-      this.props.change('saturday', _.find(onDays, e => e === 6));
-      this.props.change('sunday', _.find(onDays, e => e === 7));
-      this.props.change('onEveryxDay', onEveryxDay);
+      const { defaultValue } = this.props;
+      this.props.change('name', defaultValue.get('name'));
+      this.props.change('type', defaultValue.get('type'));
+      this.props.change('exercises', defaultValue.get('exercises'));
+      this.props.change(
+        'isCycledTraining',
+        defaultValue.get('onDays') ? 'fix' : 'cycle'
+      );
+      if (defaultValue.get('onDays')) {
+        this.props.change(
+          'monday',
+          defaultValue.get('onDays').find(value => value === 1)
+        );
+        this.props.change(
+          'tuesday',
+          defaultValue.get('onDays').find(value => value === 2)
+        );
+        this.props.change(
+          'wednesday',
+          defaultValue.get('onDays').find(value => value === 3)
+        );
+        this.props.change(
+          'thursday',
+          defaultValue.get('onDays').find(value => value === 4)
+        );
+        this.props.change(
+          'friday',
+          defaultValue.get('onDays').find(value => value === 5)
+        );
+        this.props.change(
+          'saturday',
+          defaultValue.get('onDays').find(value => value === 6)
+        );
+        this.props.change(
+          'sunday',
+          defaultValue.get('onDays').find(value => value === 7)
+        );
+      }
+      this.props.change('onEveryxDay', defaultValue.get('onEveryxDay'));
       this.props.change(
         'startDayofTraining',
-        moment(startDayofTraining).toDate()
+        moment(defaultValue.get('startDayofTraining')).toDate()
       );
     }
   }
@@ -56,7 +76,7 @@ class WorkoutTarget extends React.Component {
       createWorkoutTarget,
       reset
     } = this.props;
-    console.log('rendered')
+    console.log('rendered');
     return (
       <div>
         <form
@@ -89,7 +109,7 @@ class WorkoutTarget extends React.Component {
                 item => item !== undefined
               );
 
-              if (!isCycledTraining && _.isEmpty(onDays)) {
+              if (isCycledTraining === 'fix' && _.isEmpty(onDays)) {
                 throw new SubmissionError({
                   isCycledTraining:
                     'on fixed days you must select at least one day',
@@ -97,7 +117,7 @@ class WorkoutTarget extends React.Component {
                 });
               }
 
-              if (isCycledTraining && (!startDayofTraining || !onEveryxDay))
+              if (isCycledTraining === 'cycle' && (!startDayofTraining || !onEveryxDay))
                 throw new SubmissionError({
                   isCycledTraining:
                     'on cycled training you must set the starting date and on which days the training should occur',
@@ -113,7 +133,7 @@ class WorkoutTarget extends React.Component {
                   _error: 'exercise name'
                 });
 
-              let workoutTarget = isCycledTraining
+              let workoutTarget = isCycledTraining === 'cycle'
                 ? { name, type, startDayofTraining, exercises, onEveryxDay }
                 : {
                     name,
@@ -133,8 +153,8 @@ class WorkoutTarget extends React.Component {
               fullWidth={true}
               floatingLabelText="Training type: should it happen on fixed days like every monday or rather on every for example 5 days?"
             >
-              <MenuItem value={true} primaryText="Cycled training" />
-              <MenuItem value={false} primaryText="On fixed days" />
+              <MenuItem value="cycle" primaryText="Cycled training" />
+              <MenuItem value="fix" primaryText="On fixed days" />
             </Field>
           </div>
           <div>
@@ -152,7 +172,6 @@ class WorkoutTarget extends React.Component {
             <Field
               name="type"
               component={SelectField}
-              value="main"
               fullWidth={true}
               floatingLabelText="Will it be on a training day or a rest day?"
             >
@@ -160,7 +179,7 @@ class WorkoutTarget extends React.Component {
               <MenuItem value="rest" primaryText="Rest" />
             </Field>
           </div>
-          {isCycledTraining
+          {isCycledTraining === 'cycle'
             ? <div>
                 <Field
                   name="startDayofTraining"
@@ -180,7 +199,7 @@ class WorkoutTarget extends React.Component {
               </div>
             : null}
 
-          {!isCycledTraining
+          {isCycledTraining === 'fix'
             ? <div style={{ position: 'relative' }}>
                 <Field
                   name="monday"
@@ -230,11 +249,13 @@ class WorkoutTarget extends React.Component {
           <div style={{ textAlign: 'center' }}>
             <FieldArray
               name="exercises"
-              component={({ fields: { map, push, remove } }) => {
+              component={({
+                fields: { map, push, remove, insert, length }
+              }) => {
                 return (
                   <div>
                     {' '}<FlatButton
-                      onTouchTap={() => push(null)}
+                      onTouchTap={() => insert(length, fromJS({}))}
                       label={`Add exercise`}
                     />
                     {map((exec, index) =>
@@ -275,7 +296,6 @@ const mapDispatchToProps = dispatch => ({
 export default connect(null, mapDispatchToProps)(
   reduxForm({
     form: 'create-workout-target',
-    shouldValidate: () => true,
-    initialValues: { type: 'main', isCycledTraining: false }
+    shouldValidate: () => true
   })(formValues('isCycledTraining')(WorkoutTarget))
 );

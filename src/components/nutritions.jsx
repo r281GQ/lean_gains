@@ -13,7 +13,7 @@ import {
 import { TextField, SelectField } from 'redux-form-material-ui';
 import * as _ from 'lodash';
 
-const Nutritions = ({ fields: { map, remove }, values }) =>
+const Nutritions = ({ fields: { map, get, remove } }) =>
   <div>
     {map((result, index) => {
       return (
@@ -21,18 +21,18 @@ const Nutritions = ({ fields: { map, remove }, values }) =>
           <CardHeader
             showExpandableButton={true}
             actAsExpander={true}
-            title={result[index].food_name}
+            title={get(index).get('food_name')}
             subtitle={
               <div>
-                Protein : {`${values[index].nf_protein}  `}
-                Carbohydrate: {`${values[index].nf_total_carbohydrate}  `}
-                Fat: {`${values[index].nf_total_fat}  `}
-                Calories: {`${values[index].nf_calories}  `}
-                Serving quantity: {`${values[index].quantity}  `}
-                Serving unit: {`${values[index].serving_unit}  `}
+                Protein : {`${get(index).get('nf_protein')}  `}
+                Carbohydrate: {`${get(index).get('nf_total_carbohydrate')}  `}
+                Fat: {`${get(index).get('nf_total_fat')}  `}
+                Calories: {`${get(index).get('nf_calories')}  `}
+                Serving quantity: {`${get(index).get('quantity')}  `}
+                Serving unit: {`${get(index).get('serving_unit')}  `}
               </div>
             }
-            avatar={values[index].photo.thumb}
+            avatar={get(index).getIn(['photo', 'thumb'])}
           />
 
           <CardText expandable={true}>
@@ -44,7 +44,7 @@ const Nutritions = ({ fields: { map, remove }, values }) =>
                 floatingLabelText="serving unit"
               >
                 {_.map(
-                  values[index].alt_measures,
+                  get(index).get('alt_measures').toJS(),
                   ({ measure, serving_weight }) =>
                     <MenuItem
                       key={measure}
