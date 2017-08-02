@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link, Prompt } from 'react-router-dom';
 import {
@@ -16,7 +16,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import * as _ from 'lodash';
 import moment from 'moment';
 import CreateButton from './../../components/create_button';
-import CreateButtonMinified from './../../components/create_button';
+import CreateButtonMinified from './../../components/create_button_minified';
 import ConfirmDelete from './../../components/confirm_delete';
 import LoadingScreen from './../../components/loading';
 import DateSelector from './../../components/date_selector';
@@ -44,14 +44,15 @@ const dailyLogsForMonth = logsForMonth('dailyLogs');
 const isTodaysDailyLogExists = isTodaysLogExists('dailyLogs');
 const monthsWithDailyLogs = monthLogs('dailyLogs');
 
-class DailyLogPicker extends Component {
-  componentWillMount = () => {
+class DailyLogPicker extends PureComponent {
+  componentDidMount = () => {
     if (this.props.datesWithDailyLogs.isEmpty()) this.props.getDailyLogDates();
-    if (this.props.dailyLogsForMonth.isEmpty())
+    if (this.props.dailyLogsForMonth.isEmpty()) {
       this.props.getLogsForSelectedMonth(moment().format('MM-YYYY'));
-    this.props.setSelectedMonthForDailyLogs(
-      this.props.monthsWithDailyLogs.last()
-    );
+      this.props.setSelectedMonthForDailyLogs(
+        this.props.monthsWithDailyLogs.last()
+      );
+    }
   };
 
   componentWillReceiveProps = nextProps =>
@@ -65,8 +66,7 @@ class DailyLogPicker extends Component {
         )
       : null;
 
-  render() {
-    console.log(this.props);
+  render = () => {
     const {
       getLogsForSelectedMonth,
       selectedMonth,
@@ -77,7 +77,6 @@ class DailyLogPicker extends Component {
     } = this.props;
     return (
       <div>
-
         <DateSelector
           months={monthsWithDailyLogs.toJS()}
           selectedMonth={selectedMonth}
@@ -98,7 +97,7 @@ class DailyLogPicker extends Component {
         />
       </div>
     );
-  }
+  };
 }
 
 const mapStateToProps = state => {

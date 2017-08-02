@@ -8,6 +8,7 @@ import WorkoutLogsMainContainer from './workout_logs_main';
 import WorkoutLogFormContainer from './workout_log_form';
 import isTrainingDay from './../../store/selectors/exercises';
 
+//TODO: use HOC for modal
 const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
   <div>
     <Route

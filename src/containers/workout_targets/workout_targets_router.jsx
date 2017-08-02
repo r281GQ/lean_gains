@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import WorkoutTarget from './workout_target';
 import WorkoutTargetMain from './workout_targets_main';
 
+//TODO: use HOC for modal
 const WorkoutTargetsRouter = ({ workoutTargets }) =>
   <div>
     <Route

@@ -27,7 +27,7 @@ const CardListDailyLog = ({
             />
             <CardText expandable={true}>
               {log._id}
-              <Link to={`/dailylogs/edit/${log._id}`}>
+              <Link to={`/app/dailylogs/edit/${log._id}`}>
                 <FlatButton label="Edit" />
               </Link>
               <FlatButton

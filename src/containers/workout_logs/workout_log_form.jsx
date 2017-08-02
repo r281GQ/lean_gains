@@ -33,10 +33,8 @@ class WorkoutLogFormContainer extends PureComponent {
       )
     );
 
-  _disableThese = disabledDates => date =>
-    _.find(disabledDates, disabledDate =>
-      moment(disabledDate).isSame(date, 'day')
-    )
+  _disableThese = disableDates => date =>
+    disableDates.find(value => moment(value).isSame(date, 'day'))
       ? true
       : false;
 
@@ -61,7 +59,7 @@ class WorkoutLogFormContainer extends PureComponent {
                         minDate={moment().subtract(110, 'years').toDate()}
                         formatDate={value => moment(value).format('DD-MM-YYYY')}
                         shouldDisableDate={this._disableThese(
-                          this.props.datesWithWorkoutLogs.toJS()
+                          this.props.datesWithWorkoutLogs
                         )}
                       />}
                   />{' '}
@@ -86,11 +84,13 @@ class WorkoutLogFormContainer extends PureComponent {
 export default connect(
   state => ({
     datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates']),
-    markerList: getFormValues('workoutLog')(state)
-      ? getFormValues('workoutLog')(state)
-          .get('exercises')
-          .map(value => value.get('marker'))
-      : Map()
+    markerList:
+      getFormValues('workoutLog')(state) &&
+      getFormValues('workoutLog')(state).get('exercises')
+        ? getFormValues('workoutLog')(state)
+            .get('exercises')
+            .map(value => value.get('marker'))
+        : Map()
   }),
   dispatch => ({
     createWorkoutLog: workoutLog => dispatch(createWorkoutLog(workoutLog)),

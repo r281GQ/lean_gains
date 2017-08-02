@@ -1,30 +1,34 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form/immutable';
+import moment from 'moment';
 
-import DailyLogFormComponent from './../../components/daily_log_form';
+import DailyLogForm from './../../components/daily_log_form';
 
-class DailyLogFormContainer extends Component {
-  componentWillMount() {
+class DailyLogFormContainer extends PureComponent {
+  componentDidMount = () => {
     if (this.props.type === 'edit')
       this.props.change(
         'weight',
-        this.props.defaultValue.toJS().measurements.weight
+        this.props.defaultValue.getIn(['measurements', 'weight'])
       );
-  }
-
-  render = () => {
-    return (
-      <DailyLogFormComponent
-        createDailyLogHandler={p => console.log(p)}
-        label={this.props.type === 'edit' ? 'update' : 'create'}
-        renderDatepicker={this.props.renderDatepicker}
-        {...this.props}
-      />
-    );
   };
+
+  _disableThese = disableDates => date =>
+    disableDates.find(value => moment(value).isSame(date, 'day'))
+      ? true
+      : false;
+
+  render = () =>
+    <DailyLogForm
+      createDailyLogHandler={values => console.log(values)}
+      label={this.props.type === 'edit' ? 'update' : 'create'}
+      renderDatepicker={this.props.renderDatepicker}
+      shouldDisableDate={this._disableThese(this.props.dailyLogDates)}
+      {...this.props}
+    />;
 }
 
-export default connect()(
-  reduxForm({ form: 'daily-log' })(DailyLogFormContainer)
-);
+export default connect(state => ({
+  dailyLogDates: state.getIn(['dailyLogs', 'dates'])
+}))(reduxForm({ form: 'daily-log' })(DailyLogFormContainer));
