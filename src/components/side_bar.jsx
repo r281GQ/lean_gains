@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Drawer, MenuItem, FlatButton } from 'material-ui';
+import styled from 'styled-components';
 
 import { closeSideBar } from './../store/actionCreators/app_action_creators';
 import { logOut } from './../store/actionCreators/auth_action_creators';
 
-import styled from 'styled-components';
-
 const LinkWithoutUnderLine = styled(Link)`
   text-decoration: none;
 `;
+
 const SideBarComponent = () => {
   return (
     <Drawer
@@ -54,7 +54,6 @@ const SideBarComponent = () => {
       <MenuItem onClick={() => logOut()} primaryText="Log out" />
     </Drawer>
   );
-}
-
+};
 
 export default SideBarComponent;

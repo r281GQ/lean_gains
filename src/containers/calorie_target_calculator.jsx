@@ -8,7 +8,7 @@ import { createKcalTarget } from './../store/actionCreators/user_details_action_
 
 import calorieTarget from './../store/selectors/calorie_target';
 
-import CalorieTargetPanel from './../components/kcal_target_result';
+import CalorieTargetResult from './../components/calorie_target_result';
 import BMRCalculationSelector from './../components/bmr_calculation_selector';
 import BodyFatField from './../components/body_fat_field';
 import ActivityLevelSelecor from './../components/activity_level_selector';
@@ -19,7 +19,7 @@ import FatMethodSelector from './../components/fat_mathod_selector';
 import FatSelector from './../components/fat_selector';
 import CenteredSubmitButton from './../components/centered_submit_button';
 
-class CalorieTargetContainer extends Component {
+class CalorieTargetCalculator extends Component {
   _adjustCaloriePercentage = (props, nextProps) => {
     const { calorieSplit } = nextProps;
     const { change } = props;
@@ -157,14 +157,7 @@ class CalorieTargetContainer extends Component {
           />
           <CenteredSubmitButton label="Create calorie target" />
         </form>
-        <CalorieTargetPanel
-          calorieTarget={calorieTarget.get('finalValues').toJS()}
-          label="rest"
-        />
-        <CalorieTargetPanel
-          calorieTarget={calorieTarget.get('finalValues').toJS()}
-          label="training"
-        />
+
       </div>
     );
   };
@@ -172,7 +165,7 @@ class CalorieTargetContainer extends Component {
 
 const selector = formValueSelector('calorie-target');
 
-CalorieTargetContainer = connect(state => ({
+CalorieTargetCalculator = connect(state => ({
   activity: selector(state, 'activity'),
   fatMethod: selector(state, 'fatMethod'),
   calorieSplit: selector(state, 'calorieSplit'),
@@ -183,7 +176,7 @@ CalorieTargetContainer = connect(state => ({
   restFatPercentage: selector(state, 'restFatPercentage'),
   restDay: selector(state, 'restDay'),
   trainingDay: selector(state, 'trainingDay')
-}))(CalorieTargetContainer);
+}))(CalorieTargetCalculator);
 
 const mapStateToProps = state => {
   return {
@@ -220,5 +213,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  reduxForm({ form: 'calorie-target' })(CalorieTargetContainer)
+  reduxForm({ form: 'calorie-target' })(CalorieTargetCalculator)
 );

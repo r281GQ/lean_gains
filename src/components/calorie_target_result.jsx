@@ -9,7 +9,7 @@ import {
   FlatButton
 } from 'material-ui';
 
-const KcalTargetResult = ({ label, calorieTarget }) =>
+const CalorieTargetResult = ({ label, calorieTarget }) =>
   calorieTarget
     ? <div>
         <div>
@@ -61,4 +61,4 @@ const KcalTargetResult = ({ label, calorieTarget }) =>
       </div>
     : null;
 
-export default KcalTargetResult;
+export default CalorieTargetResult;

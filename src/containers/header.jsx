@@ -1,9 +1,9 @@
-import React from "react";
-import Immutable from "immutable";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import * as _ from "lodash";
-import { FlatButton, IconButton, FontIcon } from "material-ui";
+import React from 'react';
+import Immutable from 'immutable';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as _ from 'lodash';
+import { FlatButton, IconButton, FontIcon } from 'material-ui';
 import {
   Toolbar,
   ToolbarGroup,
@@ -13,17 +13,18 @@ import {
   MenuItem,
   IconMenu,
   CircularProgress
-} from "material-ui";
-import ActionHome from "material-ui/svg-icons/action/home";
-import Done from "material-ui/svg-icons/action/done";
-import ArrowBack from "material-ui/svg-icons/navigation/arrow-back";
-import ContentFilter from "material-ui/svg-icons/content/filter-list";
+} from 'material-ui';
 
-import { goBack } from "react-router-redux";
-import currentWeightSelector from "./../store/selectors/current_weight";
-import isTrainingDay from "./../store/selectors/exercises";
-import { openSideBar } from "./../store/actionCreators/app_action_creators";
-import todayMacros from "./../store/selectors/current_macros";
+import ActionHome from 'material-ui/svg-icons/action/home';
+import Done from 'material-ui/svg-icons/action/done';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import ContentFilter from 'material-ui/svg-icons/content/filter-list';
+
+import { goBack } from 'react-router-redux';
+import currentWeightSelector from './../store/selectors/current_weight';
+import isTrainingDay from './../store/selectors/exercises';
+import { openSideBar } from './../store/actionCreators/app_action_creators';
+import todayMacros from './../store/selectors/current_macros';
 
 //TODO just saving indicator
 const HeaderContainer = ({
@@ -36,8 +37,7 @@ const HeaderContainer = ({
   goBack
 }) => {
   return (
-
-    <Toolbar >
+    <Toolbar>
       <ToolbarGroup firstChild={true}>
         <IconButton tooltip="Main menu" onTouchTap={() => openSideBar()}>
           <ActionHome />
@@ -78,8 +78,7 @@ const HeaderContainer = ({
               key={exercises.indexOf(exec)}
               value={exercises.indexOf(exec)}
               primaryText={exec}
-            >
-            </MenuItem>
+            />
           )}
         </IconMenu>
       </ToolbarGroup>
@@ -88,11 +87,11 @@ const HeaderContainer = ({
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.getIn(["app", "isLoading"]),
+  isLoading: state.getIn(['app', 'isLoading']),
   currentWeight: currentWeightSelector(state),
   exercises: isTrainingDay('main')(state).toJS(),
   todaysMacros: todayMacros(state).toJS(),
-  userName: state.getIn(["userDetails", "userName"])
+  userName: state.getIn(['userDetails', 'userName'])
 });
 
 const mapDispatchToProps = dispatch => ({

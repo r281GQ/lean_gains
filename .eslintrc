@@ -1,9 +1,9 @@
 {
   parser: "babel-eslint",
+  # "extends": ["airbnb-base"],
   "plugins": [
     "react"
   ],
   "rules": {
   }
-  # "extends": ["airbnb-base"]
 }
