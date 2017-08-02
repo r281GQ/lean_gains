@@ -2,7 +2,7 @@ import React from "react";
 import { Field } from "redux-form/immutable";
 import { TextField, Slider } from "redux-form-material-ui";
 
-const WeightField = ({ item, currentValue }) =>
+const WeightField = ({ item }) =>
   <div>
     <Field
       name={`${item}.weight`}
@@ -15,7 +15,11 @@ const WeightField = ({ item, currentValue }) =>
       step={0.5}
       max={300}
     />
-    {currentValue || 0} KG
+
+
   </div>;
 
 export default WeightField;
+
+
+  // {currentValue || 0} KG

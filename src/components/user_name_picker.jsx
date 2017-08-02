@@ -7,6 +7,7 @@ const UserNamePicker = ({ validators }) =>
     name="userName"
     component={TextField}
     hintText="user name"
+    onChange = {event => console.log(event)}
     validate={validators('username cannot be empty')}
   />;
 

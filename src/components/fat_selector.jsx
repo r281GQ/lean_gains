@@ -2,6 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form/immutable';
 import { SelectField, Slider } from 'redux-form-material-ui';
 import { MenuItem, FlatButton } from 'material-ui';
+import CurrentSlider from './../components/current_selector' ;
 
 const FatSelector = ({
   fatMethod,
@@ -18,12 +19,13 @@ const FatSelector = ({
     ? <div>
         <Field
           name="restFatGrams"
-          component={Slider}
+          component={CurrentSlider}
           type="number"
           format={(value, name) => (value === '' ? 0 : value)}
           min={0}
           max={maxRestFatGrams}
           step={1}
+
         />
         <div style={{ textAlign: 'center' }}>
           <FlatButton

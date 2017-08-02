@@ -25,8 +25,6 @@ import isTrainingDay from "./../store/selectors/exercises";
 import { openSideBar } from "./../store/actionCreators/app_action_creators";
 import todayMacros from "./../store/selectors/current_macros";
 
-//TODO show the current route and page
-//TODO connect to redux on its own
 //TODO just saving indicator
 const HeaderContainer = ({
   currentWeight,

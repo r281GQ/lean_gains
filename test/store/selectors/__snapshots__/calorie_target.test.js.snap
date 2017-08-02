@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`calorie target props selector bodyFat defaultValue => 15.3 1`] = `15.3`;
+
+exports[`calorie target props selector bodyFat female, modified weight && sex && waist => 21.8  1`] = `21.8`;
+
+exports[`calorie target props selector bodyFat female, modified weight && sex => 12.6 1`] = `12.6`;
+
+exports[`calorie target props selector minCalorie basic minimum calorie % => 73 1`] = `-73`;
+
+exports[`calorie target props selector minCalorie reducing height should reduce |minCalorie| => -71 1`] = `
+Immutable.Map {
+  bodyFat: 18,
+  minCalorie: -71,
+  max: Immutable.Map {
+    maxRestGram: 152,
+    maxRestPercentage: 71.9,
+    maxTrainingGram: 152,
+    maxTrainingPercentage: 71.9,
+  },
+  finalValues: Immutable.Map {
+    rest: Immutable.Map {
+      calorie: 1903,
+      carbohydrate: 343,
+      fat: 0,
+      protein: 134,
+    },
+    training: Immutable.Map {
+      calorie: 1903,
+      carbohydrate: 343,
+      fat: 0,
+      protein: 134,
+    },
+  },
+}
+`;

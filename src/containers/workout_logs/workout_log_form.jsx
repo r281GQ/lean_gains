@@ -7,7 +7,9 @@ import {
   FieldArray,
   reduxForm,
   formValueSelector,
-  initialize
+  initialize,
+    formValues,
+    getFormValues
 } from 'redux-form/immutable';
 import moment from 'moment';
 import { List, Map } from 'immutable';
@@ -43,19 +45,23 @@ class WorkoutLogFormContainer extends Component {
 
   render() {
     let { createWorkoutLog, handleSubmit, updateWorkoutLog } = this.props;
+    console.log('rendered')
+    // console.log(this.props.exercises.toJS())
     return (
       <div>
         <form
           onSubmit={handleSubmit(formprops => {
-            this.props.type === 'edit'
-              ? updateWorkoutLog({
-                  exercises: formprops.get('exercises').toJS(),
-                  _id: this.props.match.params.id
-                })
-              : createWorkoutLog({
-                  exercises: formprops.get('exercises').toJS(),
-                  date: formprops.get('date').valueOf()
-                });
+            // this.props.type === 'edit'
+            //   ? updateWorkoutLog({
+            //       exercises: formprops.get('exercises').toJS(),
+            //       _id: this.props.match.params.id
+            //     })
+            //   : createWorkoutLog({
+            //       exercises: formprops.get('exercises').toJS(),
+            //       date: formprops.get('date').valueOf()
+            //     });
+            //
+                console.log(formprops.toJS())
           })}
         >
           <div>
@@ -80,7 +86,6 @@ class WorkoutLogFormContainer extends Component {
             <FieldArray
               name="exercises"
               component={ExerciseFieldArray}
-              values={this.props.exercise1s.toJS()}
             />
             <FlatButton
               type="submit"
@@ -93,16 +98,48 @@ class WorkoutLogFormContainer extends Component {
   }
 }
 
-const selector = formValueSelector('workoutLog');
+
+{/* <FieldArray
+  name="exercises"
+  component={ExerciseFieldArray}
+  stuff = {this.props.exercises}
+/> */}
+
+      // values={this.props.exercises ? this.props.exercises.toJS() :  []}
+// const selector = formValueSelector('workoutLog');
 
 //TODO own props needs to be moved to the bottom connect
-WorkoutLogFormContainer = connect(state => ({
-  exercise1s: selector(state, 'exercises') || List()
-}))(WorkoutLogFormContainer);
+// WorkoutLogFormContainer = connect(state => ({
+//   exercise1s: selector(state, 'exercises') || List()
+// }))(WorkoutLogFormContainer);
+
+// export default connect(
+//   state => ({
+//     datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates'])
+//   }),
+//   dispatch => ({
+//     createWorkoutLog: workoutLog => dispatch(createWorkoutLog(workoutLog)),
+//     updateWorkoutLog: workoutLog => dispatch(updateWorkoutLog(workoutLog))
+//   })
+// )(
+//   reduxForm({
+//     form: 'workoutLog'
+//   })(WorkoutLogFormContainer)
+// );
+//
+// const f = formValueSelector('workoutLog');
+
+// WorkoutLogFormContainer = connect (state => ({
+//
+//   // exercises: f(state,'exercises') ? f(state,'exercises').map(value => value.get('marker')) : Map()
+// exercises: getFormValues('workoutLog')(state) ? getFormValues('workoutLog')(state).map(value => value.get('marker')) : Map()
+// }))(WorkoutLogFormContainer)
 
 export default connect(
   state => ({
     datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates'])
+    // ,
+    // exercises: getFormValues('workoutLog')(state) ? getFormValues('workoutLog')(state).get('exercises').map(value => value.get('marker')) : Map()
   }),
   dispatch => ({
     createWorkoutLog: workoutLog => dispatch(createWorkoutLog(workoutLog)),
@@ -113,3 +150,5 @@ export default connect(
     form: 'workoutLog'
   })(WorkoutLogFormContainer)
 );
+
+formValues('exercises')(WorkoutLogFormContainer)

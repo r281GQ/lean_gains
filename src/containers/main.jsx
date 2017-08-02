@@ -23,7 +23,6 @@ const Error = ({errors}) => <div>{errors.map(item => <div>{`${item} is missing F
 
 //TODO implement graphs and charts
 //TODO proptypes
-//TODO tests
 class MainContainer extends PureComponent {
   componentDidMount = () => this.props.initFetch();
 

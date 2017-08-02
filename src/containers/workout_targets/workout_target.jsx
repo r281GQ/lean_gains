@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Field,
   FieldArray,
@@ -6,35 +6,34 @@ import {
   formValueSelector,
   formValues,
   SubmissionError
-} from "redux-form/immutable";
+} from 'redux-form/immutable';
 import {
   TextField,
   SelectField,
   Checkbox,
   DatePicker
-} from "redux-form-material-ui";
-import { MenuItem, FlatButton } from "material-ui";
-import { connect } from "react-redux";
-import moment from 'moment'
-import { required } from "./../../services/validators";
-import { createWorkoutTarget } from "./../../store/actionCreators/user_details_action_creators";
+} from 'redux-form-material-ui';
+import { MenuItem, FlatButton } from 'material-ui';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { required } from './../../services/validators';
+import { createWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
 
-//TODO should be able to delete and edit  workouttargers
-// const WorkoutTarget = ({
-//   handleSubmit,
-//   isCycledTraining,
-//   createWorkoutTarget,
-//   reset
-// }) => {
-//
 class WorkoutTarget extends React.Component {
-  componentWillMount(){
-    if(this.props.defaultValue){
-      const {name, onDays, type, exercises, startDayofTraining, onEveryxDay} = this.props.defaultValue;
+  componentWillMount() {
+    if (this.props.defaultValue) {
+      const {
+        name,
+        onDays,
+        type,
+        exercises,
+        startDayofTraining,
+        onEveryxDay
+      } = this.props.defaultValue;
       this.props.change('name', name);
       this.props.change('type', type);
       this.props.change('exercises', exercises);
-      this.props.change('isCycledTraining', onDays ? false: true)
+      this.props.change('isCycledTraining', onDays ? false : true);
       this.props.change('monday', _.find(onDays, e => e === 1));
       this.props.change('tuesday', _.find(onDays, e => e === 2));
       this.props.change('wednesday', _.find(onDays, e => e === 3));
@@ -43,222 +42,231 @@ class WorkoutTarget extends React.Component {
       this.props.change('saturday', _.find(onDays, e => e === 6));
       this.props.change('sunday', _.find(onDays, e => e === 7));
       this.props.change('onEveryxDay', onEveryxDay);
-      this.props.change('startDayofTraining', moment(startDayofTraining).toDate());
-
-      // console.log();
-
+      this.props.change(
+        'startDayofTraining',
+        moment(startDayofTraining).toDate()
+      );
     }
   }
 
-  render(){
-    const {handleSubmit, isCycledTraining, createWorkoutTarget, reset} = this.props;
-  return (<div>
-    <form
-      onSubmit={handleSubmit(
-        ({
-          isCycledTraining,
-          onEveryxDay,
-          name,
-          type,
-          startDayofTraining,
-          exercises,
-          monday,
-          tuesday,
-          wednesday,
-          thursday,
-          friday,
-          saturday,
-          sunday
-        }) => {
-          let onDays = _.filter(
-            [
-              monday ? 1 : undefined,
-              tuesday ? 2 : undefined,
-              wednesday ? 3 : undefined,
-              thursday ? 4 : undefined,
-              friday ? 5 : undefined,
-              saturday ? 6 : undefined,
-              sunday ? 7 : undefined
-            ],
-            item => item !== undefined
-          );
-
-          if (!isCycledTraining && _.isEmpty(onDays)) {
-            throw new SubmissionError({
-              isCycledTraining:
-                "on fixed days you must select at least one day",
-              _error: "days"
-            });
-          }
-
-          if (isCycledTraining && (!startDayofTraining || !onEveryxDay))
-            throw new SubmissionError({
-              isCycledTraining:
-                "on cycled training you must set the starting date and on which days the training should occur",
-              _error: "exercise name"
-            });
-          if (_.isEmpty(exercises) || _.every(exercises, exercise => !exercise))
-            throw new SubmissionError({
-              isCycledTraining: "you must provide at least one valid exercise",
-              _error: "exercise name"
-            });
-
-          let workoutTarget = isCycledTraining
-            ? { name, type, startDayofTraining, exercises, onEveryxDay }
-            : {
-                name,
-                type,
-                exercises,
-                onDays
-              };
-          createWorkoutTarget(workoutTarget);
-          reset();
-        }
-      )}
-    >
+  render() {
+    const {
+      handleSubmit,
+      isCycledTraining,
+      createWorkoutTarget,
+      reset
+    } = this.props;
+    console.log('rendered')
+    return (
       <div>
-        <Field
-          name="isCycledTraining"
-          component={SelectField}
-          fullWidth={true}
-          floatingLabelText="Training type: should it happen on fixed days like every monday or rather on every for example 5 days?"
+        <form
+          onSubmit={handleSubmit(
+            ({
+              isCycledTraining,
+              onEveryxDay,
+              name,
+              type,
+              startDayofTraining,
+              exercises,
+              monday,
+              tuesday,
+              wednesday,
+              thursday,
+              friday,
+              saturday,
+              sunday
+            }) => {
+              let onDays = _.filter(
+                [
+                  monday ? 1 : undefined,
+                  tuesday ? 2 : undefined,
+                  wednesday ? 3 : undefined,
+                  thursday ? 4 : undefined,
+                  friday ? 5 : undefined,
+                  saturday ? 6 : undefined,
+                  sunday ? 7 : undefined
+                ],
+                item => item !== undefined
+              );
+
+              if (!isCycledTraining && _.isEmpty(onDays)) {
+                throw new SubmissionError({
+                  isCycledTraining:
+                    'on fixed days you must select at least one day',
+                  _error: 'days'
+                });
+              }
+
+              if (isCycledTraining && (!startDayofTraining || !onEveryxDay))
+                throw new SubmissionError({
+                  isCycledTraining:
+                    'on cycled training you must set the starting date and on which days the training should occur',
+                  _error: 'exercise name'
+                });
+              if (
+                _.isEmpty(exercises) ||
+                _.every(exercises, exercise => !exercise)
+              )
+                throw new SubmissionError({
+                  isCycledTraining:
+                    'you must provide at least one valid exercise',
+                  _error: 'exercise name'
+                });
+
+              let workoutTarget = isCycledTraining
+                ? { name, type, startDayofTraining, exercises, onEveryxDay }
+                : {
+                    name,
+                    type,
+                    exercises,
+                    onDays
+                  };
+              createWorkoutTarget(workoutTarget);
+              reset();
+            }
+          )}
         >
-          <MenuItem value={true} primaryText="Cycled training" />
-          <MenuItem value={false} primaryText="On fixed days" />
-        </Field>
-      </div>
-      <div>
-        <Field
-          name="name"
-          floatingLabelText="Workout name"
-          hintText="name"
-          type="text"
-          component={TextField}
-          fullWidth={true}
-          validate={required("workout must have a name")}
-        />
-      </div>
-      <div>
-        <Field
-          name="type"
-          component={SelectField}
-          value="main"
-          fullWidth={true}
-          floatingLabelText="Will it be on a training day or a rest day?"
-        >
-          <MenuItem value="main" primaryText="Main" />
-          <MenuItem value="rest" primaryText="Rest" />
-        </Field>
-      </div>
-      {isCycledTraining
-        ? <div>
+          <div>
             <Field
-              name="startDayofTraining"
-              component={DatePicker}
-              floatingLabelText="starting date of the training"
+              name="isCycledTraining"
+              component={SelectField}
               fullWidth={true}
-              format={(value, name) => (value === "" ? 0 : value)}
-            />
+              floatingLabelText="Training type: should it happen on fixed days like every monday or rather on every for example 5 days?"
+            >
+              <MenuItem value={true} primaryText="Cycled training" />
+              <MenuItem value={false} primaryText="On fixed days" />
+            </Field>
+          </div>
+          <div>
             <Field
-              name="onEveryxDay"
-              type="number"
+              name="name"
+              floatingLabelText="Workout name"
+              hintText="name"
+              type="text"
               component={TextField}
               fullWidth={true}
-              min={1}
-              hintText="happens on every x days"
+              validate={required('workout must have a name')}
             />
           </div>
-        : null}
-
-      {!isCycledTraining
-        ? <div style={{ position: "relative" }}>
+          <div>
             <Field
-              name="monday"
-              label="Monday"
-              component={Checkbox}
-              style={{ float: "left", width: "15%" }}
-            />
-            <Field
-              name="tuesday"
-              label="Tuesday"
-              component={Checkbox}
-              style={{ float: "left", width: "15%" }}
-            />
-            <Field
-              name="wednesday"
-              label="Wednesday"
-              component={Checkbox}
-              style={{ float: "left", width: "15%" }}
-            />
-            <Field
-              name="thursday"
-              label="Thursday"
-              component={Checkbox}
-              style={{ float: "left", width: "15%" }}
-            />
-            <Field
-              name="friday"
-              label="Friday"
-              component={Checkbox}
-              style={{ float: "left", width: "15%" }}
-            />
-            <Field
-              name="saturday"
-              label="Saturday"
-              component={Checkbox}
-              style={{ float: "left", width: "15%" }}
-            />
-            <Field
-              name="sunday"
-              label="Sunday"
-              component={Checkbox}
-              style={{ float: "right", width: "10%" }}
-            />
-            <div style={{ clear: "both" }} />
+              name="type"
+              component={SelectField}
+              value="main"
+              fullWidth={true}
+              floatingLabelText="Will it be on a training day or a rest day?"
+            >
+              <MenuItem value="main" primaryText="Main" />
+              <MenuItem value="rest" primaryText="Rest" />
+            </Field>
           </div>
-        : null}
-      <div style={{ textAlign: "center" }}>
-        <FieldArray
-          name="exercises"
-          component={({ fields: { map, push, remove } }) => {
-            return (
-              <div>
-                {" "}<FlatButton
-                  onTouchTap={() => push(null)}
-                  label={`Add exercise`}
+          {isCycledTraining
+            ? <div>
+                <Field
+                  name="startDayofTraining"
+                  component={DatePicker}
+                  floatingLabelText="starting date of the training"
+                  fullWidth={true}
+                  format={(value, name) => (value === '' ? 0 : value)}
                 />
-                {map((exec, index) =>
-                  <div key={index}>
-                    <Field
-                      name={exec}
-                      floatingLabelText="provide an exercise"
-                      hintText="exercise name"
-                      component={TextField}
-                      type="text"
-                      fullWidth={true}
-                    />
-                    <FlatButton
-                      style={{ textAlign: "center" }}
-                      onTouchTap={() => remove(index)}
-                      label={`Remove exercise`}
-                    />
-                  </div>
-                )}{" "}
+                <Field
+                  name="onEveryxDay"
+                  type="number"
+                  component={TextField}
+                  fullWidth={true}
+                  min={1}
+                  hintText="happens on every x days"
+                />
               </div>
-            );
-          }}
-        />
+            : null}
+
+          {!isCycledTraining
+            ? <div style={{ position: 'relative' }}>
+                <Field
+                  name="monday"
+                  label="Monday"
+                  component={Checkbox}
+                  style={{ float: 'left', width: '15%' }}
+                />
+                <Field
+                  name="tuesday"
+                  label="Tuesday"
+                  component={Checkbox}
+                  style={{ float: 'left', width: '15%' }}
+                />
+                <Field
+                  name="wednesday"
+                  label="Wednesday"
+                  component={Checkbox}
+                  style={{ float: 'left', width: '15%' }}
+                />
+                <Field
+                  name="thursday"
+                  label="Thursday"
+                  component={Checkbox}
+                  style={{ float: 'left', width: '15%' }}
+                />
+                <Field
+                  name="friday"
+                  label="Friday"
+                  component={Checkbox}
+                  style={{ float: 'left', width: '15%' }}
+                />
+                <Field
+                  name="saturday"
+                  label="Saturday"
+                  component={Checkbox}
+                  style={{ float: 'left', width: '15%' }}
+                />
+                <Field
+                  name="sunday"
+                  label="Sunday"
+                  component={Checkbox}
+                  style={{ float: 'right', width: '10%' }}
+                />
+                <div style={{ clear: 'both' }} />
+              </div>
+            : null}
+          <div style={{ textAlign: 'center' }}>
+            <FieldArray
+              name="exercises"
+              component={({ fields: { map, push, remove } }) => {
+                return (
+                  <div>
+                    {' '}<FlatButton
+                      onTouchTap={() => push(null)}
+                      label={`Add exercise`}
+                    />
+                    {map((exec, index) =>
+                      <div key={index}>
+                        <Field
+                          name={exec}
+                          floatingLabelText="provide an exercise"
+                          hintText="exercise name"
+                          component={TextField}
+                          type="text"
+                          fullWidth={true}
+                        />
+                        <FlatButton
+                          style={{ textAlign: 'center' }}
+                          onTouchTap={() => remove(index)}
+                          label={`Remove exercise`}
+                        />
+                      </div>
+                    )}{' '}
+                  </div>
+                );
+              }}
+            />
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <FlatButton type="submit" label={`Create workout`} />
+          </div>
+        </form>
       </div>
-      <div style={{ textAlign: "center" }}>
-        <FlatButton type="submit" label={`Create workout`} />
-      </div>
-
-
-    </form>
-  </div>);
-}}
-
-
+    );
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   createWorkoutTarget: workoutLog => dispatch(createWorkoutTarget(workoutLog))
@@ -266,8 +274,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(null, mapDispatchToProps)(
   reduxForm({
-    form: "create-workout-target",
+    form: 'create-workout-target',
     shouldValidate: () => true,
-    initialValues: { type: "main", isCycledTraining: false }
-  })(formValues("isCycledTraining")(WorkoutTarget))
+    initialValues: { type: 'main', isCycledTraining: false }
+  })(formValues('isCycledTraining')(WorkoutTarget))
 );

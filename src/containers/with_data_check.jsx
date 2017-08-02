@@ -7,7 +7,7 @@ const mapToValueNamePair = props => path => ({
   name: path.name
 });
 
-const isUndefined = item => item.value === undefined;
+const isUndefined = item => typeof item.value === 'undefined';
 
 const mapToName = item => item.name;
 
@@ -16,7 +16,7 @@ const mapToGetter = state => value => state.getIn(value.path);
 const withDataCheck = (WrappedComponent, paths, ErrorComponent) => {
   const DataCheck = props => {
     const errors = _.map(
-      _.filter(_.map(paths, mapToValueNamePair(props)), isUndefined),
+      _.filter(_.map(paths, mapToValueNamePair(props)),item => typeof item.value === 'undefined'),
       mapToName
     );
     return _.isEmpty(errors)

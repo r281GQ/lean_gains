@@ -49,13 +49,13 @@ class CalorieTargetContainer extends PureComponent {
     },
     { calorieTarget }
   ) => {
-    const maxRestGram = calorieTarget.getIn('max', 'maxRestGram');
-    const maxTrainingGram = calorieTarget.getIn('max', 'maxTrainingGram');
-    const maxRestPercentage = calorieTarget.getIn('max', 'maxRestPercentage');
-    const maxTrainingPercentage = calorieTarget.getIn(
+    const maxRestGram = calorieTarget.getIn(['max', 'restGram']);
+    const maxTrainingGram = calorieTarget.getIn(['max', 'trainingGram']);
+    const maxRestPercentage = calorieTarget.getIn(['max', 'restPercentage']);
+    const maxTrainingPercentage = calorieTarget.getIn([
       'max',
-      'maxTrainingPercentage'
-    );
+      'trainingPercentage'
+    ]);
 
     if (restFatGrams > maxRestGram)
       change('restFatGrams', _.floor(maxRestGram));
@@ -67,6 +67,41 @@ class CalorieTargetContainer extends PureComponent {
       change('restFatPercentage', _.floor(maxRestPercentage));
     if (trainingFatPercentage > maxTrainingPercentage)
       change('trainingFatPercentage', _.floor(maxTrainingPercentage));
+  };
+
+  shouldComponentUpdate = (
+    { calorieTarget, calorieSplit, restDay, trainingDay, activity, fatMethod },
+    nextState
+  ) => {
+    const {
+      change,
+      restFatGrams,
+      restFatPercentage,
+      trainingFatGrams,
+      trainingFatPercentage
+    } = this.props;
+
+    const maxRestGram = calorieTarget.getIn(['max', 'restGram']);
+    const maxTrainingGram = calorieTarget.getIn(['max', 'trainingGram']);
+    const maxRestPercentage = calorieTarget.getIn(['max', 'restPercentage']);
+    const maxTrainingPercentage = calorieTarget.getIn([
+      'max',
+      'trainingPercentage'
+    ]);
+
+    const update =
+      fatMethod !== this.props.fatMethod ||
+      activity !== this.props.activity ||
+      calorieSplit !== this.props.calorieSplit ||
+      restDay !== this.props.restDay ||
+      trainingDay !== this.props.trainingDay ||
+      typeof restFatGrams === 'undefined' ||
+      typeof this.props.restDay === 'undefined' ||
+      restFatGrams > maxRestGram ||
+      trainingFatGrams > maxTrainingGram ||
+      restFatPercentage > maxRestPercentage ||
+      trainingFatPercentage > maxTrainingPercentage;
+    return update;
   };
 
   componentDidMount = () => this.props.initializeForm(this.props);
@@ -83,9 +118,13 @@ class CalorieTargetContainer extends PureComponent {
       handleSubmit,
       bmrCalculationMethod,
       createCalorieTarget,
-      calorieTarget
+      calorieTarget,
+      restFatGrams,
+      restFatPercentage,
+      trainingFatGrams,
+      trainingFatPercentage
     } = this.props;
-    console.log(this.props.f);
+    console.log('rendereds');
     return (
       <div>
         <form onSubmit={handleSubmit(() => createCalorieTarget())}>
@@ -107,23 +146,20 @@ class CalorieTargetContainer extends PureComponent {
           <FatMethodSelector />
           <FatSelector
             fatMethod={fatMethod}
-            maxRestFatGrams={calorieTarget.getIn(['max', 'maxRestGram'])}
+            maxRestFatGrams={calorieTarget.getIn(['max', 'restGram'])}
             maxRestFatPercentage={calorieTarget.getIn([
               'max',
-              'maxRestPercentage'
+              'restPercentage'
             ])}
-            maxTrainingFatGrams={calorieTarget.getIn([
-              'max',
-              'maxTrainingGram'
-            ])}
+            maxTrainingFatGrams={calorieTarget.getIn(['max', 'trainingGram'])}
             maxTrainingFatPercentage={calorieTarget.getIn([
               'max',
-              'maxTrainingPercentage'
+              'trainingPercentage'
             ])}
-            restFatGrams={this.props.restFatGrams}
-            restFatPercentage={this.props.restFatPercentage}
-            trainingFatGrams={this.props.trainingFatGrams}
-            trainingFatPercentage={this.props.trainingFatPercentage}
+            restFatGrams={restFatGrams}
+            restFatPercentage={restFatPercentage}
+            trainingFatGrams={trainingFatGrams}
+            trainingFatPercentage={trainingFatPercentage}
           />
           <CenteredSubmitButton label="Create calorie target" />
         </form>
@@ -143,48 +179,21 @@ class CalorieTargetContainer extends PureComponent {
 const selector = formValueSelector('calorie-target');
 
 CalorieTargetContainer = connect(state => ({
+  activity: selector(state, 'activity'),
+  fatMethod: selector(state, 'fatMethod'),
   calorieSplit: selector(state, 'calorieSplit'),
   bmrCalculationMethod: selector(state, 'bmrCalculationMethod'),
   trainingFatGrams: selector(state, 'trainingFatGrams'),
   restFatGrams: selector(state, 'restFatGrams'),
   trainingFatPercentage: selector(state, 'trainingFatPercentage'),
   restFatPercentage: selector(state, 'restFatPercentage'),
-  fatMethod: selector(state, 'fatMethod'),
-  f: selector(
-    state,
-    'activity',
-    'calorieSplit',
-    'protein',
-    'bmrCalculationMethod',
-    'trainingDay',
-    'trainingFatGrams',
-    'restFatGrams',
-    'trainingFatPercentage',
-    'restFatPercentage',
-    'restDay',
-    'bodyFat',
-    'fatMethod'
-  )
+  restDay: selector(state, 'restDay'),
+  trainingDay: selector(state, 'trainingDay')
 }))(CalorieTargetContainer);
 
 const mapStateToProps = state => {
   return {
     calorieTarget: calorieTarget(state)
-    // f: selector(
-    //   state,
-    //   'activity',
-    //   'calorieSplit',
-    //   'protein',
-    //   'bmrCalculationMethod',
-    //   'trainingDay',
-    //   'trainingFatGrams',
-    //   'restFatGrams',
-    //   'trainingFatPercentage',
-    //   'restFatPercentage',
-    //   'restDay',
-    //   'bodyFat',
-    //   'fatMethod'
-    // )
   };
 };
 

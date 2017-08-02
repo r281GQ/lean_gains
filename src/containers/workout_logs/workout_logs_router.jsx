@@ -21,14 +21,14 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
       exact
       path={'/app/workoutlogs/create/before'}
       render={props => {
-        let defaultValue = {
-          date: moment().toDate()
-        };
+        // let defaultValue = {
+        //   date: moment().toDate()
+        // };
+        // defaultValue={defaultValue}
         return (
           <WorkoutLogFormContainer
             {...props}
             type={`createBefore`}
-            defaultValue={defaultValue}
           />
         );
       }}
@@ -62,7 +62,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
               .set('name', value)
               .set('note', '')
               .set('marker', false)
-              .set('sets', List())
+              .set('sets', Map())
           )
         );
 

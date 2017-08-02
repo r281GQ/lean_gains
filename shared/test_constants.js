@@ -126,8 +126,8 @@ const latestMeasurements = {
   aboveBelly: 81,
   belly: 81,
   belowBelly: 87,
-  hips: 92,
-  waist: 96,
+  hip: 92,
+  waist: 60,
   rightThigh: 50,
   leftThigh: 50
 };

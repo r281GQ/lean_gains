@@ -1,13 +1,12 @@
 import { fromJS, Map } from 'immutable';
-import chai, { expect } from 'chai';
+import chai from 'chai';
 import moment from 'moment';
 import * as _ from 'lodash';
 import chaiImmutable from 'chai-immutable';
+import { check, property, gen } from 'testcheck';
 
 import selector from './../../../src/store/selectors/calorie_target';
-import {
-  latestMeasurements
-} from './../../../shared/test_constants';
+import { latestMeasurements } from './../../../shared/test_constants';
 
 chai.use(chaiImmutable);
 
@@ -27,7 +26,6 @@ chai.use(chaiImmutable);
 //   restFatPercentage: 0
 // });
 
-
 const formValues = fromJS({
   trainingDay: 0,
   bmrCalculationMethod: 'harris-benedict',
@@ -44,7 +42,6 @@ const formValues = fromJS({
   restFatPercentage: 0
 });
 
-
 const state = Map().withMutations(map =>
   map
     .setIn(['userDetails', 'latestMeasurements'], fromJS(latestMeasurements))
@@ -54,8 +51,66 @@ const state = Map().withMutations(map =>
 );
 
 describe('calorie target props selector', () => {
+  describe('bodyFat', () => {
+    it('defaultValue => 15.3', () => {
+      expect(selector(state).get('bodyFat')).toMatchSnapshot();
+    });
+
+    it('female, modified weight && sex => 12.6', () => {
+      const modifiedState = state.withMutations(map =>
+        map
+          .setIn(['userDetails', 'latestMeasurements', 'weight'], 54)
+          .setIn(['userDetails', 'sex'], 'female')
+      );
+
+      expect(selector(modifiedState).get('bodyFat')).toMatchSnapshot();
+    });
+
+    it('female, modified weight && sex && waist => 21.8 ', () => {
+      const modifiedState = state.withMutations(map =>
+        map
+          .setIn(['userDetails', 'latestMeasurements', 'weight'], 61)
+          .setIn(['userDetails', 'sex'], 'female')
+          .setIn(['userDetails', 'latestMeasurements', 'waist'], 76)
+      );
+
+      expect(selector(modifiedState).get('bodyFat')).toMatchSnapshot();
+    });
+  });
+
+  //minCalorie
+  describe('minCalorie', () => {
+    it('basic minimum calorie % => 73', () => {
+      expect(selector(state).get('minCalorie')).toMatchSnapshot();
+    });
+
+    it('reducing height should reduce |minCalorie| => -71', () => {
+      const modifiedState = state.withMutations(map =>
+        map.setIn(['userDetails', 'latestMeasurements', 'height'], 160)
+      );
+
+      expect(selector(modifiedState)).toMatchSnapshot();
+    });
+  });
+
   it('should get back the most recent target', () => {
     // console.log(state);
-   console.log(selector(state))
+    console.log(selector(state));
+  });
+
+  describe('try gen', () => {
+    it('description', () => {
+
+      const add = (x,y) => x+y
+
+      const result = check(
+        property([gen.int], x => {
+          return _.isNumber(add(x, 0));
+        })
+      );
+
+
+      console.log(result);
+    });
   });
 });
