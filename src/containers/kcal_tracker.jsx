@@ -4,10 +4,10 @@ import { List } from 'immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
-import NutritionSearchBar from './../components/nutrition_search_bar';
+import NutritionSearchBar from './../components/calorie_tracker/nutrition_search_bar';
 import CenteredSubmitButton from './../components/centered_submit_button';
-import CalorieTrackerSummary from './../components/calorie_tracker_summary';
-import FoodsFieldArray from './../components/foods_field_array';
+import CalorieTrackerSummary from './../components/calorie_tracker/calorie_tracker_summary';
+import FoodsFieldArray from './../components/calorie_tracker/foods_field_array';
 import sumMacros from './../store/selectors/sum_macros';
 import search from './../store/actionCreators/calorie_action_creators';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form/immutable';
 import { SelectField, Slider } from 'redux-form-material-ui';
 import { MenuItem, FlatButton } from 'material-ui';
-import CurrentSlider from './../components/current_slider';
+import CurrentSlider from './../current_slider';
 
 const FatSelector = ({
   fatMethod,

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { updateUserDetails } from './../store/actionCreators/user_details_action_creators';
 import { required } from './../services/validators';
 
-import UserDetailsForm from './../components/user_details_form';
+import UserDetailsForm from './../components/user_details/user_details_form';
 
 const initValues = ({ userName, dob, sex, change }) => {
   change('userName', userName);
