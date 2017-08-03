@@ -8,13 +8,21 @@ import WorkoutLogsMainContainer from './workout_logs_main';
 import WorkoutLogFormContainer from './workout_log_form';
 import isTrainingDay from './../../store/selectors/exercises';
 
+import withConfirmDeleteModal from './../confirm_delete_modal';
+
+const deleteMessage = `Are you sure you want to delete this workout log?`;
+
 //TODO: use HOC for modal
 const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
   <div>
     <Route
       exact
       path={'/app/workoutlogs'}
-      component={WorkoutLogsMainContainer}
+      component={withConfirmDeleteModal(
+        WorkoutLogsMainContainer,
+        deleteMessage,
+        'workoutLog'
+      )}
     />
 
     <Route

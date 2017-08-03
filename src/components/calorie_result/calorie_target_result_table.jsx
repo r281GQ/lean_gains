@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Table,
   TableBody,
@@ -48,5 +49,27 @@ const CalorieTargetResultTable = ({ calorieTarget, label }) =>
       </TableRow>
     </TableBody>
   </Table>;
+
+CalorieTargetResultTable.propTypes = {
+  calorieTarget: PropTypes.oneOfType([
+    PropTypes.shape({
+      rest: PropTypes.shape({
+        calorie: PropTypes.number,
+        protein: PropTypes.number,
+        carbohydrate: PropTypes.number,
+        fat: PropTypes.number
+      })
+    }),
+    PropTypes.shape({
+      training: PropTypes.shape({
+        calorie: PropTypes.number,
+        protein: PropTypes.number,
+        carbohydrate: PropTypes.number,
+        fat: PropTypes.number
+      })
+    })
+  ]),
+  label: PropTypes.string
+};
 
 export default CalorieTargetResultTable;

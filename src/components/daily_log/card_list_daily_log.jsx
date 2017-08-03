@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   List,
   ListItem,
@@ -41,5 +42,11 @@ const CardListDailyLog = ({
       </ListItem>
     )}
   </List>;
+
+CardListDailyLog.propTypes = {
+  collection: PropTypes.object,
+  onModalStateChange: PropTypes.func.isRequired,
+  setSelectedItem: PropTypes.func.isRequired
+};
 
 export default CardListDailyLog;

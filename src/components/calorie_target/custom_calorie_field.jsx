@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form/immutable';
 import { TextField } from 'redux-form-material-ui';
 
@@ -35,5 +36,10 @@ const CustomCalorieField = ({
         />
       </div>
     : null;
+
+CustomCalorieField.propTypes = {
+  calorieSplit: PropTypes.string,
+  normalize: PropTypes.func.isRequired
+}
 
 export default CustomCalorieField;

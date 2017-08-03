@@ -21,7 +21,7 @@ import ConfirmDelete from './../../components/confirm_delete';
 import LoadingScreen from './../../components/loading';
 import DateSelector from './../../components/date_selector';
 
-import CardListDailyLog from './../../components/card_list_daily_log';
+import CardListDailyLog from './../../components/daily_log/card_list_daily_log';
 
 import isTodaysLogExists from './../../store/selectors/todays_log';
 import {

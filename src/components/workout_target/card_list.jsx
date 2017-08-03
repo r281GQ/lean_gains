@@ -2,17 +2,14 @@ import React from 'react';
 import {
   List,
   ListItem,
-
   Card,
   CardHeader,
   CardText
 } from 'material-ui';
-
-
 import * as _ from 'lodash';
 
-import DeleteButton from './../components/delete_button';
-import ModifyButton from './../components/modify_button';
+import DeleteButton from './../delete_button';
+import ModifyButton from './../modify_button';
 
 const CardList = ({
   editLink,

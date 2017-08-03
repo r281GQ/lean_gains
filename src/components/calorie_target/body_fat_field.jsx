@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form/immutable';
 import { TextField } from 'redux-form-material-ui';
 
@@ -15,5 +16,9 @@ const BodyFatField = ({ bmrCalculationMethod }) =>
         step={0.1}
       />
     : null;
+
+BodyFatField.propTypes = {
+  bmrCalculationMethod: PropTypes.string
+}
 
 export default BodyFatField;

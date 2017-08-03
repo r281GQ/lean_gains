@@ -19,7 +19,7 @@ import FatSelector from './../components/calorie_target/fat_selector';
 import CenteredSubmitButton from './../components/centered_submit_button';
 
 class CalorieTargetCalculator extends Component {
-  _adjustCaloriePercentage = (props, nextProps) => {
+  _adjustCaloriePercentage(props, nextProps) {
     const { calorieSplit } = nextProps;
     const { change } = props;
     if (calorieSplit === 'slowbulk') {
@@ -34,9 +34,9 @@ class CalorieTargetCalculator extends Component {
       change('restDay', -20);
       change('trainingDay', 20);
     }
-  };
+  }
 
-  _adjustFatRatio = (
+  _adjustFatRatio(
     {
       change,
       restFatGrams,
@@ -45,7 +45,7 @@ class CalorieTargetCalculator extends Component {
       trainingFatPercentage
     },
     { calorieTarget }
-  ) => {
+  ) {
     const maxRestGram = calorieTarget.getIn(['max', 'restGram']);
     const maxTrainingGram = calorieTarget.getIn(['max', 'trainingGram']);
     const maxRestPercentage = calorieTarget.getIn(['max', 'restPercentage']);
@@ -64,18 +64,19 @@ class CalorieTargetCalculator extends Component {
       change('restFatPercentage', _.floor(maxRestPercentage));
     if (trainingFatPercentage > maxTrainingPercentage)
       change('trainingFatPercentage', _.floor(maxTrainingPercentage));
-  };
+  }
 
-  shouldComponentUpdate = (
-    { calorieTarget, calorieSplit, restDay, trainingDay, activity, fatMethod },
+  shouldComponentUpdate(
+    { calorieTarget, calorieSplit, restDay, trainingDay, activity, fatMethod, bmrCalculationMethod },
     nextState
-  ) => {
+  ) {
     const {
       change,
       restFatGrams,
       restFatPercentage,
       trainingFatGrams,
       trainingFatPercentage
+
     } = this.props;
 
     const maxRestGram = calorieTarget.getIn(['max', 'restGram']);
@@ -87,6 +88,7 @@ class CalorieTargetCalculator extends Component {
     ]);
 
     const update =
+      bmrCalculationMethod !== this.props.bmrCalculationMethod ||
       fatMethod !== this.props.fatMethod ||
       activity !== this.props.activity ||
       calorieSplit !== this.props.calorieSplit ||
@@ -99,16 +101,18 @@ class CalorieTargetCalculator extends Component {
       restFatPercentage > maxRestPercentage ||
       trainingFatPercentage > maxTrainingPercentage;
     return update;
-  };
+  }
 
-  componentDidMount = () => this.props.initializeForm(this.props);
+  componentDidMount() {
+    this.props.initializeForm(this.props);
+  }
 
-  componentWillReceiveProps = (nextProps, nextState) => {
+  componentWillReceiveProps(nextProps, nextState) {
     this._adjustCaloriePercentage(this.props, nextProps);
     this._adjustFatRatio(this.props, nextProps);
-  };
+  }
 
-  render = () => {
+  render() {
     const {
       fatMethod,
       calorieSplit,
@@ -121,7 +125,6 @@ class CalorieTargetCalculator extends Component {
       trainingFatGrams,
       trainingFatPercentage
     } = this.props;
-    console.log('rendereds');
     return (
       <div>
         <form onSubmit={handleSubmit(() => createCalorieTarget())}>
@@ -156,12 +159,10 @@ class CalorieTargetCalculator extends Component {
           />
           <CenteredSubmitButton label="Create calorie target" />
         </form>
-
       </div>
     );
-  };
+  }
 }
-
 const selector = formValueSelector('calorie-target');
 
 CalorieTargetCalculator = connect(state => ({

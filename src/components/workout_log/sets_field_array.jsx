@@ -3,8 +3,8 @@ import { FlatButton } from 'material-ui';
 import { List, ListItem } from 'material-ui';
 import { fromJS } from 'immutable';
 
-import WeightField from './../components/weight_field';
-import RepsField from './../components/reps_field';
+import WeightField from './weight_field';
+import RepsField from './reps_field';
 
 const SetsFieldArray = ({ fields: { map, remove, length, insert } }) =>
   <List>

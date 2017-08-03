@@ -17,4 +17,6 @@ const CreateButtonMinified = ({ link }) =>
     </FixedFloatingButtonLeft>
   </Link>;
 
+
+
 export default CreateButtonMinified;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import CalorieTargetResult from './../components/calorie_target_result';
+import CalorieTargetResult from './../components/calorie_result/calorie_target_result';
 import calorieTarget from './../store/selectors/calorie_target';
 
 const CalorieTargetResultContainer = ({ values }) =>

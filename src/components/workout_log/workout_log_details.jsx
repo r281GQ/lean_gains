@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 
 const setExerciseKey = (log, exercise) =>
@@ -22,5 +23,9 @@ const WorkoutLogDetails = ({ log }) =>
       </div>
     )}
   </div>;
+
+WorkoutLogDetails.PropTypes = {
+  log: PropTypes.objectOf(PropTypes.object)
+};
 
 export default WorkoutLogDetails;

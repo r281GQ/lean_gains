@@ -7,7 +7,7 @@ import {
   closeWorkoutModal
 } from './../../store/actionCreators/app_action_creators';
 import { deleteWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
-import CardList from './../../components/card_list';
+import CardList from './../../components/workout_target/card_list';
 import CreateButton from './../../components/create_button';
 import ConfirmDelete from './../../components/confirm_delete';
 import LoadingScreen from './../../components/loading';

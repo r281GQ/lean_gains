@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Field } from "redux-form/immutable";
 
-import CurrentSlider from './current_slider';
+import CurrentSlider from './../current_slider';
 
 const WeightField = ({ item }) =>
     <Field
@@ -15,5 +16,11 @@ const WeightField = ({ item }) =>
       step={0.5}
       max={300}
     />
+
+
+
+    WeightField.propTypes = {
+      item: PropTypes.string.isRequired
+    };
 
 export default WeightField;

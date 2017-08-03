@@ -13,10 +13,10 @@ Immutable.Map {
   bodyFat: 18,
   minCalorie: -71,
   max: Immutable.Map {
-    maxRestGram: 152,
-    maxRestPercentage: 71.9,
-    maxTrainingGram: 152,
-    maxTrainingPercentage: 71.9,
+    restGram: 152,
+    restPercentage: 71.9,
+    trainingGram: 152,
+    trainingPercentage: 71.9,
   },
   finalValues: Immutable.Map {
     rest: Immutable.Map {

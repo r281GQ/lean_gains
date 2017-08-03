@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   List,
   ListItem,
@@ -10,8 +11,8 @@ import {
 import * as _ from 'lodash';
 import moment from 'moment';
 
-import DeleteButton from './delete_button';
-import ModifyButton from './modify_button';
+import DeleteButton from './../delete_button';
+import ModifyButton from './../modify_button';
 
 import WorkoutLogDetails from './workout_log_details';
 
@@ -42,5 +43,12 @@ const CardListLog = ({
       </ListItem>
     )}
   </List>;
+
+CardListLog.propTypes = {
+  workoutLogs: PropTypes.objectOf(PropTypes.object),
+  editLink: PropTypes.string.isRequired,
+  onModalStateChange: PropTypes.func.isRequired,
+  setSelectedItem: PropTypes.func.isRequired
+};
 
 export default CardListLog;

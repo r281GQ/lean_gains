@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form/immutable';
 import { SelectField, Slider } from 'redux-form-material-ui';
 import { MenuItem, FlatButton } from 'material-ui';
+
 import CurrentSlider from './../current_slider';
 
 const FatSelector = ({
@@ -54,6 +56,14 @@ const FatSelector = ({
           step={0.1}
         />
       </div>;
+};
+
+FatSelector.propTypes = {
+  fatMethod: PropTypes.string,
+  maxRestFatGrams: PropTypes.number,
+  maxRestFatPercentage: PropTypes.number,
+  maxTrainingFatGrams: PropTypes.number,
+  maxTrainingFatPercentage: PropTypes.number
 };
 
 export default FatSelector;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const CalorieTrackerSummary = ({ sum }) =>
   <div>
@@ -6,5 +7,14 @@ const CalorieTrackerSummary = ({ sum }) =>
     C:
     {sum.carbohydrate} F: {sum.fat}
   </div>;
+
+CalorieTrackerSummary.propTypes = {
+  sum: PropTypes.shape({
+    calories: PropTypes.number,
+    protein: PropTypes.number,
+    carbohydrate: PropTypes.number,
+    fat: PropTypes.number
+  })
+};
 
 export default CalorieTrackerSummary;

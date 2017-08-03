@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form/immutable';
 import moment from 'moment';
 
-import DailyLogForm from './../../components/daily_log_form';
+import DailyLogForm from './../../components/daily_log/daily_log_form';
 
 class DailyLogFormContainer extends PureComponent {
   componentDidMount = () => {

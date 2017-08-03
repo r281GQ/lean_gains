@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 
-const LoginComponent = ({ handleSubmit }) =>
+const LoginComponent = ({ handleSubmit, validateEmail }) =>
   <div>
     <form onSubmit={handleSubmit}>
       <Field
@@ -25,5 +26,10 @@ const LoginComponent = ({ handleSubmit }) =>
       </Link>
     </form>
   </div>;
+
+LoginComponent.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  validateEmail: PropTypes.func.isRequired
+};
 
 export default LoginComponent;

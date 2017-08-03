@@ -9,5 +9,5 @@ const CenteredSubmitButton = props =>
   <CenteredDiv>
     <SubmitButton {...props} />
   </CenteredDiv>;
-  
+
 export default CenteredSubmitButton;

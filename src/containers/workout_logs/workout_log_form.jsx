@@ -18,7 +18,9 @@ import {
   createWorkoutLog,
   updateWorkoutLog
 } from './../../store/actionCreators/workout_log_action_creators';
-import ExerciseFieldArray from './../../components/exercies_field_array';
+import ExerciseFieldArray from './../../components/workout_log/exercies_field_array';
+
+const mapToBoolean = (v) => { return _.isBoolean(v) ? v : false; }
 
 class WorkoutLogFormContainer extends PureComponent {
   componentDidMount = () =>
@@ -37,6 +39,7 @@ class WorkoutLogFormContainer extends PureComponent {
     disableDates.find(value => moment(value).isSame(date, 'day'))
       ? true
       : false;
+
 
   render = () => {
     let { createWorkoutLog, handleSubmit, updateWorkoutLog } = this.props;
@@ -69,6 +72,7 @@ class WorkoutLogFormContainer extends PureComponent {
               name="exercises"
               component={ExerciseFieldArray}
               passedMarkerList={this.props.markerList}
+              normalizeMarker = {mapToBoolean}
             />
             <FlatButton
               type="submit"

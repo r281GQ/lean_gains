@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 
 app.use(cors(corsConfig));
 
-app.post('/api/logIn', (request, response) => {
+app.post('/api/login', (request, response) => {
   console.log('Endpoint /api/logIn reached with body: ', request.body);
 
   let { email, password } = request.body;
@@ -177,7 +177,7 @@ app.get('/api/workoutlogs', (request, response) => {
   return response.status(200).send(workoutLogs);
 });
 
-app.post('/api/signUp', (request, response) => {
+app.post('/api/signup', (request, response) => {
   console.log('Endpoint /api/logIn reached with body: ', request.body);
 
   let { email, password, name, userName } = request.body;

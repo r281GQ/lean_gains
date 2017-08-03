@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`calorie_target_result_sum_label should render label with given properties 1`] = `
+<div
+  style={
+    Object {
+      "textAlign": "center",
+    }
+  }
+>
+  <FlatButton
+    disabled={true}
+    fullWidth={false}
+    label="Calculated calories for rest day: 1500"
+    labelPosition="after"
+    labelStyle={Object {}}
+    onKeyboardFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onTouchStart={[Function]}
+    primary={false}
+    secondary={false}
+  />
+</div>
+`;

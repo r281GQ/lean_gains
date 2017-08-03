@@ -8,7 +8,7 @@ import withConfirmDeleteModal from './../confirm_delete_modal';
 
 const DailyLogsRouter = ({ dailyLogs }) =>
   <div>
-    <Route exact path={`/app/dailylogs`} component={withConfirmDeleteModal(DailyLogsMainContainer, 'geci', 'dailyLog')} />
+    <Route exact path={`/app/dailylogs`} component={withConfirmDeleteModal(DailyLogsMainContainer, 'Would you like to delete this log?', 'dailyLog')} />
 
     <Route exact path={`/app/dailylogs/create`} component={DailyLogFormContainer} />
 
@@ -16,7 +16,7 @@ const DailyLogsRouter = ({ dailyLogs }) =>
       exact
       path={`/app/dailylogs/create/before`}
       render={props => {
-        return <DailyLogFormContainer {...props} renderDatepicker={true} />;
+        return <DailyLogFormContainer {...props} renderDatepicker />;
       }}
     />
 

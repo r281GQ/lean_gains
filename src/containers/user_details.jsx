@@ -27,7 +27,7 @@ class UserDetailsContainer extends PureComponent {
     <UserDetailsForm
       {...this.props}
       validators={{
-        required,
+        userName: required,
         minDate: moment().subtract(110, 'years').toDate(),
         maxDate: moment().subtract(5, 'years').toDate()
       }}
