@@ -8,7 +8,7 @@ const monthsWithWorkoutLogs = workoutLogDates =>
 
 const checkType = type => type === 'workoutLogs' || type === 'dailyLogs';
 
-const factory = type =>
+const factory = type => 
   checkType(type)
     ? createSelector(logDates(type), monthsWithWorkoutLogs)
     : new Error('Type not supported!');

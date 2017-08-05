@@ -11,6 +11,7 @@
     "serve": "concurrently  \"nodemon mock/server.js\"  \"webpack-dev-server --hot --inline\" ",
     "serve:mock": "nodemon mock/server.js",
     "serve:dev:alone": "nodemon server/server.js",
+    "serve:dev": "concurrently \" nodemon server/server.js\"  \"webpack-dev-server --hot --inline\"",
     "build": "webpack -p"
   },
   "author": "Endre Vegh",

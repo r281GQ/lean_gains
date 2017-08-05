@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
+const { dev: { mongodb } } = require('./../../config/config.json');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://endre_vegh:sdfsdfdfsdfsdfsdf343rgdfsd2e@ds129733.mlab.com:29733/lean_gains_dev');
+mongoose.connect(mongodb);

@@ -139,7 +139,19 @@ const values = (
     'percentage'
   );
 
-  return fromJS({
+  console.log(
+    latestMeasurements.get('height'),
+    latestMeasurements.get('weight'),
+    sex,
+    latestMeasurements.get('neck'),
+    latestMeasurements.get('belly'),
+    latestMeasurements.get('waist'),
+    latestMeasurements.get('hip')
+
+
+  );
+
+  const f = {
     bodyFat: calorieCalculators.calculateBodyFat(
       latestMeasurements.get('height'),
       latestMeasurements.get('weight'),
@@ -172,7 +184,11 @@ const values = (
         protein: finalProtein
       }
     }
-  });
+  }
+
+  console.log(f)
+
+  return fromJS(f);
 };
 
 export default createSelector(age, sex, latestMeasurements, formValues, values);

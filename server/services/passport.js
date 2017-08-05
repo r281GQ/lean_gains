@@ -34,6 +34,8 @@ passport.use(
       callbackURL: '/api/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
+      console.log(profile);
+      console.log(mapToDbProps(profile))
       const userToCreate = new User(mapToDbProps(profile));
       User.findOne({ googleAuthId: userToCreate.googleAuthId })
         .then(user => {

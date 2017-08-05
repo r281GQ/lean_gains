@@ -6,8 +6,8 @@ import SubmitButton from './../submit_button';
 import SexPicker from './sex_picker';
 import DOBPickerField from './dob_picker_field';
 
-const UserDetailsForm = ({ updateUserDetails, handleSubmit, validators }) =>
-  <form onSubmit={handleSubmit(formProps => updateUserDetails(formProps))}>
+const UserDetailsForm = ({ handleUpdateUserDetails, handleSubmit, validators }) =>
+  <form onSubmit={handleSubmit(handleUpdateUserDetails)}>
     <UserNamePicker validator={validators.userName} />
     <DOBPickerField minDate={validators.minDate} maxDate={validators.maxDate} />
     <SexPicker />
@@ -15,8 +15,7 @@ const UserDetailsForm = ({ updateUserDetails, handleSubmit, validators }) =>
   </form>;
 
 UserDetailsForm.propTypes = {
-  updateUserDetails: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleUpdateUserDetails: PropTypes.func.isRequired,
   validators: PropTypes.shape({
     userName: PropTypes.func.isRequired,
     minDate: PropTypes.object.isRequired,

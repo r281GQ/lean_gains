@@ -1,9 +1,10 @@
 module.exports = mongoose => {
-  const { Schema } = mongoose;
-
-  const userSchema = new Schema({
+  const userSchema = new mongoose.Schema({
     name: {
       type: String
+    },
+    userName: {
+      type:String
     },
     email: {
       type: String,
@@ -20,6 +21,9 @@ module.exports = mongoose => {
       type: Date
     },
     googleAuthId: {
+      type: String
+    },
+    picture: {
       type: String
     }
   });

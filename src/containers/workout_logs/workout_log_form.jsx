@@ -7,7 +7,7 @@ import {
   FieldArray,
   reduxForm,
   formValueSelector,
-  initialize,
+  initialize, 
   formValues,
   getFormValues
 } from 'redux-form/immutable';
@@ -29,14 +29,14 @@ class WorkoutLogFormContainer extends PureComponent {
         'workoutLog',
         Map().withMutations(map =>
           map
-            .set('date', moment().toDate())
+            .set('createdAt', moment().toDate())
             .set('exercises', this.props.defaultValue)
         )
       )
     );
 
-  _disableThese = disableDates => date =>
-    disableDates.find(value => moment(value).isSame(date, 'day'))
+  _disableThese = disableDates => createdAt =>
+    disableDates.find(value => moment(value).isSame(createdAt, 'day'))
       ? true
       : false;
 
@@ -47,6 +47,13 @@ class WorkoutLogFormContainer extends PureComponent {
       <div>
         <form
           onSubmit={handleSubmit(formprops => {
+
+            const sendable = formprops.toJS();
+            sendable.createdAt = moment(sendable.createdAt).valueOf()
+
+            createWorkoutLog(sendable);
+
+
             console.log(formprops.toJS());
           })}
         >
@@ -54,7 +61,7 @@ class WorkoutLogFormContainer extends PureComponent {
             {this.props.type === 'createBefore'
               ? <div>
                   <Field
-                    name="date"
+                    name="createdAt"
                     component={input =>
                       <DatePicker
                         {...input}

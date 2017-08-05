@@ -50,7 +50,6 @@ const renderMainScreen = ({
       setSelectedMonth={setSelectedMonthForWorkoutLogs}
     />
 
-
     <CardListLog
       workoutLogs={workoutLogsForMonth.toJS()}
       editLink="/app/workoutlogs/edit/"
@@ -67,17 +66,15 @@ const renderMainScreen = ({
   </div>;
 
 class WorkoutLogsMainContainer extends PureComponent {
-  componentWillMount = () => {
+  componentDidMount = () => {
     if (this.props.datesWithWorkoutLogs.isEmpty())
       this.props.getWorkoutLogDates();
     if (this.props.workoutLogsForMonth.isEmpty()) {
-
       this.props.getWorkoutLogsForMonth(moment().format('MM-YYYY'));
       this.props.setSelectedMonthForWorkoutLogs(
         this.props.monthsWithWorkoutLogs.last()
-
-    );
-      }
+      );
+    }
   };
 
   componentWillReceiveProps = (nextProps, nextState) =>
@@ -118,10 +115,3 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(
   WorkoutLogsMainContainer
 );
-
-{/* <ConfirmDelete
-  title="Sure you want to delete this log?"
-  isOpen={isModalOpen}
-  close={closeWorkoutModal}
-  deleteActions={[() => deleteWorkoutLog(selectedWorkoutLog)]}
-/> */}

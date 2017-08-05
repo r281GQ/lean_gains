@@ -3,13 +3,13 @@ import axios from 'axios';
 import * as workoutLogs from './../actions/workout_logs_actions';
 import * as app from './../actions/app_actions';
 
-//TODO create axios instance with x-auth headers
 const getWorkoutLogsForMonth = month => dispatch =>
   axios
-    .get(`http://localhost:4000/api/workoutlogs`, {
+    .get(`/api/workoutlogs`, {
       params: {
         month
-      }
+      },
+      withCredentials: true
     })
     .then(({ data }) => {
       dispatch({
@@ -19,9 +19,9 @@ const getWorkoutLogsForMonth = month => dispatch =>
     })
     .catch(error => console.log(error));
 
-const getWorkoutLogDates = month => dispatch =>
+const getWorkoutLogDates = () => dispatch =>
   axios
-    .get('http://localhost:4000/api/workoutlogs/dates')
+    .get('/api/workoutlogs/dates', { withCredentials: true })
     .then(({ data }) =>
       dispatch({
         type: workoutLogs.WRITE_WORKOUT_LOG_DATES,
@@ -32,19 +32,19 @@ const getWorkoutLogDates = month => dispatch =>
 
 const createWorkoutLog = workoutLog => dispatch =>
   axios
-  .post('http://localhost:4000/api/workoutlogs', workoutLog)
-  .then(({ data }) => {
-    dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data });
-    dispatch({
-      type: workoutLogs.WRITE_WORKOUT_LOG_DATE,
-      payload: data.date
-    });
-  })
-  .catch(error => console.log(error));
+    .post('/api/workoutlogs', workoutLog, { withCredentials: true })
+    .then(({ data }) => {
+      dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data });
+      dispatch({
+        type: workoutLogs.WRITE_WORKOUT_LOG_DATE,
+        payload: data.createdAt
+      });
+    })
+    .catch(error => console.log(error));
 
 const updateWorkoutLog = workoutLog => dispatch =>
   axios
-    .put('http://localhost:4000/api/workoutlogs', workoutLog)
+    .put('/api/workoutlogs', workoutLog, { withCredentials: true })
     .then(({ data }) =>
       dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data })
     )
@@ -52,7 +52,7 @@ const updateWorkoutLog = workoutLog => dispatch =>
 
 const deleteWorkoutLog = _id => dispatch =>
   axios
-    .delete(`http://localhost:4000/api/workoutlogs/${_id}`)
+    .delete(`api/workoutlogs/${_id}`, { withCredentials: true })
     .then(({ data }) => {
       dispatch({
         type: workoutLogs.DELETE_WORKOUT_LOG_DATE,

@@ -26,7 +26,7 @@ const handleLoginSuccess = (state, { token, email, _id, lastLogin }) =>
 
 
 //TODO clear mockstate
-const reducer = (state = INITIAL_STATE_MOCK, { type, payload }) => {
+const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
     case auth.LOGIN_SUCCESS:
       return handleLoginSuccess(state, payload);

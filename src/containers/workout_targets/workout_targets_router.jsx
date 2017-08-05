@@ -6,6 +6,8 @@ import WorkoutTarget from './workout_target';
 import WorkoutTargetMain from './workout_targets_main';
 
 //TODO: use HOC for modal
+//TODO: differnet page when there are no workout targets
+//TODO: float button as hoc for reusabailty
 const WorkoutTargetsRouter = ({ workoutTargets }) =>
   <div>
     <Route

@@ -22,7 +22,7 @@ const CardListDailyLog = ({
       <ListItem disabled={true} key={log._id}>
         <Card>
           <CardHeader
-            title={moment(log.date).format('DD-MM-YYYY')}
+            title={moment(log.createdAt).utcOffset(0).format('DD-MM-YYYY')}
             actAsExpander={true}
           />
           <CardText expandable={true}>

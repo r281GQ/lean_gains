@@ -48,6 +48,8 @@ class DailyLogPicker extends PureComponent {
   componentDidMount = () => {
     if (this.props.datesWithDailyLogs.isEmpty()) this.props.getDailyLogDates();
     if (this.props.dailyLogsForMonth.isEmpty()) {
+      console.log(this.props.monthsWithDailyLogs)
+      console.log(moment().format('MM-YYYY'))
       this.props.getLogsForSelectedMonth(moment().format('MM-YYYY'));
       this.props.setSelectedMonthForDailyLogs(
         this.props.monthsWithDailyLogs.last()
@@ -117,7 +119,7 @@ const mapDispatchToProps = dispatch => ({
   getDailyLogDates: () => dispatch(getDailyLogDates()),
   deleteDailyLog: _id => dispatch(deleteDailyLog(_id)),
   setSelectedDailyLog: _id => dispatch(setSelectedDailyLog(_id)),
-  getLogsForSelectedMonth: month => dispatch(getLogsForSelectedMonth())
+  getLogsForSelectedMonth: month => dispatch(getLogsForSelectedMonth(month))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DailyLogPicker);

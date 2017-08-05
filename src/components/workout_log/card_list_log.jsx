@@ -27,7 +27,7 @@ const CardListLog = ({
       <ListItem key={log._id} disabled={true}>
         <Card>
           <CardHeader
-            title={moment(log.date).format('DD-MM-YYYY')}
+            title={moment(log.createdAt).format('DD-MM-YYYY')}
             actAsExpander={true}
             showExpandableButton={true}
           />

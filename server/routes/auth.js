@@ -1,5 +1,11 @@
 module.exports = app => passport => {
-  app.get('/api/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/api/auth/google/callback',
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('http://localhost:8080/app');
+    }
+  );
 
   app.get(
     '/api/auth/google',
@@ -9,10 +15,15 @@ module.exports = app => passport => {
   );
 
   app.get('/api/auth/whoami', (request, response) => {
+    if (!request.user)
+      return response.status(401).send({ message: 'Unauthanticated!' });
     return response.status(200).send(request.user);
   });
 
-  app.get('/api/auth/logout', request => request.logout());
+  app.get('/api/auth/logout', (request, response) => {
+    request.logout();
+    return response.status(200).send({ messgae: 'Successfully logged out!' });
+  });
 
   app.get('/api/auth/email/signup', (request, response) => {});
 

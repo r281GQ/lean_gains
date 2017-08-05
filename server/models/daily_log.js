@@ -1,20 +1,29 @@
 module.exports = mongoose => {
-  const { Schema } = mongoose;
-  
-  //date
-  const dailyLogSchema = new Schema({
+  const moment = require('moment');
+
+  const dailyLogSchema = new mongoose.Schema({
+    user: {
+      ref: 'User',
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
+    },
+    createdAt: {
+      type: Number,
+      default: () => moment().valueOf()
+    },
     protein: Number,
     carbohydrate: Number,
     fat: Number,
     neck: Number,
     weight: Number,
+    height: Number,
     chest: Number,
     rightArm: Number,
     leftArm: Number,
     aboveBelly: Number,
     belly: Number,
     belowBelly: Number,
-    hips: Number,
+    hip: Number,
     waist: Number,
     rightThigh: Number,
     leftThigh: Number,

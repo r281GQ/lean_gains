@@ -4,7 +4,7 @@ import * as userDetails from './../actions/user_details_actions';
 
 const createKcalTarget = calorieTarget => dispatch =>
   axios
-    .post('http://localhost:4000/api/kcaltargets', calorieTarget)
+    .post('/api/calorietargets', calorieTarget, {withCredentials: true})
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_KCAL_TARGETS,
@@ -15,7 +15,7 @@ const createKcalTarget = calorieTarget => dispatch =>
 
 const createWorkoutTarget = workoutLog => dispatch =>
   axios
-    .post('http://localhost:4000/api/workouttargets', workoutLog)
+    .post('/api/workouttargets', workoutLog,  {withCredentials: true})
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_WORKOUT_TARGET,
@@ -24,9 +24,22 @@ const createWorkoutTarget = workoutLog => dispatch =>
     })
     .catch(error => console.log(error));
 
+    const updateWorkoutTarget = workoutLog => dispatch =>{
+      console.log('called', workoutLog)
+      axios
+      .put('/api/workouttargets', workoutLog,  {withCredentials: true})
+      .then(({ data }) => {
+        dispatch({
+          type: userDetails.WRITE_WORKOUT_TARGET,
+          payload: data
+        });
+      })
+      .catch(error => console.log(error));
+    }
+
 const deleteWorkoutTarget = _id => dispatch =>
   axios
-    .delete(`http://localhost:4000/api/workouttargets/${_id}`)
+    .delete(`/api/workouttargets/${_id}`, {withCredentials: true} )
     .then(({ data }) =>
       dispatch({ type: userDetails.DELETE_WORKOUT_TARGET, payload: _id })
     )
@@ -34,27 +47,27 @@ const deleteWorkoutTarget = _id => dispatch =>
 
 const initFetch = () => dispatch => {
   axios
-    .get('http://localhost:4000/api/kcaltargets')
+    .get('/api/calorietargets', {withCredentials: true} )
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_KCAL_TARGETS,
         payload: data
       });
-      return axios.get('http://localhost:4000/api/workouttargets');
+      return axios.get('/api/workouttargets', {withCredentials: true});
     })
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_WORKOUT_TARGETS,
         payload: data
       });
-      return axios.get(`http://localhost:4000/api/userdetails`);
+      return axios.get(`/api/userdetails`, {withCredentials: true});
     })
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_USER_DETAILS,
         payload: data
       });
-      return axios.get('http://localhost:4000/api/latestmeasurements');
+      return axios.get('/api/latestmeasurements', {withCredentials: true});
     })
     .then(({ data }) => {
       dispatch({ type: userDetails.WRITE_LATEST, payload: data });
@@ -64,7 +77,7 @@ const initFetch = () => dispatch => {
 
 const updateUserDetails = userDetailsInfo => dispatch =>
   axios
-    .put(`http://localhost:4000/api/userdetails`, userDetailsInfo)
+    .put(`/api/userdetails`, userDetailsInfo, {withCredentials: true})
     .then(({ data }) =>
       dispatch({ type: userDetails.WRITE_USER_DETAILS, payload: data })
     )
@@ -72,6 +85,7 @@ const updateUserDetails = userDetailsInfo => dispatch =>
 
 export {
   initFetch,
+  updateWorkoutTarget,
   updateUserDetails,
   createKcalTarget,
   createWorkoutTarget,

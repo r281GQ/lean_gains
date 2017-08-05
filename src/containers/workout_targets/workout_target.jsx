@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { required } from './../../services/validators';
 import { fromJS } from 'immutable';
-import { createWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
+import { createWorkoutTarget, updateWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
 
 class WorkoutTarget extends Component {
   componentDidMount() {
@@ -29,9 +29,13 @@ class WorkoutTarget extends Component {
       this.props.change('exercises', defaultValue.get('exercises'));
       this.props.change(
         'isCycledTraining',
-        defaultValue.get('onDays') ? 'fix' : 'cycle'
+        defaultValue.get('isCycledTraining')
       );
-      if (defaultValue.get('onDays')) {
+      // this.props.change(
+      //   'isCycledTraining',
+      //   defaultValue.get('onDays') ? 'fix' : 'cycle'
+      // );
+      if (defaultValue.get('isCycledTraining') === 'fix') {
         this.props.change(
           'monday',
           defaultValue.get('onDays').find(value => value === 1)
@@ -60,20 +64,92 @@ class WorkoutTarget extends Component {
           'sunday',
           defaultValue.get('onDays').find(value => value === 7)
         );
+      } else {
+        this.props.change('onEveryxDay', defaultValue.get('onEveryxDay'));
+        this.props.change(
+          'startDayofTraining',
+          moment(defaultValue.get('startDayofTraining')).toDate()
+        );
       }
-      this.props.change('onEveryxDay', defaultValue.get('onEveryxDay'));
-      this.props.change(
-        'startDayofTraining',
-        moment(defaultValue.get('startDayofTraining')).toDate()
-      );
+
     }
   }
+  // onSubmit={handleSubmit(
+  //   ({
+  //     isCycledTraining,
+  //     onEveryxDay,
+  //     name,
+  //     type,
+  //     startDayofTraining,
+  //     exercises,
+  //     monday,
+  //     tuesday,
+  //     wednesday,
+  //     thursday,
+  //     friday,
+  //     saturday,
+  //     sunday
+  //   }) => {
+  //     let onDays = _.filter(
+  //       [
+  //         monday ? 1 : undefined,
+  //         tuesday ? 2 : undefined,
+  //         wednesday ? 3 : undefined,
+  //         thursday ? 4 : undefined,
+  //         friday ? 5 : undefined,
+  //         saturday ? 6 : undefined,
+  //         sunday ? 7 : undefined
+  //       ],
+  //       item => item !== undefined
+  //     );
+  //
+  //
+  //     if (isCycledTraining === 'fix' && _.isEmpty(onDays)) {
+  //       throw new SubmissionError({
+  //         isCycledTraining:
+  //           'on fixed days you must select at least one day',
+  //         _error: 'days'
+  //       });
+  //     }
+  //
+  //     if (isCycledTraining === 'cycle' && (!startDayofTraining || !onEveryxDay))
+  //       throw new SubmissionError({
+  //         isCycledTraining:
+  //           'on cycled training you must set the starting date and on which days the training should occur',
+  //         _error: 'exercise name'
+  //       });
+  //     if (
+  //       _.isEmpty(exercises) ||
+  //       _.every(exercises, exercise => !exercise)
+  //     )
+  //       throw new SubmissionError({
+  //         isCycledTraining:
+  //           'you must provide at least one valid exercise',
+  //         _error: 'exercise name'
+  //       });
+  //
+  //     let workoutTarget = isCycledTraining === 'cycle'
+  //       ? { name, type, startDayofTraining, exercises, onEveryxDay }
+  //       : {
+  //           name,
+  //           type,
+  //           exercises,
+  //           onDays
+  //         };
+  //     createWorkoutTarget(workoutTarget);
+  //     reset();
+  //   }
+  // )}
+
+
+
 
   render() {
     const {
       handleSubmit,
       isCycledTraining,
       createWorkoutTarget,
+      updateWorkoutTarget,
       reset
     } = this.props;
     console.log('rendered');
@@ -81,33 +157,26 @@ class WorkoutTarget extends Component {
       <div>
         <form
           onSubmit={handleSubmit(
-            ({
-              isCycledTraining,
-              onEveryxDay,
-              name,
-              type,
-              startDayofTraining,
-              exercises,
-              monday,
-              tuesday,
-              wednesday,
-              thursday,
-              friday,
-              saturday,
-              sunday
-            }) => {
+            formProps => {
               let onDays = _.filter(
                 [
-                  monday ? 1 : undefined,
-                  tuesday ? 2 : undefined,
-                  wednesday ? 3 : undefined,
-                  thursday ? 4 : undefined,
-                  friday ? 5 : undefined,
-                  saturday ? 6 : undefined,
-                  sunday ? 7 : undefined
+                  formProps.get('monday') ? 1 : undefined,
+                  formProps.get('tuesday') ? 2 : undefined,
+                  formProps.get('wednesday') ? 3 : undefined,
+                  formProps.get('thursday') ? 4 : undefined,
+                  formProps.get('friday') ? 5 : undefined,
+                  formProps.get('saturday') ? 6 : undefined,
+                  formProps.get('sunday') ? 7 : undefined
                 ],
                 item => item !== undefined
               );
+              let isCycledTraining = formProps.get('isCycledTraining');
+
+              let onEveryxDay = formProps.get('onEveryxDay');
+              let name = formProps.get('name');
+              let type = formProps.get('type');
+              let startDayofTraining = formProps.get('startDayofTraining');
+
 
               if (isCycledTraining === 'fix' && _.isEmpty(onDays)) {
                 throw new SubmissionError({
@@ -124,24 +193,30 @@ class WorkoutTarget extends Component {
                   _error: 'exercise name'
                 });
               if (
-                _.isEmpty(exercises) ||
-                _.every(exercises, exercise => !exercise)
+                typeof formProps.get('exercises') === 'undefined' || _.isEmpty(formProps.get('exercises').toJS()) ||
+                _.every(formProps.get('exercises').toJS(), exercise => !exercise)
               )
                 throw new SubmissionError({
                   isCycledTraining:
                     'you must provide at least one valid exercise',
                   _error: 'exercise name'
                 });
+let exercises = formProps.get('exercises').toJS();
+              // let workoutTarget = isCycledTraining === 'cycle'
+              //   ? {isCycledTraining, name, type, startDayofTraining, exercises, onEveryxDay, onDays }
+              //   : {
+              //     isCycledTraining,
+              //       name,
+              //       type,
+              //       exercises,
+              //       onDays
+              //     };
 
-              let workoutTarget = isCycledTraining === 'cycle'
-                ? { name, type, startDayofTraining, exercises, onEveryxDay }
-                : {
-                    name,
-                    type,
-                    exercises,
-                    onDays
-                  };
-              createWorkoutTarget(workoutTarget);
+
+                  let workoutTarget =
+                     {isCycledTraining, name, type, startDayofTraining: moment(startDayofTraining).valueOf(), exercises, onEveryxDay, onDays }
+                    ;
+              this.props.match.params.id ? updateWorkoutTarget(Object.assign(workoutTarget, {_id: this.props.match.params.id})) : createWorkoutTarget(workoutTarget);
               reset();
             }
           )}
@@ -255,7 +330,7 @@ class WorkoutTarget extends Component {
                 return (
                   <div>
                     {' '}<FlatButton
-                      onTouchTap={() => insert(length, fromJS({}))}
+                      onTouchTap={() => insert(length, '')}
                       label={`Add exercise`}
                     />
                     {map((exec, index) =>
@@ -267,6 +342,8 @@ class WorkoutTarget extends Component {
                           component={TextField}
                           type="text"
                           fullWidth={true}
+                          value = ''
+
                         />
                         <FlatButton
                           style={{ textAlign: 'center' }}
@@ -290,7 +367,8 @@ class WorkoutTarget extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createWorkoutTarget: workoutLog => dispatch(createWorkoutTarget(workoutLog))
+  createWorkoutTarget: workoutLog => dispatch(createWorkoutTarget(workoutLog)),
+  updateWorkoutTarget: workoutLog => dispatch(updateWorkoutTarget(workoutLog))
 });
 
 export default connect(null, mapDispatchToProps)(

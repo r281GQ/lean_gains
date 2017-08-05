@@ -33,9 +33,9 @@ const reduceIntervalToExercises = currentDate => (list, value) => {
     : list;
 };
 
-const filterFixedDays = value => value.get('onEveryxDay') === undefined;
+const filterFixedDays = value => value.get('isCycledTraining') === 'fix';
 
-const filterIntervalDays = value => value.get('onEveryxDay') !== undefined;
+const filterIntervalDays = value => value.get('isCycledTraining') === 'cycle';
 
 const getExercises = (mainWorkouts, currentDate) => {
   const exercisesFromFixedDays = mainWorkouts

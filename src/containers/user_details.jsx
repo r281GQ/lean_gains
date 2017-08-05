@@ -14,11 +14,19 @@ const initValues = ({ userName, dob, sex, change }) => {
   change('sex', sex);
 };
 
-const prepareFormProps = ({ userName, dob, sex }) => ({
-  userName,
-  sex,
-  dob: moment(dob).valueOf()
+const prepareFormProps = formProps => ({
+  userName: formProps.get('userName'),
+  sex: formProps.get('sex'),
+  dob: moment(formProps.get('dob')).valueOf()
 });
+
+// const prepareFormProps = ({ userName, dob, sex }) => ({
+//   userName,
+//   sex,
+//   dob: moment(dob).valueOf()
+// });
+
+
 
 class UserDetailsContainer extends PureComponent {
   componentWillMount = () => initValues(this.props);
@@ -26,6 +34,11 @@ class UserDetailsContainer extends PureComponent {
   render = () =>
     <UserDetailsForm
       {...this.props}
+      handleUpdateUserDetails = {formProps => {
+        const normalized = prepareFormProps(formProps);
+        console.log(normalized);
+        this.props.updateUserDetails(normalized);
+      }}
       validators={{
         userName: required,
         minDate: moment().subtract(110, 'years').toDate(),
@@ -42,7 +55,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateUserDetails: userDetails =>
-    dispatch(updateUserDetails(prepareFormProps(userDetails)))
+    dispatch(updateUserDetails(userDetails))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

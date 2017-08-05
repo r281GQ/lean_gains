@@ -30,6 +30,8 @@ const handleWriteWorkoutTarget = (state, payload) =>
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case userDetails.WRITE_KCAL_TARGET:
+      return state.setIn(['kcalTargets',payload._id], fromJS(payload))
     case userDetails.WRITE_LATEST:
       return state.set('latestMeasurements', fromJS(payload));
     case userDetails.WRITE_KCAL_TARGETS:
