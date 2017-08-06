@@ -9,22 +9,19 @@ const {
 
 passport.serializeUser(({ id }, done) => done(null, id));
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((id, done) =>
   User.findById(id)
     .then(user => done(null, user))
-    .catch(error => console.log(error));
-});
+    .catch(error => console.log(error))
+);
 
-const mapToDbProps = profile => {
-  const user = {
-    name: profile.displayName,
-    email: profile.emails[0].value,
-    sex: profile.gender,
-    googleAuthId: profile.id,
-    picture: profile.photos[0].value
-  };
-  return user;
-};
+const mapToDbProps = profile => ({
+  name: profile.displayName,
+  email: profile.emails[0].value,
+  sex: profile.gender,
+  googleAuthId: profile.id,
+  picture: profile.photos[0].value
+});
 
 passport.use(
   new Strategy(
@@ -33,19 +30,13 @@ passport.use(
       clientSecret,
       callbackURL: '/api/auth/google/callback'
     },
-    (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
-      console.log(mapToDbProps(profile))
-      const userToCreate = new User(mapToDbProps(profile));
-      User.findOne({ googleAuthId: userToCreate.googleAuthId })
-        .then(user => {
-          if (user) {
-            return done(null, user);
-          }
-          return userToCreate.save();
-        })
+    (accessToken, refreshToken, profile, done) =>
+      User.findOne({ googleAuthId: profile.id })
+        .then(
+          user =>
+            user ? done(null, user) : new User(mapToDbProps(profile)).save()
+        )
         .then(user => done(null, user))
-        .catch(error => console.log(error));
-    }
+        .catch(error => console.log(error))
   )
 );

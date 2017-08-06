@@ -5,12 +5,12 @@ const cors = require('cors');
 const { dev: { cookie } } = require('./../config/config.json');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(cors({credentials: true, origin: 'http://localhost:8080'}))
-app.use(bodyParser.json())
+app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
+app.use(bodyParser.json());
 
 app.use(
   cookieSession({
@@ -39,6 +39,4 @@ require('./routes/workoutlog')(app);
 
 // app.use(express.static(path.join(__dirname, '/../build')));
 
-app.listen(3050, () => {
-  console.log('Server started on port: 3050');
-});
+app.listen(3050, () => console.log('Server started on port: 3050'));

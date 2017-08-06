@@ -3,33 +3,28 @@ const moment = require('moment');
 const _ = require('lodash');
 const User = mongoose.model('User');
 
-const handleGetUserDetails = (request, response) => {
-  return new Promise((resolve, reject) => {
-    User.findOne({_id: request.user._id})
-    .then(user => {
-      const details = _.pick(user, ['dob', 'sex', 'picture', 'userName']);
-      resolve(details)
-    })
-    .catch(error => reject(error))
-  })
-}
+const pickUserValues = user =>
+  _.pick(user, ['dob', 'sex', 'picture', 'userName']);
 
+const handleGetUserDetails = ({ user: { _id } }) =>
+  new Promise((resolve, reject) =>
+    User.findOne({ _id })
+      .then(user => resolve(pickUserValues(user)))
+      .catch(error => reject(error))
+  );
 
-
-const handlePutUserDetails = (request, response) => {
-  const {dob, sex, userName} =  request.body;
-  return new Promise((resolve, reject) => {
-    User.findOneAndUpdate({_id: request.user._id},
-      {$set: {dob, sex, userName}}, {new: true})
-    .then(user => {
-      const details = _.pick(user, ['dob', 'sex', 'picture', 'userName']);
-
-      resolve(details)
-    })
-    .catch(error => reject(error))
-  })
-}
+const handlePutUserDetails = ({ body: { dob, sex, userName } }) =>
+  new Promise((resolve, reject) =>
+    User.findOneAndUpdate(
+      { _id: request.user._id },
+      { $set: { dob, sex, userName } },
+      { new: true }
+    )
+      .then(user => resolve(pickUserValues(user)))
+      .catch(error => reject(error))
+  );
 
 module.exports = {
-  handleGetUserDetails,handlePutUserDetails
-}
+  handleGetUserDetails,
+  handlePutUserDetails
+};

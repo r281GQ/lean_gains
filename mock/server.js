@@ -18,17 +18,6 @@ const {
 } = require('./../shared/test_constants');
 
 const app = express();
-const corsConfig = {
-  origin: '*',
-  allowedHeaders: [
-    'Accept-Version',
-    'Authorization',
-    'Credentials',
-    'Content-Type',
-    'x-auth'
-  ],
-  exposedHeaders: ['X-Request-Id', 'x-auth']
-};
 
 app.use(bodyParser.json());
 

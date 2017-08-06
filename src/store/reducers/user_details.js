@@ -1,4 +1,4 @@
-import { fromJS, Set, Map } from 'immutable';
+import { fromJS } from 'immutable';
 import moment from 'moment';
 import * as _ from 'lodash';
 
@@ -30,8 +30,6 @@ const handleWriteWorkoutTarget = (state, payload) =>
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-    case userDetails.WRITE_KCAL_TARGET:
-      return state.setIn(['kcalTargets',payload._id], fromJS(payload))
     case userDetails.WRITE_LATEST:
       return state.set('latestMeasurements', fromJS(payload));
     case userDetails.WRITE_KCAL_TARGETS:
