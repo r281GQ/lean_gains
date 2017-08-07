@@ -6,52 +6,55 @@ const selector = formValueSelector('calorie-track');
 
 const foods = state => selector(state, 'foods') || List();
 
-const calories = foods =>
-  foods.reduce((sum, item) => {
-    const serving_weight = item
-      .get('alt_measures')
-      .find(value => value.get('measure') === item.get('serving_unit'))
-      .get('serving_weight');
+const getSelectedWeight = item =>
+  item
+    .get('measures')
+    .find(value => value.get('name') === item.get('unit'))
+    .get('weight');
 
-    return sum.withMutations(map =>
-      map
-        .update(
-          'protein',
-          value =>
-            value +
-            item.get('nf_protein') *
-              (serving_weight /
-                item.get('serving_weight_grams') *
-                item.get('quantity'))
-        )
-        .update(
-          'carbohydrate',
-          value =>
-            value +
-            item.get('nf_total_carbohydrate') *
-              (serving_weight /
-                item.get('serving_weight_grams') *
-                item.get('quantity'))
-        )
-        .update(
-          'fat',
-          value =>
-            value +
-            item.get('nf_total_fat') *
-              (serving_weight /
-                item.get('serving_weight_grams') *
-                item.get('quantity'))
-        )
-        .update(
-          'calories',
-          value =>
-            value +
-            item.get('nf_calories') *
-              (serving_weight /
-                item.get('serving_weight_grams') *
-                item.get('quantity'))
-        )
-    );
-  }, fromJS({ calories: 0, protein: 0, carbohydrate: 0, fat: 0 }));
+const calories = foods =>
+  foods.reduce(
+    (sum, item) =>
+      sum.withMutations(map =>
+        map
+          .update(
+            'protein',
+            value =>
+              value +
+              item.get('protein') *
+                (getSelectedWeight(item) /
+                  item.get('gram') *
+                  item.get('quantity'))
+          )
+          .update(
+            'carbohydrate',
+            value =>
+              value +
+              item.get('carbohydrate') *
+                (getSelectedWeight(item) /
+                  item.get('gram') *
+                  item.get('quantity'))
+          )
+          .update(
+            'fat',
+            value =>
+              value +
+              item.get('fat') *
+                (getSelectedWeight(item) /
+                  item.get('gram') *
+                  item.get('quantity'))
+          )
+          .update(
+            'calories',
+            value =>
+              value +
+              item.get('calorie') *
+                (getSelectedWeight(item) /
+                  item.get('gram') *
+                  item.get('quantity'))
+          )
+      ),
+    fromJS({ calories: 0, protein: 0, carbohydrate: 0, fat: 0 })
+  );
 
 export default createSelector(foods, calories);

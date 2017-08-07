@@ -15,6 +15,7 @@ import { closeSideBar } from './../store/actionCreators/app_action_creators';
 import WorkoutTargetRouter from './workout_targets/workout_targets_router';
 
 import CalorieTargetContainer from './calorie_target_container';
+import CalorieTrackerContainer from './calorie_tracker_container'
 
 import withMessageBar from './massage_container';
 import withLoadingScreen from './loading_container';
@@ -37,7 +38,7 @@ class MainContainer extends PureComponent {
       <Route path="/app/dailylogs" component={DailyLogsRouter} />
       <Route path="/app/workouttargets" component={WorkoutTargetRouter} />
       <Route path="/app/kcaltarget" component={withDataCheck(CalorieTargetContainer, [{name:'sex', path:['userDetails', 'sex']}],Error )} />
-      <Route path="/app/kcaltracker" component={KcalTracker} />
+      <Route path="/app/kcaltracker" component={CalorieTrackerContainer} />
     </div>;
 }
 

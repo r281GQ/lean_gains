@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { reduxForm, submit } from 'redux-form/immutable';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
@@ -9,7 +9,40 @@ import CenteredSubmitButton from './../components/centered_submit_button';
 import CalorieTrackerSummary from './../components/calorie_tracker/calorie_tracker_summary';
 import FoodsFieldArray from './../components/calorie_tracker/foods_field_array';
 import sumMacros from './../store/selectors/sum_macros';
-import search from './../store/actionCreators/calorie_action_creators';
+import {
+  search,
+  updateCalorieLog
+} from './../store/actionCreators/calorie_action_creators';
+
+import styled from 'styled-components';
+
+import CalorieLog from './../components/calorie_log';
+
+const Contianer = styled.div`
+  position: relative;
+  overflow: hidden;
+`;
+
+// const MainField = styled.div`
+//   position: absolute;
+//   width: 66%;
+// `;
+//
+// const SideField = styled.div`
+//   position: absolute;
+//   width: 33%;
+//   right: 0px;
+// `;
+
+const MainField = styled.div`
+  float: left;
+  width: 66%;
+`;
+
+const SideField = styled.div`
+  float: right;
+  width: 33%;
+`;
 
 //TODO favourite foods like shortcut or tag, recentsearches and recipes
 //TODO autoSave functionanilty refactor to an action creator (saga)
@@ -25,29 +58,33 @@ class CalorieTrackerContainer extends PureComponent {
   _roundAndConvertSum = sum => sum.map(value => _.round(value));
 
   render = () =>
-    <div>
+    <Contianer>
       <CalorieTrackerSummary
         sum={this._roundAndConvertSum(this.props.sum).toJS()}
       />
       <NutritionSearchBar onKeyPressHandler={this._onKeyPressHandler} />
       <form
-        onSubmit={this.props.handleSubmit(form => console.log(form.toJS()))}
+        onSubmit={this.props.handleSubmit(formProps => {
+          this.props.updateCalorieLog(formProps.get('foods').toJS());
+        })}
       >
         <CenteredSubmitButton label="Update day" />
         <FoodsFieldArray />
       </form>
-    </div>;
+    </Contianer>;
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    search: query => dispatch(search(query))
+    search: query => dispatch(search(query)),
+    updateCalorieLog: calorieLog => dispatch(updateCalorieLog(calorieLog))
   };
 };
 
 const mapStateToProps = state => {
   return {
-    sum: sumMacros(state)
+    sum: sumMacros(state),
+    calorieLog: state.getIn(['calorieLog']) || Map()
   };
 };
 

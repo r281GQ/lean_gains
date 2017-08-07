@@ -27,6 +27,8 @@ require('./models/daily_log')(mongoose);
 require('./models/calorie_target')(mongoose);
 require('./models/workouttargets')(mongoose);
 require('./models/workoutlog')(mongoose);
+require('./models/nutrition')(mongoose);
+require('./models/calorie_log')(mongoose);
 require('./services/passport');
 require('./services/mongoose');
 
@@ -36,6 +38,7 @@ require('./routes/user_details')(app);
 require('./routes/calorietarget')(app);
 require('./routes/workouttargets')(app);
 require('./routes/workoutlog')(app);
+require('./routes/calorie_log')(app);
 
 // app.use(express.static(path.join(__dirname, '/../build')));
 

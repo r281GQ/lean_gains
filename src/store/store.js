@@ -7,6 +7,7 @@ import Immutable from 'immutable';
 
 import app from './reducers/app';
 import auth from './reducers/auth';
+import calorieLog from './reducers/calorie_logs'
 import userDetails from './reducers/user_details';
 import dailyLogs from './reducers/daily_logs';
 import workoutLogs from './reducers/workout_logs';
@@ -17,6 +18,7 @@ const store = createStore(
     app,
     auth,
     userDetails,
+    calorieLog,
     dailyLogs,
     routing,
     workoutLogs,

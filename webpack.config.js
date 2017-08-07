@@ -35,7 +35,8 @@ const config = {
         exclude: /node_modules/,
         loaders: [
           'react-hot-loader',
-          'babel-loader?plugins[]=transform-class-properties',
+          // 'babel-loader?plugins[]=transform-class-properties',
+          'babel-loader',
           'eslint-loader'
         ]
       },

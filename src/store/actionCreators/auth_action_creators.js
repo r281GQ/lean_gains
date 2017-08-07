@@ -43,6 +43,8 @@ const whoAmI = () => dispatch =>
 //     });
 // };
 
+
+//TODO: delete every data in reducers
 const logOut = () => dispatch =>
   axios
     .get('/api/auth/logout')

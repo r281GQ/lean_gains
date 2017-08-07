@@ -20,15 +20,15 @@ const Nutritions = ({ fields: { map, get, remove } }) =>
         <CardHeader
           showExpandableButton={true}
           actAsExpander={true}
-          title={get(index).get('food_name')}
+          title={get(index).get('name')}
           subtitle={
             <div>
-              Protein : {`${get(index).get('nf_protein')}  `}
-              Carbohydrate: {`${get(index).get('nf_total_carbohydrate')}  `}
-              Fat: {`${get(index).get('nf_total_fat')}  `}
-              Calories: {`${get(index).get('nf_calories')}  `}
+              Protein : {`${get(index).get('protein')}  `}
+              Carbohydrate: {`${get(index).get('carbohydrate')}  `}
+              Fat: {`${get(index).get('fat')}  `}
+              Calories: {`${get(index).get('calorie')}  `}
               Serving quantity: {`${get(index).get('quantity')}  `}
-              Serving unit: {`${get(index).get('serving_unit')}  `}
+              Serving unit: {`${get(index).get('unit')}  `}
             </div>
           }
           avatar={get(index).getIn(['photo', 'thumb'])}
@@ -38,17 +38,17 @@ const Nutritions = ({ fields: { map, get, remove } }) =>
           <div>
             <Field
               component={SelectField}
-              name={`${result}.serving_unit`}
+              name={`${result}.unit`}
               fullWidth={true}
               floatingLabelText="serving unit"
             >
               {_.map(
-                get(index).get('alt_measures').toJS(),
-                ({ measure, serving_weight }) =>
+                get(index).get('measures').toJS(),
+                ({ name, weight }) =>
                   <MenuItem
-                    key={measure}
-                    value={measure}
-                    primaryText={`Meausure : ${measure}  Weight: ${serving_weight}`}
+                    key={name}
+                    value={name}
+                    primaryText={`Meausure : ${name}  Weight: ${weight}`}
                   />
               )}
             </Field>
