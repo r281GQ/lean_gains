@@ -1,3 +1,4 @@
+//TODO: implement jwt auth, and github oauth
 module.exports = app => passport => {
   app.get(
     '/api/auth/google/callback',

@@ -46,7 +46,7 @@ const getExercises = (mainWorkouts, currentDate) => {
     .filter(filterIntervalDays)
     .reduce(reduceIntervalToExercises(currentDate), List());
 
-  return exercisesFromFixedDays.concat(exercisesFromIntervalDays);
+  return exercisesFromFixedDays.concat(exercisesFromIntervalDays).isEmpty() ? List().push('You do not have any exercise for today') : exercisesFromFixedDays.concat(exercisesFromIntervalDays);
 };
 
 const factory = type => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Drawer, MenuItem, FlatButton } from 'material-ui';
-
+import { Drawer, MenuItem } from 'material-ui';
+import PropTypes from 'prop-types';
 import { closeSideBar } from './../store/actionCreators/app_action_creators';
 import { logOut } from './../store/actionCreators/auth_action_creators';
 
@@ -66,5 +66,9 @@ const mapDispatchToProps = dispatch => ({
   closeSideBar: () => dispatch(closeSideBar()),
   logOut: () => dispatch(logOut())
 });
+
+// SideBarContainer.propTypes = {
+//   isSideBarOpen: PropTypes.number
+// }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarContainer);

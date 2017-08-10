@@ -7,7 +7,7 @@ import {
   FieldArray,
   reduxForm,
   formValueSelector,
-  initialize, 
+  initialize,
   formValues,
   getFormValues
 } from 'redux-form/immutable';
@@ -51,7 +51,7 @@ class WorkoutLogFormContainer extends PureComponent {
             const sendable = formprops.toJS();
             sendable.createdAt = moment(sendable.createdAt).valueOf()
 
-            createWorkoutLog(sendable);
+              this.props.match.params.id ? updateWorkoutLog(sendable) : createWorkoutLog(sendable);
 
 
             console.log(formprops.toJS());

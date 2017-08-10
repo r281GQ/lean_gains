@@ -26,6 +26,8 @@ import isTrainingDay from './../store/selectors/exercises';
 import { openSideBar } from './../store/actionCreators/app_action_creators';
 import todayMacros from './../store/selectors/current_macros';
 
+
+
 //TODO just saving indicator
 const HeaderContainer = ({
   currentWeight,
@@ -38,7 +40,8 @@ const HeaderContainer = ({
 }) => {
   return (
     <Toolbar>
-      <ToolbarGroup firstChild={true}>
+
+        <ToolbarGroup firstChild={true}>
         <IconButton tooltip="Main menu" onTouchTap={() => openSideBar()}>
           <ActionHome />
         </IconButton>

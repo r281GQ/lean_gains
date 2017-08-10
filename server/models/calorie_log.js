@@ -41,14 +41,14 @@ module.exports = mongoose => {
     return _.reduce(
       this.nutritions,
       (sum, item) => {
-        const { weight } = _.find(item.measures, m => m.name === item.unit);
+        const multiplier =
+          _.find(item.measures, measure => measure.name === item.unit).weight /
+          item.gram;
 
-        const f = weight / item.gram;
-
-        sum.protein += item.protein * f;
-        sum.carbohydrate += item.carbohydrate * f;
-        sum.fat += item.fat * f;
-        sum.calorie += item.calorie * f;
+        sum.protein += item.protein * multiplier;
+        sum.carbohydrate += item.carbohydrate * multiplier;
+        sum.fat += item.fat * multiplier;
+        sum.calorie += item.calorie * multiplier;
         return sum;
       },
       { protein: 0, carbohydrate: 0, fat: 0, calorie: 0 }

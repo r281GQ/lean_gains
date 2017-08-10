@@ -5,9 +5,9 @@ const _ = require('lodash');
 const decorateWithUser = model => {
   const Model = mongoose.model(model);
   return (body, user) => {
-    const log = new Model(body);
-    log.user = user;
-    return log;
+    const model = new Model(body);
+    model.user = user;
+    return model;
   };
 };
 

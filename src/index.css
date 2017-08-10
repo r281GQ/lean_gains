@@ -1,0 +1,81 @@
+body {
+  position: relative;
+  padding-bottom: 70px;
+}
+
+.login-container-upper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.login-container-middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.login-container-inner {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
+
+.col {
+  box-sizing: border-box;
+}
+
+.col-4 {
+  float: left;
+  text-align: center;
+  padding: 10px;
+  width: 33%;
+}
+
+.col-3 {
+  float: left;
+  text-align: center;
+  padding: 10px;
+  width: 25%;
+}
+
+.col-6 {
+  float: left;
+  padding: 10px;
+  text-align: center;
+  width: 50%;
+}
+
+.col-12{
+  padding: 10px;
+  float: left;
+  text-align: center;
+  width: 100%;
+}
+
+.row {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.row::after{
+  clear: both;
+}
+
+.clear {
+  clear: both;
+}
+
+
+@media screen and (max-width: 1200px) {
+  .login-container-inner {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .login-container-inner {
+    width: 95%;
+  }
+}

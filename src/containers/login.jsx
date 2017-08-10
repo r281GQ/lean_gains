@@ -12,13 +12,12 @@ const LoginContainer = props =>
     <LoginComponent
       {...props}
       validateEmail = {value => value}
+      google={props.googleLogIn}
       handleSubmit={props.handleSubmit(({ email, password }) => {
         props.logIn({ password, email });
         props.reset();
       })}
     />
-    <a href="/api/auth/google">login</a>
-    <button onClick={props.whoAmI}>whoAmI</button>
     {/* <GoogleLoginButton googleLoginHandler = {props.googleLogIn} /> */}
   </div>;
 
@@ -28,6 +27,8 @@ const LoginContainer = props =>
     };
   };
 
+  // <a href="/api/auth/google">login</a>
+  // <button onClick={props.whoAmI}>whoAmI</button>
 const mapDispatchToProps = dispatch => ({
   logIn: userInfo => dispatch(logIn(userInfo)),
   googleLogIn: () => dispatch(googleLogin()),

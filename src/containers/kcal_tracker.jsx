@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { reduxForm, submit } from 'redux-form/immutable';
+import { reduxForm } from 'redux-form/immutable';
 import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
@@ -14,38 +14,7 @@ import {
   updateCalorieLog
 } from './../store/actionCreators/calorie_action_creators';
 
-import styled from 'styled-components';
-
-import CalorieLog from './../components/calorie_log';
-
-const Contianer = styled.div`
-  position: relative;
-  overflow: hidden;
-`;
-
-// const MainField = styled.div`
-//   position: absolute;
-//   width: 66%;
-// `;
-//
-// const SideField = styled.div`
-//   position: absolute;
-//   width: 33%;
-//   right: 0px;
-// `;
-
-const MainField = styled.div`
-  float: left;
-  width: 66%;
-`;
-
-const SideField = styled.div`
-  float: right;
-  width: 33%;
-`;
-
 //TODO favourite foods like shortcut or tag, recentsearches and recipes
-//TODO autoSave functionanilty refactor to an action creator (saga)
 class CalorieTrackerContainer extends PureComponent {
   _onKeyPressHandler = ({ key, target: { value } }) => {
     if (key === 'Enter') {
@@ -57,21 +26,22 @@ class CalorieTrackerContainer extends PureComponent {
 
   _roundAndConvertSum = sum => sum.map(value => _.round(value));
 
-  render = () =>
-    <Contianer>
-      <CalorieTrackerSummary
-        sum={this._roundAndConvertSum(this.props.sum).toJS()}
-      />
-      <NutritionSearchBar onKeyPressHandler={this._onKeyPressHandler} />
-      <form
-        onSubmit={this.props.handleSubmit(formProps => {
-          this.props.updateCalorieLog(formProps.get('foods').toJS());
-        })}
-      >
-        <CenteredSubmitButton label="Update day" />
-        <FoodsFieldArray />
-      </form>
-    </Contianer>;
+  render() {
+    const { handleSubmit, updateCalorieLog, sum } = this.props;
+    return (
+      <div>
+        <CalorieTrackerSummary sum={this._roundAndConvertSum(sum).toJS()} />
+        <NutritionSearchBar onKeyPressHandler={this._onKeyPressHandler} />
+        <form
+          onSubmit={handleSubmit(formProps => {
+            updateCalorieLog(formProps.get('foods').toJS());
+          })}
+        >
+          <FoodsFieldArray />
+        </form>
+      </div>
+    );
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -81,16 +51,15 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const mapStateToProps = state => {
-  return {
-    sum: sumMacros(state),
-    calorieLog: state.getIn(['calorieLog']) || Map()
-  };
-};
+const mapStateToProps = state => ({
+  sum: sumMacros(state)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   reduxForm({
     form: 'calorie-track',
+    onSubmit: (formProps, dispatch, props) =>
+      dispatch(updateCalorieLog(formProps.get('foods').toJS())),
     shouldValidate: () => true
   })(CalorieTrackerContainer)
 );

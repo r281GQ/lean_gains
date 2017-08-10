@@ -17,9 +17,9 @@ import { whoAmI } from './../store/actionCreators/auth_action_creators';
 // };
 
 const withAuthentication = WrappedComponent => {
-  class AuthenticationContainer extends React.Component {
+  class AuthenticationContainer extends React.PureComponent {
     componentDidMount() {
-      this.props.whoAmI();
+      if(!this.props.isAuthenticated)this.props.whoAmI();
     }
     render() {
       console.log(this.props.isAuthenticated)

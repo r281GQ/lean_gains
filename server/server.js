@@ -7,6 +7,9 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 
+//TODO: error codes
+//TODO: validation middleware
+//TODO: tests
 const app = express();
 
 app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
@@ -25,21 +28,24 @@ app.use(passport.session());
 require('./models/user')(mongoose);
 require('./models/daily_log')(mongoose);
 require('./models/calorie_target')(mongoose);
-require('./models/workouttargets')(mongoose);
-require('./models/workoutlog')(mongoose);
-require('./models/nutrition')(mongoose);
+require('./models/workout_target')(mongoose);
+require('./models/workout_log')(mongoose);
 require('./models/calorie_log')(mongoose);
 require('./services/passport');
 require('./services/mongoose');
 
 require('./routes/auth')(app)(passport);
-require('./routes/models')(app);
-require('./routes/user_details')(app);
-require('./routes/calorietarget')(app);
-require('./routes/workouttargets')(app);
-require('./routes/workoutlog')(app);
+require('./routes/daily_log')(app);
+require('./routes/user_detail')(app);
+require('./routes/calorie_target')(app);
+require('./routes/workout_target')(app);
+require('./routes/workout_log')(app);
 require('./routes/calorie_log')(app);
 
-// app.use(express.static(path.join(__dirname, '/../build')));
+app.use(express.static(path.join(__dirname, '/../build')));
+//
+app.get('/app/*', (request,response) => {
+  response.redirect('/');
+})
 
 app.listen(3050, () => console.log('Server started on port: 3050'));

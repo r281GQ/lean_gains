@@ -48,6 +48,19 @@ const structureValues = log => ({
   createdAt: log.createdAt
 });
 
+const updateValueIfAbsent = (latest, current) =>
+  _.mapValues(
+    latest,
+    (value, key) => (typeof value === 'undefined' ? current[key] : value)
+  );
+
+const reduceLogsToLatestValues = logs =>
+  _.reduce(
+    logs,
+    (latest, current) => updateValueIfAbsent(latest, current),
+    initialValues
+  );
+
 const handleGetDailyLogs = ({ user, query: { month } }) =>
   new Promise((resolve, reject) =>
     DailyLog.find({
@@ -69,21 +82,26 @@ const handlePostDailyLogs = ({ user, body }) =>
   new Promise((resolve, reject) =>
     decorateWithUser('DailyLog')(body, user)
       .save()
-      .then(log => resolve(log))
+      .then(log => resolve(structureValues(log)))
       .catch(error => reject(error))
   );
 
-const updateValueIfAbsent = (latest, current) =>
-  _.mapValues(
-    latest,
-    (value, key) => (typeof value === 'undefined' ? current[key] : value)
+const handlePutDailyLogs = ({ user, body }) =>
+  new Promise((resolve, reject) =>
+    DailyLog.findOneAndUpdate(
+      { user, _id: body._id },
+      { $set: body },
+      { new: true }
+    )
+      .then(log => resolve(structureValues(log)))
+      .catch(error => reject(error))
   );
 
-const reduceLogsToLatestValues = logs =>
-  _.reduce(
-    logs,
-    (latest, current) => updateValueIfAbsent(latest, current),
-    initialValues
+const handleDeleteDailyLogs = ({ user, params: { _id } }) =>
+  new Promise((resolve, reject) =>
+    DailyLog.findOneAndRemove({ _id, user })
+      .then(item => resolve(item))
+      .catch(error => reject(error))
   );
 
 //TODO: implement a way to break iteration if final object has every value
@@ -99,5 +117,7 @@ module.exports = {
   handleGetDailyLogs,
   handleGetDailyLogDates,
   handlePostDailyLogs,
-  handleLatestMeasurements
+  handleLatestMeasurements,
+  handlePutDailyLogs,
+  handleDeleteDailyLogs
 };

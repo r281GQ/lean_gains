@@ -2,17 +2,17 @@ import axios from 'axios';
 import client from './../../services/request';
 
 import * as dailyLogs from './../actions/daily_logs_actions';
-import * as userDetails from './user_details_action_creators';
+import * as userDetails from './../actions/user_details_actions';
 
 const createLog = dailyLog => dispatch =>
   axios
     .post('/api/dailylogs', dailyLog, { withCredentials: true })
     .then(response => {
       dispatch({ type: dailyLogs.WRITE_DAILY_LOG, payload: response.data });
-      dispatch({
-        type: dailyLogs.WRITE_DAILY_LOG_DATES,
-        payload: response.data
-      });
+      // dispatch({
+      //   type: dailyLogs.WRITE_DAILY_LOG_DATES,
+      //   payload: response.data
+      // });
       return axios.get('/api/latestmeasurements', { withCredentials: true });
     })
     .then(({ data }) => {
@@ -45,7 +45,7 @@ const updateDailyLog = dailyLog => dispatch =>
     .then(({ data }) => {
       dispatch({
         type: dailyLogs.WRITE_DAILY_LOG,
-        payload: data.date
+        payload: data
       });
       return axios.get('/api/latestmeasurements', { withCredentials: true });
     })

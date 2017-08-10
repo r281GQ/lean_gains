@@ -1,8 +1,9 @@
 import React from 'react';
 import CalorieTracker from './kcal_tracker';
 import styled from 'styled-components';
+import { connect} from 'react-redux';
 
-import {FlatButton} from 'material-ui'
+import {FlatButton, Dialog} from 'material-ui'
 
 import CalorieLogContainer from './calorie_log_container';
 
@@ -16,8 +17,7 @@ const Container = styled.div`
 `;
 
 const Contianer = styled.div`
-  position: relative;
-  overflow: hidden;
+  clear: both;
 `;
 
 const MainField = styled.div`
@@ -31,7 +31,8 @@ const SideField = styled.div`
 `;
 const CalorieTrackerContainer = () => {
   return (
-    <div>
+    <Contianer>
+
       <MainField>
         <CalorieTracker />
       </MainField>
@@ -40,7 +41,8 @@ const CalorieTrackerContainer = () => {
 
         <CalorieLogContainer />
       </SideField>
-    </div>
+      <Contianer/>
+    </Contianer>
   );
 };
 

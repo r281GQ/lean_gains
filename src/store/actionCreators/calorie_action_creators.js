@@ -1,8 +1,8 @@
-import { arrayPush, arrayRemoveAll, initialize } from 'redux-form/immutable';
+import { arrayPush, initialize } from 'redux-form/immutable';
 import * as _ from 'lodash';
 import axios from 'axios';
 
-import { fromJS, Map } from 'immutable';
+import { Map } from 'immutable';
 
 import {
   mapValues,
@@ -10,6 +10,8 @@ import {
   mock,
   prepareAPI
 } from './../../services/calorie_track';
+
+import * as app from './../actions/app_actions';
 
 import * as calorieLog from './../actions/calorie_actions';
 
@@ -20,51 +22,118 @@ import * as calorieLog from './../actions/calorie_actions';
 //     })
 //     .catch(err => {});
 
-const updateCalorieLog = items => dispatch => {
-  axios
-    .put(
-      '/api/calorielogs',
-      _.map(items, item => ({ ...item, measures: _.toArray(item.measures) })),
-      { credentials: true }
-    )
-    .then(({ data }) => {
-      console.log(data);
-      dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
-      dispatch(arrayRemoveAll('calorie-track', 'foods'));
-      // dispatch(arrayRemoveAll('calorie-log', 'nutritions'));
-      _.forEach(items, nutrition =>
-        dispatch(arrayPush('calorie-log', 'nutritions', fromJS(nutrition)))
-      );
-      // _.forEach(data.nutritions, nutrition => dispatch(arrayPush('calorie-log', 'nutritions',fromJS(nutrition))))
-    })
-    .catch(error => console.log(error));
+// const updateCalorieLog = (items) => (dispatch, getState) => {
+//   dispatch({ type: app.INIT_API });
+//   axios
+//     .put(
+//       '/api/calorielogs',
+//       _.map(items, item => ({ ...item, measures: _.toArray(item.measures) })),
+//       {
+//         credentials: true,
+//         params: { day: getState().getIn(['app', 'selectedDayCalorieLog']) }
+//       }
+//     )
+//     .then(({ data }) => {
+//       dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
+//       dispatch(
+//         initialize(
+//           'calorie-track',
+//           Map().set('foods', getState().getIn(['calorieLog', 'nutritions']))
+//         )
+//       );
+//       dispatch({ type: app.CLOSE_API });
+//     })
+//     .catch(error => {
+//       dispatch({ type: app.CLOSE_API });
+//       console.log(error);
+//     });
+// };
+
+const updateCalorieLog = items => (dispatch, getState) => {
+  dispatch({ type: app.INIT_API });
+  if (getState().getIn(['app', 'openConsentModalDate'])) {
+    axios
+      .put(
+        '/api/calorielogs',
+        _.map(items, item => ({ ...item, measures: _.toArray(item.measures) })),
+        {
+          credentials: true,
+          params: { day: getState().getIn(['app', 'selectedDayCalorieLog']) }
+        }
+      )
+      .then(({ data }) => {
+        return axios.get('/api/calorielogs', {
+          credentials: true,
+          params: { day: getState().getIn(['app', 'openConsentModalDate']) }
+        });
+      })
+      .then(({ data }) => {
+        dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
+        dispatch(
+          initialize(
+            'calorie-track',
+            Map().set('foods', getState().getIn(['calorieLog', 'nutritions']))
+          )
+        );
+        dispatch({
+          type: app.SET_CALORIE_LOG_DAY,
+          payload: getState().getIn(['app', 'openConsentModalDate'])
+        });
+        dispatch({ type: app.CLOSE_CONSENT_MODAL });
+        dispatch({ type: app.CLOSE_API });
+      })
+      .catch(error => {
+        dispatch({ type: app.CLOSE_API });
+        console.log(error);
+      });
+  } else {
+    axios
+      .put(
+        '/api/calorielogs',
+        _.map(items, item => ({ ...item, measures: _.toArray(item.measures) })),
+        {
+          credentials: true,
+          params: { day: getState().getIn(['app', 'selectedDayCalorieLog']) }
+        }
+      )
+      .then(({ data }) => {
+        dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
+        dispatch(
+          initialize(
+            'calorie-track',
+            Map().set('foods', getState().getIn(['calorieLog', 'nutritions']))
+          )
+        );
+        dispatch({ type: app.CLOSE_API });
+      })
+      .catch(error => {
+        dispatch({ type: app.CLOSE_API });
+        console.log(error);
+      });
+  }
 };
-const initLog = () => (dispatch, getState) =>
+
+const initializeCalorieLog = () => (dispatch, getState) => {
+  dispatch({ type: app.INIT_FETCH });
   axios
-    .get('/api/calorielogs', { credentials: true })
+    .get('/api/calorielogs', { credentials: true ,params: { day: getState().getIn(['app', 'selectedDayCalorieLog'])}})
     .then(({ data }) => {
       dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
       dispatch(
         initialize(
-          'calorie-log',
-          Map().set(
-            'nutritions',
-            getState().getIn(['calorieLog', 'nutritions'])
-          )
+          'calorie-track',
+          Map().set('foods', getState().getIn(['calorieLog', 'nutritions']))
         )
       );
+      dispatch({ type: app.CLOSE_FETCH });
     })
-    .catch(error => console.log(error));
-
-const getCalorieLog = date =>
-  axios
-    .get('/api/calorielogs', { credentials: true })
-    .then(item =>
-      dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: item })
-    )
-    .catch(error => console.log(error));
+    .catch(error => {
+      dispatch({ type: app.CLOSE_FETCH });
+      console.log(error);
+    });
+};
 
 const search = query => dispatch =>
   dispatch(arrayPush('calorie-track', 'foods', mapValues(mock())));
 
-export { search, updateCalorieLog, getCalorieLog, initLog };
+export { search, updateCalorieLog, initializeCalorieLog };

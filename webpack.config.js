@@ -3,24 +3,46 @@ const extract = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
+const vendor = [
+  'axios',
+  'immutable',
+  'lodash',
+  'material-ui',
+  'moment',
+  'react',
+  'react-dom',
+  'react-redux',
+  'react-router',
+  'react-router-bootstrap',
+  'react-router-dom',
+  'react-router-redux',
+  'react-tap-event-plugin',
+  'redux',
+  'redux-devtools-extension',
+  'redux-form',
+  'redux-form-material-ui',
+  'redux-immutable',
+  'redux-logger',
+  'redux-thunk',
+  'reselect',
+  'styled-components'
+];
+
 const config = {
-  entry: ['./src/index.jsx'],
+  // entry: ['./src/index.jsx'],
+  entry: {
+    bundle: './src/index.jsx',
+    vendor
+  },
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js'
+    filename: '[name].[hash].js',
+    publicPath: '/'
   },
   devServer: {
     historyApiFallback: true,
-    // proxy: {
-    //   '/api/auth/google': {
-    //     target: 'http://localhost:3050'
-    //   },
-    //   '/api/auth/logout': {
-    //     target: 'http://localhost:3050'
-    //   }
-    // }
     proxy: {
-      '/api' :{
+      '/api': {
         target: 'http://localhost:3050'
       }
     }
@@ -33,12 +55,8 @@ const config = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: [
-          'react-hot-loader',
-          // 'babel-loader?plugins[]=transform-class-properties',
-          'babel-loader',
-          'eslint-loader'
-        ]
+        loaders: ['react-hot-loader', 'babel-loader']
+        // loaders: ['react-hot-loader', 'babel-loader', 'eslint-loader']
       },
       {
         use: extract.extract({
@@ -52,7 +70,8 @@ const config = {
     new extract('style.css'),
     new HtmlWebpackPlugin({
       template: 'src/index.html'
-    })
+    }),
+    new webpack.optimize.CommonsChunkPlugin({ names: ['vendor'] })
   ]
 };
 

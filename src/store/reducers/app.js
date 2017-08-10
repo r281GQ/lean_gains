@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable';
+import moment from 'moment';
 
 import * as app from './../actions/app_actions';
 
@@ -7,11 +8,27 @@ const INITIAL_STATE = fromJS({
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
-  message: ''
+  isFetching: false,
+  selectedDayCalorieLog: moment().toDate(),
+  message: '',
+  hasCalorieTrackConsent: false,
+  isConsentModalOpen: false
 });
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case 'addConsent':
+      return state.set('hasCalorieTrackConsent', true);
+      case 'removeConsent':
+        return state.set('hasCalorieTrackConsent', false);
+    case app.OPEN_CONSENT_MODAL:
+      return state.set('isConsentModalOpen', true).set('openConsentModalDate', fromJS(payload));
+      case 'unset':
+        return state.set('openConsentModalDate', undefined);
+    case app.CLOSE_CONSENT_MODAL:
+      return state.set('isConsentModalOpen', false).set('openConsentModalDate', undefined);
+    case app.SET_CALORIE_LOG_DAY:
+      return state.set('selectedDayCalorieLog', payload);
     case app.SET_MESSAGE:
       return state.set('message', payload);
     case app.OPEN_MESSAGE_BAR:
@@ -22,6 +39,10 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
       return state.set('isLoading', true);
     case app.CLOSE_API:
       return state.set('isLoading', false);
+    case app.INIT_FETCH:
+      return state.set('isFetching', true);
+    case app.CLOSE_FETCH:
+      return state.set('isFetching', false);
     case app.OPEN_SIDE_BAR:
       return state.set('isSideBarOpen', true);
     case app.CLOSE_SIDE_BAR:

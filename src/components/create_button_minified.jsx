@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const FixedFloatingButtonLeft = styled(FloatingActionButton)`
     position: fixed;
-    bottom: 20;
+    bottom: 50;
     right: 100;
 `;
 

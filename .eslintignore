@@ -2,3 +2,5 @@ build/*
 mock/*
 server/*
 shared/*
+webpack.config.js
+src/index.jsx

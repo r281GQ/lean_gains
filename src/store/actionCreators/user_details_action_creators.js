@@ -49,6 +49,7 @@ const initFetch = () => dispatch => {
   axios
     .get('/api/calorietargets', { withCredentials: true })
     .then(({ data }) => {
+      
       dispatch({
         type: userDetails.WRITE_KCAL_TARGETS,
         payload: data

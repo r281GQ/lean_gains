@@ -31,8 +31,29 @@ const handlePostWorkoutLogs = ({ user, body }) =>
       .catch(err => reject(error))
   );
 
+const handlePutWorkoutLog = ({ user, body }) => {
+  return new Promise((resolve, reject) => {
+    WorkoutLog.findOneAndUpdate(
+      { user, _id: body._id },
+      { $set: body },
+      { new: true }
+    )
+      .then(item => resolve(item))
+      .catch(error => reject(error));
+  });
+};
+
+const handleDeleteWorkoutLog = ({ user, query: { _id } }) =>
+  new Promise((resolve, reject) =>
+    WorkoutLog.findOneAndRemove({ _id, user })
+      .then(item => resolve(item))
+      .catch(error => reject(error))
+  );
+
 module.exports = {
   handleGetWorkoutLog,
   handleGetWorkoutLogDates,
-  handlePostWorkoutLogs
+  handlePostWorkoutLogs,
+  handlePutWorkoutLog,
+  handleDeleteWorkoutLog
 };

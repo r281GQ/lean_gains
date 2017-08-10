@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const FixedFloatingButton = styled(FloatingActionButton)`
     position: fixed;
-    bottom: 20;
+    bottom: 50;
     right: 20;
 `;
 
