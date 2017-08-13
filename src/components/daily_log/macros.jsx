@@ -3,11 +3,10 @@ import { TextField } from 'redux-form-material-ui';
 import { Field } from 'redux-form/immutable';
 import { Paper, FlatButton } from 'material-ui';
 
-
 const Macros = () =>
   <Paper>
     <div className="row">
-        <FlatButton disabled label="Macros" />
+      <FlatButton disabled label="Macros" />
     </div>
     <div className="row">
       <div className="col col-4">

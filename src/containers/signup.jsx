@@ -1,60 +1,33 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form/immutable';
-import { FlatButton } from 'material-ui';
-import { Link } from 'react-router-dom';
 
 import SignUpComponent from './../components/auth/signup';
 import { signUp } from './../store/actionCreators/auth_action_creators';
+import {
+  validateEmail,
+  validatePasswordAgain,
+  required,
+  validateIsEmailUnique as asyncValidate
+} from './../services/validators';
 
-const passwordAgainValidate = (password, allValue) =>
-  allValue.get('password') === allValue.get('passwordAgain')
-    ? undefined
-    : `passwords don't match`;
-
-const validateEmail = email =>
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-    email
-  )
-    ? undefined
-    : 'email is not valid';
-
-const asyncValidate = values =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      resolve();
-    }, 2000);
-  }).then(() => ({
-    email: 'ffff'
-  }));
-
+//TODO: submit validation
 const SignUpContainer = props =>
-  <div>
-    <SignUpComponent
-      {...props}
-      validateEmail={validateEmail}
-      validatePasswordAgain={passwordAgainValidate}
-      signUpHandler={props.handleSubmit(
-        ({ name, username, email, password }) => {
-          props.signUp({ name, username, email, password });
-          props.reset();
-        }
-      )}
-    />
-    <Link to="/login">
-      <FlatButton label="Click here if you already have an account" />
-    </Link>
-    <Link to="/google">
-      <FlatButton label="Click here if you wish to log in with google" />
-    </Link>
-  </div>;
+  <SignUpComponent
+    {...props}
+    required={required}
+    validateEmail={validateEmail}
+    validatePasswordAgain={validatePasswordAgain}
+    signUpHandler={props.handleSubmit(formProps => {
+      props.signUp({
+        userName: formProps.get('userName'),
+        email: formProps.get('email'),
+        password: formProps.get('password')
+      });
+      props.reset();
+    })}
+  />;
 
-const mapDispatchToProps = dispatch => {
-  return {
-    signUp: userInfo => dispatch(signUp(userInfo))
-  };
-};
-
-export default connect(null, mapDispatchToProps)(
+export default connect(null, { signUp })(
   reduxForm({ form: 'signup', asyncValidate })(SignUpContainer)
 );

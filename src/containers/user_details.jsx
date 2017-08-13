@@ -2,49 +2,41 @@ import React, { PureComponent } from 'react';
 import { reduxForm } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { fromJS } from 'immutable';
 
 import { updateUserDetails } from './../store/actionCreators/user_details_action_creators';
 import { required } from './../services/validators';
-
 import UserDetailsForm from './../components/user_details/user_details_form';
 
-const initValues = ({ userName, dob, sex, change }) => {
-  change('userName', userName);
-  change('dob', moment(dob).toDate());
-  change('sex', sex);
-};
-
-const prepareFormProps = formProps => ({
-  userName: formProps.get('userName'),
-  sex: formProps.get('sex'),
-  dob: moment(formProps.get('dob')).valueOf()
-});
-
-// const prepareFormProps = ({ userName, dob, sex }) => ({
-//   userName,
-//   sex,
-//   dob: moment(dob).valueOf()
-// });
-
-
-
 class UserDetailsContainer extends PureComponent {
-  componentWillMount = () => initValues(this.props);
+  componentDidMount() {
+    const { userName, dob, sex, initialize } = this.props;
+    initialize(fromJS({ userName, dob: moment(dob).toDate(), sex }));
+  }
 
-  render = () =>
-    <UserDetailsForm
-      {...this.props}
-      handleUpdateUserDetails = {formProps => {
-        const normalized = prepareFormProps(formProps);
-        console.log(normalized);
-        this.props.updateUserDetails(normalized);
-      }}
-      validators={{
-        userName: required,
-        minDate: moment().subtract(110, 'years').toDate(),
-        maxDate: moment().subtract(5, 'years').toDate()
-      }}
-    />;
+  render() {
+    const { handleSubmit, updateUserDetails } = this.props;
+    return (
+      <div className="user-details">
+        <UserDetailsForm
+          {...this.props}
+          handleUpdateUserDetails={handleSubmit(formProps =>
+            updateUserDetails({
+              userName: formProps.get('userName'),
+              sex: formProps.get('sex'),
+              dob: formProps.get('dob')
+            })
+          )}
+          normalizeDate={value => moment(value).valueOf()}
+          validators={{
+            userName: required,
+            minDate: moment().subtract(110, 'years').toDate(),
+            maxDate: moment().subtract(5, 'years').toDate()
+          }}
+        />
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
@@ -53,13 +45,8 @@ const mapStateToProps = state => ({
   userName: state.getIn(['userDetails', 'userName'])
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateUserDetails: userDetails =>
-    dispatch(updateUserDetails(userDetails))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps, { updateUserDetails })(
   reduxForm({
-    form: 'userdetails'
+    form: 'user-details'
   })(UserDetailsContainer)
 );

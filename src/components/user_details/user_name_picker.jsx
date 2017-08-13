@@ -5,6 +5,7 @@ import { Field } from 'redux-form/immutable';
 
 const UserNamePicker = ({ validator }) =>
   <Field
+    fullWidth
     name="userName"
     component={TextField}
     hintText="user name"

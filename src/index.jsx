@@ -10,7 +10,7 @@ import { store } from './store/store';
 import { history } from './store/reducers/routing';
 import App from './containers/app';
 
-import './index.css'
+import './index.scss';
 
 injectTapEventPlugin();
 
@@ -28,10 +28,3 @@ render(
   </MuiThemeProvider>,
   DOCUMENT_ROOT
 );
-
-// This is needed for Hot Module Replacement
-// if (module.hot) {
-//   module.hot.accept('./App', () => renderApp());
-// }
-//
-// renderApp();

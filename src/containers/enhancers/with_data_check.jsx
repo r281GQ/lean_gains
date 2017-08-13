@@ -7,6 +7,7 @@ const mapToValueNamePair = props => path => ({
   name: path.name
 });
 
+//TODO: implement ErrorComponent internally
 const withDataCheck = (WrappedComponent, paths, ErrorComponent) => {
   const DataCheck = props => {
     const errors = _.map(
@@ -16,15 +17,16 @@ const withDataCheck = (WrappedComponent, paths, ErrorComponent) => {
       ),
       item => item.name
     );
+
     return _.isEmpty(errors)
       ? <WrappedComponent />
       : <ErrorComponent errors={errors} />;
   };
 
-  const mapStateToProps = state =>
+  const mapStateToProps = paths => state =>
     _.mapValues(_.keyBy(paths, 'name'), value => state.getIn(value.path));
 
-  return connect(mapStateToProps)(DataCheck);
+  return connect(mapStateToProps(paths))(DataCheck);
 };
 
 export default withDataCheck;

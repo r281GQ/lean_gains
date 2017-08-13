@@ -1,45 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form/immutable';
-import { FlatButton , Paper} from 'material-ui';
-import { TextField, DatePicker } from 'redux-form-material-ui';
-import Macros from './macros1'
+import { RaisedButton } from 'material-ui';
+
+import Macros from './macros';
 import Issues from './issues';
 import Measurements from './measuerements';
+import DateSelector from './date_selector';
+
 const DailyLogForm = ({
-  handleSubmit,
-  createDailyLogHandler,
   label,
-  renderDatepicker,
-  shouldDisableDate
+  submitHandler,
+  shouldDisableDate,
+  renderDate,
+  disableButton
 }) =>
-  <form onSubmit={handleSubmit(createDailyLogHandler)}>
-    <div>
-      {renderDatepicker
-        ? <Field
-            name="date"
-            component={DatePicker}
-            shouldDisableDate={shouldDisableDate}
-          />
-        : null}
-      Macros
-
-      <Macros/>
+  <form onSubmit={submitHandler}>
+    <div className="log-form-inputs">
+      <DateSelector
+        renderDate={renderDate}
+        shouldDisableDate={shouldDisableDate}
+      />
+      <Macros />
+      <Issues />
+      <Measurements />
     </div>
-    <Issues/>
-    <div>
-      <Measurements/>
-
-    </div>
-    <FlatButton label={label} type="submit" />
+    <RaisedButton
+      fullWidth
+      label={label}
+      type="submit"
+      disabled={disableButton}
+    />
   </form>;
 
-  DailyLogForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    createDailyLogHandler: PropTypes.func.isRequired,
-    label: PropTypes.string,
-    renderDatepicker: PropTypes.bool,
-    shouldDisableDate: PropTypes.func.isRequired
-  }
+DailyLogForm.propTypes = {
+  submitHandler: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  shouldDisableDate: PropTypes.func.isRequired,
+  renderDate: PropTypes.bool
+};
 
 export default DailyLogForm;

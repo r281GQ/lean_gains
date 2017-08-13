@@ -5,9 +5,15 @@ import CalorieTargetResult from './calorie_target_result';
 import Footer from './footer'
 
 const CalorieTargetContainer = () =>
-  <div>
-    <CalorieTargetCalculator />
-    <CalorieTargetResult />
-  </div>;
+<div className="calorie-target">
+  <div className="row">
+    <div className="col col-6">
 
+    <CalorieTargetCalculator /></div>
+    <div className="col col-6">
+    <CalorieTargetResult />
+    </div>
+    <div className="clear"></div>
+  </div>;
+</div>
 export default CalorieTargetContainer;

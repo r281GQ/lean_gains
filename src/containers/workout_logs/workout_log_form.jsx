@@ -20,18 +20,22 @@ import {
 } from './../../store/actionCreators/workout_log_action_creators';
 import ExerciseFieldArray from './../../components/workout_log/exercies_field_array';
 
-const mapToBoolean = (v) => { return _.isBoolean(v) ? v : false; }
+const mapToBoolean = v => {
+  return _.isBoolean(v) ? v : false;
+};
 
 class WorkoutLogFormContainer extends PureComponent {
+  constructor(props){
+    super(props);
+    this._disableThese = this._disableThese.bind(this);
+  }
+
   componentDidMount = () =>
-    this.props.dispatch(
-      initialize(
-        'workoutLog',
-        Map().withMutations(map =>
-          map
-            .set('createdAt', moment().toDate())
-            .set('exercises', this.props.defaultValue)
-        )
+    this.props.initialize(
+      Map().withMutations(map =>
+        map
+          .set('createdAt', moment().toDate())
+          .set('exercises', this.props.defaultValue)
       )
     );
 
@@ -40,19 +44,21 @@ class WorkoutLogFormContainer extends PureComponent {
       ? true
       : false;
 
-
   render = () => {
     let { createWorkoutLog, handleSubmit, updateWorkoutLog } = this.props;
     return (
-      <div>
+      <div className="workout-log-container">
         <form
           onSubmit={handleSubmit(formprops => {
-
             const sendable = formprops.toJS();
-            sendable.createdAt = moment(sendable.createdAt).valueOf()
+            sendable.createdAt = moment(sendable.createdAt).valueOf();
 
-              this.props.match.params.id ? updateWorkoutLog(sendable) : createWorkoutLog(sendable);
-
+            this.props.match.params.id
+              ? updateWorkoutLog({
+                  ...sendable,
+                  _id: this.props.match.params.id
+                })
+              : createWorkoutLog(sendable);
 
             console.log(formprops.toJS());
           })}
@@ -79,10 +85,17 @@ class WorkoutLogFormContainer extends PureComponent {
               name="exercises"
               component={ExerciseFieldArray}
               passedMarkerList={this.props.markerList}
-              normalizeMarker = {mapToBoolean}
+              normalizeMarker={mapToBoolean}
             />
             <FlatButton
               type="submit"
+              disabled={
+                this.props.datesWithWorkoutLogs.find(value =>
+                  moment(value).isSame(this.props.selectedDate, 'day')
+                ) && !this.props.match.params.id
+                  ? true
+                  : false
+              }
               label={this.props.match.params.id ? 'modify' : 'create'}
             />
           </div>
@@ -95,6 +108,9 @@ class WorkoutLogFormContainer extends PureComponent {
 export default connect(
   state => ({
     datesWithWorkoutLogs: state.getIn(['workoutLogs', 'dates']),
+    selectedDate: getFormValues('workoutLog')(state)
+      ? getFormValues('workoutLog')(state).get('createdAt')
+      : moment(),
     markerList:
       getFormValues('workoutLog')(state) &&
       getFormValues('workoutLog')(state).get('exercises')
@@ -103,10 +119,7 @@ export default connect(
             .map(value => value.get('marker'))
         : Map()
   }),
-  dispatch => ({
-    createWorkoutLog: workoutLog => dispatch(createWorkoutLog(workoutLog)),
-    updateWorkoutLog: workoutLog => dispatch(updateWorkoutLog(workoutLog))
-  })
+  { updateWorkoutLog, createWorkoutLog }
 )(
   reduxForm({
     form: 'workoutLog'

@@ -33,8 +33,9 @@ const withConfirmDeleteModal = (WrappedComponent, title, type) => {
     closeModal,
     deleteItem,
     selectedItem
-  }) =>
-    <div>
+  }) => {
+    console.log(selectedItem);
+    return (<div>
       <ConfirmDelete
         title={title}
         isOpen={isModalOpen}
@@ -43,7 +44,9 @@ const withConfirmDeleteModal = (WrappedComponent, title, type) => {
       />
 
       <WrappedComponent />
-    </div>;
+    </div>);
+  }
+    ;
 
   const mapStateToProps = state => {
     return {

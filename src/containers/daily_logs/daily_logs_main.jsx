@@ -1,28 +1,14 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Link, Prompt } from 'react-router-dom';
-import {
-  SelectField,
-  MenuItem,
-  List,
-  ListItem,
-  Card,
-  CardHeader,
-  CardText,
-  FloatingActionButton,
-  FlatButton
-} from 'material-ui';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import * as _ from 'lodash';
 import moment from 'moment';
+
 import CreateButton from './../../components/create_button';
 import CreateButtonMinified from './../../components/create_button_minified';
 import ConfirmDelete from './../../components/confirm_delete';
 import LoadingScreen from './../../components/loading';
 import DateSelector from './../../components/date_selector';
-
 import CardListDailyLog from './../../components/daily_log/card_list_daily_log';
-
 import isTodaysLogExists from './../../store/selectors/todays_log';
 import {
   getDailyLogDates,
@@ -35,47 +21,48 @@ import {
   openWorkoutModal,
   setSelectedDailyLog
 } from './../../store/actionCreators/app_action_creators';
-
 import monthLogs from './../../store/selectors/month_log';
-
 import logsForMonth from './../../store/selectors/log_selector';
-
 const dailyLogsForMonth = logsForMonth('dailyLogs');
 const isTodaysDailyLogExists = isTodaysLogExists('dailyLogs');
 const monthsWithDailyLogs = monthLogs('dailyLogs');
 
-class DailyLogPicker extends PureComponent {
-  componentDidMount = () => {
+class DailyLogMain extends PureComponent {
+  componentDidMount() {
     if (this.props.datesWithDailyLogs.isEmpty()) this.props.getDailyLogDates();
     if (this.props.dailyLogsForMonth.isEmpty()) {
-      console.log(this.props.monthsWithDailyLogs)
-      console.log(moment().format('MM-YYYY'))
       this.props.getLogsForSelectedMonth(moment().format('MM-YYYY'));
       this.props.setSelectedMonthForDailyLogs(
         this.props.monthsWithDailyLogs.last()
       );
     }
-  };
+  }
 
-  componentWillReceiveProps = nextProps =>
-    (this.props.monthsWithDailyLogs.isEmpty() &&
-      !nextProps.monthsWithDailyLogs.isEmpty()) ||
-    nextProps.monthsWithDailyLogs.find(
-      value => value === this.props.selectedMonth
-    ) === undefined
-      ? this.props.setSelectedMonthForDailyLogs(
-          nextProps.monthsWithDailyLogs.last()
-        )
-      : null;
+  componentWillReceiveProps(nextProps) {
+    if (
+      (this.props.monthsWithDailyLogs.isEmpty() &&
+        !nextProps.monthsWithDailyLogs.isEmpty()) ||
+      nextProps.monthsWithDailyLogs.find(
+        value => value === this.props.selectedMonth
+      ) === undefined
+    )
+      this.props.setSelectedMonthForDailyLogs(
+        nextProps.monthsWithDailyLogs.last()
+      );
+  }
 
-  render = () => {
+  render() {
     const {
       getLogsForSelectedMonth,
       selectedMonth,
       monthsWithDailyLogs,
       setSelectedMonthForDailyLogs,
       logs,
-      deleteDailyLog
+      deleteDailyLog,
+      isTodaysDailyLogExists,
+      setSelectedDailyLog,
+      openWorkoutModal,
+      dailyLogsForMonth
     } = this.props;
     return (
       <div>
@@ -87,19 +74,19 @@ class DailyLogPicker extends PureComponent {
         />
 
         <CardListDailyLog
-          collection={this.props.dailyLogsForMonth.toJS()}
-          onModalStateChange={this.props.openWorkoutModal}
-          setSelectedItem={this.props.setSelectedDailyLog}
+          collection={dailyLogsForMonth.toJS()}
+          onModalStateChange={openWorkoutModal}
+          setSelectedItem={setSelectedDailyLog}
         />
 
         <CreateButtonMinified link="/app/dailylogs/create/before" />
         <CreateButton
           link="/app/dailylogs/create"
-          disabled={this.props.isTodaysDailyLogExists}
+          disabled={isTodaysDailyLogExists}
         />
       </div>
     );
-  };
+  }
 }
 
 const mapStateToProps = state => {
@@ -112,14 +99,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  openWorkoutModal: () => dispatch(openWorkoutModal()),
-  setSelectedMonthForDailyLogs: month =>
-    dispatch(setSelectedMonthForDailyLogs(month)),
-  getDailyLogDates: () => dispatch(getDailyLogDates()),
-  deleteDailyLog: _id => dispatch(deleteDailyLog(_id)),
-  setSelectedDailyLog: _id => dispatch(setSelectedDailyLog(_id)),
-  getLogsForSelectedMonth: month => dispatch(getLogsForSelectedMonth(month))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DailyLogPicker);
+export default connect(mapStateToProps, {
+  getDailyLogDates,
+  deleteDailyLog,
+  setSelectedDailyLog,
+  getLogsForSelectedMonth,
+  openWorkoutModal,
+  setSelectedMonthForDailyLogs
+})(DailyLogMain);

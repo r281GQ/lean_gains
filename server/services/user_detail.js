@@ -13,10 +13,10 @@ const handleGetUserDetails = ({ user: { _id } }) =>
       .catch(error => reject(error))
   );
 
-const handlePutUserDetails = ({ body: { dob, sex, userName } }) =>
+const handlePutUserDetails = ({user:{_id}, body: { dob, sex, userName } }) =>
   new Promise((resolve, reject) =>
     User.findOneAndUpdate(
-      { _id: request.user._id },
+      { _id },
       { $set: { dob, sex, userName } },
       { new: true }
     )

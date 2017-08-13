@@ -25,54 +25,53 @@ const vendor = [
   'redux-logger',
   'redux-thunk',
   'reselect',
-  'styled-components'
+  'styled-components',
 ];
 
 const config = {
-  // entry: ['./src/index.jsx'],
   entry: {
     bundle: './src/index.jsx',
-    vendor
+    vendor,
   },
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].[hash].js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devServer: {
     historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3050'
-      }
-    }
+        target: 'http://localhost:3050',
+      },
+    },
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: ['react-hot-loader', 'babel-loader']
+        loaders: ['react-hot-loader', 'babel-loader'],
         // loaders: ['react-hot-loader', 'babel-loader', 'eslint-loader']
       },
       {
         use: extract.extract({
-          use: 'css-loader'
+          use: ['css-loader', 'sass-loader'],
         }),
-        test: /\.css$/
-      }
-    ]
+        test: /\.scss$/,
+      },
+    ],
   },
   plugins: [
     new extract('style.css'),
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: 'src/index.html',
     }),
-    new webpack.optimize.CommonsChunkPlugin({ names: ['vendor'] })
-  ]
+    new webpack.optimize.CommonsChunkPlugin({ names: ['vendor'] }),
+  ],
 };
 
 module.exports = config;

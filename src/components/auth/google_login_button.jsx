@@ -1,10 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { FlatButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
+import { FontIcon } from 'material-ui';
 
 const GoogleLoginButton = () =>
-  <a href="/api/auth/google">
-    <FlatButton label="Log in with Google" />
-  </a>;
+  <RaisedButton
+    href="/api/auth/google"
+    label="Log in with Google"
+    labelPosition="before"
+    icon={<FontIcon className="fa fa-google" />}
+  />;
 
 export default GoogleLoginButton;

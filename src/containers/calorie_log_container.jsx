@@ -4,31 +4,34 @@ import { connect } from 'react-redux';
 import { initializeCalorieLog } from './../store/actionCreators/calorie_action_creators';
 import {
   loadNutritionsForDay,
-  closeConsentModal
+  closeConsentModal,
+  addCalorieTrackConsent
 } from './../store/actionCreators/app_action_creators';
 import { LinearProgress, DatePicker, Dialog, FlatButton } from 'material-ui';
 import * as _ from 'lodash';
 
-const actions = (closeConsentModal, saveForm, loadNutritionsForDay, da ,addConsent ) => [
+const actions = (
+  closeConsentModal,
+  saveForm,
+  loadNutritionsForDay,
+  da,
+  addConsent
+) => [
   <FlatButton
     label="Cancel"
-
     onTouchTap={() => {
+      closeConsentModal();
+    }}
+  />,
 
-      closeConsentModal()
-    }
-  }
-/>,
-
-<FlatButton
-  label="Discard"
-
-  onTouchTap={() => {
-    addConsent();
-    closeConsentModal()
-    loadNutritionsForDay(da)
-  }}
-/>,
+  <FlatButton
+    label="Discard"
+    onTouchTap={() => {
+      addConsent();
+      closeConsentModal();
+      loadNutritionsForDay(da);
+    }}
+  />,
   <FlatButton
     label="Save"
     primary
@@ -37,8 +40,6 @@ const actions = (closeConsentModal, saveForm, loadNutritionsForDay, da ,addConse
       // closeConsentModal();
     }}
   />
-
-
 ];
 
 //TODO: isFetching to HOC
@@ -56,28 +57,33 @@ class CalorieLogContainer extends PureComponent {
       saveForm,
       addConsent
     } = this.props;
-    return !this.props.isFetching
-      ? <div>
-          <DatePicker
-            name="f"
-            onChange={(event, value) => loadNutritionsForDay(value)}
-            value={selectedDay}
-          />
-          <FlatButton label='update day'  onTouchTap={() =>saveForm()}/>
-          <Dialog
-            open={isConsentModalOpen}
-            title={`you have unsaved chnages in the foods, if you procedd these will be lost`}
-            actions={actions(closeConsentModal, saveForm, loadNutritionsForDay, this.props.da, addConsent)}
-          />
-        </div>
-      : <LinearProgress />;
+    return(<div>
+      <DatePicker
+        name="f"
+        onChange={(event, value) => loadNutritionsForDay(value)}
+        value={selectedDay}
+      />
+      <FlatButton label="update day" onTouchTap={() => saveForm()} />
+      <Dialog
+        open={isConsentModalOpen}
+        title={`you have unsaved chnages in the foods, if you procedd these will be lost`}
+        actions={actions(
+          closeConsentModal,
+          saveForm,
+          loadNutritionsForDay,
+          this.props.da,
+          addConsent
+        )}
+      />
+    </div>);
+
   }
 }
 
 const mapStateToProps = state => {
   return {
-    da : state.getIn(['app', 'openConsentModalDate']),
-    isFetching: state.getIn(['app', 'isFetching']),
+    da: state.getIn(['app', 'openConsentModalDate']),
+
     selectedDay: state.getIn(['app', 'selectedDayCalorieLog']),
     isConsentModalOpen: state.getIn(['app', 'isConsentModalOpen'])
   };
@@ -89,7 +95,7 @@ const mapDispatchToProps = dispatch => {
     loadNutritionsForDay: value => dispatch(loadNutritionsForDay(value)),
     closeConsentModal: () => dispatch(closeConsentModal()),
     saveForm: () => dispatch(submit('calorie-track')),
-    addConsent: () => dispatch({type: 'addConsent'})
+    addConsent: () => dispatch(addCalorieTrackConsent())
   };
 };
 

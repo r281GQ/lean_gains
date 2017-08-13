@@ -8,7 +8,7 @@ import {
   CardText,
   FlatButton
 } from 'material-ui';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import * as _ from 'lodash';
 
@@ -22,11 +22,10 @@ const CardListDailyLog = ({
       <ListItem disabled={true} key={log._id}>
         <Card>
           <CardHeader
-            title={moment(log.createdAt).utcOffset(0).format('DD-MM-YYYY')}
+            title={moment(log.createdAt).format('DD-MM-YYYY')}
             actAsExpander={true}
           />
           <CardText expandable={true}>
-            {log._id}
             <Link to={`/app/dailylogs/edit/${log._id}`}>
               <FlatButton label="Edit" />
             </Link>

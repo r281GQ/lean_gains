@@ -16,8 +16,12 @@ const CalorieTargetResultContainer = ({ values }) =>
     />
   </div>;
 
-const mapStateToProps = state => ({
-  values: calorieTarget(state).get('finalValues')
-});
+const mapStateToProps = state => {
+  const g = calorieTarget(state).get('finalValues')
+  return {
+    values: g
+  }
+}
+
 
 export default connect(mapStateToProps)(CalorieTargetResultContainer);

@@ -43,12 +43,18 @@ const handlePutWorkoutLog = ({ user, body }) => {
   });
 };
 
-const handleDeleteWorkoutLog = ({ user, query: { _id } }) =>
-  new Promise((resolve, reject) =>
-    WorkoutLog.findOneAndRemove({ _id, user })
+const handleDeleteWorkoutLog = req =>{
+  const { user, params: { _id } } = req
+
+  console.log(_id);
+  console.log(req.url);
+return new Promise((resolve, reject) =>
+    WorkoutLog.findOneAndRemove({ _id:_id, user })
       .then(item => resolve(item))
       .catch(error => reject(error))
   );
+
+}
 
 module.exports = {
   handleGetWorkoutLog,

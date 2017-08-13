@@ -8,34 +8,38 @@ import withConfirmDeleteModal from './../confirm_delete_modal';
 
 const DailyLogsRouter = ({ dailyLogs }) =>
   <div>
-    <Route exact path={`/app/dailylogs`} component={withConfirmDeleteModal(DailyLogsMainContainer, 'Would you like to delete this log?', 'dailyLog')} />
+    <Route
+      exact
+      path={`/app/dailylogs`}
+      component={withConfirmDeleteModal(
+        DailyLogsMainContainer,
+        'Would you like to delete this log?',
+        'dailyLog'
+      )}
+    />
 
-    <Route exact path={`/app/dailylogs/create`} component={DailyLogFormContainer} />
+    <Route
+      exact
+      path={`/app/dailylogs/create`}
+      component={DailyLogFormContainer}
+    />
 
     <Route
       exact
       path={`/app/dailylogs/create/before`}
-      render={props => {
-        return <DailyLogFormContainer {...props} renderDatepicker />;
-      }}
+      render={props => <DailyLogFormContainer {...props} renderDatepicker />}
     />
 
     <Route
       exact
       path={`/app/dailylogs/edit/:id`}
-      render={props => {
-        const defaultValue = dailyLogs.find(
-          (value, key) => key === props.match.params.id
-        );
-
-        return (
-          <DailyLogFormContainer
-            {...props}
-            defaultValue={defaultValue}
-            type={'edit'}
-          />
-        );
-      }}
+      render={props =>
+        <DailyLogFormContainer
+          {...props}
+          defaultValue={dailyLogs.find(
+            (value, key) => key === props.match.params.id
+          )}
+        />}
     />
   </div>;
 

@@ -6,6 +6,7 @@ import moment from 'moment';
 const DOBPickerField = ({ minDate, maxDate }) => {
   return (
     <Field
+      fullWidth
       name="dob"
       component={input =>
         <DatePicker

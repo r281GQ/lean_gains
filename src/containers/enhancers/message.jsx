@@ -1,10 +1,11 @@
 import React from 'react';
-import { Snackbar } from 'material-ui';
 import { connect } from 'react-redux';
+import { Snackbar } from 'material-ui';
+
 import {
   openMessageBar,
   closeMessageBar
-} from './../store/actionCreators/app_action_creators';
+} from './../../store/actionCreators/app_action_creators';
 
 const withMessageBar = WrappedComponent => {
   const MessageBar = ({ isMessageBarOpen, closeMessageBar, message }) =>
@@ -17,13 +18,17 @@ const withMessageBar = WrappedComponent => {
         autoHideDuration={5000}
       />
     </div>;
-  return connect(
-    state => ({
+
+  const mapStateToProps = state => {
+    return {
       isMessageBarOpen: state.getIn(['app', 'isMessageBarOpen']),
       message: state.getIn(['app', 'message'])
-    }),
-    { closeMessageBar, openMessageBar }
-  )(MessageBar);
+    };
+  };
+
+  return connect(mapStateToProps, { closeMessageBar, openMessageBar })(
+    MessageBar
+  );
 };
 
 export default withMessageBar;

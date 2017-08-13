@@ -18,7 +18,10 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { required } from './../../services/validators';
 import { fromJS } from 'immutable';
-import { createWorkoutTarget, updateWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
+import {
+  createWorkoutTarget,
+  updateWorkoutTarget
+} from './../../store/actionCreators/user_details_action_creators';
 
 class WorkoutTarget extends Component {
   componentDidMount() {
@@ -71,7 +74,6 @@ class WorkoutTarget extends Component {
           moment(defaultValue.get('startDayofTraining')).toDate()
         );
       }
-
     }
   }
   // onSubmit={handleSubmit(
@@ -141,9 +143,6 @@ class WorkoutTarget extends Component {
   //   }
   // )}
 
-
-
-
   render() {
     const {
       handleSubmit,
@@ -156,70 +155,82 @@ class WorkoutTarget extends Component {
     return (
       <div>
         <form
-          onSubmit={handleSubmit(
-            formProps => {
-              let onDays = _.filter(
-                [
-                  formProps.get('monday') ? 1 : undefined,
-                  formProps.get('tuesday') ? 2 : undefined,
-                  formProps.get('wednesday') ? 3 : undefined,
-                  formProps.get('thursday') ? 4 : undefined,
-                  formProps.get('friday') ? 5 : undefined,
-                  formProps.get('saturday') ? 6 : undefined,
-                  formProps.get('sunday') ? 7 : undefined
-                ],
-                item => item !== undefined
-              );
-              let isCycledTraining = formProps.get('isCycledTraining');
+          onSubmit={handleSubmit(formProps => {
+            let onDays = _.filter(
+              [
+                formProps.get('monday') ? 1 : undefined,
+                formProps.get('tuesday') ? 2 : undefined,
+                formProps.get('wednesday') ? 3 : undefined,
+                formProps.get('thursday') ? 4 : undefined,
+                formProps.get('friday') ? 5 : undefined,
+                formProps.get('saturday') ? 6 : undefined,
+                formProps.get('sunday') ? 7 : undefined
+              ],
+              item => item !== undefined
+            );
+            let isCycledTraining = formProps.get('isCycledTraining');
 
-              let onEveryxDay = formProps.get('onEveryxDay');
-              let name = formProps.get('name');
-              let type = formProps.get('type');
-              let startDayofTraining = formProps.get('startDayofTraining');
+            let onEveryxDay = formProps.get('onEveryxDay');
+            let name = formProps.get('name');
+            let type = formProps.get('type');
+            let startDayofTraining = formProps.get('startDayofTraining');
 
-
-              if (isCycledTraining === 'fix' && _.isEmpty(onDays)) {
-                throw new SubmissionError({
-                  isCycledTraining:
-                    'on fixed days you must select at least one day',
-                  _error: 'days'
-                });
-              }
-
-              if (isCycledTraining === 'cycle' && (!startDayofTraining || !onEveryxDay))
-                throw new SubmissionError({
-                  isCycledTraining:
-                    'on cycled training you must set the starting date and on which days the training should occur',
-                  _error: 'exercise name'
-                });
-              if (
-                typeof formProps.get('exercises') === 'undefined' || _.isEmpty(formProps.get('exercises').toJS()) ||
-                _.every(formProps.get('exercises').toJS(), exercise => !exercise)
-              )
-                throw new SubmissionError({
-                  isCycledTraining:
-                    'you must provide at least one valid exercise',
-                  _error: 'exercise name'
-                });
-let exercises = formProps.get('exercises').toJS();
-              // let workoutTarget = isCycledTraining === 'cycle'
-              //   ? {isCycledTraining, name, type, startDayofTraining, exercises, onEveryxDay, onDays }
-              //   : {
-              //     isCycledTraining,
-              //       name,
-              //       type,
-              //       exercises,
-              //       onDays
-              //     };
-
-
-                  let workoutTarget =
-                     {isCycledTraining, name, type, startDayofTraining: moment(startDayofTraining).valueOf(), exercises, onEveryxDay, onDays }
-                    ;
-              this.props.match.params.id ? updateWorkoutTarget(Object.assign(workoutTarget, {_id: this.props.match.params.id})) : createWorkoutTarget(workoutTarget);
-              reset();
+            if (isCycledTraining === 'fix' && _.isEmpty(onDays)) {
+              throw new SubmissionError({
+                isCycledTraining:
+                  'on fixed days you must select at least one day',
+                _error: 'days'
+              });
             }
-          )}
+
+            if (
+              isCycledTraining === 'cycle' &&
+              (!startDayofTraining || !onEveryxDay)
+            )
+              throw new SubmissionError({
+                isCycledTraining:
+                  'on cycled training you must set the starting date and on which days the training should occur',
+                _error: 'exercise name'
+              });
+            if (
+              typeof formProps.get('exercises') === 'undefined' ||
+              _.isEmpty(formProps.get('exercises').toJS()) ||
+              _.every(formProps.get('exercises').toJS(), exercise => !exercise)
+            )
+              throw new SubmissionError({
+                isCycledTraining:
+                  'you must provide at least one valid exercise',
+                _error: 'exercise name'
+              });
+            let exercises = formProps.get('exercises').toJS();
+            // let workoutTarget = isCycledTraining === 'cycle'
+            //   ? {isCycledTraining, name, type, startDayofTraining, exercises, onEveryxDay, onDays }
+            //   : {
+            //     isCycledTraining,
+            //       name,
+            //       type,
+            //       exercises,
+            //       onDays
+            //     };
+
+            let workoutTarget = {
+              isCycledTraining,
+              name,
+              type,
+              startDayofTraining: moment(startDayofTraining).valueOf(),
+              exercises,
+              onEveryxDay,
+              onDays
+            };
+            this.props.match.params.id
+              ? updateWorkoutTarget(
+                  Object.assign(workoutTarget, {
+                    _id: this.props.match.params.id
+                  })
+                )
+              : createWorkoutTarget(workoutTarget);
+            reset();
+          })}
         >
           <div>
             <Field
@@ -342,8 +353,7 @@ let exercises = formProps.get('exercises').toJS();
                           component={TextField}
                           type="text"
                           fullWidth={true}
-                          value = ''
-
+                          value=""
                         />
                         <FlatButton
                           style={{ textAlign: 'center' }}

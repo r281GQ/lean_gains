@@ -1,14 +1,33 @@
+$login-background : #E0E0E0;
+
 body {
   position: relative;
-  padding-bottom: 70px;
+  padding-bottom: 48px;
+  margin: 0px;
 }
+
+.user-details {
+  margin: 0 auto;
+  width: 25%;
+  text-align: justify;
+}
+
 
 .login-container-upper {
   display: table;
   height: 100%;
   width: 100%;
+  background-color: $login-background;
 }
 
+.workout-log-container {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.lil { cursor: pointer; }
 .login-container-middle {
   display: table-cell;
   vertical-align: middle;
@@ -59,14 +78,32 @@ body {
   margin-bottom: 10px;
 }
 
+.parent-paper {
+  padding: 20px;
+}
+
+.log-form-inputs {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
 .row::after{
   clear: both;
+}
+
+.llll {
+
+
 }
 
 .clear {
   clear: both;
 }
 
+.calorie-target .col-6 {
+
+ text-align: left;
+}
 
 @media screen and (max-width: 1200px) {
   .login-container-inner {
@@ -77,5 +114,12 @@ body {
 @media screen and (max-width: 900px) {
   .login-container-inner {
     width: 95%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .calorie-target .col-6 {
+    float:none;
+    width: 100%;
   }
 }

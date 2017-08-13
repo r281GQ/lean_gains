@@ -12,6 +12,7 @@ module.exports = app => {
   });
 
   app.put('/api/userdetails', withAuth, (request, response) => {
+  console.log(request);
     handlePutUserDetails(request)
       .then(userDetails => response.status(200).send(userDetails))
       .catch(error => console.log(error));
