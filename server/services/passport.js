@@ -28,8 +28,8 @@ const mapToDbProps = profile => ({
 passport.use(
   new Strategy(
     {
-      clientID || env.GOOGLE_CLIENT_ID,
-      clientSecret || env.GOOGLE_CLIENT_SECRET,
+      clientID: clientID || env.GOOGLE_CLIENT_ID,
+      clientSecret: clientSecret || env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/api/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) =>

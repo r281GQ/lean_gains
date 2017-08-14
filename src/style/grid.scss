@@ -1,0 +1,41 @@
+.col {
+  box-sizing: border-box;
+}
+
+.col-4 {
+  float: left;
+  text-align: center;
+  padding: 10px;
+  width: 33%;
+}
+
+.col-3 {
+  float: left;
+  text-align: center;
+  padding: 10px;
+  width: 25%;
+}
+
+.col-6 {
+  float: left;
+  padding: 10px;
+  text-align: center;
+  width: 50%;
+}
+
+.col-12 {
+  padding: 10px;
+  float: left;
+  text-align: center;
+  width: 100%;
+}
+
+.row {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.clear {
+  clear: both;
+}

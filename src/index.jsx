@@ -16,6 +16,7 @@ injectTapEventPlugin();
 
 const DOCUMENT_ROOT = document.getElementById('root');
 
+//TODO: webpack lodash plugin
 render(
   <MuiThemeProvider>
     <Provider store={store}>

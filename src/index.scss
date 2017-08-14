@@ -1,3 +1,5 @@
+@import './style/grid.scss';
+
 $login-background: #f5f5f5;
 $login-backgroundd: #e0e0e0;
 
@@ -42,8 +44,8 @@ body {
   padding: 8px;
 }
 
-.workout-log-container,
-.workout-target-container {
+.workout-log__container,
+.workout-target__container {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -74,9 +76,6 @@ body {
 .login-outer {
 }
 
-// .sign-up-container {
-//
-// }
 
 .fixed-floating-button {
   position: fixed;
@@ -116,44 +115,6 @@ body {
   box-sizing: border-box;
 }
 
-.col {
-  box-sizing: border-box;
-}
-
-.col-4 {
-  float: left;
-  text-align: center;
-  padding: 10px;
-  width: 33%;
-}
-
-.col-3 {
-  float: left;
-  text-align: center;
-  padding: 10px;
-  width: 25%;
-}
-
-.col-6 {
-  float: left;
-  padding: 10px;
-  text-align: center;
-  width: 50%;
-}
-
-.col-12 {
-  padding: 10px;
-  float: left;
-  text-align: center;
-  width: 100%;
-}
-
-.row {
-  position: relative;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
 .parent-paper {
   padding: 20px;
 }
@@ -163,9 +124,7 @@ body {
   margin-top: 10px;
 }
 
-.clear {
-  clear: both;
-}
+
 
 .calorie-target .col-6 {
   text-align: left;
