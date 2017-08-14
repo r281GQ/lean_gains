@@ -9,7 +9,8 @@
     "serve:mock": "nodemon mock/server.js",
     "serve:dev:alone": "nodemon server/server.js",
     "serve:dev": "concurrently \" nodemon server/server.js\"  \"webpack-dev-server --hot --inline\"",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "start": "node server/server.js"
   },
   "author": "Endre Vegh",
   "license": "ISC",

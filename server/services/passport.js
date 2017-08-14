@@ -7,6 +7,8 @@ const {
   dev: { google: { clientID, clientSecret } }
 } = require('./../../config/config.json');
 
+const env = process.env;
+
 passport.serializeUser(({ id }, done) => done(null, id));
 
 passport.deserializeUser((id, done) =>
@@ -26,8 +28,8 @@ const mapToDbProps = profile => ({
 passport.use(
   new Strategy(
     {
-      clientID,
-      clientSecret,
+      clientID || env.GOOGLE_CLIENT_ID,
+      clientSecret || env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/api/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) =>

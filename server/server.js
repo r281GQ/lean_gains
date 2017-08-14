@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 
+const env = process.env;
+
 //TODO: error codes
 //TODO: validation middleware
 //TODO: tests
@@ -18,7 +20,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [cookie]
+    keys: [cookie || env.cookie]
   })
 );
 
@@ -43,7 +45,7 @@ require('./routes/workout_log')(app);
 require('./routes/calorie_log')(app);
 
 app.use(express.static(path.join(__dirname, '/../build')));
-//
+
 app.get('/app/*', (request,response) => {
   response.redirect('/');
 })
