@@ -7,30 +7,28 @@ body {
   margin: 0px;
 }
 
-.user-details {
+.user-details__container {
   margin: 0 auto;
   width: 25%;
   text-align: justify;
 }
 
-.footer-container {
+.footer__container {
   position: absolute;
   bottom: 0px;
   width: 100%;
-
   height: 48px;
   left: 0px;
 }
-.footer-paper {
+
+.footer__paper {
   height: 100%;
   background-color: #e0e0e0;
   width: 75%;
-
   padding: 0px;
   border: 0px;
   margin-left: auto;
   margin-right: auto;
-
   text-align: center;
   display: block;
 }
@@ -39,17 +37,7 @@ body {
   background-color: #757575;
   color: #eeeeee;
 }
-// .login-container-upper {
-//   // display: table;
-//   // height: 100%;
-//   // width: 100%;
-//   // margin-bottom: -48px;
-//   // margin-top: -56px;
-//   // background-color: $login-background;
-//   //
-//
-// }
-//
+
 .user-details-paper {
   padding: 8px;
 }
@@ -65,7 +53,7 @@ body {
   cursor: pointer;
 }
 
-.sign-up-button-container{
+.sign-up-button-container {
   margin-top: 15px;
 }
 
@@ -175,28 +163,12 @@ body {
   margin-top: 10px;
 }
 
-.row::after {
-  clear: both;
-}
-
 .clear {
   clear: both;
 }
 
 .calorie-target .col-6 {
   text-align: left;
-}
-
-@media screen and (max-width: 1200px) {
-  .login-container-inner {
-    // width: 50%;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .login-container-inner {
-    width: 95%;
-  }
 }
 
 @media screen and (max-width: 1000px) {
