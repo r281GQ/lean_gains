@@ -4,15 +4,15 @@ import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
-import NutritionSearchBar from './../components/calorie_tracker/nutrition_search_bar';
-import CenteredSubmitButton from './../components/centered_submit_button';
-import CalorieTrackerSummary from './../components/calorie_tracker/calorie_tracker_summary';
-import FoodsFieldArray from './../components/calorie_tracker/foods_field_array';
-import sumMacros from './../store/selectors/sum_macros';
+import NutritionSearchBar from './../../components/calorie_tracker/nutrition_search_bar';
+import CenteredSubmitButton from './../../components/centered_submit_button';
+import CalorieTrackerSummary from './../../components/calorie_tracker/calorie_tracker_summary';
+import FoodsFieldArray from './../../components/calorie_tracker/foods_field_array';
+import sumMacros from './../../store/selectors/sum_macros';
 import {
   search,
   updateCalorieLog
-} from './../store/actionCreators/calorie_action_creators';
+} from './../../store/actionCreators/calorie_action_creators';
 
 //TODO favourite foods like shortcut or tag, recentsearches and recipes
 class CalorieTrackerContainer extends PureComponent {

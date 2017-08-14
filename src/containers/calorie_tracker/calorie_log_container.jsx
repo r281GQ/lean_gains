@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import { submit } from 'redux-form/immutable';
 import { connect } from 'react-redux';
-import { initializeCalorieLog } from './../store/actionCreators/calorie_action_creators';
+import { initializeCalorieLog } from './../../store/actionCreators/calorie_action_creators';
 import {
   loadNutritionsForDay,
   closeConsentModal,
   addCalorieTrackConsent
-} from './../store/actionCreators/app_action_creators';
+} from './../../store/actionCreators/app_action_creators';
 import { LinearProgress, DatePicker, Dialog, FlatButton } from 'material-ui';
 import * as _ from 'lodash';
 

@@ -2,14 +2,14 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form/immutable';
 
-import SignUpComponent from './../components/auth/signup';
-import { signUp } from './../store/actionCreators/auth_action_creators';
+import SignUpComponent from './../../components/auth/signup';
+import { signUp } from './../../store/actionCreators/auth_action_creators';
 import {
   validateEmail,
   validatePasswordAgain,
   required,
   validateIsEmailUnique as asyncValidate
-} from './../services/validators';
+} from './../../services/validators';
 
 //TODO: submit validation
 const SignUpContainer = props =>

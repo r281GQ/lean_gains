@@ -1,10 +1,10 @@
-import React from 'react';
+ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Drawer, MenuItem, Divider, FontIcon } from 'material-ui';
 import PropTypes from 'prop-types';
-import { closeSideBar } from './../store/actionCreators/app_action_creators';
-import { logOut } from './../store/actionCreators/auth_action_creators';
+import { closeSideBar } from './../../store/actionCreators/app_action_creators';
+import { logOut } from './../../store/actionCreators/auth_action_creators';
 
 import styled from 'styled-components';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';

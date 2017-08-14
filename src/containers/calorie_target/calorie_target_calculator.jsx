@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import { Map } from 'immutable';
 
-import { createKcalTarget } from './../store/actionCreators/user_details_action_creators';
+import { createKcalTarget } from './../../store/actionCreators/user_details_action_creators';
 
-import calorieTarget from './../store/selectors/calorie_target';
+import calorieTarget from './../../store/selectors/calorie_target';
 
-import BMRCalculationSelector from './../components/calorie_target/bmr_calculation_selector';
-import BodyFatField from './../components/calorie_target/body_fat_field';
-import ActivityLevelSelecor from './../components/calorie_target/activity_level_selector';
-import CalorieSplitSelector from './../components/calorie_target/calorie_split_selector';
-import CustomCalorieField from './../components/calorie_target/custom_calorie_field';
-import ProteinField from './../components/calorie_target/protein_field';
-import FatMethodSelector from './../components/calorie_target/fat_mathod_selector';
-import FatSelector from './../components/calorie_target/fat_selector';
-import CenteredSubmitButton from './../components/centered_submit_button';
+import BMRCalculationSelector from './../../components/calorie_target/bmr_calculation_selector';
+import BodyFatField from './../../components/calorie_target/body_fat_field';
+import ActivityLevelSelecor from './../../components/calorie_target/activity_level_selector';
+import CalorieSplitSelector from './../../components/calorie_target/calorie_split_selector';
+import CustomCalorieField from './../../components/calorie_target/custom_calorie_field';
+import ProteinField from './../../components/calorie_target/protein_field';
+import FatMethodSelector from './../../components/calorie_target/fat_mathod_selector';
+import FatSelector from './../../components/calorie_target/fat_selector';
+import CenteredSubmitButton from './../../components/centered_submit_button';
 
 class CalorieTargetCalculator extends Component {
   _adjustCaloriePercentage(props, nextProps) {

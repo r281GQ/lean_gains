@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form/immutable';
 import { Redirect } from 'react-router-dom';
 
-import LoginComponent from './../components/auth/login';
-import { logIn } from './../store/actionCreators/auth_action_creators';
+import LoginComponent from './../../components/auth/login';
+import { logIn } from './../../store/actionCreators/auth_action_creators';
 
 //TODO: validateEmail function
 const LoginContainer = props =>
