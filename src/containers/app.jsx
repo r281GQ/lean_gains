@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import LoginContainer from './login';
-import SignUpContainer from './signup';
-import HeaderContainer from './header';
-import FooterContainer from './footer';
+import LoginContainer from './auth/login';
+import SignUpContainer from './auth/signup';
+import HeaderContainer from './layout/header';
+import FooterContainer from './layout/footer';
 import withAuthentication from './enhancers/authentication';
 import { AsyncMainContainer } from './async/containers';
 

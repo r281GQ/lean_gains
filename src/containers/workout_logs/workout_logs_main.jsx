@@ -28,45 +28,8 @@ const isTodaysWorkoutLogExists = isTodaysLogExists('workoutLogs');
 const workoutLogsForMonth = logsForMonth('workoutLogs');
 const monthsWithWorkoutLogs = monthLogs('workoutLogs');
 
-const renderMainScreen = ({
-  monthsWithWorkoutLogs,
-  selectedMonth,
-  getWorkoutLogsForMonth,
-  setSelectedMonthForWorkoutLogs,
-  isModalOpen,
-  closeWorkoutModal,
-  deleteWorkoutLog,
-  workoutLogsForMonth,
-  setSelectedWorkoutLog,
-  openWorkoutModal,
-  isTodaysWorkoutLogExists,
-  selectedWorkoutLog
-}) =>
-  <div>
-    <DateSelector
-      months={monthsWithWorkoutLogs.toJS()}
-      selectedMonth={selectedMonth}
-      fetchDataForSelectedMonth={getWorkoutLogsForMonth}
-      setSelectedMonth={setSelectedMonthForWorkoutLogs}
-    />
-
-    <CardListLog
-      workoutLogs={workoutLogsForMonth.toJS()}
-      editLink="/app/workoutlogs/edit/"
-      setSelectedItem={setSelectedWorkoutLog}
-      onModalStateChange={openWorkoutModal}
-    />
-
-    <CreateButtonMinified link="/app/workoutlogs/create/before" />
-
-    <CreateButton
-      link="/app/workoutlogs/create"
-      disabled={isTodaysWorkoutLogExists}
-    />
-  </div>;
-
 class WorkoutLogsMainContainer extends PureComponent {
-  componentDidMount = () => {
+  componentDidMount() {
     if (this.props.datesWithWorkoutLogs.isEmpty())
       this.props.getWorkoutLogDates();
     if (this.props.workoutLogsForMonth.isEmpty()) {
@@ -75,9 +38,9 @@ class WorkoutLogsMainContainer extends PureComponent {
         this.props.monthsWithWorkoutLogs.last()
       );
     }
-  };
+  }
 
-  componentWillReceiveProps = (nextProps, nextState) =>
+  componentWillReceiveProps(nextProps) {
     (this.props.monthsWithWorkoutLogs.isEmpty() &&
       !nextProps.monthsWithWorkoutLogs.isEmpty()) ||
     nextProps.monthsWithWorkoutLogs.find(
@@ -87,8 +50,48 @@ class WorkoutLogsMainContainer extends PureComponent {
           nextProps.monthsWithWorkoutLogs.last()
         )
       : null;
+  }
 
-  render = () => renderMainScreen(this.props);
+  render() {
+    const {
+      monthsWithWorkoutLogs,
+      selectedMonth,
+      getWorkoutLogsForMonth,
+      setSelectedMonthForWorkoutLogs,
+      isModalOpen,
+      closeWorkoutModal,
+      deleteWorkoutLog,
+      workoutLogsForMonth,
+      setSelectedWorkoutLog,
+      openWorkoutModal,
+      isTodaysWorkoutLogExists,
+      selectedWorkoutLog
+    } = this.props;
+    return (
+      <div>
+        <DateSelector
+          months={monthsWithWorkoutLogs.toJS()}
+          selectedMonth={selectedMonth}
+          fetchDataForSelectedMonth={getWorkoutLogsForMonth}
+          setSelectedMonth={setSelectedMonthForWorkoutLogs}
+        />
+
+        <CardListLog
+          workoutLogs={workoutLogsForMonth.toJS()}
+          editLink="/app/workoutlogs/edit/"
+          setSelectedItem={setSelectedWorkoutLog}
+          onModalStateChange={openWorkoutModal}
+        />
+
+        <CreateButtonMinified link="/app/workoutlogs/create/before" />
+
+        <CreateButton
+          link="/app/workoutlogs/create"
+          disabled={isTodaysWorkoutLogExists}
+        />
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
@@ -101,17 +104,12 @@ const mapStateToProps = state => ({
   selectedWorkoutLog: state.getIn(['app', 'selectedWorkoutLog'])
 });
 
-const mapDispatchToProps = dispatch => ({
-  getWorkoutLogsForMonth: month => dispatch(getWorkoutLogsForMonth(month)),
-  getWorkoutLogDates: () => dispatch(getWorkoutLogDates()),
-  setSelectedMonthForWorkoutLogs: month =>
-    dispatch(setSelectedMonthForWorkoutLogs(month)),
-  deleteWorkoutLog: _id => dispatch(deleteWorkoutLog(_id)),
-  openWorkoutModal: () => dispatch(openWorkoutModal()),
-  closeWorkoutModal: () => dispatch(closeWorkoutModal()),
-  setSelectedWorkoutLog: _id => dispatch(setSelectedWorkoutLog(_id))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  WorkoutLogsMainContainer
-);
+export default connect(mapStateToProps, {
+  getWorkoutLogsForMonth,
+  getWorkoutLogDates,
+  setSelectedMonthForWorkoutLogs,
+  deleteWorkoutLog,
+  openWorkoutModal,
+  closeWorkoutModal,
+  setSelectedWorkoutLog
+})(WorkoutLogsMainContainer);

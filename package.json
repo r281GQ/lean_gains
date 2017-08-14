@@ -4,11 +4,8 @@
   "description": "leangains style tracker",
   "main": "server/server.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --require ./test/init_test.js  'test/**/*.@(js|jsx)'",
     "test:jest": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "test:watch": "npm run test -- --watch --watch-extensions jsx",
-    "serve": "concurrently  \"nodemon mock/server.js\"  \"webpack-dev-server --hot --inline\" ",
     "serve:mock": "nodemon mock/server.js",
     "serve:dev:alone": "nodemon server/server.js",
     "serve:dev": "concurrently \" nodemon server/server.js\"  \"webpack-dev-server --hot --inline\"",

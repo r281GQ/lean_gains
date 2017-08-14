@@ -4,10 +4,8 @@ import { Route } from 'react-router-dom';
 
 import WorkoutTarget from './workout_target';
 import WorkoutTargetMain from './workout_targets_main';
+import withConfirmDeleteModal from './../enhancers/confirm_delete_modal';
 
-//TODO: use HOC for modal
-//TODO: differnet page when there are no workout targets
-//TODO: float button as hoc for reusabailty
 const WorkoutTargetsRouter = ({ workoutTargets }) =>
   <div>
     <Route
@@ -19,18 +17,24 @@ const WorkoutTargetsRouter = ({ workoutTargets }) =>
     <Route
       exact
       path={'/app/workouttargets/edit/:id'}
-      render={props => {
-        const selectedWorkoutTarget = workoutTargets.find(
-          (value, key) => props.match.params.id === key
-        );
-
-        return (
-          <WorkoutTarget {...props} defaultValue={selectedWorkoutTarget} />
-        );
-      }}
+      render={props =>
+        <WorkoutTarget
+          {...props}
+          defaultValue={workoutTargets.find(
+            (value, key) => props.match.params.id === key
+          )}
+        />}
     />
 
-    <Route exact path={'/app/workouttargets'} component={WorkoutTargetMain} />
+    <Route
+      exact
+      path={'/app/workouttargets'}
+      component={withConfirmDeleteModal(
+        WorkoutTargetMain,
+        `Are you sure you want to delete this workout target?`,
+        'workoutTarget'
+      )}
+    />
   </div>;
 
 export default connect(state => ({

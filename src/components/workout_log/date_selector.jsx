@@ -4,9 +4,13 @@ import { DatePicker } from 'redux-form-material-ui';
 import { Field } from 'redux-form/immutable';
 import { Paper, FlatButton } from 'material-ui';
 
-
-// TODO: maxDate and minDate
-const DateSelector = ({ renderDate, shouldDisableDate }) =>
+const DateSelector = ({
+  renderDate,
+  shouldDisableDate,
+  maxDate,
+  minDate,
+  formatDate
+}) =>
   renderDate
     ? <Paper>
         <div className="row">
@@ -19,7 +23,9 @@ const DateSelector = ({ renderDate, shouldDisableDate }) =>
               name="createdAt"
               component={DatePicker}
               shouldDisableDate={shouldDisableDate}
-
+              maxDate={maxDate}
+              minDate={minDate}
+              formatDate={formatDate}
             />
           </div>
           <div className="clear" />
@@ -29,7 +35,10 @@ const DateSelector = ({ renderDate, shouldDisableDate }) =>
 
 DateSelector.propTypes = {
   shouldDisableDate: PropTypes.func.isRequired,
-  renderDate: PropTypes.bool
+  renderDate: PropTypes.bool,
+  maxDate: PropTypes.instanceOf(Date),
+  minDate: PropTypes.instanceOf(Date),
+  formatDate: PropTypes.func.isRequired
 };
 
 export default DateSelector;

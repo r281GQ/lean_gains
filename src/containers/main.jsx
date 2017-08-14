@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import SideBarContainer from './side_bar';
+import SideBarContainer from './layout/side_bar';
 import withMessageBar from './enhancers/message';
 import * as async from './async/containers';
 

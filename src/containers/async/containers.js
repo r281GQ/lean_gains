@@ -11,7 +11,7 @@ export const AsyncDailyLogsRouter = asyncComponent(() =>
 );
 
 export const AsyncCalorieTargetContainer = asyncComponent(() =>
-  System.import('./../calorie_target_container').then(module => module.default)
+  System.import('./../calorie_target/calorie_target_container').then(module => module.default)
 );
 
 export const AsyncUserDetailsContainer = asyncComponent(() =>
@@ -25,11 +25,11 @@ export const AsyncWorkoutLogsRouter = asyncComponent(() =>
 );
 
 export const AsyncWorkoutTargetsRouter = asyncComponent(() =>
-  System.import('./.././workout_targets/workout_targets_router').then(
+  System.import('./../workout_targets/workout_targets_router').then(
     module => module.default
   )
 );
 
 export const AsyncCalorieTrackerContainer = asyncComponent(() =>
-  System.import('./../calorie_tracker_container').then(module => module.default)
+  System.import('./../calorie_tracker/calorie_tracker_container').then(module => module.default)
 );

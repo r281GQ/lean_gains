@@ -1,14 +1,15 @@
 import React from 'react';
 import { Slider } from 'redux-form-material-ui';
 import { FlatButton } from 'material-ui';
+import * as _ from 'lodash';
 
 const CurrentSlider = props =>
   <div>
     <Slider {...props} />
-    <div style={{ textAlign: 'center' }}>
+    <div className="current-slider">
       <FlatButton
         disabled={true}
-        label={`${props.input.name}  ${props.input.value}`}
+        label={`${_.isNaN(props.input.value) ? 0 : props.input.value}`}
       />
     </div>
   </div>;

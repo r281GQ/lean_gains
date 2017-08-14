@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import DailyLogsMainContainer from './daily_logs_main';
 import DailyLogFormContainer from './daily_log_form';
-import withConfirmDeleteModal from './../confirm_delete_modal';
+import withConfirmDeleteModal from './../enhancers/confirm_delete_modal';
 
 const DailyLogsRouter = ({ dailyLogs }) =>
   <div>

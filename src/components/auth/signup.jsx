@@ -51,7 +51,7 @@ const SignUpComponent = ({
             validate={validatePasswordAgain}
           />
         </div>
-        <div>
+        <div className="sign-up-button-container">
           <RaisedButton
             primary
             fullWidth

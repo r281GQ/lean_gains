@@ -1,31 +1,19 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { FlatButton } from 'material-ui';
-import { DatePicker } from 'redux-form-material-ui';
-import {
-  Field,
-  FieldArray,
-  reduxForm,
-  formValueSelector,
-  initialize,
-  formValues,
-  getFormValues
-} from 'redux-form/immutable';
-import moment from 'moment';
+import { reduxForm, initialize, getFormValues } from 'redux-form/immutable';
 import { Map } from 'immutable';
+import moment from 'moment';
 
+import WorkoutLogForm from './../../components/workout_log/workout_log_form';
 import {
   createWorkoutLog,
   updateWorkoutLog
 } from './../../store/actionCreators/workout_log_action_creators';
-import ExerciseFieldArray from './../../components/workout_log/exercies_field_array';
 
-const mapToBoolean = v => {
-  return _.isBoolean(v) ? v : false;
-};
+const mapToBoolean = value => (_.isBoolean(value) ? value : false);
 
 class WorkoutLogFormContainer extends PureComponent {
-  constructor(props){
+  constructor(props) {
     super(props);
     this._disableThese = this._disableThese.bind(this);
   }
@@ -44,65 +32,49 @@ class WorkoutLogFormContainer extends PureComponent {
       ? true
       : false;
 
-  render = () => {
-    let { createWorkoutLog, handleSubmit, updateWorkoutLog } = this.props;
+  render() {
+    const {
+      match,
+      createWorkoutLog,
+      handleSubmit,
+      updateWorkoutLog,
+      datesWithWorkoutLogs,
+      markerList,
+      selectedDate
+    } = this.props;
     return (
-      <div className="workout-log-container">
-        <form
-          onSubmit={handleSubmit(formprops => {
-            const sendable = formprops.toJS();
-            sendable.createdAt = moment(sendable.createdAt).valueOf();
-
-            this.props.match.params.id
+      <WorkoutLogForm
+        submitHandler={handleSubmit(
+          formprops =>
+            match.params.id
               ? updateWorkoutLog({
-                  ...sendable,
-                  _id: this.props.match.params.id
+                  ...formprops.toJS(),
+                  _id: match.params.id,
+                  createdAt: moment(formprops.get('createdAt')).valueOf()
                 })
-              : createWorkoutLog(sendable);
-
-            console.log(formprops.toJS());
-          })}
-        >
-          <div>
-            {this.props.type === 'createBefore'
-              ? <div>
-                  <Field
-                    name="createdAt"
-                    component={input =>
-                      <DatePicker
-                        {...input}
-                        maxDate={moment().toDate()}
-                        minDate={moment().subtract(110, 'years').toDate()}
-                        formatDate={value => moment(value).format('DD-MM-YYYY')}
-                        shouldDisableDate={this._disableThese(
-                          this.props.datesWithWorkoutLogs
-                        )}
-                      />}
-                  />{' '}
-                </div>
-              : null}
-            <FieldArray
-              name="exercises"
-              component={ExerciseFieldArray}
-              passedMarkerList={this.props.markerList}
-              normalizeMarker={mapToBoolean}
-            />
-            <FlatButton
-              type="submit"
-              disabled={
-                this.props.datesWithWorkoutLogs.find(value =>
-                  moment(value).isSame(this.props.selectedDate, 'day')
-                ) && !this.props.match.params.id
-                  ? true
-                  : false
-              }
-              label={this.props.match.params.id ? 'modify' : 'create'}
-            />
-          </div>
-        </form>
-      </div>
+              : createWorkoutLog({
+                  ...formprops.toJS(),
+                  createdAt: moment(formprops.get('createdAt')).valueOf()
+                })
+        )}
+        renderDate={match.path ? _.includes(match.path, 'before') : false}
+        maxDate={moment().toDate()}
+        minDate={moment().subtract(110, 'years').toDate()}
+        formatDate={value => moment(value).format('DD-MM-YYYY')}
+        shouldDisableDate={this._disableThese(datesWithWorkoutLogs)}
+        passedMarkerList={markerList}
+        normalizeMarker={mapToBoolean}
+        disabled={
+          datesWithWorkoutLogs.find(value =>
+            moment(value).isSame(selectedDate, 'day')
+          ) && !match.params.id
+            ? true
+            : false
+        }
+        label={match.params.id ? 'Update' : 'Create'}
+      />
     );
-  };
+  }
 }
 
 export default connect(

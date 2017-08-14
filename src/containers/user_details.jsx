@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { reduxForm } from 'redux-form/immutable';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import { fromJS } from 'immutable';
+import moment from 'moment';
 
 import { updateUserDetails } from './../store/actionCreators/user_details_action_creators';
 import { required } from './../services/validators';

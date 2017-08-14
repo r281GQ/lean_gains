@@ -1,4 +1,5 @@
-$login-background : #E0E0E0;
+$login-background: #f5f5f5;
+$login-backgroundd: #e0e0e0;
 
 body {
   position: relative;
@@ -12,32 +13,119 @@ body {
   text-align: justify;
 }
 
-
-.login-container-upper {
-  display: table;
-  height: 100%;
+.footer-container {
+  position: absolute;
+  bottom: 0px;
   width: 100%;
-  background-color: $login-background;
+
+  height: 48px;
+  left: 0px;
+}
+.footer-paper {
+  height: 100%;
+  background-color: #e0e0e0;
+  width: 75%;
+
+  padding: 0px;
+  border: 0px;
+  margin-left: auto;
+  margin-right: auto;
+
+  text-align: center;
+  display: block;
 }
 
-.workout-log-container {
+.header-toolbar {
+  background-color: #757575;
+  color: #eeeeee;
+}
+// .login-container-upper {
+//   // display: table;
+//   // height: 100%;
+//   // width: 100%;
+//   // margin-bottom: -48px;
+//   // margin-top: -56px;
+//   // background-color: $login-background;
+//   //
+//
+// }
+//
+.user-details-paper {
+  padding: 8px;
+}
+
+.workout-log-container,
+.workout-target-container {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
 }
 
-
-.lil { cursor: pointer; }
-.login-container-middle {
-  display: table-cell;
-  vertical-align: middle;
+.underline {
+  cursor: pointer;
 }
 
-.login-container-inner {
+.sign-up-button-container{
+  margin-top: 15px;
+}
+
+.current-slider {
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 25%;
+}
+
+.login-paper,
+.sign-up-paper,
+.workout-log-paper,
+.workout-target-paper {
+  padding: 30px;
+}
+.main-container {
+  margin: 8px;
+}
+
+.login-outer {
+}
+
+// .sign-up-container {
+//
+// }
+
+.fixed-floating-button {
+  position: fixed;
+  bottom: 68px;
+  right: 20px;
+}
+
+.fixed-floating-button-mini {
+  position: fixed;
+  bottom: 68px;
+  right: 100px;
+}
+
+.login-container,
+.sign-up-container {
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  // margin-left: auto;
+  // margin-right: auto;
+  // width: 25%;
+  //
+  display: flex;
+  // text-align: center;
+  //
+  height: 95%;
+  // padding: 20px;
+  margin-bottom: -48px;
+  // margin-top:  -56px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .col {
@@ -65,7 +153,7 @@ body {
   width: 50%;
 }
 
-.col-12{
+.col-12 {
   padding: 10px;
   float: left;
   text-align: center;
@@ -87,13 +175,8 @@ body {
   margin-top: 10px;
 }
 
-.row::after{
+.row::after {
   clear: both;
-}
-
-.llll {
-
-
 }
 
 .clear {
@@ -101,13 +184,12 @@ body {
 }
 
 .calorie-target .col-6 {
-
- text-align: left;
+  text-align: left;
 }
 
 @media screen and (max-width: 1200px) {
   .login-container-inner {
-    width: 50%;
+    // width: 50%;
   }
 }
 
@@ -119,7 +201,7 @@ body {
 
 @media screen and (max-width: 1000px) {
   .calorie-target .col-6 {
-    float:none;
+    float: none;
     width: 100%;
   }
 }

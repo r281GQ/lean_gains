@@ -2,17 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { Map } from 'immutable';
-import moment from 'moment';
 
 import WorkoutLogsMainContainer from './workout_logs_main';
 import WorkoutLogFormContainer from './workout_log_form';
 import isTrainingDay from './../../store/selectors/exercises';
 
-import withConfirmDeleteModal from './../confirm_delete_modal';
+import withConfirmDeleteModal from './../enhancers/confirm_delete_modal';
 
-const deleteMessage = `Are you sure you want to delete this workout log?`;
-
-//TODO: use HOC for modal
 const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
   <div>
     <Route
@@ -20,7 +16,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
       path={'/app/workoutlogs'}
       component={withConfirmDeleteModal(
         WorkoutLogsMainContainer,
-        deleteMessage,
+        `Are you sure you want to delete this workout log?`,
         'workoutLog'
       )}
     />
@@ -58,7 +54,10 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
         const defaultValue = exercises.map(value =>
           Map().withMutations(map =>
             map
-              .set('name', value)
+              .set(
+                'name',
+                value !== 'You do not have any exercise for today' ? value : ''
+              )
               .set('note', '')
               .set('marker', false)
               .set('sets', Map())

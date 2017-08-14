@@ -25,10 +25,6 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  logIn: userInfo => dispatch(logIn(userInfo))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps, { logIn })(
   reduxForm({ form: 'login' })(LoginContainer)
 );
