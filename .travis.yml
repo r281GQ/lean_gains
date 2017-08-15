@@ -1,14 +1,15 @@
 language: node_js
-
 before_install:
-  - npm install -g npm@latest
-
-
+- npm install -g npm@latest
 node_js:
-  - "6"
-  - "7"
-  - "8"
-  - "stable"
-
+- '6'
+- '7'
+- '8'
+- stable
 after_success:
-  - npm run build
+- npm run build
+deploy:
+  provider: heroku
+  app: lean-gains-dev
+  api_key:
+    secure: IhZESPyUmxDmxO5jTms2mWV+lhMlODAYg9J3uK1soQ4J8gTKfZ+4CtReCb7AWCTuNfp2MOJmvyi0VUo1QUSGwz4sgwEUbYGaUvKOjcKBDeeUbKrrPRy39boKbqUrKohcS96tPokSdfqQTnmveWIDZbElp9xZuRGODk6ps5ayAXIwTv52HwEJEU+3zBJwmCPLBqtPhX/0XOoq8u3gTtYdF1NJLthEFlKcr09xsp7hm/ItjyUEAoFr0YnnO8B5P63ItAxeEtSlF04VZLgyweL644/v2VAU5RxRF+JaCY2kh73hUdQa7zzpjf8jCyW3LdCO3IjzX50EbThdOh5W/2/26YXNv2Jh6BSLtH/EmxzJZciAQzHeIGylqtq9nqB837gXZ91h4Sy2PH/q7WitSdljKuz7UCF8qrDVUNZLUY9v3zYRRdJgn0aSCVua7rz7Tkd+LMwPWjvDD10Rp859l8mrCYXtKY6y9hTXMwFha01c81qdLX+9t3JUfFXJYEh3nMj+9HByC6IEb5ugZsqcw3pjxRUiXnPj0PKWUyEqDq0R9zQwo6xlGYaNcX6u2X+qaB0jbKz6/tKlvsnGXNDBlHLaAPHUq2UOSmmM6QUc7iiBjWx+lrIhJy/7U8ImHAAklCWvGCpZ0FRIG4s4/rPPbuGq4i5xuEXKGvSahJCGp1kedkY=

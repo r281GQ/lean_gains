@@ -8,6 +8,7 @@ const LoginComponent = ({ handleSubmit, validateEmail }) =>
 <div className="login-outer">
   <div className="login-container">
     <Paper className="login-paper">
+      Fresh repo
       <FlatButton disabled label="Log in" />
       <form onSubmit={handleSubmit}>
         <div>
