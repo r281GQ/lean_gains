@@ -2,12 +2,11 @@ const express = require('express');
 const passport = require('passport');
 const path = require('path');
 const cors = require('cors');
-const { dev: { cookie } } = require('./../config/config.json');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 
-const env = process.env;
+const cookie = process.env.NODE_ENV === 'production' ? process.env.cookie : require('./../config/config.json').dev.cookie;
 
 //TODO: error codes
 //TODO: validation middleware
@@ -20,7 +19,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [cookie || env.cookie]
+    keys: [cookie]
   })
 );
 

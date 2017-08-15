@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-const { dev: { mongodb } } = require('./../../config/config.json');
-
-const env = process.env;
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(mongodb || env.mongodb);
+mongoose.connect(
+  process.env.NODE_ENV === 'production'
+    ? process.env.mongodb
+    : require('./../../config/config.json').dev.mongodb
+);
