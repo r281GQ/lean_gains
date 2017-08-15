@@ -49,7 +49,7 @@ require('./routes/calorie_log')(app);
 
 app.use(express.static(path.join(__dirname, '/../build')));
 
-app.get('/app/*', (request, response) => {
+app.get('*', (request, response) => {
   response.redirect('/');
 });
 
