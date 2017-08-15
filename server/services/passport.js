@@ -3,12 +3,6 @@ const { Strategy } = require('passport-google-oauth20');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-// const {
-//   dev: { google: { clientID, clientSecret } }
-// } = require('./../../config/config.json');
-
-const env = process.env;
-
 passport.serializeUser(({ id }, done) => done(null, id));
 
 passport.deserializeUser((id, done) =>
