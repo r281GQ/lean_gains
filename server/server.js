@@ -6,7 +6,11 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 
-const cookie = process.env.NODE_ENV === 'production' ? process.env.cookie : require('./../config/config.json').dev.cookie;
+const COOKIE =
+  process.env.NODE_ENV === 'production'
+    ? process.env.cookie
+    : require('./../config/config.json').dev.cookie;
+const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 3050;
 
 //TODO: error codes
 //TODO: validation middleware
@@ -19,7 +23,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [cookie]
+    keys: [COOKIE]
   })
 );
 
@@ -45,8 +49,8 @@ require('./routes/calorie_log')(app);
 
 app.use(express.static(path.join(__dirname, '/../build')));
 
-app.get('/app/*', (request,response) => {
+app.get('/app/*', (request, response) => {
   response.redirect('/');
-})
+});
 
-app.listen(3050, () => console.log('Server started on port: 3050'));
+app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
