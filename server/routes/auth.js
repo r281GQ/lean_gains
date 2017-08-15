@@ -6,6 +6,7 @@ module.exports = app => passport => {
     '/api/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
+      process.env.NODE_ENV === 'production' ? res.redirect('https://lean-gains-dev.herokuapp.com/app'):
       res.redirect('/app');
     }
   );
@@ -18,7 +19,6 @@ module.exports = app => passport => {
   );
 
   app.get('/api/auth/whoami', (request, response) => {
-    console.log(process.env);
     if (!request.user)
       return response.status(401).send({ message: 'Unauthanticated!' });
     return response.status(200).send(request.user);
