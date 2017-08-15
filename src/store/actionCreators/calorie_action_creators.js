@@ -94,4 +94,8 @@ export const initializeCalorieLog = () => (dispatch, getState) => {
 };
 
 export const search = query => dispatch =>
-  dispatch(arrayPush('calorie-track', 'foods', mapValues(formatResponse(prepareAPI(query)))));
+  prepareAPI(query).then(response =>
+    dispatch(
+      arrayPush('calorie-track', 'foods', mapValues(formatResponse(response)))
+    )
+  );

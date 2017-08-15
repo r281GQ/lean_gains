@@ -16,7 +16,7 @@ const APP_ID = '8c0712d2';
 const prepareAPI = query =>
   axios({
     url: API_ENDPOINT,
-    method: 'POST',
+    method: 'POST', 
     data: {
       query
     },
@@ -83,7 +83,7 @@ const mock = () => ({
       measure: 'medium',
       seq: 7,
       qty: 1
-    }, 
+    },
     1: {
       serving_weight: 149,
       measure: 'small (2-3/4',
