@@ -83,7 +83,7 @@ const mock = () => ({
       measure: 'medium',
       seq: 7,
       qty: 1
-    },
+    }, 
     1: {
       serving_weight: 149,
       measure: 'small (2-3/4',
