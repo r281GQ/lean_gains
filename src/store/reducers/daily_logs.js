@@ -1,5 +1,4 @@
 import { fromJS, Map, Set } from 'immutable';
-import moment from 'moment';
 import * as _ from 'lodash';
 
 import * as dailyLogs from './../actions/daily_logs_actions';

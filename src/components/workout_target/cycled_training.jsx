@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form/immutable';
 import { TextField, DatePicker } from 'redux-form-material-ui';
 
@@ -22,5 +23,10 @@ const CycledTraining = ({ isCycledTraining, formatDate }) =>
         />
       </div>
     : null;
+
+CycledTraining.propTypes = {
+isCycledTraining: PropTypes.oneOf(['fix' , 'cycle']),
+  formatDate: PropTypes.func.isRequired,
+};
 
 export default CycledTraining;

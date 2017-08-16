@@ -1,6 +1,7 @@
 import React from 'react';
-import { Field } from 'redux-form/immutable';
+import PropTypes from 'prop-types';
 import { TextField } from 'redux-form-material-ui';
+import { Field } from 'redux-form/immutable';
 
 const Name = ({ validateWorkoutName }) =>
   <div>
@@ -14,5 +15,9 @@ const Name = ({ validateWorkoutName }) =>
       validate={validateWorkoutName}
     />
   </div>;
+
+Name.propTypes = {
+  validateWorkoutName: PropTypes.func.isRequired,
+};
 
 export default Name;

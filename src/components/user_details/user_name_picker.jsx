@@ -12,8 +12,8 @@ const UserNamePicker = ({ validator }) =>
     validate={validator('username cannot be empty')}
   />;
 
-UserNamePicker.PropTypes = {
-  validator: PropTypes.func.isRequired
-}
+UserNamePicker.propTypes = {
+  validator: PropTypes.func.isRequired,
+};
 
 export default UserNamePicker;

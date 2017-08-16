@@ -40,7 +40,7 @@ body {
   color: #eeeeee;
 }
 
-.user-details-paper {
+.user-details__paper {
   padding: 8px;
 }
 
@@ -55,7 +55,7 @@ body {
   cursor: pointer;
 }
 
-.sign-up-button-container {
+.sign-up-button__container {
   margin-top: 15px;
 }
 
@@ -63,18 +63,16 @@ body {
   text-align: center;
 }
 
-.login-paper,
-.sign-up-paper,
-.workout-log-paper,
-.workout-target-paper {
+.login__paper,
+.sign-up__paper,
+.workout-log__paper,
+.workout-target__paper {
   padding: 30px;
 }
-.main-container {
+.main__container {
   margin: 8px;
 }
 
-.login-outer {
-}
 
 
 .fixed-floating-button {
@@ -89,8 +87,8 @@ body {
   right: 100px;
 }
 
-.login-container,
-.sign-up-container {
+.login__container,
+.sign-up__container {
   background-color: white;
   text-align: center;
   align-items: center;
@@ -113,6 +111,18 @@ body {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+}
+
+.calorie-tracker-summery__container {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px;
+  text-align: center;
+  width: 50%;
+}
+
+.link-no-underline {
+  text-decoration: none;
 }
 
 .parent-paper {

@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {
   setSelectedMonthForWorkoutLogs,
@@ -19,10 +21,8 @@ import isTodaysLogExists from './../../store/selectors/todays_log';
 
 import CreateButton from './../../components/create_button';
 import CreateButtonMinified from './../../components/create_button_minified';
-import ConfirmDelete from './../../components/confirm_delete';
 import CardListLog from './../../components/workout_log/card_list_log';
 import DateSelector from './../../components/date_selector';
-import LoadingScreen from './../../components/loading';
 
 const isTodaysWorkoutLogExists = isTodaysLogExists('workoutLogs');
 const workoutLogsForMonth = logsForMonth('workoutLogs');
@@ -58,14 +58,10 @@ class WorkoutLogsMainContainer extends PureComponent {
       selectedMonth,
       getWorkoutLogsForMonth,
       setSelectedMonthForWorkoutLogs,
-      isModalOpen,
-      closeWorkoutModal,
-      deleteWorkoutLog,
       workoutLogsForMonth,
       setSelectedWorkoutLog,
       openWorkoutModal,
       isTodaysWorkoutLogExists,
-      selectedWorkoutLog
     } = this.props;
     return (
       <div>
@@ -92,6 +88,19 @@ class WorkoutLogsMainContainer extends PureComponent {
       </div>
     );
   }
+}
+
+WorkoutLogsMainContainer.propTypes = {
+  getWorkoutLogDates: PropTypes.func.isRequired,
+  datesWithWorkoutLogs: ImmutablePropTypes.set,
+  monthsWithWorkoutLogs: ImmutablePropTypes.set,
+  selectedMonth: PropTypes.string,
+  getWorkoutLogsForMonth: PropTypes.func.isRequired,
+  setSelectedMonthForWorkoutLogs: PropTypes.func.isRequired,
+  workoutLogsForMonth: ImmutablePropTypes.map,
+  setSelectedWorkoutLog:PropTypes.func.isRequired,
+  openWorkoutModal: PropTypes.func.isRequired,
+  isTodaysWorkoutLogExists: PropTypes.bool
 }
 
 const mapStateToProps = state => ({

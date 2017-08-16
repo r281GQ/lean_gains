@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import { fromJS } from 'immutable';
@@ -16,6 +17,7 @@ class UserDetailsContainer extends PureComponent {
 
   render() {
     const { handleSubmit, updateUserDetails } = this.props;
+
     return (
       <div className="user-details">
         <UserDetailsForm
@@ -24,14 +26,14 @@ class UserDetailsContainer extends PureComponent {
             updateUserDetails({
               userName: formProps.get('userName'),
               sex: formProps.get('sex'),
-              dob: formProps.get('dob')
-            })
+              dob: moment(formProps.get('dob')).valueOf(),
+            }),
           )}
           normalizeDate={value => moment(value).valueOf()}
           validators={{
             userName: required,
             minDate: moment().subtract(110, 'years').toDate(),
-            maxDate: moment().subtract(5, 'years').toDate()
+            maxDate: moment().subtract(5, 'years').toDate(),
           }}
         />
       </div>
@@ -41,12 +43,19 @@ class UserDetailsContainer extends PureComponent {
 
 const mapStateToProps = state => ({
   sex: state.getIn(['userDetails', 'sex']),
-  dob: state.getIn(['userDetails', 'dob']),
-  userName: state.getIn(['userDetails', 'userName'])
+  dob: moment(state.getIn(['userDetails', 'dob'])).toDate(),
+  userName: state.getIn(['userDetails', 'userName']),
 });
+
+UserDetailsContainer.propTypes = {
+  userName: PropTypes.string,
+  dob: PropTypes.instanceOf(Date),
+  sex: PropTypes.oneOf(['male', 'female']),
+  updateUserDetails: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { updateUserDetails })(
   reduxForm({
-    form: 'user-details'
-  })(UserDetailsContainer)
+    form: 'user-details',
+  })(UserDetailsContainer),
 );

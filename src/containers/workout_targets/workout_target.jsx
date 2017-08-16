@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
 import { reduxForm, formValues, SubmissionError } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import { required } from './../../services/validators';
-import { fromJS, Map } from 'immutable';
+import { Map } from 'immutable';
+import * as _ from 'lodash'
 
 import {
   createWorkoutTarget,
@@ -65,8 +68,8 @@ class WorkoutTarget extends PureComponent {
     } = this.props;
     return (
       <WorkoutTargetForm
-        {...this.props}
-        formatDate={(value, name) => (value === '' ? 0 : value)}
+        isCycledTraining = {isCycledTraining}
+        formatDate={value => (value === '' ? 0 : value)}
         validateWorkoutName={required('Workout must have a name!')}
         submitHandler={handleSubmit(formProps => {
           const onDays = _.filter(
@@ -114,6 +117,8 @@ class WorkoutTarget extends PureComponent {
               _error: 'exercise name'
             });
 
+
+
           match.params.id
             ? updateWorkoutTarget({
                 ...formProps.toJS(),
@@ -128,7 +133,7 @@ class WorkoutTarget extends PureComponent {
                 startDayofTraining: moment(
                   formProps.get('startDayofTraining')
                 ).valueOf(),
-                onDays
+                onDays: formProps.get('isCycledTraining') === 'fix' ?  onDays : []
               });
 
           reset();
@@ -136,6 +141,14 @@ class WorkoutTarget extends PureComponent {
       />
     );
   }
+}
+
+
+WorkoutTarget.propTypes = {
+  defaultValue: ImmutablePropTypes.map,
+  updateWorkoutTarget: PropTypes.func.isRequired,
+  createWorkoutTarget: PropTypes.func.isRequired,
+  isCycledTraining: PropTypes.oneOf(['fix' , 'cycle'])
 }
 
 export default connect(null, { createWorkoutTarget, updateWorkoutTarget })(

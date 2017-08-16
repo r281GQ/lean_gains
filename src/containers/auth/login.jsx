@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form/immutable';
 import { Redirect } from 'react-router-dom';
@@ -19,12 +20,16 @@ const LoginContainer = props =>
         })}
       />;
 
+LoginContainer.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.getIn(['auth', 'authenticated'])
+    isAuthenticated: state.getIn(['auth', 'authenticated']),
   };
 };
 
 export default connect(mapStateToProps, { logIn })(
-  reduxForm({ form: 'login' })(LoginContainer)
+  reduxForm({ form: 'login' })(LoginContainer),
 );

@@ -1,6 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+
+// import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+
+
+
+
 import CalorieTargetResult from './../../components/calorie_result/calorie_target_result';
 import calorieTarget from './../../store/selectors/calorie_target';
 
@@ -17,11 +24,12 @@ const CalorieTargetResultContainer = ({ values }) =>
   </div>;
 
 const mapStateToProps = state => {
-  const g = calorieTarget(state).get('finalValues')
   return {
-    values: g
+    values: calorieTarget(state).get('finalValues')
   }
 }
 
-
+CalorieTargetResultContainer.propTypes = {
+  values: ImmutablePropTypes.map
+}
 export default connect(mapStateToProps)(CalorieTargetResultContainer);

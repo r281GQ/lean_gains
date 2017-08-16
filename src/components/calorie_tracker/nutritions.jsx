@@ -5,9 +5,7 @@ import {
   FlatButton,
   Card,
   CardHeader,
-  CardMedia,
   CardActions,
-  CardTitle,
   CardText
 } from 'material-ui';
 import { TextField, SelectField } from 'redux-form-material-ui';

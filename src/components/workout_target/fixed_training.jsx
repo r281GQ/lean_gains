@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form/immutable';
 import { Checkbox } from 'redux-form-material-ui';
 
@@ -50,5 +51,9 @@ const FixedTraining = ({ isCycledTraining }) =>
         <div className="cl" />
       </div>
     : null;
+
+FixedTraining.propTypes = {
+isCycledTraining: PropTypes.oneOf(['fix' , 'cycle'])
+};
 
 export default FixedTraining;

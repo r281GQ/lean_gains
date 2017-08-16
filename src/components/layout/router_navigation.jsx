@@ -6,11 +6,11 @@ import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 //TODO: implement conditionals (epics ? sagas?)
 const RouterNavigation = ({ goBack, goForward }) =>
   <ToolbarGroup>
-    <IconButton onTouchTap={() => this.props.goBack()} tooltip={`Go back`}>
+    <IconButton onTouchTap={() => goBack()} tooltip={`Go back`}>
       <ArrowBack color="white" />
     </IconButton>
     <IconButton
-      onTouchTap={() => this.props.goForward()}
+      onTouchTap={() => goForward()}
       tooltip={`Go forward`}
     >
       <ArrowForward color="white" />

@@ -1,5 +1,6 @@
 import React from 'react';
-import { IconButton, ToolbarGroup, ToolbarTitle } from 'material-ui';
+import PropTypes from 'prop-types';
+import { IconButton, ToolbarGroup } from 'material-ui';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 
 const Main = ({ openSideBar }) =>
@@ -8,5 +9,9 @@ const Main = ({ openSideBar }) =>
       <Menu color="white" />
     </IconButton>
   </ToolbarGroup>;
+
+Main.propTypes = {
+  openSideBar: PropTypes.func.isRequired,
+};
 
 export default Main;

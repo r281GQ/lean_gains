@@ -19,7 +19,7 @@ import workoutLogs from './reducers/workout_logs';
 const authState = fromJS({
   authenticated: false,
   isLoading: false,
-  token: null
+  token: null,
 });
 
 const appState = fromJS({
@@ -29,27 +29,27 @@ const appState = fromJS({
   isMessageBarOpen: false,
   isFetching: false,
   selectedDayCalorieLog: moment().toDate(),
-  message: ''
+  message: '',
 });
 
 const routingState = Immutable.fromJS({
-  location: undefined
+  location: undefined,
 });
 
 const calorieLogState = Map();
 
 const dailyLogsState = Map().withMutations(map =>
-  map.set('data', Map()).set('dates', Set())
+  map.set('data', Map()).set('dates', Set()),
 );
 
 const userDetailsState = fromJS({
   workoutTargets: {},
   kcalTargets: {},
-  latestMeasurements: {}
+  latestMeasurements: {},
 });
 
 const workoutLogsState = Map().withMutations(map =>
-  map.set('data', Map()).set('dates', Set())
+  map.set('data', Map()).set('dates', Set()),
 );
 
 const INITIAL_STATE = Map().withMutations(map =>
@@ -60,11 +60,12 @@ const INITIAL_STATE = Map().withMutations(map =>
     .set('calorieLog', calorieLogState)
     .set('dailyLogs', dailyLogsState)
     .set('userDetails', userDetailsState)
-    .set('workoutLogs', workoutLogsState)
+    .set('workoutLogs', workoutLogsState),
 );
 
 const logger = createLogger({
-  stateTransformer: state => (Iterable.isIterable(state) ? state.toJS() : state)
+  stateTransformer: state =>
+    Iterable.isIterable(state) ? state.toJS() : state,
 });
 
 const rootReducer = combineReducers({
@@ -75,7 +76,7 @@ const rootReducer = combineReducers({
   dailyLogs,
   routing,
   workoutLogs,
-  form
+  form,
 });
 
 const withLogout = (rootReducer, INITIAL_STATE) => (state, action) =>
@@ -86,7 +87,7 @@ const withLogout = (rootReducer, INITIAL_STATE) => (state, action) =>
 //TODO: add undo function to api actions to roll back
 const store = createStore(
   withLogout(rootReducer, INITIAL_STATE),
-  composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance))
+  composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance)),
 );
 
-export { store };
+export default store;

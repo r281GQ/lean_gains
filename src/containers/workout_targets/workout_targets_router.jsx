@@ -1,4 +1,5 @@
 import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
@@ -21,7 +22,7 @@ const WorkoutTargetsRouter = ({ workoutTargets }) =>
         <WorkoutTarget
           {...props}
           defaultValue={workoutTargets.find(
-            (value, key) => props.match.params.id === key
+            (value, key) => props.match.params.id === key,
           )}
         />}
     />
@@ -32,11 +33,15 @@ const WorkoutTargetsRouter = ({ workoutTargets }) =>
       component={withConfirmDeleteModal(
         WorkoutTargetMain,
         `Are you sure you want to delete this workout target?`,
-        'workoutTarget'
+        'workoutTarget',
       )}
     />
   </div>;
 
+WorkoutTargetsRouter.propTypes = {
+  workoutTargets: ImmutablePropTypes.map,
+};
+
 export default connect(state => ({
-  workoutTargets: state.getIn(['userDetails', 'workoutTargets'])
+  workoutTargets: state.getIn(['userDetails', 'workoutTargets']),
 }))(WorkoutTargetsRouter);

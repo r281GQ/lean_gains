@@ -2,12 +2,6 @@ import { fromJS } from 'immutable';
 
 import * as auth from './../actions/auth_actions';
 
-const INITIAL_STATE_MOCK = fromJS({
-  authenticated: true,
-  isLoading: false,
-  token: null,
-});
-
 const INITIAL_STATE = fromJS({
   authenticated: false,
   isLoading: false,

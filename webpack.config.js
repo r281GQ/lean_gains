@@ -3,6 +3,10 @@ const extract = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
+const ENVIRONMENT = process.env.NODE_ENV;
+const DEV =
+  ENVIRONMENT === 'development' ? require('./config/config.json') : null;
+
 const vendor = [
   'axios',
   'immutable',
@@ -25,13 +29,12 @@ const vendor = [
   'redux-logger',
   'redux-thunk',
   'reselect',
-  'styled-components',
 ];
 
 const config = {
   entry: {
-    bundle: './src/index.jsx',
     vendor,
+    bundle: './src/index.jsx',
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -54,8 +57,8 @@ const config = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: ['react-hot-loader', 'babel-loader'],
-        // loaders: ['react-hot-loader', 'babel-loader', 'eslint-loader']
+        // loaders: ['react-hot-loader', 'babel-loader'],
+        loaders: ['react-hot-loader', 'babel-loader', 'eslint-loader'],
       },
       {
         use: extract.extract({
@@ -69,6 +72,25 @@ const config = {
     new extract('style.css'),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        REACT_APP_NUTRITIONIX_APP_KEY: JSON.stringify(
+          ENVIRONMENT === 'production'
+            ? process.env.NUTRITIONIX_APP_KEY
+            : DEV.dev.NUTRITIONIX.APP_KEY,
+        ),
+        REACT_APP_NUTRITIONIX_REF_KEY: JSON.stringify(
+          ENVIRONMENT === 'production'
+            ? process.env.NUTRITIONIX_REF_KEY
+            : DEV.dev.NUTRITIONIX.REF_KEY,
+        ),
+        REACT_APP_NUTRITIONIX_APP_ID: JSON.stringify(
+          ENVIRONMENT === 'production'
+            ? process.env.NUTRITIONIX_APP_ID
+            : DEV.dev.NUTRITIONIX.APP_ID,
+        ),
+      },
     }),
     new webpack.optimize.CommonsChunkPlugin({ names: ['vendor'] }),
   ],

@@ -2,6 +2,12 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
+
+
+
+
 import DailyLogsMainContainer from './daily_logs_main';
 import DailyLogFormContainer from './daily_log_form';
 import withConfirmDeleteModal from './../enhancers/confirm_delete_modal';
@@ -42,6 +48,10 @@ const DailyLogsRouter = ({ dailyLogs }) =>
         />}
     />
   </div>;
+
+  DailyLogsRouter.propTypes = {
+    dailyLogs: ImmutablePropTypes.map
+  }
 
 export default connect(state => ({
   dailyLogs: state.getIn(['dailyLogs', 'data'])

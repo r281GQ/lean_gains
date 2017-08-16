@@ -1,22 +1,16 @@
 import axios from 'axios';
 import * as _ from 'lodash';
 import { fromJS } from 'immutable';
-// import config from './../../config/config.json';
-
-
-// const {
-//   dev: { nutritionix: { API_ENDPOINT, REF_KEY, APP_KEY, APP_ID } }
-// } = config;
 
 const API_ENDPOINT = 'https://trackapi.nutritionix.com/v2/natural/nutrients';
-const REF_KEY = 0;
-const APP_KEY = 'a9ff02753543e452faaaa3bb2936e49e';
-const APP_ID = '8c0712d2';
+const REF_KEY = process.env.REACT_APP_NUTRITIONIX_REF_KEY;
+const APP_KEY = process.env.REACT_APP_NUTRITIONIX_APP_KEY;
+const APP_ID = process.env.REACT_APP_NUTRITIONIX_APP_ID;
 
 const prepareAPI = query =>
   axios({
     url: API_ENDPOINT,
-    method: 'POST', 
+    method: 'POST',
     data: {
       query
     },

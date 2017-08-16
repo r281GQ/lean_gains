@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 import { reduxForm } from 'redux-form/immutable';
-import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
+import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import NutritionSearchBar from './../../components/calorie_tracker/nutrition_search_bar';
-import CenteredSubmitButton from './../../components/centered_submit_button';
 import CalorieTrackerSummary from './../../components/calorie_tracker/calorie_tracker_summary';
 import FoodsFieldArray from './../../components/calorie_tracker/foods_field_array';
 import sumMacros from './../../store/selectors/sum_macros';
 import {
   search,
-  updateCalorieLog
+  updateCalorieLog,
 } from './../../store/actionCreators/calorie_action_creators';
 
 //TODO favourite foods like shortcut or tag, recentsearches and recipes
@@ -44,22 +44,21 @@ class CalorieTrackerContainer extends PureComponent {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    search: query => dispatch(search(query)),
-    updateCalorieLog: calorieLog => dispatch(updateCalorieLog(calorieLog))
-  };
+CalorieTrackerContainer.propTypes = {
+  search: PropTypes.func.isRequired,
+  updateCalorieLog: PropTypes.func.isRequired,
+  sum: ImmutablePropTypes.map,
 };
 
 const mapStateToProps = state => ({
-  sum: sumMacros(state)
+  sum: sumMacros(state),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps, { search, updateCalorieLog })(
   reduxForm({
     form: 'calorie-track',
-    onSubmit: (formProps, dispatch, props) =>
+    onSubmit: (formProps, dispatch) =>
       dispatch(updateCalorieLog(formProps.get('foods').toJS())),
-    shouldValidate: () => true
-  })(CalorieTrackerContainer)
+    shouldValidate: () => true,
+  })(CalorieTrackerContainer),
 );

@@ -1,4 +1,5 @@
 import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { Map } from 'immutable';
@@ -9,7 +10,7 @@ import isTrainingDay from './../../store/selectors/exercises';
 
 import withConfirmDeleteModal from './../enhancers/confirm_delete_modal';
 
-const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
+const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
   <div>
     <Route
       exact
@@ -17,7 +18,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
       component={withConfirmDeleteModal(
         WorkoutLogsMainContainer,
         `Are you sure you want to delete this workout log?`,
-        'workoutLog'
+        'workoutLog',
       )}
     />
 
@@ -35,13 +36,13 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
       render={props => {
         const defaultValue = workoutLogs
           .find((value, key) => props.match.params.id === key)
-          .get('exercises');
-
+          // .get('exercises');
+;
         return (
           <WorkoutLogFormContainer
             {...props}
             defaultValue={defaultValue}
-            type={`edit`}
+
           />
         );
       }}
@@ -56,12 +57,12 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
             map
               .set(
                 'name',
-                value !== 'You do not have any exercise for today' ? value : ''
+                value !== 'You do not have any exercise for today' ? value : '',
               )
               .set('note', '')
               .set('marker', false)
-              .set('sets', Map())
-          )
+              .set('sets', Map()),
+          ),
         );
 
         return (
@@ -75,7 +76,12 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs, dispatch }) =>
     />
   </div>;
 
+WorkoutLogsRouter.propTypes = {
+  exercises: ImmutablePropTypes.list,
+  workoutLogs: ImmutablePropTypes.map,
+};
+
 export default connect(state => ({
   workoutLogs: state.getIn(['workoutLogs', 'data']),
-  exercises: isTrainingDay('main')(state)
+  exercises: isTrainingDay('main')(state),
 }))(WorkoutLogsRouter);

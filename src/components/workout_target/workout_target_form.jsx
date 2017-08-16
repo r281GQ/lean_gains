@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatButton, Paper } from 'material-ui';
+import PropTypes from 'prop-types';
 
 import FixedTraining from './fixed_training';
 import CycledTraining from './cycled_training';
@@ -12,7 +13,7 @@ const WorkoutTargetForm = ({
   submitHandler,
   formatDate,
   validateWorkoutName,
-  isCycledTraining
+  isCycledTraining,
 }) =>
   <div className="workout-target-container">
     <Paper className="workout-target-paper">
@@ -32,5 +33,12 @@ const WorkoutTargetForm = ({
       </form>
     </Paper>
   </div>;
+
+WorkoutTargetForm.propTypes = {
+  submitHandler: PropTypes.func.isRequired,
+  formatDate: PropTypes.func.isRequired,
+  validateWorkoutName: PropTypes.func.isRequired,
+isCycledTraining: PropTypes.oneOf(['fix' , 'cycle'])
+};
 
 export default WorkoutTargetForm;

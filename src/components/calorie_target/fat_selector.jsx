@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form/immutable';
-import { SelectField, Slider } from 'redux-form-material-ui';
-import { MenuItem, FlatButton } from 'material-ui';
 
 import CurrentSlider from './../current_slider';
 
@@ -11,22 +9,22 @@ const FatSelector = ({
   maxRestFatGrams,
   maxRestFatPercentage,
   maxTrainingFatGrams,
-  maxTrainingFatPercentage
-}) => {
-  return fatMethod === 'grams'
+  maxTrainingFatPercentage,
+}) =>
+  fatMethod === 'grams'
     ? <div>
         <Field
           name="restFatGrams"
           component={CurrentSlider}
           type="number"
-          format={(value, name) => (value === '' ? 0 : value)}
+          format={value => (value === '' ? 0 : value)}
           min={0}
           max={maxRestFatGrams}
           step={1}
         />
 
         <Field
-          format={(value, name) => (value === '' ? 0 : value)}
+          format={value => (value === '' ? 0 : value)}
           name="trainingFatGrams"
           component={CurrentSlider}
           type="number"
@@ -38,7 +36,7 @@ const FatSelector = ({
     : <div>
         <Field
           name="restFatPercentage"
-          format={(value, name) => (value === '' ? 0 : value)}
+          format={value => (value === '' ? 0 : value)}
           component={CurrentSlider}
           type="number"
           min={0}
@@ -47,7 +45,7 @@ const FatSelector = ({
         />
 
         <Field
-          format={(value, name) => (value === '' ? 0 : value)}
+          format={value => (value === '' ? 0 : value)}
           name="trainingFatPercentage"
           component={CurrentSlider}
           type="number"
@@ -56,14 +54,13 @@ const FatSelector = ({
           step={0.1}
         />
       </div>;
-};
 
 FatSelector.propTypes = {
   fatMethod: PropTypes.string,
   maxRestFatGrams: PropTypes.number,
   maxRestFatPercentage: PropTypes.number,
   maxTrainingFatGrams: PropTypes.number,
-  maxTrainingFatPercentage: PropTypes.number
+  maxTrainingFatPercentage: PropTypes.number,
 };
 
 export default FatSelector;

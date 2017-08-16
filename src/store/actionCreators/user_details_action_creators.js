@@ -39,7 +39,7 @@ export const updateWorkoutTarget = workoutLog => dispatch => {
 export const deleteWorkoutTarget = _id => dispatch =>
   request
     .delete(`/api/workouttargets/${_id}`)
-    .then(({ data }) =>
+    .then(() =>
       dispatch({ type: userDetails.DELETE_WORKOUT_TARGET, payload: _id })
     )
     .catch(error => console.log(error));

@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import { fromJS } from 'immutable';
 import { formValueSelector } from 'redux-form/immutable';
-import * as _ from 'lodash';
 
 import * as calorieCalculators from './calorie_target/calorie_calculators';
 import ageSelector from './age';
@@ -139,19 +138,7 @@ const values = (
     'percentage'
   );
 
-  console.log(
-    latestMeasurements.get('height'),
-    latestMeasurements.get('weight'),
-    sex,
-    latestMeasurements.get('neck'),
-    latestMeasurements.get('belly'),
-    latestMeasurements.get('waist'),
-    latestMeasurements.get('hip')
-
-
-  );
-
-  const f = {
+  return fromJS({
     bodyFat: calorieCalculators.calculateBodyFat(
       latestMeasurements.get('height'),
       latestMeasurements.get('weight'),
@@ -184,11 +171,7 @@ const values = (
         protein: finalProtein
       }
     }
-  }
-
-  console.log(f)
-
-  return fromJS(f);
+  });
 };
 
 export default createSelector(age, sex, latestMeasurements, formValues, values);

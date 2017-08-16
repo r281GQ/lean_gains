@@ -1,19 +1,14 @@
 import React from 'react';
 import { Field, FieldArray } from 'redux-form/immutable';
-import {
-  TextField,
-  SelectField,
-  Checkbox,
-  DatePicker
-} from 'redux-form-material-ui';
-import { MenuItem, FlatButton, Paper } from 'material-ui';
+import { TextField } from 'redux-form-material-ui';
+import { FlatButton, Paper } from 'material-ui';
 
 const Exercises = () =>
   <div>
     <Paper className="workout-target-paper">
       <FieldArray
         name="exercises"
-        component={({ fields: { map, push, remove, insert, length } }) => {
+        component={({ fields: { map, remove, insert, length } }) => {
           return (
             <div>
               <FlatButton
@@ -37,7 +32,7 @@ const Exercises = () =>
                     onTouchTap={() => remove(index)}
                     label="Remove exercise"
                   />
-                </div>
+                </div>,
               )}
             </div>
           );

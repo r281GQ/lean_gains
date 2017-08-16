@@ -25,7 +25,7 @@ const DateSelector = ({
               shouldDisableDate={shouldDisableDate}
               maxDate={maxDate}
               minDate={minDate}
-              formatDate={formatDate}
+              format={formatDate}
             />
           </div>
           <div className="clear" />

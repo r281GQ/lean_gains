@@ -11,7 +11,7 @@ const WeightField = ({ item }) =>
     placeholder="weight"
     component={CurrentSlider}
     defaultValue={1}
-    format={(value, name) => (value === ''  ? 0 : Number.parseFloat(value))}
+    format={value => (value === ''  ? 0 : Number.parseFloat(value))}
     min={0}
     step={0.5}
     max={300}

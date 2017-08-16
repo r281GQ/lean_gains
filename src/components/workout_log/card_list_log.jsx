@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   List,
   ListItem,
-  MenuItem,
   Card,
   CardHeader,
   CardText
@@ -45,7 +44,7 @@ const CardListLog = ({
   </List>;
 
 CardListLog.propTypes = {
-  workoutLogs: PropTypes.objectOf(PropTypes.object),
+  workoutLogs: PropTypes.object,
   editLink: PropTypes.string.isRequired,
   onModalStateChange: PropTypes.func.isRequired,
   setSelectedItem: PropTypes.func.isRequired

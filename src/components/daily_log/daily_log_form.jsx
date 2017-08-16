@@ -36,7 +36,8 @@ DailyLogForm.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   label: PropTypes.string,
   shouldDisableDate: PropTypes.func.isRequired,
-  renderDate: PropTypes.bool
+  renderDate: PropTypes.bool,
+  disableButton: PropTypes.bool
 };
 
 export default DailyLogForm;

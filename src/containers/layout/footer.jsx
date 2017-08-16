@@ -11,7 +11,6 @@ const FooterContainer = () =>
       <IconButton
         target="_blank"
         href="https://endrevegh.wordpress.com/"
-        tooltip="top-center"
         tooltipPosition="top-center"
         tooltip="WordPress"
       >
@@ -20,7 +19,6 @@ const FooterContainer = () =>
       <IconButton
         target="_blank"
         href="https://github.com/r281GQ/lean_gains"
-        tooltip="top-center"
         tooltipPosition="top-center"
         tooltip="GitHub"
       >

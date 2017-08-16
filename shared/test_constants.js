@@ -2,7 +2,7 @@ const moment = require('moment');
 
 const dailyLogDates = [
   moment('04-04-2017', 'DD-MM-YYYY').valueOf(),
-  moment('03-05-2017', 'DD-MM-YYYY').valueOf()
+  moment('03-05-2017', 'DD-MM-YYYY').valueOf(),
 ];
 
 const dailyLogs = [
@@ -12,7 +12,7 @@ const dailyLogs = [
     macros: {
       protein: 110,
       carbohydrate: 90,
-      fat: 60
+      fat: 60,
     },
     measurements: {
       neck: undefined,
@@ -26,12 +26,12 @@ const dailyLogs = [
       hips: 45,
       waist: undefined,
       rightThigh: undefined,
-      leftThigh: undefined
+      leftThigh: undefined,
     },
     sleepIssues: 4,
     stressIssues: 5,
     hungerIssues: 2,
-    fatigueLethargy: 1
+    fatigueLethargy: 1,
   },
   {
     _id: '1_daily_log',
@@ -39,7 +39,7 @@ const dailyLogs = [
     macros: {
       protein: 103,
       carbohydrate: 30,
-      fat: 90
+      fat: 90,
     },
     measurements: {
       neck: undefined,
@@ -53,13 +53,13 @@ const dailyLogs = [
       hips: undefined,
       waist: undefined,
       rightThigh: undefined,
-      leftThigh: undefined
+      leftThigh: undefined,
     },
     sleepIssues: 1,
     stressIssues: 2,
     hungerIssues: 3,
-    fatigueLethargy: 4
-  }
+    fatigueLethargy: 4,
+  },
 ];
 
 const auth = {
@@ -67,7 +67,7 @@ const auth = {
   email: 'endre@mail.com',
   _id: 'randomId',
   token: 'randomToken',
-  lastLogin: moment('05-07-2017', 'DD-MM-YYYY').valueOf()
+  lastLogin: moment('05-07-2017', 'DD-MM-YYYY').valueOf(),
 };
 
 const kcalTargets = [
@@ -80,14 +80,14 @@ const kcalTargets = [
       calorie: 1000,
       protein: 100,
       carbohydrate: 30,
-      fat: 80
+      fat: 80,
     },
     training: {
       calorie: 2100,
       protein: 110,
       carbohydrate: 210,
-      fat: 30
-    }
+      fat: 30,
+    },
   },
   {
     _id: '1_kcal_target',
@@ -98,22 +98,22 @@ const kcalTargets = [
       calorie: 1100,
       protein: 100,
       carbohydrate: 30,
-      fat: 80
+      fat: 80,
     },
     training: {
       calorie: 2230,
       protein: 110,
       carbohydrate: 210,
-      fat: 30
-    }
-  }
+      fat: 30,
+    },
+  },
 ];
 
 const userDetails = {
   dob: moment('22-05-1988', 'DD-MM-YYYY').valueOf(),
   sex: 'male',
   picture: `https://somerandomurl/pictureid`,
-  userName: 'kfbr392'
+  userName: 'kfbr392',
 };
 
 const latestMeasurements = {
@@ -129,7 +129,7 @@ const latestMeasurements = {
   hip: 92,
   waist: 60,
   rightThigh: 50,
-  leftThigh: 50
+  leftThigh: 50,
 };
 
 const workoutTargets = [
@@ -138,7 +138,7 @@ const workoutTargets = [
     type: 'main',
     name: 'back',
     onDays: [1],
-    exercises: ['deadlift', 'pullup']
+    exercises: ['deadlift', 'pullup'],
   },
   {
     _id: '1_workout_target',
@@ -146,14 +146,14 @@ const workoutTargets = [
     name: 'chest',
     startDayofTraining: moment('05-05-2017', 'DD-MM-YYYY').valueOf(),
     onEveryxDay: 1,
-    exercises: ['bench', 'pushup']
-  }
+    exercises: ['bench', 'pushup'],
+  },
 ];
 
 const workoutLogDates = [
   moment('02-07-2017', 'DD-MM-YYYY').valueOf(),
   moment('01-01-2017', 'DD-MM-YYYY').valueOf(),
-  moment('01-07-2017', 'DD-MM-YYYY').valueOf()
+  moment('01-07-2017', 'DD-MM-YYYY').valueOf(),
 ];
 
 const workoutLogs = [
@@ -168,16 +168,16 @@ const workoutLogs = [
           {
             _id: '0_workout_log_0_exercise_0_set',
             reps: 5,
-            weight: 95.5
+            weight: 95.5,
           },
           {
             _id: '0_workout_log_0_exercise_1_set',
             reps: 5,
-            weight: 90.5
-          }
-        ]
-      }
-    ]
+            weight: 90.5,
+          },
+        ],
+      },
+    ],
   },
   {
     _id: '1_0_workout_log',
@@ -190,11 +190,11 @@ const workoutLogs = [
           {
             _id: '1_workout_log_0_exercise_0_set',
             reps: 5,
-            weight: 60.5
-          }
-        ]
-      }
-    ]
+            weight: 60.5,
+          },
+        ],
+      },
+    ],
   },
   {
     _id: '2_workout_log',
@@ -207,17 +207,17 @@ const workoutLogs = [
           {
             _id: '2_workout_log_0_exercise_0_set',
             reps: 5,
-            weight: 50
+            weight: 50,
           },
           {
             _id: '2_workout_log_0_exercise_1_set',
             reps: 5,
-            weight: 45.5
-          }
-        ]
-      }
-    ]
-  }
+            weight: 45.5,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 module.exports = {
@@ -229,5 +229,5 @@ module.exports = {
   workoutTargets,
   latestMeasurements,
   workoutLogDates,
-  workoutLogs
+  workoutLogs,
 };

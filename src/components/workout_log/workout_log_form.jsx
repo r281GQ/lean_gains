@@ -1,10 +1,20 @@
 import React from 'react';
-import ExerciseFieldArray from './exercies_field_array';
-import { Field, FieldArray } from 'redux-form/immutable';
+import { FieldArray } from 'redux-form/immutable';
 import { RaisedButton, Paper } from 'material-ui';
-import { DatePicker } from 'redux-form-material-ui';
 
+import ExerciseFieldArray from './exercies_field_array';
 import DateSelector from './date_selector';
+
+
+import PropTypes from 'prop-types';
+
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
+
+
+
+
+
 
 const WorkoutLogForm = ({
   disabled,
@@ -16,8 +26,8 @@ const WorkoutLogForm = ({
   maxDate,
   minDate,
   formatDate,
-  shouldDisableDate,
-  weightLabel
+  shouldDisableDate
+
 }) =>
   <div className="workout-log-container">
     <Paper className="workout-log-paper">
@@ -46,5 +56,18 @@ const WorkoutLogForm = ({
       </form>
     </Paper>
   </div>;
+
+  WorkoutLogForm.propTypes = {
+    disabled: PropTypes.bool,
+    passedMarkerList:ImmutablePropTypes.list,
+    normalizeMarker:PropTypes.func,
+    label:PropTypes.string,
+    submitHandler:PropTypes.func,
+    renderDate:PropTypes.bool,
+    maxDate:PropTypes.instanceOf(Date),
+    minDate:PropTypes.instanceOf(Date),
+    formatDate:PropTypes.func,
+    shouldDisableDate:PropTypes.func
+  }
 
 export default WorkoutLogForm;

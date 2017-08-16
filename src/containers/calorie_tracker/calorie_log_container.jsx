@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { submit } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import { initializeCalorieLog } from './../../store/actionCreators/calorie_action_creators';
@@ -7,8 +9,12 @@ import {
   closeConsentModal,
   addCalorieTrackConsent
 } from './../../store/actionCreators/app_action_creators';
-import { LinearProgress, DatePicker, Dialog, FlatButton } from 'material-ui';
-import * as _ from 'lodash';
+import {  DatePicker, Dialog, FlatButton } from 'material-ui';
+
+
+
+
+
 
 const actions = (
   closeConsentModal,
@@ -17,14 +23,14 @@ const actions = (
   da,
   addConsent
 ) => [
-  <FlatButton
+  <FlatButton key={1}
     label="Cancel"
     onTouchTap={() => {
       closeConsentModal();
     }}
   />,
 
-  <FlatButton
+  <FlatButton key={2}
     label="Discard"
     onTouchTap={() => {
       addConsent();
@@ -32,7 +38,7 @@ const actions = (
       loadNutritionsForDay(da);
     }}
   />,
-  <FlatButton
+  <FlatButton key={3}
     label="Save"
     primary
     onTouchTap={() => {
@@ -41,6 +47,8 @@ const actions = (
     }}
   />
 ];
+
+
 
 //TODO: isFetching to HOC
 class CalorieLogContainer extends PureComponent {
@@ -79,7 +87,16 @@ class CalorieLogContainer extends PureComponent {
 
   }
 }
-
+CalorieLogContainer.propTypes = {
+  initializeCalorieLog: PropTypes.func,
+  loadNutritionsForDay: PropTypes.func,
+  selectedDay: PropTypes.instanceOf(Date),
+  isConsentModalOpen:PropTypes.bool,
+  closeConsentModal: PropTypes.func,
+  saveForm: PropTypes.func,
+  addConsent: PropTypes.func,
+  da:PropTypes.instanceOf(Date),
+}
 const mapStateToProps = state => {
   return {
     da: state.getIn(['app', 'openConsentModalDate']),

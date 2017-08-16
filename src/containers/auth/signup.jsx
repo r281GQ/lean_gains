@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form/immutable';
 
@@ -8,7 +8,7 @@ import {
   validateEmail,
   validatePasswordAgain,
   required,
-  validateIsEmailUnique as asyncValidate
+  validateIsEmailUnique as asyncValidate,
 } from './../../services/validators';
 
 //TODO: submit validation
@@ -22,12 +22,12 @@ const SignUpContainer = props =>
       props.signUp({
         userName: formProps.get('userName'),
         email: formProps.get('email'),
-        password: formProps.get('password')
+        password: formProps.get('password'),
       });
       props.reset();
     })}
   />;
 
 export default connect(null, { signUp })(
-  reduxForm({ form: 'signup', asyncValidate })(SignUpContainer)
+  reduxForm({ form: 'signup', asyncValidate })(SignUpContainer),
 );

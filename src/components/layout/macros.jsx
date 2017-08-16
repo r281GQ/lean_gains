@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ToolbarGroup, ToolbarTitle, CircularProgress } from 'material-ui';
 
 const Macros = ({ todaysMacros, isFetching }) =>
@@ -10,5 +11,15 @@ const Macros = ({ todaysMacros, isFetching }) =>
           text={`Macros: ${todaysMacros.calorie} P: ${todaysMacros.protein} C: ${todaysMacros.carbohydrate} F: ${todaysMacros.fat}`}
         />}
   </ToolbarGroup>;
+
+Macros.propTypes = {
+  isFetching: PropTypes.bool,
+  todaysMacros: PropTypes.shape({
+    calorie: PropTypes.number,
+    protein: PropTypes.number,
+    carbohydrate: PropTypes.number,
+    fat: PropTypes.number,
+  }),
+};
 
 export default Macros;

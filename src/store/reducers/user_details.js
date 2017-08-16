@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import moment from 'moment';
 import * as _ from 'lodash';
 
 import * as userDetails from './../actions/user_details_actions';

@@ -11,6 +11,12 @@ import * as _ from 'lodash';
 import DeleteButton from './../delete_button';
 import ModifyButton from './../modify_button';
 
+
+import PropTypes from 'prop-types';
+
+
+
+
 const CardList = ({
   editLink,
   collection,
@@ -46,5 +52,10 @@ const CardList = ({
     </List>
   );
 };
-
+CardList.propTypes = {
+  editLink: PropTypes.string,
+  collection: PropTypes.any,
+  onModalStateChange: PropTypes.func,
+  setSelectedItem: PropTypes.func
+}
 export default CardList;

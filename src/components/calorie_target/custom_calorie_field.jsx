@@ -39,7 +39,9 @@ const CustomCalorieField = ({
 
 CustomCalorieField.propTypes = {
   calorieSplit: PropTypes.string,
-  normalize: PropTypes.func.isRequired
+  normalize: PropTypes.func.isRequired,
+  minTraining: PropTypes.number,
+  minRest:PropTypes.number
 }
 
 export default CustomCalorieField;

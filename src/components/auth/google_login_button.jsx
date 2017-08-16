@@ -1,6 +1,5 @@
 import React from 'react';
-import { RaisedButton } from 'material-ui';
-import { FontIcon } from 'material-ui';
+import { RaisedButton, FontIcon } from 'material-ui';
 
 const GoogleLoginButton = () =>
   <RaisedButton

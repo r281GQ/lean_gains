@@ -24,8 +24,8 @@ const WorkoutLogDetails = ({ log }) =>
     )}
   </div>;
 
-WorkoutLogDetails.PropTypes = {
-  log: PropTypes.objectOf(PropTypes.object)
+WorkoutLogDetails.propTypes = {
+  log: PropTypes.object
 };
 
 export default WorkoutLogDetails;

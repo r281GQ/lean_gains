@@ -3,7 +3,7 @@ import { TextField } from 'redux-form-material-ui';
 import { Field } from 'redux-form/immutable';
 import { Paper, FlatButton } from 'material-ui';
 
-const Measurements = props =>
+const Measurements = () =>
   <Paper className="parent-paper">
     <div className="row">
       <FlatButton disabled label="Measurements" />

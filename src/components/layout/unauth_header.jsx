@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   RaisedButton,
   Toolbar,
   ToolbarGroup,
-  ToolbarSeparator
+  ToolbarSeparator,
 } from 'material-ui';
 
 import GoogleLoginButton from './../auth/google_login_button';
@@ -24,5 +25,9 @@ const UnauthanticatedHeader = ({ pathname }) =>
       <GoogleLoginButton />
     </ToolbarGroup>
   </Toolbar>;
+
+UnauthanticatedHeader.propTypes = {
+  pathname: PropTypes.string,
+};
 
 export default UnauthanticatedHeader;

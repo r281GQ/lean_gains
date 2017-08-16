@@ -1,9 +1,11 @@
 import React from 'react';
-import { List, ListItem, RaisedButton, Paper } from 'material-ui';
+import PropTypes from 'prop-types';
+import { List, RaisedButton, Paper } from 'material-ui';
 import { fromJS } from 'immutable';
 
 import Exercise from './exercise';
 
+//TODO: imm or not imm
 const ExerciseFieldArray = props =>
   <div>
     <RaisedButton
@@ -21,9 +23,13 @@ const ExerciseFieldArray = props =>
             item={item}
             passedMarker={props.passedMarkerList.get(index)}
           />
-        </Paper>
+        </Paper>,
       )}
     </List>
   </div>;
+
+ExerciseFieldArray.propTypes = {
+  passedMarkerList: PropTypes.object,
+};
 
 export default ExerciseFieldArray;

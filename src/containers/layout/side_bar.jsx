@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Drawer, MenuItem, Divider, FontIcon } from 'material-ui';
@@ -6,15 +6,10 @@ import PropTypes from 'prop-types';
 import { closeSideBar } from './../../store/actionCreators/app_action_creators';
 import { logOut } from './../../store/actionCreators/auth_action_creators';
 
-import styled from 'styled-components';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 
-const LinkWithoutUnderLine = styled(Link)`
-  text-decoration: none;
-`;
-
 //TODO: implement help sidebar
-const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
+const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut }) => {
   return (
     <Drawer
       open={isSideBarOpen}
@@ -27,7 +22,8 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
         rightIcon={<ArrowBack />}
       />
       <Divider />
-      <LinkWithoutUnderLine
+      <Link
+        className="link-no-underline"
         to="/app/kcaltracker"
         onClick={() => closeSideBar()}
       >
@@ -35,8 +31,9 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
           primaryText="Track calories"
           rightIcon={<FontIcon className="fa fa-pencil-square-o" />}
         />
-      </LinkWithoutUnderLine>
-      <LinkWithoutUnderLine
+      </Link>
+      <Link
+        className="link-no-underline"
         to="/app/workoutlogs"
         onClick={() => closeSideBar()}
       >
@@ -44,21 +41,30 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
           primaryText="Workout logs"
           rightIcon={<FontIcon className="fa fa-pencil" />}
         />
-      </LinkWithoutUnderLine>
-      <LinkWithoutUnderLine to="/app/dailylogs" onClick={() => closeSideBar()}>
+      </Link>
+      <Link
+        className="link-no-underline"
+        to="/app/dailylogs"
+        onClick={() => closeSideBar()}
+      >
         <MenuItem
           primaryText="Daily logs"
           rightIcon={<FontIcon className="fa fa-pencil-square" />}
         />
-      </LinkWithoutUnderLine>
-      <LinkWithoutUnderLine to="/app/kcaltarget" onClick={() => closeSideBar()}>
+      </Link>
+      <Link
+        className="link-no-underline"
+        to="/app/kcaltarget"
+        onClick={() => closeSideBar()}
+      >
         <MenuItem
           primaryText="Set calorie target"
           rightIcon={<FontIcon className="fa fa-dot-circle-o" />}
         />
-      </LinkWithoutUnderLine>
+      </Link>
 
-      <LinkWithoutUnderLine
+      <Link
+        className="link-no-underline"
         to="/app/workouttargets"
         onClick={() => closeSideBar()}
       >
@@ -66,9 +72,10 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
           primaryText="Set workout target"
           rightIcon={<FontIcon className="fa fa-bullseye" />}
         />
-      </LinkWithoutUnderLine>
+      </Link>
 
-      <LinkWithoutUnderLine
+      <Link
+        className="link-no-underline"
         to="/app/userdetails"
         onClick={() => closeSideBar()}
       >
@@ -76,14 +83,18 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
           primaryText="Change user details"
           rightIcon={<FontIcon className="fa fa-user" />}
         />
-      </LinkWithoutUnderLine>
+      </Link>
       <Divider />
-      <LinkWithoutUnderLine to="/app/about" onClick={() => closeSideBar()}>
+      <Link
+        className="link-no-underline"
+        to="/app/about"
+        onClick={() => closeSideBar()}
+      >
         <MenuItem
           primaryText="About"
           rightIcon={<FontIcon className="fa fa-info" />}
         />
-      </LinkWithoutUnderLine>
+      </Link>
 
       <Divider />
       <MenuItem
@@ -95,10 +106,16 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut, links }) => {
   );
 };
 
+SideBarContainer.propTypes = {
+  isSideBarOpen: PropTypes.bool,
+  closeSideBar: PropTypes.func.isRequired,
+  logOut: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => ({
-  isSideBarOpen: state.getIn(['app', 'isSideBarOpen'])
+  isSideBarOpen: state.getIn(['app', 'isSideBarOpen']),
 });
 
 export default connect(mapStateToProps, { closeSideBar, logOut })(
-  SideBarContainer
+  SideBarContainer,
 );

@@ -11,12 +11,12 @@ export const whoAmI = () => (dispatch, getState) =>
         dispatch(initFetch());
       }
     })
-    .catch(error => dispatch({ type: auth.LOG_OUT }));
+    .catch(() => dispatch({ type: auth.LOG_OUT }));
 
 export const logOut = () => dispatch =>
   request
     .get('/api/auth/logout')
-    .then(response => {
+    .then(() => {
       dispatch({ type: auth.LOG_OUT });
     })
     .catch(error => console.log(error));

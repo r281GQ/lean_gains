@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DropDownMenu, MenuItem } from 'material-ui';
 import * as _ from 'lodash';
 
@@ -22,5 +23,11 @@ const DateSelector = ({
   >
     {renderMonths(months)}
   </DropDownMenu>;
+  DateSelector.propTypes = {
+    selectedMonth: PropTypes.string,
+    fetchDataForSelectedMonth: PropTypes.func.isRequired,
+    setSelectedMonth: PropTypes.func.isRequired,
+    months: PropTypes.arrayOf(PropTypes.string)
+  }
 
 export default DateSelector;
