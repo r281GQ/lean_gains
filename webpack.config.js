@@ -78,17 +78,17 @@ const config = {
         REACT_APP_NUTRITIONIX_APP_KEY: JSON.stringify(
           ENVIRONMENT === 'production'
             ? process.env.NUTRITIONIX_APP_KEY
-            : DEV.dev.NUTRITIONIX.APP_KEY,
+            : DEV.dev.NUTRITIONIX.APP_KEY
         ),
         REACT_APP_NUTRITIONIX_REF_KEY: JSON.stringify(
           ENVIRONMENT === 'production'
             ? process.env.NUTRITIONIX_REF_KEY
-            : DEV.dev.NUTRITIONIX.REF_KEY,
+            : DEV.dev.NUTRITIONIX.REF_KEY
         ),
         REACT_APP_NUTRITIONIX_APP_ID: JSON.stringify(
           ENVIRONMENT === 'production'
             ? process.env.NUTRITIONIX_APP_ID
-            : DEV.dev.NUTRITIONIX.APP_ID,
+            : DEV.dev.NUTRITIONIX.APP_ID
         ),
       },
     }),
