@@ -13,7 +13,7 @@ const UserNamePicker = ({ validator }) =>
   />;
 
 UserNamePicker.propTypes = {
-  validator: PropTypes.func.isRequired,
+  validator: PropTypes.func.isRequired
 };
 
 export default UserNamePicker;

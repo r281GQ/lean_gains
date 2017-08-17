@@ -9,7 +9,7 @@ const SaveIndicator = ({ isLoading }) =>
   </ToolbarGroup>;
 
 SaveIndicator.propTypes = {
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default SaveIndicator;

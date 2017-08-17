@@ -8,7 +8,7 @@ const CalorieTargetLabel = ({ value }) =>
     : <FlatButton disabled label="0" />;
 
 CalorieTargetLabel.propTypes = {
-  value: PropTypes.number,
+  value: PropTypes.number
 };
 
 export default CalorieTargetLabel;

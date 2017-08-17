@@ -15,17 +15,17 @@ const withConfirmDeleteModal = (WrappedComponent, title, type) => {
       case 'workoutTarget':
         return {
           selectedItem: 'selectedWorkoutTarget',
-          deleteItem: deleteWorkoutTarget,
+          deleteItem: deleteWorkoutTarget
         };
       case 'workoutLog':
         return {
           selectedItem: 'selectedWorkoutLog',
-          deleteItem: deleteWorkoutLog,
+          deleteItem: deleteWorkoutLog
         };
       case 'dailyLog':
         return {
           selectedItem: 'selectedDailyLog',
-          deleteItem: deleteDailyLog,
+          deleteItem: deleteDailyLog
         };
     }
   };
@@ -34,7 +34,7 @@ const withConfirmDeleteModal = (WrappedComponent, title, type) => {
     isModalOpen,
     closeModal,
     deleteItem,
-    selectedItem,
+    selectedItem
   }) => {
     return (
       <div>
@@ -52,20 +52,20 @@ const withConfirmDeleteModal = (WrappedComponent, title, type) => {
     isModalOpen: PropTypes.bool,
     closeModal: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
-    selectedItem: PropTypes.string,
+    selectedItem: PropTypes.string
   };
 
   const mapStateToProps = state => {
     return {
       isModalOpen: state.getIn(['app', 'isConfirmDeleteModalOpen']),
-      selectedItem: state.getIn(['app', getItemType(type).selectedItem]),
+      selectedItem: state.getIn(['app', getItemType(type).selectedItem])
     };
   };
 
   const mapDispatchToProps = dispatch => {
     return {
       deleteItem: _id => dispatch(getItemType(type).deleteItem(_id)),
-      closeModal: () => dispatch(closeWorkoutModal()),
+      closeModal: () => dispatch(closeWorkoutModal())
     };
   };
 

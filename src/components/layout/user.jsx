@@ -13,7 +13,7 @@ const User = ({ userName, photo }) =>
 
 User.propTypes = {
   userName: PropTypes.string,
-  photo: PropTypes.string,
+  photo: PropTypes.string
 };
 
 export default User;

@@ -17,7 +17,7 @@ const ConfirmDelete = ({ isOpen, close, deleteActions, title }) =>
           close();
           deleteActions.forEach(fn => fn());
         }}
-      />,
+      />
     ]}
   />;
 
@@ -25,7 +25,7 @@ ConfirmDelete.propTypes = {
   isOpen: PropTypes.bool,
   close: PropTypes.func,
   deleteActions: PropTypes.arrayOf(PropTypes.func),
-  title: PropTypes.string,
+  title: PropTypes.string
 };
 
 export default ConfirmDelete;

@@ -9,7 +9,7 @@ import { Map } from 'immutable';
 
 import {
   updateDailyLog,
-  createDailyLog,
+  createDailyLog
 } from './../../store/actionCreators/daily_log_action_creators';
 import DailyLogForm from './../../components/daily_log/daily_log_form';
 
@@ -24,7 +24,7 @@ class DailyLogFormContainer extends PureComponent {
       this.props.initialize(
         this.props.defaultValue
           .flatten()
-          .update('createdAt', value => moment(value).toDate()),
+          .update('createdAt', value => moment(value).toDate())
       );
     else {
       this.props.initialize(Map().set('createdAt', moment().toDate()));
@@ -44,7 +44,7 @@ class DailyLogFormContainer extends PureComponent {
       handleSubmit,
       updateDailyLog,
       selectedDate,
-      createDailyLog,
+      createDailyLog
     } = this.props;
     return (
       <DailyLogForm
@@ -55,7 +55,10 @@ class DailyLogFormContainer extends PureComponent {
                 _id: match.params.id,
                 createdAt: moment(props.get('createdAt')).valueOf()
               })
-            : createDailyLog({...props.toJS(), createdAt: moment(props.get('createdAt')).valueOf()});
+            : createDailyLog({
+                ...props.toJS(),
+                createdAt: moment(props.get('createdAt')).valueOf()
+              });
         })}
         label={match.params.id ? 'Update' : 'Create'}
         renderDate={match.path ? _.includes(match.path, 'before') : false}
@@ -63,7 +66,7 @@ class DailyLogFormContainer extends PureComponent {
         {...this.props}
         disableButton={
           this.props.datesWithDailyLogs.find(value =>
-            moment(value).isSame(selectedDate, 'day'),
+            moment(value).isSame(selectedDate, 'day')
           ) && !this.props.match.params.id
             ? true
             : false
@@ -78,7 +81,7 @@ DailyLogFormContainer.propTypes = {
   defaultValue: ImmutablePropTypes.map,
   updateDailyLog: PropTypes.func,
   createDailyLog: PropTypes.func,
-  selectedDate: PropTypes.instanceOf(Date),
+  selectedDate: PropTypes.instanceOf(Date)
 };
 
 const mapStateToProps = state => {
@@ -86,10 +89,10 @@ const mapStateToProps = state => {
     datesWithDailyLogs: state.getIn(['dailyLogs', 'dates']),
     selectedDate: getFormValues('daily-log')(state)
       ? moment(getFormValues('daily-log')(state).get('createdAt')).toDate()
-      : moment().toDate(),
+      : moment().toDate()
   };
 };
 
 export default connect(mapStateToProps, { createDailyLog, updateDailyLog })(
-  reduxForm({ form: 'daily-log' })(DailyLogFormContainer),
+  reduxForm({ form: 'daily-log' })(DailyLogFormContainer)
 );

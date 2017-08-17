@@ -35,7 +35,7 @@ const LoginComponent = ({ handleSubmit, validateEmail }) =>
 
 LoginComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  validateEmail: PropTypes.func.isRequired,
+  validateEmail: PropTypes.func.isRequired
 };
 
 export default LoginComponent;

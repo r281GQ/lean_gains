@@ -5,7 +5,7 @@ import { Snackbar } from 'material-ui';
 
 import {
   openMessageBar,
-  closeMessageBar,
+  closeMessageBar
 } from './../../store/actionCreators/app_action_creators';
 
 const withMessageBar = WrappedComponent => {
@@ -23,18 +23,18 @@ const withMessageBar = WrappedComponent => {
   MessageBar.propTypes = {
     isMessageBarOpen: PropTypes.bool,
     closeMessageBar: PropTypes.func.isRequired,
-    message: PropTypes.string,
+    message: PropTypes.string
   };
 
   const mapStateToProps = state => {
     return {
       isMessageBarOpen: state.getIn(['app', 'isMessageBarOpen']),
-      message: state.getIn(['app', 'message']),
+      message: state.getIn(['app', 'message'])
     };
   };
 
   return connect(mapStateToProps, { closeMessageBar, openMessageBar })(
-    MessageBar,
+    MessageBar
   );
 };
 

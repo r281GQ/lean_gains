@@ -19,12 +19,12 @@ const withAuthentication = WrappedComponent => {
 
   AuthenticationContainer.propTypes = {
     isAuthenticated: PropTypes.bool,
-    whoAmI: PropTypes.func.isRequired,
+    whoAmI: PropTypes.func.isRequired
   };
 
   const mapStateToProps = state => {
     return {
-      isAuthenticated: state.getIn(['auth', 'authenticated']),
+      isAuthenticated: state.getIn(['auth', 'authenticated'])
     };
   };
 

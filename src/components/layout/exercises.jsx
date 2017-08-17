@@ -6,7 +6,7 @@ import {
   ToolbarGroup,
   ToolbarTitle,
   MenuItem,
-  IconMenu,
+  IconMenu
 } from 'material-ui';
 import ContentFilter from 'material-ui/svg-icons/navigation/arrow-downward';
 
@@ -26,13 +26,13 @@ const Exercises = ({ exercises }) =>
           key={exercises.indexOf(exec)}
           value={exercises.indexOf(exec)}
           primaryText={exec.toUpperCase()}
-        />,
+        />
       )}
     </IconMenu>
   </ToolbarGroup>;
 
 Exercises.propTypes = {
-  exercises: PropTypes.arrayOf(PropTypes.string),
+  exercises: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default Exercises;

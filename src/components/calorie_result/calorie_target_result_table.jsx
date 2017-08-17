@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
+  TableRowColumn
 } from 'material-ui';
 
 import CalorieTargetLabel from './calore_target_label';

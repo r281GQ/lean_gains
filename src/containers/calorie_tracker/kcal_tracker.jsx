@@ -11,7 +11,7 @@ import FoodsFieldArray from './../../components/calorie_tracker/foods_field_arra
 import sumMacros from './../../store/selectors/sum_macros';
 import {
   search,
-  updateCalorieLog,
+  updateCalorieLog
 } from './../../store/actionCreators/calorie_action_creators';
 
 //TODO favourite foods like shortcut or tag, recentsearches and recipes
@@ -47,11 +47,11 @@ class CalorieTrackerContainer extends PureComponent {
 CalorieTrackerContainer.propTypes = {
   search: PropTypes.func.isRequired,
   updateCalorieLog: PropTypes.func.isRequired,
-  sum: ImmutablePropTypes.map,
+  sum: ImmutablePropTypes.map
 };
 
 const mapStateToProps = state => ({
-  sum: sumMacros(state),
+  sum: sumMacros(state)
 });
 
 export default connect(mapStateToProps, { search, updateCalorieLog })(
@@ -59,6 +59,6 @@ export default connect(mapStateToProps, { search, updateCalorieLog })(
     form: 'calorie-track',
     onSubmit: (formProps, dispatch) =>
       dispatch(updateCalorieLog(formProps.get('foods').toJS())),
-    shouldValidate: () => true,
-  })(CalorieTrackerContainer),
+    shouldValidate: () => true
+  })(CalorieTrackerContainer)
 );

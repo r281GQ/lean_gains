@@ -27,8 +27,8 @@ UserDetailsForm.propTypes = {
   validators: PropTypes.shape({
     userName: PropTypes.func.isRequired,
     minDate: PropTypes.object.isRequired,
-    maxDate: PropTypes.object.isRequired,
-  }),
+    maxDate: PropTypes.object.isRequired
+  })
 };
 
 export default UserDetailsForm;

@@ -10,10 +10,10 @@ const DeleteButton = ({ setSelectedItem, onModalStateChange }) =>
     }}
     label="Delete"
   />;
-  
+
 DeleteButton.propTypes = {
   setSelectedItem: PropTypes.func.isRequired,
-  onModalStateChange: PropTypes.func.isRequired,
+  onModalStateChange: PropTypes.func.isRequired
 };
 
 export default DeleteButton;

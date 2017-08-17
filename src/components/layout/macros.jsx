@@ -18,8 +18,8 @@ Macros.propTypes = {
     calorie: PropTypes.number,
     protein: PropTypes.number,
     carbohydrate: PropTypes.number,
-    fat: PropTypes.number,
-  }),
+    fat: PropTypes.number
+  })
 };
 
 export default Macros;

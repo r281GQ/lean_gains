@@ -17,7 +17,7 @@ const Name = ({ validateWorkoutName }) =>
   </div>;
 
 Name.propTypes = {
-  validateWorkoutName: PropTypes.func.isRequired,
+  validateWorkoutName: PropTypes.func.isRequired
 };
 
 export default Name;

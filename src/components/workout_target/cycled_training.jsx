@@ -25,8 +25,8 @@ const CycledTraining = ({ isCycledTraining, formatDate }) =>
     : null;
 
 CycledTraining.propTypes = {
-isCycledTraining: PropTypes.oneOf(['fix' , 'cycle']),
-  formatDate: PropTypes.func.isRequired,
+  isCycledTraining: PropTypes.oneOf(['fix', 'cycle']),
+  formatDate: PropTypes.func.isRequired
 };
 
 export default CycledTraining;

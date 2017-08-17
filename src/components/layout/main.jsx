@@ -11,7 +11,7 @@ const Main = ({ openSideBar }) =>
   </ToolbarGroup>;
 
 Main.propTypes = {
-  openSideBar: PropTypes.func.isRequired,
+  openSideBar: PropTypes.func.isRequired
 };
 
 export default Main;

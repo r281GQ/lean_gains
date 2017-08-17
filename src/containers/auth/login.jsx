@@ -21,15 +21,15 @@ const LoginContainer = props =>
       />;
 
 LoginContainer.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.getIn(['auth', 'authenticated']),
+    isAuthenticated: state.getIn(['auth', 'authenticated'])
   };
 };
 
 export default connect(mapStateToProps, { logIn })(
-  reduxForm({ form: 'login' })(LoginContainer),
+  reduxForm({ form: 'login' })(LoginContainer)
 );

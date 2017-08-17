@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { submit } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import { initializeCalorieLog } from './../../store/actionCreators/calorie_action_creators';
@@ -9,12 +8,7 @@ import {
   closeConsentModal,
   addCalorieTrackConsent
 } from './../../store/actionCreators/app_action_creators';
-import {  DatePicker, Dialog, FlatButton } from 'material-ui';
-
-
-
-
-
+import { DatePicker, Dialog, FlatButton } from 'material-ui';
 
 const actions = (
   closeConsentModal,
@@ -23,14 +17,16 @@ const actions = (
   da,
   addConsent
 ) => [
-  <FlatButton key={1}
+  <FlatButton
+    key={1}
     label="Cancel"
     onTouchTap={() => {
       closeConsentModal();
     }}
   />,
 
-  <FlatButton key={2}
+  <FlatButton
+    key={2}
     label="Discard"
     onTouchTap={() => {
       addConsent();
@@ -38,7 +34,8 @@ const actions = (
       loadNutritionsForDay(da);
     }}
   />,
-  <FlatButton key={3}
+  <FlatButton
+    key={3}
     label="Save"
     primary
     onTouchTap={() => {
@@ -47,8 +44,6 @@ const actions = (
     }}
   />
 ];
-
-
 
 //TODO: isFetching to HOC
 class CalorieLogContainer extends PureComponent {
@@ -65,38 +60,39 @@ class CalorieLogContainer extends PureComponent {
       saveForm,
       addConsent
     } = this.props;
-    return(<div>
-      <DatePicker
-        name="f"
-        onChange={(event, value) => loadNutritionsForDay(value)}
-        value={selectedDay}
-      />
-      <FlatButton label="update day" onTouchTap={() => saveForm()} />
-      <Dialog
-        open={isConsentModalOpen}
-        title={`you have unsaved chnages in the foods, if you procedd these will be lost`}
-        actions={actions(
-          closeConsentModal,
-          saveForm,
-          loadNutritionsForDay,
-          this.props.da,
-          addConsent
-        )}
-      />
-    </div>);
-
+    return (
+      <div>
+        <DatePicker
+          name="f"
+          onChange={(event, value) => loadNutritionsForDay(value)}
+          value={selectedDay}
+        />
+        <FlatButton label="update day" onTouchTap={() => saveForm()} />
+        <Dialog
+          open={isConsentModalOpen}
+          title={`you have unsaved chnages in the foods, if you procedd these will be lost`}
+          actions={actions(
+            closeConsentModal,
+            saveForm,
+            loadNutritionsForDay,
+            this.props.da,
+            addConsent
+          )}
+        />
+      </div>
+    );
   }
 }
 CalorieLogContainer.propTypes = {
   initializeCalorieLog: PropTypes.func,
   loadNutritionsForDay: PropTypes.func,
   selectedDay: PropTypes.instanceOf(Date),
-  isConsentModalOpen:PropTypes.bool,
+  isConsentModalOpen: PropTypes.bool,
   closeConsentModal: PropTypes.func,
   saveForm: PropTypes.func,
   addConsent: PropTypes.func,
-  da:PropTypes.instanceOf(Date),
-}
+  da: PropTypes.instanceOf(Date)
+};
 const mapStateToProps = state => {
   return {
     da: state.getIn(['app', 'openConsentModalDate']),

@@ -26,14 +26,14 @@ class UserDetailsContainer extends PureComponent {
             updateUserDetails({
               userName: formProps.get('userName'),
               sex: formProps.get('sex'),
-              dob: moment(formProps.get('dob')).valueOf(),
-            }),
+              dob: moment(formProps.get('dob')).valueOf()
+            })
           )}
           normalizeDate={value => moment(value).valueOf()}
           validators={{
             userName: required,
             minDate: moment().subtract(110, 'years').toDate(),
-            maxDate: moment().subtract(5, 'years').toDate(),
+            maxDate: moment().subtract(5, 'years').toDate()
           }}
         />
       </div>
@@ -44,18 +44,18 @@ class UserDetailsContainer extends PureComponent {
 const mapStateToProps = state => ({
   sex: state.getIn(['userDetails', 'sex']),
   dob: moment(state.getIn(['userDetails', 'dob'])).toDate(),
-  userName: state.getIn(['userDetails', 'userName']),
+  userName: state.getIn(['userDetails', 'userName'])
 });
 
 UserDetailsContainer.propTypes = {
   userName: PropTypes.string,
   dob: PropTypes.instanceOf(Date),
   sex: PropTypes.oneOf(['male', 'female']),
-  updateUserDetails: PropTypes.func,
+  updateUserDetails: PropTypes.func
 };
 
 export default connect(mapStateToProps, { updateUserDetails })(
   reduxForm({
-    form: 'user-details',
-  })(UserDetailsContainer),
+    form: 'user-details'
+  })(UserDetailsContainer)
 );

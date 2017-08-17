@@ -5,7 +5,7 @@ import {
   RaisedButton,
   Toolbar,
   ToolbarGroup,
-  ToolbarSeparator,
+  ToolbarSeparator
 } from 'material-ui';
 
 import GoogleLoginButton from './../auth/google_login_button';
@@ -27,7 +27,7 @@ const UnauthanticatedHeader = ({ pathname }) =>
   </Toolbar>;
 
 UnauthanticatedHeader.propTypes = {
-  pathname: PropTypes.string,
+  pathname: PropTypes.string
 };
 
 export default UnauthanticatedHeader;

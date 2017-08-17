@@ -5,7 +5,7 @@ import * as auth from './../actions/auth_actions';
 const INITIAL_STATE = fromJS({
   authenticated: false,
   isLoading: false,
-  token: null,
+  token: null
 });
 
 const handleLoginSuccess = (state, { token, email, _id, lastLogin }) =>
@@ -17,7 +17,6 @@ const handleLoginSuccess = (state, { token, email, _id, lastLogin }) =>
       .setIn(['user', 'lastLogin'], lastLogin)
       .setIn(['user', 'email'], email)
   );
-
 
 //TODO clear mockstate
 const reducer = (state = INITIAL_STATE, { type, payload }) => {

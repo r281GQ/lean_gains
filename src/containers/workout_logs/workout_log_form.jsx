@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 import WorkoutLogForm from './../../components/workout_log/workout_log_form';
 import {
   createWorkoutLog,
-  updateWorkoutLog,
+  updateWorkoutLog
 } from './../../store/actionCreators/workout_log_action_creators';
 
 const mapToBoolean = value => (_.isBoolean(value) ? value : false);
@@ -23,9 +23,9 @@ class WorkoutLogFormContainer extends PureComponent {
   componentDidMount() {
     if (this.props.match.params.id)
       this.props.initialize(
-        this.props.defaultValue
-        
-          .update('createdAt', value => moment(value).toDate()),
+        this.props.defaultValue.update('createdAt', value =>
+          moment(value).toDate()
+        )
       );
     else {
       this.props.initialize(Map().set('createdAt', moment().toDate()));
@@ -53,7 +53,7 @@ class WorkoutLogFormContainer extends PureComponent {
       updateWorkoutLog,
       datesWithWorkoutLogs,
       markerList,
-      selectedDate,
+      selectedDate
     } = this.props;
     return (
       <WorkoutLogForm
@@ -63,12 +63,12 @@ class WorkoutLogFormContainer extends PureComponent {
               ? updateWorkoutLog({
                   ...formprops.toJS(),
                   _id: match.params.id,
-                  createdAt: moment(formprops.get('createdAt')).valueOf(),
+                  createdAt: moment(formprops.get('createdAt')).valueOf()
                 })
               : createWorkoutLog({
                   ...formprops.toJS(),
-                  createdAt: moment(formprops.get('createdAt')).valueOf(),
-                }),
+                  createdAt: moment(formprops.get('createdAt')).valueOf()
+                })
         )}
         renderDate={match.path ? _.includes(match.path, 'before') : false}
         maxDate={moment().toDate()}
@@ -79,7 +79,7 @@ class WorkoutLogFormContainer extends PureComponent {
         normalizeMarker={mapToBoolean}
         disabled={
           datesWithWorkoutLogs.find(value =>
-            moment(value).isSame(selectedDate, 'day'),
+            moment(value).isSame(selectedDate, 'day')
           ) && !match.params.id
             ? true
             : false
@@ -92,11 +92,14 @@ class WorkoutLogFormContainer extends PureComponent {
 
 WorkoutLogFormContainer.propTypes = {
   createWorkoutLog: PropTypes.func.isRequired,
-  defaultValue: PropTypes.oneOfType([ImmutablePropTypes.list, ImmutablePropTypes.map]),
+  defaultValue: PropTypes.oneOfType([
+    ImmutablePropTypes.list,
+    ImmutablePropTypes.map
+  ]),
   updateWorkoutLog: PropTypes.func.isRequired,
   datesWithWorkoutLogs: ImmutablePropTypes.set,
   markerList: ImmutablePropTypes.list,
-  selectedDate: PropTypes.instanceOf(Date),
+  selectedDate: PropTypes.instanceOf(Date)
 };
 
 const mapStateToProps = state => {
@@ -111,12 +114,12 @@ const mapStateToProps = state => {
         ? getFormValues('workoutLog')(state)
             .get('exercises')
             .map(value => value.get('marker'))
-        : List(),
+        : List()
   };
 };
 
 export default connect(mapStateToProps, { updateWorkoutLog, createWorkoutLog })(
   reduxForm({
-    form: 'workoutLog',
-  })(WorkoutLogFormContainer),
+    form: 'workoutLog'
+  })(WorkoutLogFormContainer)
 );

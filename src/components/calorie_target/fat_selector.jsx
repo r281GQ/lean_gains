@@ -9,7 +9,7 @@ const FatSelector = ({
   maxRestFatGrams,
   maxRestFatPercentage,
   maxTrainingFatGrams,
-  maxTrainingFatPercentage,
+  maxTrainingFatPercentage
 }) =>
   fatMethod === 'grams'
     ? <div>
@@ -60,7 +60,7 @@ FatSelector.propTypes = {
   maxRestFatGrams: PropTypes.number,
   maxRestFatPercentage: PropTypes.number,
   maxTrainingFatGrams: PropTypes.number,
-  maxTrainingFatPercentage: PropTypes.number,
+  maxTrainingFatPercentage: PropTypes.number
 };
 
 export default FatSelector;

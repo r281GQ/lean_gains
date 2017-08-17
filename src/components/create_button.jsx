@@ -16,7 +16,7 @@ const CreateButton = ({ link, disabled }) =>
 
 CreateButton.propTypes = {
   link: PropTypes.string,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export default CreateButton;

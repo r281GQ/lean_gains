@@ -24,11 +24,8 @@ const dailyLogsForMonth = logsForMonth('dailyLogs');
 const isTodaysDailyLogExists = isTodaysLogExists('dailyLogs');
 const monthsWithDailyLogs = monthLogs('dailyLogs');
 
-
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-
-
 
 //TODO: refactor these to be more declarative
 class DailyLogMain extends PureComponent {
@@ -94,15 +91,15 @@ class DailyLogMain extends PureComponent {
 DailyLogMain.propTypes = {
   datesWithDailyLogs: ImmutablePropTypes.set,
   getDailyLogDates: PropTypes.func,
-  dailyLogsForMonth:ImmutablePropTypes.map,
+  dailyLogsForMonth: ImmutablePropTypes.map,
   getLogsForSelectedMonth: PropTypes.func,
   setSelectedMonthForDailyLogs: PropTypes.func,
   monthsWithDailyLogs: ImmutablePropTypes.set,
   isTodaysDailyLogExists: PropTypes.bool,
   selectedMonth: PropTypes.string,
   setSelectedDailyLog: PropTypes.func,
-  openWorkoutModal: PropTypes.func,
-}
+  openWorkoutModal: PropTypes.func
+};
 
 const mapStateToProps = state => {
   return {

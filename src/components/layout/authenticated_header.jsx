@@ -18,7 +18,7 @@ const AuthenticatedHeader = ({
   photo,
   todaysMacros,
   goBack,
-  goForward,
+  goForward
 }) =>
   <Toolbar style={{ backgroundColor: '#757575', color: '#EEEEEE' }}>
     <Main openSideBar={openSideBar} />
@@ -36,7 +36,7 @@ AuthenticatedHeader.propTypes = {
   isLoading: PropTypes.bool,
   userName: PropTypes.string,
   photo: PropTypes.string,
-  todaysMacros: PropTypes.object,
+  todaysMacros: PropTypes.object
 };
 
 export default AuthenticatedHeader;

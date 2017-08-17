@@ -13,7 +13,7 @@ const WorkoutTargetForm = ({
   submitHandler,
   formatDate,
   validateWorkoutName,
-  isCycledTraining,
+  isCycledTraining
 }) =>
   <div className="workout-target__container">
     <Paper className="workout-target__paper ">
@@ -38,7 +38,7 @@ WorkoutTargetForm.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   formatDate: PropTypes.func.isRequired,
   validateWorkoutName: PropTypes.func.isRequired,
-isCycledTraining: PropTypes.oneOf(['fix' , 'cycle'])
+  isCycledTraining: PropTypes.oneOf(['fix', 'cycle'])
 };
 
 export default WorkoutTargetForm;

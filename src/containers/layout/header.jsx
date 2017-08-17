@@ -22,7 +22,7 @@ const HeaderContainer = ({
   isAuthenticated,
   isFetching,
   goBack,
-  goForward,
+  goForward
 }) =>
   !isAuthenticated
     ? <UnauthanticatedHeader pathname={pathname} />
@@ -46,7 +46,7 @@ HeaderContainer.propTypes = {
   userName: PropTypes.string,
   photo: PropTypes.string,
   isAuthenticated: PropTypes.bool,
-  isFetching: PropTypes.bool,
+  isFetching: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
@@ -56,9 +56,9 @@ const mapStateToProps = state => ({
   exercises: isTrainingDay('main')(state),
   todaysMacros: todayMacros(state),
   userName: state.getIn(['userDetails', 'userName']),
-  photo: state.getIn(['userDetails', 'picture']),
+  photo: state.getIn(['userDetails', 'picture'])
 });
 
 export default connect(mapStateToProps, { openSideBar, goBack, goForward })(
-  withRouter(HeaderContainer),
+  withRouter(HeaderContainer)
 );

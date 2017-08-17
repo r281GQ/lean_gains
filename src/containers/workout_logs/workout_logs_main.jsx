@@ -61,7 +61,7 @@ class WorkoutLogsMainContainer extends PureComponent {
       workoutLogsForMonth,
       setSelectedWorkoutLog,
       openWorkoutModal,
-      isTodaysWorkoutLogExists,
+      isTodaysWorkoutLogExists
     } = this.props;
     return (
       <div>
@@ -98,10 +98,10 @@ WorkoutLogsMainContainer.propTypes = {
   getWorkoutLogsForMonth: PropTypes.func.isRequired,
   setSelectedMonthForWorkoutLogs: PropTypes.func.isRequired,
   workoutLogsForMonth: ImmutablePropTypes.map,
-  setSelectedWorkoutLog:PropTypes.func.isRequired,
+  setSelectedWorkoutLog: PropTypes.func.isRequired,
   openWorkoutModal: PropTypes.func.isRequired,
   isTodaysWorkoutLogExists: PropTypes.bool
-}
+};
 
 const mapStateToProps = state => ({
   monthsWithWorkoutLogs: monthsWithWorkoutLogs(state),

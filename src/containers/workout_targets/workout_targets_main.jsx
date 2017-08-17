@@ -5,7 +5,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {
   setSelectedWorkoutTarget,
-  openWorkoutModal,
+  openWorkoutModal
 } from './../../store/actionCreators/app_action_creators';
 import CardList from './../../components/workout_target/card_list';
 import CreateButton from './../../components/create_button';
@@ -13,7 +13,7 @@ import CreateButton from './../../components/create_button';
 const WorkoutTargetsMainContainer = ({
   workoutTargets,
   openWorkoutModal,
-  setSelectedWorkoutTarget,
+  setSelectedWorkoutTarget
 }) =>
   <div>
     <CardList
@@ -28,17 +28,17 @@ const WorkoutTargetsMainContainer = ({
 const mapStateToProps = state => {
   return {
     workoutTargets: state.getIn(['userDetails', 'workoutTargets']),
-    selectedWorkoutTarget: state.getIn(['app', 'selectedWorkoutTarget']),
+    selectedWorkoutTarget: state.getIn(['app', 'selectedWorkoutTarget'])
   };
 };
 
 WorkoutTargetsMainContainer.propTypes = {
   workoutTargets: ImmutablePropTypes.map,
   openWorkoutModal: PropTypes.func.isRequired,
-  setSelectedWorkoutTarget: PropTypes.func.isRequired,
+  setSelectedWorkoutTarget: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, {
   setSelectedWorkoutTarget,
-  openWorkoutModal,
+  openWorkoutModal
 })(WorkoutTargetsMainContainer);

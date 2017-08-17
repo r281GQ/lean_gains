@@ -9,7 +9,7 @@ const ModifyButton = ({ link }) =>
   </Link>;
 
 ModifyButton.propTypes = {
-  link: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired
 };
 
 export default ModifyButton;

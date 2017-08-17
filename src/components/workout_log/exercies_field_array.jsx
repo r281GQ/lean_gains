@@ -23,13 +23,13 @@ const ExerciseFieldArray = props =>
             item={item}
             passedMarker={props.passedMarkerList.get(index)}
           />
-        </Paper>,
+        </Paper>
       )}
     </List>
   </div>;
 
 ExerciseFieldArray.propTypes = {
-  passedMarkerList: PropTypes.object,
+  passedMarkerList: PropTypes.object
 };
 
 export default ExerciseFieldArray;

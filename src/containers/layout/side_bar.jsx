@@ -109,13 +109,13 @@ const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut }) => {
 SideBarContainer.propTypes = {
   isSideBarOpen: PropTypes.bool,
   closeSideBar: PropTypes.func.isRequired,
-  logOut: PropTypes.func.isRequired,
+  logOut: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  isSideBarOpen: state.getIn(['app', 'isSideBarOpen']),
+  isSideBarOpen: state.getIn(['app', 'isSideBarOpen'])
 });
 
 export default connect(mapStateToProps, { closeSideBar, logOut })(
-  SideBarContainer,
+  SideBarContainer
 );

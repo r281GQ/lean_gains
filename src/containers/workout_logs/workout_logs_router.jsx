@@ -18,7 +18,7 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
       component={withConfirmDeleteModal(
         WorkoutLogsMainContainer,
         `Are you sure you want to delete this workout log?`,
-        'workoutLog',
+        'workoutLog'
       )}
     />
 
@@ -34,16 +34,12 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
       exact
       path="/app/workoutlogs/edit/:id"
       render={props => {
-        const defaultValue = workoutLogs
-          .find((value, key) => props.match.params.id === key)
-          // .get('exercises');
-;
+        const defaultValue = workoutLogs.find(
+          (value, key) => props.match.params.id === key
+        );
+        // .get('exercises');
         return (
-          <WorkoutLogFormContainer
-            {...props}
-            defaultValue={defaultValue}
-
-          />
+          <WorkoutLogFormContainer {...props} defaultValue={defaultValue} />
         );
       }}
     />
@@ -57,12 +53,12 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
             map
               .set(
                 'name',
-                value !== 'You do not have any exercise for today' ? value : '',
+                value !== 'You do not have any exercise for today' ? value : ''
               )
               .set('note', '')
               .set('marker', false)
-              .set('sets', Map()),
-          ),
+              .set('sets', Map())
+          )
         );
 
         return (
@@ -78,10 +74,10 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
 
 WorkoutLogsRouter.propTypes = {
   exercises: ImmutablePropTypes.list,
-  workoutLogs: ImmutablePropTypes.map,
+  workoutLogs: ImmutablePropTypes.map
 };
 
 export default connect(state => ({
   workoutLogs: state.getIn(['workoutLogs', 'data']),
-  exercises: isTrainingDay('main')(state),
+  exercises: isTrainingDay('main')(state)
 }))(WorkoutLogsRouter);
