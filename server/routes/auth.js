@@ -1,13 +1,17 @@
-const { handleIsEmailUnique } = require('./../services/auth');
+const {
+  handleIsEmailUnique,
+  handleSignUp,
+  handleLogin
+} = require('./../services/auth');
 
-//TODO: implement jwt auth, and github oauth
 module.exports = app => passport => {
   app.get(
     '/api/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      process.env.NODE_ENV === 'production' ? res.redirect('https://lean-gains-dev.herokuapp.com/app'):
-      res.redirect('/app');
+      process.env.NODE_ENV === 'production'
+        ? res.redirect('https://lean-gains-dev.herokuapp.com/app')
+        : res.redirect('/app');
     }
   );
 
@@ -18,6 +22,36 @@ module.exports = app => passport => {
     })
   );
 
+  app.post(
+    '/api/auth/local/login',
+    passport.authenticate('local'),
+    (request, response) => {
+      response.status(200).send({ message: 'Authanticated!' });
+    }
+  );
+
+  const f = (request,response, next) => {
+    handleSignUp(request)
+      .then(user => {
+        console.log(request.body);
+        next();
+      })
+      .catch(error => console.log(error));
+  }
+
+
+// .then(user => response.status(201).send(user))
+  app.post('/api/auth/local/signup', f,passport.authenticate('local'),(request, response) => {
+    // handleSignUp(request)
+    //   .then(user => {
+    //     request.body.email = user.email;
+    //     request.body.password = user.password;
+    //     ;
+    //   })
+    //   .catch(error => console.log(error));
+      response.status(200).send({ message: 'Authanticated!' });
+  });
+
   app.get('/api/auth/whoami', (request, response) => {
     if (!request.user)
       return response.status(401).send({ message: 'Unauthanticated!' });
@@ -26,6 +60,7 @@ module.exports = app => passport => {
 
   app.get('/api/auth/logout', (request, response) => {
     request.logout();
+    request.session = null;
     return response.status(200).send({ messgae: 'Successfully logged out!' });
   });
 

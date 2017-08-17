@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'redux-form/immutable';
 import { TextField } from 'redux-form-material-ui';
 import { FlatButton, Paper, RaisedButton } from 'material-ui';
 

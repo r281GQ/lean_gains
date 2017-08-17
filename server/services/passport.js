@@ -1,6 +1,9 @@
 const passport = require('passport');
-const { Strategy } = require('passport-google-oauth20');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const User = mongoose.model('User');
 
@@ -21,7 +24,30 @@ const mapToDbProps = profile => ({
 });
 
 passport.use(
-  new Strategy(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password'
+    },
+    (email, password, done) =>
+      User.findOne({ email })
+        .then(
+          user =>
+            !user
+              ? done(null, false)
+              : bcrypt.compare(
+                  password,
+                  user.password,
+                  (err, result) =>
+                    result ? done(null, user) : done(null, false)
+                )
+        )
+        .catch(error => console.log(error))
+  )
+);
+
+passport.use(
+  new GoogleStrategy(
     {
       clientID:
         process.env.NODE_ENV === 'production'

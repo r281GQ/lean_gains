@@ -7,7 +7,7 @@ const User = ({ userName, photo }) =>
   <ToolbarGroup>
     <ToolbarTitle style={{ color: '#EEEEEE' }} text={`Welcome ${userName} `} />
     <Link to="/app/userdetails">
-      <Avatar className="underline" src={photo} />
+      {photo ? <Avatar className="underline" src={photo} /> : <Avatar />}
     </Link>
   </ToolbarGroup>;
 

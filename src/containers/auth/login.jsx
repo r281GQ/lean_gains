@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 
 import LoginComponent from './../../components/auth/login';
 import { logIn } from './../../store/actionCreators/auth_action_creators';
+import { validateEmail } from './../../services/validators';
 
 //TODO: validateEmail function
 const LoginContainer = props =>
@@ -13,9 +14,12 @@ const LoginContainer = props =>
     ? <Redirect to="/app" />
     : <LoginComponent
         {...props}
-        validateEmail={value => value}
-        handleSubmit={props.handleSubmit(({ email, password }) => {
-          props.logIn({ password, email });
+        validateEmail={validateEmail}
+        handleSubmit={props.handleSubmit(formProps => {
+          props.logIn({
+            password: formProps.get('password'),
+            email: formProps.get('email')
+          });
           props.reset();
         })}
       />;
