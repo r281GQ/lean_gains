@@ -8,9 +8,10 @@ const bodyParser = require('body-parser');
 
 const COOKIE =
   process.env.NODE_ENV === 'production'
-    ? process.env.cookie
-    : require('./../config/config.json').dev.cookie;
-const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 3050;
+    ? process.env.COOKIE
+    : require('./../config/config.json').dev.COOKIE;
+
+const PORT = process.env.NODE_ENV === 'development' ? 3050 : process.env.PORT;
 
 //TODO: error codes
 //TODO: validation middleware
@@ -23,8 +24,8 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [COOKIE]
-  })
+    keys: [COOKIE],
+  }),
 );
 
 app.use(passport.initialize());

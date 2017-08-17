@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const WorkoutTarget = mongoose.model('WorkoutTarget');
 
 const { decorateWithUser } = require('./../utils/service');
@@ -7,7 +8,7 @@ const handleGetWorkoutTarget = ({ user }) =>
   new Promise((resolve, reject) =>
     WorkoutTarget.find({ user })
       .then(targets => resolve(targets))
-      .catch(error => reject(error))
+      .catch(error => reject(error)),
   );
 
 const handlePutWorkoutTarget = ({
@@ -19,9 +20,9 @@ const handlePutWorkoutTarget = ({
     startDayofTraining,
     exercises,
     onEveryxDay,
-    onDays
+    onDays,
   },
-  user
+  user,
 }) =>
   new Promise((resolve, reject) =>
     WorkoutTarget.findOneAndUpdate(
@@ -34,13 +35,13 @@ const handlePutWorkoutTarget = ({
           exercises,
           startDayofTraining,
           onEveryxDay,
-          onDays
-        }
+          onDays,
+        },
       },
-      { new: true }
+      { new: true },
     )
       .then(item => resolve(item))
-      .catch(error => reject(error))
+      .catch(error => reject(error)),
   );
 
 const handlePostWorkoutTarget = ({ body, user }) =>
@@ -48,19 +49,19 @@ const handlePostWorkoutTarget = ({ body, user }) =>
     decorateWithUser('WorkoutTarget')(body, user)
       .save()
       .then(target => resolve(target))
-      .catch(error => reject(error))
+      .catch(error => reject(error)),
   );
 
 const handleDeleteWorkoutTarget = ({ user, params: { _id } }) =>
   new Promise((resolve, reject) =>
     WorkoutTarget.findOneAndRemove({ _id, user })
       .then(target => resolve(target))
-      .catch(error => reject(error))
+      .catch(error => reject(error)),
   );
 
 module.exports = {
   handlePostWorkoutTarget,
   handleGetWorkoutTarget,
   handlePutWorkoutTarget,
-  handleDeleteWorkoutTarget
+  handleDeleteWorkoutTarget,
 };

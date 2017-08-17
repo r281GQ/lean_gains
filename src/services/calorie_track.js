@@ -12,13 +12,13 @@ const prepareAPI = query =>
     url: API_ENDPOINT,
     method: 'POST',
     data: {
-      query
+      query,
     },
     headers: {
       'x-app-id': APP_ID,
       'x-app-key': APP_KEY,
-      'x-remote-user-id': REF_KEY
-    }
+      'x-remote-user-id': REF_KEY,
+    },
   });
 
 const mapValues = raw =>
@@ -35,8 +35,8 @@ const mapValues = raw =>
     tags: _.omit(raw.tags, ['measure', 'quantity']),
     measures: _.mapValues(raw.alt_measures, measure => ({
       name: measure.measure,
-      weight: measure.serving_weight
-    }))
+      weight: measure.serving_weight,
+    })),
   });
 
 const formatResponse = response =>
@@ -52,10 +52,10 @@ const formatResponse = response =>
         'alt_measures',
         'photo',
         'tags',
-        'nf_calories'
+        'nf_calories',
       ]),
-      { quantity: 1 }
-    )
+      { quantity: 1 },
+    ),
   )[0];
 
 const mock = () => ({
@@ -70,33 +70,33 @@ const mock = () => ({
       serving_weight: 242,
       measure: 'NLEA serving',
       seq: 7,
-      qty: 1
+      qty: 1,
     },
     2: {
       serving_weight: 182,
       measure: 'medium',
       seq: 7,
-      qty: 1
+      qty: 1,
     },
     1: {
       serving_weight: 149,
       measure: 'small (2-3/4',
       seq: 5,
-      qty: 1
-    }
+      qty: 1,
+    },
   },
   photo: {
     thumb: 'https://d2xdmhkmkbyw75.cloudfront.net/384_thumb.jpg',
-    highres: 'https://d2xdmhkmkbyw75.cloudfront.net/384_highres.jpg'
+    highres: 'https://d2xdmhkmkbyw75.cloudfront.net/384_highres.jpg',
   },
   tags: {
     item: 'apple',
     measure: null,
     quantity: '1.0',
-    tag_id: 384
+    tag_id: 384,
   },
   nf_calories: 94.64,
-  quantity: 1
+  quantity: 1,
 });
 
 export { mapValues, formatResponse, mock, prepareAPI };

@@ -1,6 +1,7 @@
 const passport = require('passport');
 const { Strategy } = require('passport-google-oauth20');
 const mongoose = require('mongoose');
+
 const User = mongoose.model('User');
 
 passport.serializeUser(({ id }, done) => done(null, id));
@@ -8,7 +9,7 @@ passport.serializeUser(({ id }, done) => done(null, id));
 passport.deserializeUser((id, done) =>
   User.findById(id)
     .then(user => done(null, user))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error)),
 );
 
 const mapToDbProps = profile => ({
@@ -16,7 +17,7 @@ const mapToDbProps = profile => ({
   email: profile.emails[0].value,
   sex: profile.gender,
   googleAuthId: profile.id,
-  picture: profile.photos[0].value
+  picture: profile.photos[0].value,
 });
 
 passport.use(
@@ -25,20 +26,20 @@ passport.use(
       clientID:
         process.env.NODE_ENV === 'production'
           ? process.env.GOOGLE_CLIENT_ID
-          : require('./../../config/config.json').dev.google.clientID,
+          : require('./../../config/config.json').dev.GOOGLE.CLIENT_ID,
       clientSecret:
         process.env.NODE_ENV === 'production'
           ? process.env.GOOGLE_CLIENT_SECRET
-          : require('./../../config/config.json').dev.google.clientSecret,
-      callbackURL: '/api/auth/google/callback'
+          : require('./../../config/config.json').dev.GOOGLE.CLIENT_SECRET,
+      callbackURL: '/api/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) =>
       User.findOne({ googleAuthId: profile.id })
         .then(
           user =>
-            user ? done(null, user) : new User(mapToDbProps(profile)).save()
+            user ? done(null, user) : new User(mapToDbProps(profile)).save(),
         )
         .then(user => done(null, user))
-        .catch(error => console.log(error))
-  )
+        .catch(error => console.log(error)),
+  ),
 );

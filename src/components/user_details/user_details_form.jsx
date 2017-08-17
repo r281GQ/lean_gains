@@ -8,17 +8,19 @@ import SexPicker from './sex_picker';
 import DOBPickerField from './dob_picker_field';
 
 const UserDetailsForm = ({ handleUpdateUserDetails, validators }) =>
-  <Paper className="user-details__paper">
-    <form onSubmit={handleUpdateUserDetails}>
-      <UserNamePicker validator={validators.userName} />
-      <DOBPickerField
-        minDate={validators.minDate}
-        maxDate={validators.maxDate}
-      />
-      <SexPicker />
-      <SubmitButton label={`Update`} />
-    </form>
-  </Paper>;
+  <div className="user-details__container">
+    <Paper className="user-details__paper">
+      <form onSubmit={handleUpdateUserDetails}>
+        <UserNamePicker validator={validators.userName} />
+        <DOBPickerField
+          minDate={validators.minDate}
+          maxDate={validators.maxDate}
+        />
+        <SexPicker />
+        <SubmitButton label={`Update`} />
+      </form>
+    </Paper>
+  </div>;
 
 UserDetailsForm.propTypes = {
   handleUpdateUserDetails: PropTypes.func.isRequired,

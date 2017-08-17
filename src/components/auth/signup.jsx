@@ -12,8 +12,8 @@ const SignUpComponent = ({
   validatePasswordAgain,
   required
 }) =>
-  <div className="sign-up-container">
-    <Paper className="sign-up-paper">
+  <div className="sign-up__container">
+    <Paper className="sign-up__paper">
       <FlatButton disabled label="Sign up" />
       <form onSubmit={signUpHandler}>
         <div>
@@ -51,7 +51,7 @@ const SignUpComponent = ({
             validate={validatePasswordAgain}
           />
         </div>
-        <div className="sign-up-button-container">
+        <div className="sign-up-button__container ">
           <RaisedButton
             primary
             fullWidth

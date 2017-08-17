@@ -29,8 +29,8 @@ const WorkoutLogForm = ({
   shouldDisableDate
 
 }) =>
-  <div className="workout-log-container">
-    <Paper className="workout-log-paper">
+  <div className="workout-log__container">
+    <Paper className="workout-log__paper">
       <form onSubmit={submitHandler}>
         <div>
           <DateSelector

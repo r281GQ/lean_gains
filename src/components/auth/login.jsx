@@ -5,9 +5,8 @@ import { TextField } from 'redux-form-material-ui';
 import { FlatButton, Paper, RaisedButton } from 'material-ui';
 
 const LoginComponent = ({ handleSubmit, validateEmail }) =>
-<div className="login-outer">
-  <div className="login-container">
-    <Paper className="login-paper">
+  <div className="login__container">
+    <Paper className="login__paper">
       <FlatButton disabled label="Log in" />
       <form onSubmit={handleSubmit}>
         <div>
@@ -32,12 +31,11 @@ const LoginComponent = ({ handleSubmit, validateEmail }) =>
         </div>
       </form>
     </Paper>
-  </div>
   </div>;
 
 LoginComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  validateEmail: PropTypes.func.isRequired
+  validateEmail: PropTypes.func.isRequired,
 };
 
 export default LoginComponent;

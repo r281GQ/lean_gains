@@ -2,9 +2,9 @@ import React from 'react';
 import { Paper, IconButton, FontIcon } from 'material-ui';
 
 const FooterContainer = () =>
-  <div className="footer-container">
+  <div className="footer__container">
     <Paper
-      className="footer-paper"
+      className="footer__paper"
       style={{ backgroundColor: '#E0E0E0' }}
       zDepth={2}
     >

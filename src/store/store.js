@@ -87,7 +87,7 @@ const withLogout = (rootReducer, INITIAL_STATE) => (state, action) =>
 //TODO: add undo function to api actions to roll back
 const store = createStore(
   withLogout(rootReducer, INITIAL_STATE),
-  composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance)),
+  composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance, logger)),
 );
 
 export default store;

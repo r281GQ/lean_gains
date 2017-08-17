@@ -15,8 +15,8 @@ const WorkoutTargetForm = ({
   validateWorkoutName,
   isCycledTraining,
 }) =>
-  <div className="workout-target-container">
-    <Paper className="workout-target-paper">
+  <div className="workout-target__container">
+    <Paper className="workout-target__paper ">
       <form onSubmit={submitHandler}>
         <WorkoutTypeSelector />
         <Name validateWorkoutName={validateWorkoutName} />
