@@ -37,9 +37,9 @@ passport.use(
       User.findOne({ googleAuthId: profile.id })
         .then(
           user =>
-            user ? done(null, user) : new User(mapToDbProps(profile)).save(),
+            user ? done(null, user) : new User(mapToDbProps(profile)).save()
         )
         .then(user => done(null, user))
         .catch(error => console.log(error))
-  ),
+  )
 );

@@ -6,12 +6,13 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
-      modules: true,
-    },
+      modules: true
+    }
   },
   extends: ['airbnb-base', 'plugin:react/recommended', 'eslint:recommended'],
   rules: {
     'import/extensions': 'off',
+    'comma-dangle': ['error', 'never'],
     'no-unused-vars': ['warn'],
     'import/no-unresolved': ['error'],
     'import/no-extraneous-dependencies': 'off',
@@ -29,14 +30,14 @@ module.exports = {
           'reset',
           'fields',
           'goBack',
-          'goForward',
-        ],
-      },
+          'goForward'
+        ]
+      }
     ],
     'no-console': ['warn'],
-    'import/first': ['off'],
+    'import/first': ['off']
   },
   settings: {
-    'import/resolver': 'webpack',
-  },
+    'import/resolver': 'webpack'
+  }
 };

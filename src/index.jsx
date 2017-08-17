@@ -28,5 +28,5 @@ render(
       </ConnectedRouter>
     </Provider>
   </MuiThemeProvider>,
-  DOCUMENT_ROOT,
+  DOCUMENT_ROOT
 );
