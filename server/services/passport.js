@@ -9,7 +9,7 @@ passport.serializeUser(({ id }, done) => done(null, id));
 passport.deserializeUser((id, done) =>
   User.findById(id)
     .then(user => done(null, user))
-    .catch(error => console.log(error)),
+    .catch(error => console.log(error))
 );
 
 const mapToDbProps = profile => ({
@@ -17,7 +17,7 @@ const mapToDbProps = profile => ({
   email: profile.emails[0].value,
   sex: profile.gender,
   googleAuthId: profile.id,
-  picture: profile.photos[0].value,
+  picture: profile.photos[0].value
 });
 
 passport.use(
@@ -31,7 +31,7 @@ passport.use(
         process.env.NODE_ENV === 'production'
           ? process.env.GOOGLE_CLIENT_SECRET
           : require('./../../config/config.json').dev.GOOGLE.CLIENT_SECRET,
-      callbackURL: '/api/auth/google/callback',
+      callbackURL: '/api/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) =>
       User.findOne({ googleAuthId: profile.id })
@@ -40,6 +40,6 @@ passport.use(
             user ? done(null, user) : new User(mapToDbProps(profile)).save(),
         )
         .then(user => done(null, user))
-        .catch(error => console.log(error)),
+        .catch(error => console.log(error))
   ),
 );

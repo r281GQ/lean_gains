@@ -24,8 +24,8 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [COOKIE],
-  }),
+    keys: [COOKIE]
+  })
 );
 
 app.use(passport.initialize());
