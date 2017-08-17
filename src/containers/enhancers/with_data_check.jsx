@@ -6,7 +6,7 @@ const mapToValueNamePair = props => path => ({
   value: props[path.name],
   name: path.name
 });
-
+ // [{name:'sex', path:['userDetails', 'sex']}]
 //TODO: implement ErrorComponent internally
 const withDataCheck = (WrappedComponent, paths, ErrorComponent) => {
   const DataCheck = props => {
