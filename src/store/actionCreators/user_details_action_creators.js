@@ -1,3 +1,4 @@
+/*eslint no-console: off*/
 import request from './../../services/request';
 import * as userDetails from './../actions/user_details_actions';
 import * as app from './../actions/app_actions';

@@ -1,3 +1,4 @@
+/*eslint no-console: off*/
 import request from './../../services/request';
 
 import * as dailyLogs from './../actions/daily_logs_actions';

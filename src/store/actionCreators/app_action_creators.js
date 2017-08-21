@@ -1,8 +1,4 @@
-import { initialize, isPristine } from 'redux-form/immutable';
-import { Map, fromJS } from 'immutable';
 import * as app from './../actions/app_actions';
-import * as calorieLog from './../actions/calorie_actions';
-import request from './../../services/request';
 
 export const setSelectedMonthForWorkoutLogs = month => ({
   type: app.SELECT_WORKOUT_LOG_MONTH,
@@ -43,7 +39,7 @@ export const setSelectedDailyLog = _id => ({
   payload: _id
 });
 
-export const addCalorieTrackConsent = () => ({type: app.ADD_CONSENT})
+export const addCalorieTrackConsent = () => ({ type: app.ADD_CONSENT });
 
 export const openMessageBar = () => ({ type: app.OPEN_MESSAGE_BAR });
 
@@ -52,32 +48,3 @@ export const closeMessageBar = () => ({ type: app.CLOSE_MESSAGE_BAR });
 export const initFetch = () => ({ type: app.INIT_FETCH });
 
 export const closeFetch = () => ({ type: app.CLOSE_FETCH });
-
-export const loadNutritionsForDay = day => (dispatch, getState) => {
-  if (
-    getState().getIn(['app', 'hasCalorieTrackConsent']) ||
-    isPristine('calorie-track')(getState())
-  ) {
-    dispatch({
-      type: app.SET_CALORIE_LOG_DAY,
-      payload: day
-    });
-    request
-      .get('/api/calorielogs', { params: { day } })
-      .then(({ data }) => {
-        // dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
-        dispatch(
-          initialize(
-            'calorie-track',
-            // Map().set('foods', getState().getIn(['calorieLog', 'nutritions'])),
-            Map().set('foods', fromJS(data).get('nutritions'))
-          )
-        );
-        dispatch({ type: app.REMOVE_CONSENT });
-        dispatch({ type: app.UNSET_PENDING_CALORIE_LOG_DAY });
-      })
-      .catch(error => console.log(error));
-  } else {
-    return dispatch({ type: app.OPEN_CONSENT_MODAL, payload: day });
-  }
-};

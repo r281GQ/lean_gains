@@ -1,3 +1,4 @@
+/*eslint no-console: off*/
 import request from './../../services/request';
 import * as auth from './../actions/auth_actions';
 import { initFetch } from './../actionCreators/user_details_action_creators';

@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { Dialog, FlatButton } from 'material-ui';
+// import PropTypes from 'prop-types';
+// import ImmutablePropTypes from 'react-immutable-proptypes';
+// import { Dialog, FlatButton } from 'material-ui';
 
 const Error = () =>
 // const Error = ({ errorMessages, isErrorModalOpen, closeErrorModal }) =>

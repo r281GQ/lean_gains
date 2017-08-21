@@ -6,7 +6,10 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
+  isFetching: false,
+  selectedDayCalorieLog: 2017-08-21T20:27:24.101Z,
   message: "",
+  isConsentModalOpen: false,
 }
 `;
 
@@ -16,7 +19,10 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
+  isFetching: false,
+  selectedDayCalorieLog: 2017-08-21T20:27:24.101Z,
   message: "",
+  isConsentModalOpen: false,
 }
 `;
 
@@ -26,7 +32,10 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
+  isFetching: false,
+  selectedDayCalorieLog: 2017-08-21T20:27:24.101Z,
   message: "",
+  isConsentModalOpen: false,
 }
 `;
 
@@ -36,7 +45,10 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: true,
   isMessageBarOpen: false,
+  isFetching: false,
+  selectedDayCalorieLog: 2017-08-21T20:27:24.101Z,
   message: "",
+  isConsentModalOpen: false,
 }
 `;
 
@@ -46,7 +58,10 @@ Immutable.Map {
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
+  isFetching: false,
+  selectedDayCalorieLog: 2017-08-21T20:27:24.101Z,
   message: "",
+  isConsentModalOpen: false,
 }
 `;
 
@@ -56,6 +71,9 @@ Immutable.Map {
   isSideBarOpen: true,
   isLoading: false,
   isMessageBarOpen: false,
+  isFetching: false,
+  selectedDayCalorieLog: 2017-08-21T20:27:24.101Z,
   message: "",
+  isConsentModalOpen: false,
 }
 `;

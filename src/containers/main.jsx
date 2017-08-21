@@ -8,8 +8,6 @@ import * as async from './async/containers';
 
 import CalorieTargetError from './calorie_target_error'
 
-// [{name:'sex', path:['userDetails', 'sex']}]
-
 const requirements = [
   { name: 'dob', path: ['userDetails',  'dob'] },
   { name: 'sex', path: ['userDetails',  'sex'] },
@@ -45,6 +43,7 @@ import Error from './error';
 
 //TODO implement graphs and charts
 //TODO withDataCheck for every details
+//TODO organise imports
 const MainContainer = () =>
   <div className="main-container">
     <Error   />
@@ -64,7 +63,7 @@ const MainContainer = () =>
       component={withDataCheck(
         async.AsyncCalorieTargetContainer,
         requirements,
-        () => <div>erro</div>
+        CalorieTargetError
       )}
     />
     <Route

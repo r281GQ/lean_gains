@@ -59,7 +59,6 @@ Macros.propTypes = {
   }).isRequired
 };
 
-// export default Macros;
 export default withDataCheck(
   Macros,
   requirements,
@@ -69,3 +68,5 @@ export default withDataCheck(
     </ToolbarGroup>,
   { name: 'target' }
 );
+
+// export default Macros;

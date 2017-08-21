@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FlatButton } from 'material-ui';
 
 const CalorieTargetResultSumLabel = ({ calorieTarget, label }) =>
-  <div style={{ textAlign: 'center' }}>
+  <div className="text-align">
     <FlatButton
       disabled={true}
       label={`Calculated calories for ${label} day: ${calorieTarget[label]

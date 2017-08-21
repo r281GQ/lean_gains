@@ -11,7 +11,6 @@ const INITIAL_STATE = fromJS({
   isFetching: false,
   selectedDayCalorieLog: moment().toDate(),
   message: '',
-  hasCalorieTrackConsent: false,
   isConsentModalOpen: false
 });
 
@@ -25,8 +24,6 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
       return state
         .set('isConsentModalOpen', true)
         .set('openConsentModalDate', fromJS(payload));
-    case app.UNSET_PENDING_CALORIE_LOG_DAY:
-      return state.set('openConsentModalDate', undefined);
     case app.CLOSE_CONSENT_MODAL:
       return state
         .set('isConsentModalOpen', false)

@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlatButton } from 'material-ui';
 
 const CalorieTrackerSummary = ({ sum }) =>
   <div className="calorie-tracker-summery__container">
-    <FlatButton
-      label={`Calories so far: ${sum.calories} P:${sum.protein} C: ${sum.carbohydrate} F: ${sum.fat}`}
-      disabled
-    />
+    <div>{`Calories: ${sum.calories}`}</div>
+    <div>{`P:${sum.protein} C: ${sum.carbohydrate} F: ${sum.fat}`}</div>
   </div>;
 
 CalorieTrackerSummary.propTypes = {
@@ -16,7 +13,7 @@ CalorieTrackerSummary.propTypes = {
     protein: PropTypes.number,
     carbohydrate: PropTypes.number,
     fat: PropTypes.number
-  })
+  }).isRequired
 };
 
 export default CalorieTrackerSummary;

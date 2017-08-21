@@ -20,6 +20,8 @@ module.exports = {
       'error',
       {
         ignore: [
+          'submit',
+          'pristine',
           'input',
           'location',
           'match',
@@ -40,7 +42,7 @@ module.exports = {
   settings: {
     'import/resolver': 'webpack'
   },
-  "env": {
-   "jest/globals": true
- }
+  env: {
+    'jest/globals': true
+  }
 };

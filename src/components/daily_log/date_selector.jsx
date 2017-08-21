@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { DatePicker } from 'redux-form-material-ui';
 import { Field } from 'redux-form/immutable';
 import { Paper, FlatButton } from 'material-ui';
-import moment from 'moment'
-
+import moment from 'moment';
 
 // TODO: maxDate and minDate
 const DateSelector = ({ renderDate, shouldDisableDate }) =>
@@ -20,11 +19,7 @@ const DateSelector = ({ renderDate, shouldDisableDate }) =>
               name="createdAt"
               component={DatePicker}
               shouldDisableDate={shouldDisableDate}
-              format = {value => {
-                console.log(value);
-                return moment(value).toDate()}
-              }
-              
+              format={value => moment(value).toDate()}
             />
           </div>
           <div className="clear" />

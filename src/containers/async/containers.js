@@ -31,5 +31,5 @@ export const AsyncWorkoutTargetsRouter = asyncComponent(() =>
 );
 
 export const AsyncCalorieTrackerContainer = asyncComponent(() =>
-  System.import('./../calorie_tracker/calorie_tracker_container').then(module => module.default)
+  System.import('./../calorie_tracker/calorie_tracker').then(module => module.default)
 );

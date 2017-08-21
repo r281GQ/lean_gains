@@ -1,5 +1,3 @@
-import chai from 'chai';
-
 import reducer from './../../../src/store/reducers/app';
 import * as app from './../../../src/store/actions/app_actions';
 
@@ -51,7 +49,7 @@ describe('app reducer', () => {
       type: app.SET_SELECTED_DAILY_LOG,
       payload: 'randomId'
     });
-    chai.expect(nextState.get('selectedDailyLog')).to.equal('randomId');
+    expect(nextState.get('selectedDailyLog')).toBe('randomId');
   });
 
   it('should set selected workout log _id', () => {
@@ -59,7 +57,7 @@ describe('app reducer', () => {
       type: app.SET_SELECTED_WORKOUT_LOG,
       payload: 'randomId'
     });
-    chai.expect(nextState.get('selectedWorkoutLog')).to.equal('randomId');
+    expect(nextState.get('selectedWorkoutLog')).toBe('randomId');
   });
 
   it('should set selected workout target _id', () => {
@@ -67,7 +65,7 @@ describe('app reducer', () => {
       type: app.SET_SELECTED_WORKOUT_TARGET,
       payload: 'randomId'
     });
-    chai.expect(nextState.get('selectedWorkoutTarget')).to.equal('randomId');
+    expect(nextState.get('selectedWorkoutTarget')).toBe('randomId');
   });
 
   it('should set selected month for daily log', () => {
@@ -75,7 +73,7 @@ describe('app reducer', () => {
       type: app.SELECT_DAILY_LOG_MONTH,
       payload: '05-2016'
     });
-    chai.expect(nextState.get('selectedMonthForDailyLogs')).to.equal('05-2016');
+    expect(nextState.get('selectedMonthForDailyLogs')).toBe('05-2016');
   });
 
   it('should set selected month for workout log', () => {
@@ -83,6 +81,6 @@ describe('app reducer', () => {
       type: app.SELECT_WORKOUT_LOG_MONTH,
       payload: '05-2016'
     });
-    chai.expect(nextState.get('selectedMonthForWorkoutLogs')).to.equal('05-2016');
+    expect(nextState.get('selectedMonthForWorkoutLogs')).toBe('05-2016');
   });
 });
