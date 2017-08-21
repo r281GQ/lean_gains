@@ -3,6 +3,7 @@ import moment from 'moment';
 
 const logs = type => state => state.getIn([type, 'data']);
 
+//fetches the appropriate current month from the store
 const selectedMonth = type => state =>
   state.getIn([
     'app',
@@ -11,6 +12,7 @@ const selectedMonth = type => state =>
       : 'selectedMonthForDailyLogs'
   ]);
 
+//filters out the current month's logs
 const logsForMonth = (logs, selectedMonth) => {
   return logs.filter(value =>
     moment(value.get('date')).isSame(moment(selectedMonth, 'MM-YYYY'), 'month')

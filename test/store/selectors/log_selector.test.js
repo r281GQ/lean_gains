@@ -1,7 +1,4 @@
-import { fromJS, Map, Set } from 'immutable';
-import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
-import moment from 'moment';
+import { fromJS, Map } from 'immutable';
 import * as _ from 'lodash';
 
 import {
@@ -26,16 +23,14 @@ const state = Map().withMutations(map =>
 const dailyLogsForMonth = logs('dailyLogs');
 const workoutLogsForMonths = logs('workoutLogs');
 
-chai.use(chaiImmutable);
-
 describe('months selector', () => {
   it('should return 0 within the list', () => {
     const logsForMinth = dailyLogsForMonth(state);
-    expect(logsForMinth.size).to.equal(0);
+    expect(logsForMinth.size).toBe(0);
   });
 
   it('should return 2 within the list', () => {
     const logsForMinth = workoutLogsForMonths(state);
-    expect(logsForMinth.size).to.equal(2);
+    expect(logsForMinth.size).toBe(2);
   });
 });

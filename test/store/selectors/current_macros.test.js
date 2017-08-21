@@ -1,12 +1,10 @@
 import { Map, fromJS } from 'immutable';
-import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
 import moment from 'moment';
 import * as _ from 'lodash';
+
 import currentMacros from './../../../src/store/selectors/current_macros';
 import { kcalTargets } from './../../../shared/test_constants';
 
-chai.use(chaiImmutable);
 
 const mockState = Map().withMutations(map =>
   map
@@ -46,13 +44,13 @@ const mockState = Map().withMutations(map =>
 describe('current macros selector', () => {
   it('should give back the latest targets training values', () => {
     const nextState = currentMacros(mockState);
-    expect(nextState).to.equal(fromJS(kcalTargets[0]).get('training'));
+    expect(nextState).toEqual(fromJS(kcalTargets[0]).get('training'));
   });
 
   it('should give back empty Map() if values are misssing', () => {
     const nextState = currentMacros(
       mockState.setIn(['userDetails', 'kcalTargets'], undefined)
     );
-    expect(nextState).to.equal(Map());
+    expect(nextState).toEqual(Map());
   });
 });

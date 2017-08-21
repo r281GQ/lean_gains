@@ -1,14 +1,10 @@
 import { fromJS, Map } from 'immutable';
-import chai from 'chai';
 import moment from 'moment';
 import * as _ from 'lodash';
-import chaiImmutable from 'chai-immutable';
-import { check, property, gen } from 'testcheck';
 
 import selector from './../../../src/store/selectors/calorie_target';
 import { latestMeasurements } from './../../../shared/test_constants';
 
-chai.use(chaiImmutable);
 
 // const formValues = fromJS({
 //   trainingDay: 20,
@@ -93,24 +89,4 @@ describe('calorie target props selector', () => {
     });
   });
 
-  it('should get back the most recent target', () => {
-    // console.log(state);
-    console.log(selector(state));
-  });
-
-  describe('try gen', () => {
-    it('description', () => {
-
-      const add = (x,y) => x+y
-
-      const result = check(
-        property([gen.int], x => {
-          return _.isNumber(add(x, 0));
-        })
-      );
-
-
-      console.log(result);
-    });
-  });
 });

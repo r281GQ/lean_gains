@@ -1,7 +1,4 @@
 import { fromJS, Map, Set } from 'immutable';
-import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
-import moment from 'moment';
 
 import {
   dailyLogDates,
@@ -19,14 +16,12 @@ const state = Map().withMutations(map =>
 const dailyLogMonths = months('dailyLogs');
 const workoutLogMonths = months('workoutLogs');
 
-chai.use(chaiImmutable);
-
 describe('months selector', () => {
   it('should get back 0417 and 0517 on dailyLogs', () => {
-    expect(dailyLogMonths(state)).to.equal(Set().add('04-2017').add('05-2017'));
+    expect(dailyLogMonths(state)).toEqual(Set().add('04-2017').add('05-2017'));
   });
   it('should get back 0417 and 0517 on dailyLogs', () => {
-    expect(workoutLogMonths(state)).to.equal(
+    expect(workoutLogMonths(state)).toEqual(
       Set().add('07-2017').add('01-2017')
     );
   });
