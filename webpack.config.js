@@ -34,7 +34,7 @@ const vendor = [
 const config = {
   entry: {
     vendor,
-    bundle: './src/index.jsx',
+    bundle: ['babel-polyfill','./src/index.jsx'],
   },
   output: {
     path: path.join(__dirname, 'build'),

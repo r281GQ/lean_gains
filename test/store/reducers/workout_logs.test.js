@@ -1,6 +1,5 @@
 import Immutable, { fromJS } from 'immutable';
 import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
 import moment from 'moment';
 
 import {
@@ -9,7 +8,6 @@ import {
 } from './../../../shared/test_constants';
 import reducer from './../../../src/store/reducers/workout_logs';
 import * as workoutLogs from './../../../src/store/actions/workout_logs_actions';
-chai.use(chaiImmutable);
 
 describe('workout logs reducer', () => {
   it('should write all workout logs', () => {

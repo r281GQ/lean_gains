@@ -7,9 +7,7 @@ import * as _ from 'lodash';
 import { Map } from 'immutable';
 
 import { createKcalTarget } from './../../store/actionCreators/user_details_action_creators';
-
 import calorieTarget from './../../store/selectors/calorie_target';
-
 import BMRCalculationSelector from './../../components/calorie_target/bmr_calculation_selector';
 import BodyFatField from './../../components/calorie_target/body_fat_field';
 import ActivityLevelSelecor from './../../components/calorie_target/activity_level_selector';
@@ -177,11 +175,11 @@ CalorieTargetCalculator.propTypes = {
   restFatPercentage: PropTypes.number,
   trainingFatGrams: PropTypes.number,
   trainingFatPercentage: PropTypes.number,
-  initializeForm: PropTypes.func,
+  initializeForm: PropTypes.func.isRequired,
   fatMethod: PropTypes.string,
   calorieSplit: PropTypes.string,
   bmrCalculationMethod: PropTypes.string,
-  createCalorieTarget: PropTypes.func,
+  createCalorieTarget: PropTypes.func.isRequired,
   calorieTarget: ImmutablePropTypes.mapContains({
     bodyFat: PropTypes.number,
     finalValues: ImmutablePropTypes.mapContains({
@@ -207,45 +205,6 @@ CalorieTargetCalculator.propTypes = {
     })
   })
 };
-
-// CalorieTargetCalculator.propTypes = {
-//   activity: PropTypes.string,
-//   restDay: PropTypes.number,
-//   trainingDay: PropTypes.number,
-//   restFatGrams: PropTypes.number,
-//   restFatPercentage: PropTypes.number,
-//   trainingFatGrams: PropTypes.number,
-//   trainingFatPercentage: PropTypes.number,
-//   initializeForm: PropTypes.func,
-//   fatMethod: PropTypes.string,
-//   calorieSplit: PropTypes.string,
-//   bmrCalculationMethod: PropTypes.string,
-//   createCalorieTarget: PropTypes.func,
-//   calorieTarget: PropTypes.shape({
-//     bodyFat: PropTypes.number,
-//     finalValues: PropTypes.shape({
-//       rest: PropTypes.shape({
-//         calorie: PropTypes.number,
-//         carbohydrate: PropTypes.number,
-//         fat: PropTypes.number,
-//         protein: PropTypes.number,
-//       }),
-//       training: PropTypes.shape({
-//         calorie: PropTypes.number,
-//         carbohydrate: PropTypes.number,
-//         fat: PropTypes.number,
-//         protein: PropTypes.number,
-//       }),
-//     }),
-//     minCalorie: PropTypes.number,
-//     max: PropTypes.shape({
-//       restGram: PropTypes.number,
-//       restPercentage: PropTypes.number,
-//       trainingGram: PropTypes.number,
-//       trainingPercentage: PropTypes.number,
-//     }),
-//   }),
-// };
 
 const selector = formValueSelector('calorie-target');
 

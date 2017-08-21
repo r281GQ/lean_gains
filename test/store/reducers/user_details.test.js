@@ -1,6 +1,5 @@
 import { fromJS } from 'immutable';
 import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
 import moment from 'moment';
 
 import {
@@ -11,7 +10,6 @@ import {
 import reducer from './../../../src/store/reducers/user_details';
 import * as userDetails from './../../../src/store/actions/user_details_actions';
 
-chai.use(chaiImmutable);
 
 describe('user details reducer', () => {
   it('should write workout targets', () => {

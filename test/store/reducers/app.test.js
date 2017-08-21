@@ -1,10 +1,8 @@
 import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
 
 import reducer from './../../../src/store/reducers/app';
 import * as app from './../../../src/store/actions/app_actions';
 
-chai.use(chaiImmutable);
 
 describe('app reducer', () => {
   it('should set isLoading to TRUE on INIT_API', () => {

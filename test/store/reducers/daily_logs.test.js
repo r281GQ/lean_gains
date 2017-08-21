@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
 import moment from 'moment';
 
 import reducer from './../../../src/store/reducers/daily_logs';
@@ -10,7 +9,6 @@ import {
   dailyLogs as dailyLogsPayload
 } from './../../../shared/test_constants';
 
-chai.use(chaiImmutable);
 
 describe('daily logs reducer', () => {
   it('should write dates', () => {

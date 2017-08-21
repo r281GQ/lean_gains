@@ -1,6 +1,6 @@
 module.exports = {
   parser: 'babel-eslint',
-  plugins: ['react', 'import'],
+  plugins: ['react', 'import', 'jest'],
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',
@@ -39,5 +39,8 @@ module.exports = {
   },
   settings: {
     'import/resolver': 'webpack'
-  }
+  },
+  "env": {
+   "jest/globals": true
+ }
 };

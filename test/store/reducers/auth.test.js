@@ -1,13 +1,10 @@
 import { Map } from 'immutable';
-import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
 import moment from 'moment';
 
 import reducer from './../../../src/store/reducers/auth';
 import * as auth from './../../../src/store/actions/auth_actions';
 import { auth as authPayload } from './../../../shared/test_constants';
 
-chai.use(chaiImmutable);
 
 describe('auth reducer', () => {
   it('should set isLoading property to true when INIT_AUTH is dispatched', () => {

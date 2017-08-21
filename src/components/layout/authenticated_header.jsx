@@ -9,6 +9,8 @@ import User from './user';
 import Macros from './macros';
 import SaveIndicator from './save_indicator';
 
+
+
 const AuthenticatedHeader = ({
   openSideBar,
   exercises,

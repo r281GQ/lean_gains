@@ -1,5 +1,5 @@
 import { initialize, isPristine } from 'redux-form/immutable';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import * as app from './../actions/app_actions';
 import * as calorieLog from './../actions/calorie_actions';
 import request from './../../services/request';
@@ -65,11 +65,12 @@ export const loadNutritionsForDay = day => (dispatch, getState) => {
     request
       .get('/api/calorielogs', { params: { day } })
       .then(({ data }) => {
-        dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
+        // dispatch({ type: calorieLog.WRITE_CALORIE_LOG, payload: data });
         dispatch(
           initialize(
             'calorie-track',
-            Map().set('foods', getState().getIn(['calorieLog', 'nutritions']))
+            // Map().set('foods', getState().getIn(['calorieLog', 'nutritions'])),
+            Map().set('foods', fromJS(data).get('nutritions'))
           )
         );
         dispatch({ type: app.REMOVE_CONSENT });
