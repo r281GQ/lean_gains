@@ -1,5 +1,3 @@
-import { fromJS } from 'immutable';
-import chai, { expect } from 'chai';
 import moment from 'moment';
 
 import {
@@ -10,16 +8,17 @@ import {
 import reducer from './../../../src/store/reducers/user_details';
 import * as userDetails from './../../../src/store/actions/user_details_actions';
 
-
 describe('user details reducer', () => {
   it('should write workout targets', () => {
     const nextState = reducer(undefined, {
       type: userDetails.WRITE_WORKOUT_TARGETS,
       payload: workoutTargets
     });
-    expect(nextState.get('workoutTargets').size).to.equal(2);
-    expect(nextState.get('workoutTargets')).to.include.keys(
-      '0_workout_target',
+    expect(nextState.get('workoutTargets').size).toBe(2);
+    expect(nextState.get('workoutTargets').toJS()).toHaveProperty(
+      '0_workout_target'
+    );
+    expect(nextState.get('workoutTargets').toJS()).toHaveProperty(
       '1_workout_target'
     );
   });
@@ -29,8 +28,8 @@ describe('user details reducer', () => {
       type: userDetails.WRITE_WORKOUT_TARGET,
       payload: workoutTargets[0]
     });
-    expect(nextState.get('workoutTargets').size).to.equal(1);
-    expect(nextState.get('workoutTargets')).to.include.keys(
+    expect(nextState.get('workoutTargets').size).toBe(1);
+    expect(nextState.get('workoutTargets').toJS()).toHaveProperty(
       '0_workout_target'
     );
   });
@@ -40,11 +39,9 @@ describe('user details reducer', () => {
       type: userDetails.WRITE_KCAL_TARGETS,
       payload: kcalTargets
     });
-    expect(nextState.get('kcalTargets').size).to.equal(2);
-    expect(nextState.get('kcalTargets')).to.include.keys(
-      '0_kcal_target',
-      '1_kcal_target'
-    );
+    expect(nextState.get('kcalTargets').size).toBe(2);
+    expect(nextState.get('kcalTargets').toJS()).toHaveProperty('0_kcal_target');
+    expect(nextState.get('kcalTargets').toJS()).toHaveProperty('1_kcal_target');
   });
 
   it('should write the basic info the the userDetals', () => {
@@ -52,14 +49,12 @@ describe('user details reducer', () => {
       type: userDetails.WRITE_USER_DETAILS,
       payload: userDetailsPayload
     });
-    expect(nextState.get('sex')).to.equal('male');
-    expect(nextState.get('picture')).to.equal(
-      `https://somerandomurl/pictureid`
-    );
-    expect(nextState.get('dob')).to.equal(
+    expect(nextState.get('sex')).toBe('male');
+    expect(nextState.get('picture')).toBe(`https://somerandomurl/pictureid`);
+    expect(nextState.get('dob')).toBe(
       moment('22-05-1988', 'DD-MM-YYYY').valueOf()
     );
-    expect(nextState.get('userName')).to.equal('kfbr392');
+    expect(nextState.get('userName')).toBe('kfbr392');
   });
 
   describe('with some basic state', () => {
@@ -76,7 +71,7 @@ describe('user details reducer', () => {
       const nextState = reducer(basicState, {
         type: userDetails.UNSET_PICTURE
       });
-      expect(nextState.get('picture')).to.be.undefined;
+      expect(nextState.get('picture')).toBeUndefined();
     });
 
     it('should remove workoutTarget', () => {
@@ -84,16 +79,14 @@ describe('user details reducer', () => {
         type: userDetails.WRITE_WORKOUT_TARGETS,
         payload: workoutTargets
       });
-      let payload = stateWithWorkout
-        .get('workoutTargets')
-        .findKey(value => true);
+      let payload = stateWithWorkout.get('workoutTargets').findKey(() => true);
 
       const nextState = reducer(stateWithWorkout, {
         type: userDetails.DELETE_WORKOUT_TARGET,
         payload
       });
 
-      expect(nextState.getIn(['workoutTargets', payload])).to.be.undefined;
+      expect(nextState.getIn(['workoutTargets', payload])).toBeUndefined();
     });
   });
 });

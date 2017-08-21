@@ -16,10 +16,6 @@ const INITIAL_STATE = fromJS({
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-    case app.ADD_CONSENT:
-      return state.set('hasCalorieTrackConsent', true);
-    case app.REMOVE_CONSENT:
-      return state.set('hasCalorieTrackConsent', false);
     case app.OPEN_CONSENT_MODAL:
       return state
         .set('isConsentModalOpen', true)
@@ -28,8 +24,6 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
       return state
         .set('isConsentModalOpen', false)
         .set('openConsentModalDate', undefined);
-    case app.SET_CALORIE_LOG_DAY:
-      return state.set('selectedDayCalorieLog', payload);
     case app.SET_MESSAGE:
       return state.set('message', payload);
     case app.OPEN_MESSAGE_BAR:

@@ -1,37 +1,50 @@
+import { Map } from 'immutable';
+
 import reducer from './../../../src/store/reducers/app';
 import * as app from './../../../src/store/actions/app_actions';
 
-
 describe('app reducer', () => {
+  it('should set isLoading to TRUE on INIT_FETCH', () => {
+    const nextState = reducer(undefined, { type: app.INIT_FETCH });
+    expect(nextState.get('isFetching')).toBe(true);
+  });
+
+  it('should set isLoading to FALSE on CLOSE_FETCH', () => {
+    const nextState = reducer(reducer(undefined, { type: app.CLOSE_FETCH }), {
+      type: app.CLOSE_FETCH
+    });
+    expect(nextState.get('isFetching')).toBe(false);
+  });
+
   it('should set isLoading to TRUE on INIT_API', () => {
     const nextState = reducer(undefined, { type: app.INIT_API });
-    expect(nextState).toMatchSnapshot();
+    expect(nextState.get('isLoading')).toBe(true);
   });
 
   it('should set isLoading to FALSE on CLOSE_API', () => {
     const nextState = reducer(reducer(undefined, { type: app.INIT_API }), {
       type: app.CLOSE_API
     });
-    expect(nextState).toMatchSnapshot();
+    expect(nextState.get('isLoading')).toBe(false);
   });
 
   it('should set isSideBarOpen to TRUE on OPEN_SIDE_BAR', () => {
     const nextState = reducer(undefined, { type: app.OPEN_SIDE_BAR });
-    expect(nextState).toMatchSnapshot();
+    expect(nextState.get('isSideBarOpen')).toBe(true);
   });
 
   it('should set isSideBarOpen to FALSE on CLOSE_SIDE_BAR', () => {
     const nextState = reducer(reducer(undefined, { type: app.OPEN_SIDE_BAR }), {
       type: app.CLOSE_SIDE_BAR
     });
-    expect(nextState).toMatchSnapshot();
+    expect(nextState.get('isSideBarOpen')).toBe(false);
   });
 
   it('should set isConfirmDeleteModalOpen to TRUE on OPEN_CONFIRM_DELETE_MODAL', () => {
     const nextState = reducer(undefined, {
       type: app.OPEN_CONFIRM_DELETE_MODAL
     });
-    expect(nextState).toMatchSnapshot();
+    expect(nextState.get('isConfirmDeleteModalOpen')).toBe(true);
   });
 
   it('should set isConfirmDeleteModalOpen to FALSE on CLOSE_CONFIRM_DELETE_MODAL', () => {
@@ -41,7 +54,7 @@ describe('app reducer', () => {
         type: app.CLOSE_CONFIRM_DELETE_MODAL
       }
     );
-    expect(nextState).toMatchSnapshot();
+    expect(nextState.get('isConfirmDeleteModalOpen')).toBe(false);
   });
 
   it('should set selected daily log _id', () => {
@@ -82,5 +95,53 @@ describe('app reducer', () => {
       payload: '05-2016'
     });
     expect(nextState.get('selectedMonthForWorkoutLogs')).toBe('05-2016');
+  });
+
+  it('should set isConsentModalOpen to true with applied date', () => {
+    const nextState = reducer(undefined, {
+      type: app.OPEN_CONSENT_MODAL,
+      payload: '01-01-2017'
+    });
+    expect(nextState.get('isConsentModalOpen')).toBe(true);
+    expect(nextState.get('openConsentModalDate')).toBe('01-01-2017');
+  });
+
+  it('should set isConsentModalOpen to false', () => {
+    const nextState = reducer(
+      Map()
+        .set('openConsentModalDate', '01-01-2017')
+        .set('isConsentModalOpen', true),
+      {
+        type: app.CLOSE_CONSENT_MODAL
+      }
+    );
+
+    expect(nextState.get('isConsentModalOpen')).toBe(false);
+    expect(nextState.get('openConsentModalDate')).toBe(undefined);
+  });
+
+  it('should set isMessageBarOpen to false', () => {
+    const nextState = reducer(Map().set('isMessageBarOpen', true), {
+      type: app.CLOSE_MESSAGE_BAR
+    });
+
+    expect(nextState.get('isMessageBarOpen')).toBe(false);
+  });
+
+  it('should set isMessageBarOpen to true', () => {
+    const nextState = reducer(Map(), {
+      type: app.OPEN_MESSAGE_BAR
+    });
+
+    expect(nextState.get('isMessageBarOpen')).toBe(true);
+  });
+
+  it('should set message to payload', () => {
+    const nextState = reducer(Map(), {
+      type: app.SET_MESSAGE,
+      payload: 'sample'
+    });
+
+    expect(nextState.get('message')).toBe('sample');
   });
 });

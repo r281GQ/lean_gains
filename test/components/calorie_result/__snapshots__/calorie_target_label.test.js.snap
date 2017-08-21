@@ -15,35 +15,3 @@ exports[`CalorieTargetLabel test should render 1`] = `
   secondary={false}
 />
 `;
-
-exports[`calorie_target_result label should be 0 when no label provided 1`] = `
-<FlatButton
-  disabled={true}
-  fullWidth={false}
-  label="0"
-  labelPosition="after"
-  labelStyle={Object {}}
-  onKeyboardFocus={[Function]}
-  onMouseEnter={[Function]}
-  onMouseLeave={[Function]}
-  onTouchStart={[Function]}
-  primary={false}
-  secondary={false}
-/>
-`;
-
-exports[`calorie_target_result should render label 1`] = `
-<FlatButton
-  disabled={true}
-  fullWidth={false}
-  label="label"
-  labelPosition="after"
-  labelStyle={Object {}}
-  onKeyboardFocus={[Function]}
-  onMouseEnter={[Function]}
-  onMouseLeave={[Function]}
-  onTouchStart={[Function]}
-  primary={false}
-  secondary={false}
-/>
-`;

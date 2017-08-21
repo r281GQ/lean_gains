@@ -1,6 +1,4 @@
 import { fromJS, Map, Set } from 'immutable';
-import chai, { expect } from 'chai';
-import chaiImmutable from 'chai-immutable';
 import moment from 'moment';
 
 import {
@@ -19,15 +17,14 @@ const state = Map().withMutations(map =>
 const dailyLogSelector = todaysLog('dailyLogs');
 const workoutLogSelector = todaysLog('workoutLogs');
 
-chai.use(chaiImmutable);
 
 describe('todays log selector', () => {
   it('should return false if todays date is not among state vars', () => {
     const daily = dailyLogSelector(state);
     const workout = workoutLogSelector(state);
 
-    expect(daily).to.be.false;
-    expect(workout).to.be.false;
+    expect(daily).toBeFalsy();
+    expect(workout).toBeFalsy();
   });
 
   it('should return false if dates are empty', () => {
@@ -40,8 +37,8 @@ describe('todays log selector', () => {
     const daily = dailyLogSelector(modifiedState);
     const workout = workoutLogSelector(modifiedState);
 
-    expect(daily).to.be.false;
-    expect(workout).to.be.false;
+    expect(daily).toBeFalsy();
+    expect(workout).toBeFalsy();
   });
 
   it(`should return true if today's date is among state vars`, () => {
@@ -54,7 +51,7 @@ describe('todays log selector', () => {
     const daily = dailyLogSelector(modifiedState);
     const workout = workoutLogSelector(modifiedState);
 
-    expect(daily).to.be.true;
-    expect(workout).to.be.true;
+    expect(daily).toBeTruthy();
+    expect(workout).toBeTruthy();
   });
 });

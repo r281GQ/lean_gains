@@ -19,7 +19,7 @@ import {
 
 import * as app from './../../store/actionCreators/app_action_creators';
 
-//TODO favourite foods like shortcut or tag, recentsearches and recipes
+//TODO favourite foods like shortcut or tags, recentsearches and recipes
 class CalorieTrackerContainer extends PureComponent {
   componentDidMount() {
     this.props.loadNutritionsForDay(moment().toDate(), true);
