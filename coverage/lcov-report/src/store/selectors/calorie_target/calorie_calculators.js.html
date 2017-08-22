@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/store/selectors/calorie_target/calorie_calculators.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">All files</a> / <a href="index.html">src/store/selectors/calorie_target</a> calorie_calculators.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>20/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>9/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>10/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>18/18</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">120x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as _ from 'lodash';
+&nbsp;
+import * as baseFunctions from './base';
+&nbsp;
+const unlessItsAbovezero = value =&gt; (value &gt; 0 ? value : <span class="branch-1 cbranch-no" title="branch not covered" >0.1)</span>;
+&nbsp;
+const calculateBodyFat = (height, weight, sex, neck, belly, waist, hip) =&gt;
+  sex === 'male'
+    ? baseFunctions.maleBodyFat(height, neck, belly)
+    : baseFunctions.femaleBodyFat(height, neck, waist, hip);
+&nbsp;
+const tdeeCalculator = (method, weight, height, age, sex, activity, bodyFat) =&gt;
+  method === 'harris-benedict'
+    ? baseFunctions.harrisBenedict(weight, height, age, sex) * activity
+    : baseFunctions.katchMcardle(baseFunctions.leanMass(weight, bodyFat)) *
+      activity;
+&nbsp;
+const calculateProteinTarget = (bodyFat, method, protein, weight) =&gt;
+  method === 'katch-mcardle'
+    ? <span class="branch-0 cbranch-no" title="branch not covered" >baseFunctions.leanMass(weight, bodyFat) * protein * 4</span>
+    : weight * protein * 4;
+&nbsp;
+const calculateFinalFat = (fatMethod, tdee, dayCalorieV, percentage, gram) =&gt;
+  fatMethod === 'percentage'
+    ? _.ceil(
+        baseFunctions.dayCalorie(tdee, dayCalorieV) * (percentage / 100) / 9
+      )
+    : <span class="branch-1 cbranch-no" title="branch not covered" >_.ceil(gram * 9) / 9;</span>
+&nbsp;
+const calculateFinalCalorie = (tdee, dayCalorieV) =&gt;
+  _.ceil(baseFunctions.dayCalorie(tdee, dayCalorieV));
+&nbsp;
+const calculateFinalProtein = proteinCalorie =&gt; _.ceil(proteinCalorie / 4);
+&nbsp;
+const minCalorie = (tdee, proteinCalorie) =&gt;
+  -1 * _.floor((tdee - proteinCalorie) / tdee * 100);
+&nbsp;
+const calculateFinalCarbohydrate = (
+  tdee,
+  dayCalorieV,
+  proteinCalorie,
+  fatMethod,
+  percentage,
+  gram
+) =&gt;
+  _.ceil(
+    (baseFunctions.dayCalorie(tdee, dayCalorieV) -
+      calculateFinalFat(fatMethod, tdee, dayCalorieV, percentage, gram) * 9 -
+      proteinCalorie) /
+      4
+  );
+&nbsp;
+const calculateMax = (tdee, dayCalorieV, proteinCalorie, type) =&gt;
+  _.floor(
+    unlessItsAbovezero(
+      type === 'percentage'
+        ? baseFunctions.maxFatPercentage(
+            baseFunctions.dayCalorie(tdee, dayCalorieV),
+            proteinCalorie
+          )
+        : baseFunctions.maxFatGram(
+            baseFunctions.dayCalorie(tdee, dayCalorieV),
+            proteinCalorie
+          )
+    ),
+    1
+  );
+&nbsp;
+export {
+  calculateMax,
+  calculateBodyFat,
+  minCalorie,
+  unlessItsAbovezero,
+  calculateFinalCarbohydrate,
+  calculateFinalProtein,
+  calculateFinalCalorie,
+  calculateFinalFat,
+  calculateProteinTarget,
+  tdeeCalculator
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Aug 22 2017 13:14:08 GMT+0100 (BST)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/containers/calorie_target/calorie_target_calculator.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/containers/calorie_target</a> calorie_target_calculator.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">10.2% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/49</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">10.42% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/48</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { reduxForm, formValueSelector, initialize } from 'redux-form/immutable';
+import { connect } from 'react-redux';
+import * as _ from 'lodash';
+import { Map } from 'immutable';
+&nbsp;
+import { createKcalTarget } from './../../store/actionCreators/user_details_action_creators';
+import calorieTarget from './../../store/selectors/calorie_target';
+import BMRCalculationSelector from './../../components/calorie_target/bmr_calculation_selector';
+import BodyFatField from './../../components/calorie_target/body_fat_field';
+import ActivityLevelSelecor from './../../components/calorie_target/activity_level_selector';
+import CalorieSplitSelector from './../../components/calorie_target/calorie_split_selector';
+import CustomCalorieField from './../../components/calorie_target/custom_calorie_field';
+import ProteinField from './../../components/calorie_target/protein_field';
+import FatMethodSelector from './../../components/calorie_target/fat_mathod_selector';
+import FatSelector from './../../components/calorie_target/fat_selector';
+import CenteredSubmitButton from './../../components/centered_submit_button';
+&nbsp;
+class CalorieTargetCalculator extends Component {
+<span class="fstat-no" title="function not covered" >  _a</span>djustCaloriePercentage(props, nextProps) {
+    const { calorieSplit } = <span class="cstat-no" title="statement not covered" >nextProps;</span>
+    const { change } = <span class="cstat-no" title="statement not covered" >props;</span>
+<span class="cstat-no" title="statement not covered" >    if (calorieSplit === 'slowbulk') {</span>
+<span class="cstat-no" title="statement not covered" >      change('restDay', -10);</span>
+<span class="cstat-no" title="statement not covered" >      change('trainingDay', 30);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (calorieSplit === 'cut') {</span>
+<span class="cstat-no" title="statement not covered" >      change('restDay', -30);</span>
+<span class="cstat-no" title="statement not covered" >      change('trainingDay', 10);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (calorieSplit === 'recomp') {</span>
+<span class="cstat-no" title="statement not covered" >      change('restDay', -20);</span>
+<span class="cstat-no" title="statement not covered" >      change('trainingDay', 20);</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  _a</span>djustFatRatio(
+    {
+      change,
+      restFatGrams,
+      restFatPercentage,
+      trainingFatGrams,
+      trainingFatPercentage
+    },
+    { calorieTarget }
+  ) {
+    const maxRestGram = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn(['max', 'restGram']);</span>
+    const maxTrainingGram = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn(['max', 'trainingGram']);</span>
+    const maxRestPercentage = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn(['max', 'restPercentage']);</span>
+    const maxTrainingPercentage = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn([</span>
+      'max',
+      'trainingPercentage'
+    ]);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (restFatGrams &gt; maxRestGram)</span>
+<span class="cstat-no" title="statement not covered" >      change('restFatGrams', _.floor(maxRestGram));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (trainingFatGrams &gt; maxTrainingGram)</span>
+<span class="cstat-no" title="statement not covered" >      change('trainingFatGrams', _.floor(maxTrainingGram));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (restFatPercentage &gt; maxRestPercentage)</span>
+<span class="cstat-no" title="statement not covered" >      change('restFatPercentage', _.floor(maxRestPercentage));</span>
+<span class="cstat-no" title="statement not covered" >    if (trainingFatPercentage &gt; maxTrainingPercentage)</span>
+<span class="cstat-no" title="statement not covered" >      change('trainingFatPercentage', _.floor(maxTrainingPercentage));</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  sh</span>ouldComponentUpdate({
+    calorieTarget,
+    calorieSplit,
+    restDay,
+    trainingDay,
+    activity,
+    fatMethod,
+    bmrCalculationMethod
+  }) {
+    const {
+      restFatGrams,
+      restFatPercentage,
+      trainingFatGrams,
+      trainingFatPercentage
+    } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+&nbsp;
+    const maxRestGram = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn(['max', 'restGram']);</span>
+    const maxTrainingGram = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn(['max', 'trainingGram']);</span>
+    const maxRestPercentage = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn(['max', 'restPercentage']);</span>
+    const maxTrainingPercentage = <span class="cstat-no" title="statement not covered" >calorieTarget.getIn([</span>
+      'max',
+      'trainingPercentage'
+    ]);
+&nbsp;
+    const update =
+<span class="cstat-no" title="statement not covered" >      bmrCalculationMethod !== this.props.bmrCalculationMethod ||</span>
+      fatMethod !== this.props.fatMethod ||
+      activity !== this.props.activity ||
+      calorieSplit !== this.props.calorieSplit ||
+      restDay !== this.props.restDay ||
+      trainingDay !== this.props.trainingDay ||
+      typeof restFatGrams === 'undefined' ||
+      typeof this.props.restDay === 'undefined' ||
+      restFatGrams &gt; maxRestGram ||
+      trainingFatGrams &gt; maxTrainingGram ||
+      restFatPercentage &gt; maxRestPercentage ||
+      trainingFatPercentage &gt; maxTrainingPercentage;
+<span class="cstat-no" title="statement not covered" >    return update;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>mponentDidMount() {
+<span class="cstat-no" title="statement not covered" >    this.props.initializeForm(this.props);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>mponentWillReceiveProps(nextProps) {
+<span class="cstat-no" title="statement not covered" >    this._adjustCaloriePercentage(this.props, nextProps);</span>
+<span class="cstat-no" title="statement not covered" >    this._adjustFatRatio(this.props, nextProps);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nder() {
+    const {
+      fatMethod,
+      calorieSplit,
+      handleSubmit,
+      bmrCalculationMethod,
+      createCalorieTarget,
+      calorieTarget
+    } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div&gt;
+        &lt;form
+          onSubmit={handleSubmit(<span class="fstat-no" title="function not covered" >()</span> =&gt;
+<span class="cstat-no" title="statement not covered" >            createCalorieTarget(calorieTarget.get('finalValues').toJS())</span>
+          )}
+        &gt;
+          &lt;BMRCalculationSelector /&gt;
+          &lt;BodyFatField bmrCalculationMethod={bmrCalculationMethod} /&gt;
+          &lt;ActivityLevelSelecor
+            normalize={<span class="fstat-no" title="function not covered" >va</span>lue =&gt;
+<span class="cstat-no" title="statement not covered" >              typeof value !== 'number' ? Number.parseFloat(value) : value}</span>
+          /&gt;
+          &lt;CalorieSplitSelector /&gt;
+          &lt;CustomCalorieField
+            calorieSplit={calorieSplit}
+            minRest={calorieTarget.toJS().minCalorie}
+            minTraining={calorieTarget.toJS().minCalorie}
+            normalize={<span class="fstat-no" title="function not covered" >va</span>lue =&gt;
+<span class="cstat-no" title="statement not covered" >              typeof value !== 'number' ? Number.parseFloat(value) : value}</span>
+          /&gt;
+          &lt;ProteinField /&gt;
+          &lt;FatMethodSelector /&gt;
+          &lt;FatSelector
+            fatMethod={fatMethod}
+            maxRestFatGrams={calorieTarget.getIn(['max', 'restGram'])}
+            maxRestFatPercentage={calorieTarget.getIn([
+              'max',
+              'restPercentage'
+            ])}
+            maxTrainingFatGrams={calorieTarget.getIn(['max', 'trainingGram'])}
+            maxTrainingFatPercentage={calorieTarget.getIn([
+              'max',
+              'trainingPercentage'
+            ])}
+          /&gt;
+          &lt;CenteredSubmitButton label="Create calorie target" /&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+&nbsp;
+CalorieTargetCalculator.propTypes = {
+  activity: PropTypes.number,
+  restDay: PropTypes.number,
+  trainingDay: PropTypes.number,
+  restFatGrams: PropTypes.number,
+  restFatPercentage: PropTypes.number,
+  trainingFatGrams: PropTypes.number,
+  trainingFatPercentage: PropTypes.number,
+  initializeForm: PropTypes.func.isRequired,
+  fatMethod: PropTypes.string,
+  calorieSplit: PropTypes.string,
+  bmrCalculationMethod: PropTypes.string,
+  createCalorieTarget: PropTypes.func.isRequired,
+  calorieTarget: ImmutablePropTypes.mapContains({
+    bodyFat: PropTypes.number,
+    finalValues: ImmutablePropTypes.mapContains({
+      rest: ImmutablePropTypes.mapContains({
+        calorie: PropTypes.number,
+        carbohydrate: PropTypes.number,
+        fat: PropTypes.number,
+        protein: PropTypes.number
+      }),
+      training: ImmutablePropTypes.mapContains({
+        calorie: PropTypes.number,
+        carbohydrate: PropTypes.number,
+        fat: PropTypes.number,
+        protein: PropTypes.number
+      })
+    }),
+    minCalorie: PropTypes.number,
+    max: ImmutablePropTypes.mapContains({
+      restGram: PropTypes.number,
+      restPercentage: PropTypes.number,
+      trainingGram: PropTypes.number,
+      trainingPercentage: PropTypes.number
+    })
+  })
+};
+&nbsp;
+const selector = formValueSelector('calorie-target');
+&nbsp;
+/*eslint no-class-assign: "off"*/
+CalorieTargetCalculator = connect(<span class="fstat-no" title="function not covered" >st</span>ate =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+  activity: selector(state, 'activity'),
+  fatMethod: selector(state, 'fatMethod'),
+  calorieSplit: selector(state, 'calorieSplit'),
+  bmrCalculationMethod: selector(state, 'bmrCalculationMethod'),
+  trainingFatGrams: selector(state, 'trainingFatGrams'),
+  restFatGrams: selector(state, 'restFatGrams'),
+  trainingFatPercentage: selector(state, 'trainingFatPercentage'),
+  restFatPercentage: selector(state, 'restFatPercentage'),
+  restDay: selector(state, 'restDay'),
+  trainingDay: selector(state, 'trainingDay')
+}))(CalorieTargetCalculator);
+&nbsp;
+const mapStateToProps = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; {
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    calorieTarget: calorieTarget(state)
+  };
+};
+&nbsp;
+const mapDispatchToProps = <span class="fstat-no" title="function not covered" >di</span>spatch =&gt; {
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    initializeForm: <span class="fstat-no" title="function not covered" >({</span> calorieTarget }) =&gt;
+<span class="cstat-no" title="statement not covered" >      dispatch(</span>
+        initialize(
+          'calorie-target',
+          Map().withMutations(<span class="fstat-no" title="function not covered" >ma</span>p =&gt;
+<span class="cstat-no" title="statement not covered" >            map</span>
+              .set('bodyFat', calorieTarget.get('bodyFat'))
+              .set('restDay', -20)
+              .set('trainingDay', 20)
+              .set('restFatGrams', 0)
+              .set('trainingFatGrams', 0)
+              .set('restFatPercentage', 0)
+              .set('trainingFatPercentage', 0)
+              .set('fatMethod', 'grams')
+              .set('activity', 1.2)
+              .set('protein', 2)
+              .set('calorieSplit', 'recomp')
+              .set('bmrCalculationMethod', 'harris-benedict')
+          )
+        )
+      ),
+    createCalorieTarget: <span class="fstat-no" title="function not covered" >ca</span>lorieTarget =&gt;
+<span class="cstat-no" title="statement not covered" >      dispatch(createKcalTarget(calorieTarget))</span>
+  };
+};
+&nbsp;
+export default connect(mapStateToProps, mapDispatchToProps)(
+  reduxForm({ form: 'calorie-target' })(CalorieTargetCalculator)
+);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Aug 22 2017 13:14:08 GMT+0100 (BST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

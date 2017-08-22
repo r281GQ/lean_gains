@@ -65,6 +65,7 @@ const values = (
     activity,
     bodyFat
   );
+  // console.log(tdee);
   // const restDayCalories = dayCalorie(tdee, restDay);
   // const trainingDayCalories = dayCalorie(tdee, trainingDay);
 

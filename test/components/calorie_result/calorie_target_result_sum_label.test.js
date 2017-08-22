@@ -4,7 +4,12 @@ import CalorieTargetResultSumLabel from './../../../src/components/calorie_resul
 
 describe('CalorieTargetResultSumLabel test', () => {
   it('should render', () => {
-    const component = shallow(<CalorieTargetResultSumLabel />);
+    const component = shallow(
+      <CalorieTargetResultSumLabel
+        label="rest"
+        calorieTarget={{ rest: { calorie: 1000 }, training: { calorie: 1500 } }}
+      />
+    );
     expect(component).toHaveLength(1);
     expect(component).toMatchSnapshot();
   });

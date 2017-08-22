@@ -21,13 +21,15 @@ const Exercises = ({ exercises }) =>
         </IconButton>
       }
     >
-      {_.map(exercises, exec =>
-        <MenuItem
-          key={exercises.indexOf(exec)}
-          value={exercises.indexOf(exec)}
-          primaryText={exec.toUpperCase()}
-        />
-      )}
+      {!_.isEmpty(exercises)
+        ? _.map(exercises, exec =>
+            <MenuItem
+              key={exercises.indexOf(exec)}
+              value={exercises.indexOf(exec)}
+              primaryText={exec.toUpperCase()}
+            />
+          )
+        : <MenuItem key={0} value={0} primaryText="NO EXERCISE FOR TODAY" />}
     </IconMenu>
   </ToolbarGroup>;
 

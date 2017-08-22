@@ -11,7 +11,6 @@ import moment from 'moment';
 import { LOG_OUT } from './actions/auth_actions';
 import app from './reducers/app';
 import auth from './reducers/auth';
-import calorieLog from './reducers/calorie_logs';
 import userDetails from './reducers/user_details';
 import dailyLogs from './reducers/daily_logs';
 import workoutLogs from './reducers/workout_logs';
@@ -36,7 +35,6 @@ const routingState = Immutable.fromJS({
   location: undefined
 });
 
-const calorieLogState = Map();
 
 const dailyLogsState = Map().withMutations(map =>
   map.set('data', Map()).set('dates', Set())
@@ -57,7 +55,6 @@ const INITIAL_STATE = Map().withMutations(map =>
     .set('auth', authState)
     .set('app', appState)
     .set('routing', routingState)
-    .set('calorieLog', calorieLogState)
     .set('dailyLogs', dailyLogsState)
     .set('userDetails', userDetailsState)
     .set('workoutLogs', workoutLogsState)
@@ -71,7 +68,6 @@ const rootReducer = combineReducers({
   app,
   auth,
   userDetails,
-  calorieLog,
   dailyLogs,
   routing,
   workoutLogs,

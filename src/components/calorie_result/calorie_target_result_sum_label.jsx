@@ -23,8 +23,8 @@ CalorieTargetResultSumLabel.propTypes = {
         calorie: PropTypes.number
       })
     })
-  ]),
-  label: PropTypes.string
+  ]).isRequired,
+  label: PropTypes.string.isRequired
 };
 
 export default CalorieTargetResultSumLabel;

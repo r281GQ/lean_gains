@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`calorie_target_result_sum_label should render 1`] = `
+<div
+  className="sign-up__container"
+>
+  <Paper
+    circle={false}
+    className="sign-up__paper"
+    rounded={true}
+    transitionEnabled={true}
+    zDepth={1}
+  >
+    <FlatButton
+      disabled={true}
+      fullWidth={false}
+      label="Sign up"
+      labelPosition="after"
+      labelStyle={Object {}}
+      onKeyboardFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onTouchStart={[Function]}
+      primary={false}
+      secondary={false}
+    />
+    <form
+      onSubmit={[Function]}
+    >
+      <div>
+        <Field
+          component={[Function]}
+          floatingLabelText="Username"
+          name="userName"
+          validate={[Function]}
+        />
+      </div>
+      <div>
+        <Field
+          component={[Function]}
+          floatingLabelText="Email address"
+          name="email"
+          type="email"
+          validate={
+            Array [
+              [Function],
+              [Function],
+            ]
+          }
+        />
+      </div>
+      <div>
+        <Field
+          component={[Function]}
+          floatingLabelText="Password"
+          name="password"
+          type="password"
+          validate={[Function]}
+        />
+      </div>
+      <div>
+        <Field
+          component={[Function]}
+          floatingLabelText="Password once more"
+          name="passwordAgain"
+          type="password"
+          validate={[Function]}
+        />
+      </div>
+      <div
+        className="sign-up-button__container "
+      >
+        <RaisedButton
+          disabled={false}
+          fullWidth={true}
+          label="Sign Up"
+          labelPosition="after"
+          primary={true}
+          secondary={false}
+          type="submit"
+        />
+      </div>
+    </form>
+  </Paper>
+</div>
+`;

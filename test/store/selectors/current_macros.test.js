@@ -5,13 +5,13 @@ import * as _ from 'lodash';
 import currentMacros from './../../../src/store/selectors/current_macros';
 import { kcalTargets } from './../../../shared/test_constants';
 
-
 const mockState = Map().withMutations(map =>
   map
     .setIn(
       ['userDetails', 'workoutTargets', '0'],
       fromJS({
         type: 'main',
+        isCycledTraining: 'fix',
         startDayofTraining: moment().subtract(3, 'days'),
         onEveryxDay: undefined,
         onDays: [moment().isoWeekday()],
@@ -22,6 +22,7 @@ const mockState = Map().withMutations(map =>
       ['userDetails', 'workoutTargets', '1'],
       fromJS({
         type: 'main',
+        isCycledTraining: 'fix',
         startDayofTraining: moment().subtract(3, 'days'),
         onEveryxDay: undefined,
         onDays: [moment().isoWeekday()],
@@ -32,6 +33,7 @@ const mockState = Map().withMutations(map =>
       ['userDetails', 'workoutTargets', '2'],
       fromJS({
         type: 'rest',
+        isCycledTraining: 'fix',
         startDayofTraining: moment().subtract(3, 'days'),
         onEveryxDay: undefined,
         onDays: [moment().isoWeekday()],

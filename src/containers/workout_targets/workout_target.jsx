@@ -14,6 +14,7 @@ import {
 } from './../../store/actionCreators/user_details_action_creators';
 import WorkoutTargetForm from './../../components/workout_target/workout_target_form';
 
+// TODO: div class wrogn on createform
 class WorkoutTarget extends PureComponent {
   componentDidMount() {
     const { defaultValue, initialize } = this.props;
