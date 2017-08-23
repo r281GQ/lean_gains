@@ -1,10 +1,10 @@
-/*eslint no-console: off*/
 import request from './../../services/request';
 import * as workoutLogs from './../actions/workout_logs_actions';
 import * as app from './../actions/app_actions';
 
-export const getWorkoutLogsForMonth = month => dispatch =>
-  request
+export const getWorkoutLogsForMonth = month => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .get(`/api/workoutlogs`, {
       params: {
         month
@@ -15,22 +15,28 @@ export const getWorkoutLogsForMonth = month => dispatch =>
         type: workoutLogs.WRITE_WORKOUT_LOGS,
         payload: data
       });
+      dispatch({ type: app.CLOSE_API });
     })
-    .catch(error => console.log(error));
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
 
-export const getWorkoutLogDates = () => dispatch =>
-  request
+export const getWorkoutLogDates = () => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .get('/api/workoutlogs/dates')
-    .then(({ data }) =>
+    .then(({ data }) => {
       dispatch({
         type: workoutLogs.WRITE_WORKOUT_LOG_DATES,
         payload: data
-      })
-    )
-    .catch(error => console.log(error));
+      });
+      dispatch({ type: app.CLOSE_API });
+    })
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
 
-export const createWorkoutLog = workoutLog => dispatch =>
-  request
+export const createWorkoutLog = workoutLog => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .post('/api/workoutlogs', workoutLog)
     .then(({ data }) => {
       dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data });
@@ -38,19 +44,25 @@ export const createWorkoutLog = workoutLog => dispatch =>
         type: workoutLogs.WRITE_WORKOUT_LOG_DATE,
         payload: data.createdAt
       });
+      dispatch({ type: app.CLOSE_API });
     })
-    .catch(error => console.log(error));
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
 
-export const updateWorkoutLog = workoutLog => dispatch =>
-  request
+export const updateWorkoutLog = workoutLog => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .put('/api/workoutlogs', workoutLog)
-    .then(({ data }) =>
-      dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data })
-    )
-    .catch(error => console.log(error));
+    .then(({ data }) => {
+      dispatch({ type: workoutLogs.WRITE_WORKOUT_LOG, payload: data });
+      dispatch({ type: app.CLOSE_API });
+    })
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
 
-export const deleteWorkoutLog = _id => dispatch =>
-  request
+export const deleteWorkoutLog = _id => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .delete(`/api/workoutlogs/${_id}`)
     .then(({ data }) => {
       dispatch({
@@ -58,10 +70,7 @@ export const deleteWorkoutLog = _id => dispatch =>
         payload: data.createdAt
       });
       dispatch({ type: workoutLogs.DELETE_WORKOUT_LOG, payload: _id });
-      dispatch({ type: app.OPEN_MESSAGE_BAR });
-      dispatch({
-        type: app.SET_MESSAGE,
-        payload: `Log with id ${_id} was deleted!`
-      });
+      dispatch({ type: app.CLOSE_API });
     })
-    .catch(error => console.log(error));
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};

@@ -14,7 +14,6 @@ import SaveIndicator from './save_indicator';
 const AuthenticatedHeader = ({
   openSideBar,
   exercises,
-  isFetching,
   isLoading,
   userName,
   photo,
@@ -26,7 +25,7 @@ const AuthenticatedHeader = ({
     <Main openSideBar={openSideBar} />
     <RouterNavigation goBack={goBack} goForward={goForward} />
     <Exercises exercises={exercises} />
-    <Macros todaysMacros={todaysMacros} isFetching={isFetching} />
+    <Macros todaysMacros={todaysMacros} isFetching={isLoading} />
     <SaveIndicator isLoading={isLoading} />
     <User userName={userName} photo={photo} />
   </Toolbar>;
@@ -34,7 +33,6 @@ const AuthenticatedHeader = ({
 AuthenticatedHeader.propTypes = {
   openSideBar: PropTypes.func,
   exercises: PropTypes.arrayOf(PropTypes.string),
-  isFetching: PropTypes.bool,
   isLoading: PropTypes.bool,
   userName: PropTypes.string,
   photo: PropTypes.string,

@@ -1,14 +1,9 @@
-/*eslint no-console: off*/
 import { arrayPush, initialize } from 'redux-form/immutable';
 import { Map, fromJS, List } from 'immutable';
 import * as _ from 'lodash';
 
 import request from './../../services/request';
-import {
-  mapValues,
-  formatResponse,
-  prepareAPI
-} from './../../services/calorie_track';
+import prepareAPI from './../../services/calorie_track';
 import * as app from './../actions/app_actions';
 
 export const updateCalorieLog = (items, day, nextDay) => dispatch => {
@@ -69,33 +64,41 @@ export const updateCalorieLog = (items, day, nextDay) => dispatch => {
   }
 };
 
-export const loadNutritionsForDay = (day, isPristine) => dispatch =>
-  isPristine
-    ? request
-        .get('/api/calorielogs', { params: { day } })
-        .then(({ data }) => {
-          dispatch({
-            type: app.SET_CALORIE_LOG_DAY,
-            payload: day
-          });
-          dispatch(
-            initialize(
-              'calorie-track',
-              Map().set(
-                'foods',
-                fromJS(data).get('nutritions')
-                  ? fromJS(data).get('nutritions')
-                  : List()
-              )
-            )
-          );
-        })
-        .catch(error => console.log(error))
-    : dispatch({ type: app.OPEN_CONSENT_MODAL, payload: day });
+export const loadNutritionsForDay = (day, isPristine) => dispatch => {
+  if (!isPristine)
+    return dispatch({ type: app.OPEN_CONSENT_MODAL, payload: day });
 
-export const search = query => dispatch =>
-  prepareAPI(query).then(response =>
-    dispatch(
-      arrayPush('calorie-track', 'foods', mapValues(formatResponse(response)))
-    )
-  );
+  dispatch({ type: app.INIT_API });
+  return request
+    .get('/api/calorielogs', { params: { day } })
+    .then(({ data }) => {
+      dispatch({
+        type: app.SET_CALORIE_LOG_DAY,
+        payload: day
+      });
+      dispatch(
+        initialize(
+          'calorie-track',
+          Map().set(
+            'foods',
+            fromJS(data).get('nutritions')
+              ? fromJS(data).get('nutritions')
+              : List()
+          )
+        )
+      );
+      dispatch({ type: app.CLOSE_API });
+    })
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
+
+export const search = query => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return prepareAPI(query)
+    .then(response => {
+      dispatch(arrayPush('calorie-track', 'foods', response));
+
+      dispatch({ type: app.CLOSE_API });
+    })
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};

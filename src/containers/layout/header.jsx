@@ -24,7 +24,6 @@ const HeaderContainer = ({
   userName,
   photo,
   isAuthenticated,
-  isFetching,
   goBack,
   goForward
 }) =>
@@ -44,7 +43,6 @@ const HeaderContainer = ({
           openSideBar={() => openSideBar()}
           todaysMacros={todaysMacros.toJS()}
           exercises={exercises.toJS()}
-          isFetching={isFetching}
           isLoading={isLoading}
           userName={userName}
           photo={photo}
@@ -60,14 +58,12 @@ HeaderContainer.propTypes = {
   isLoading: PropTypes.bool,
   userName: PropTypes.string,
   photo: PropTypes.string,
-  isAuthenticated: PropTypes.bool,
-  isFetching: PropTypes.bool
+  isAuthenticated: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.getIn(['auth', 'authenticated']),
   isLoading: state.getIn(['app', 'isLoading']),
-  isFetching: state.getIn(['app', 'isFetching']),
   exercises: isTrainingDay('main')(state),
   todaysMacros: todayMacros(state),
   userName: state.getIn(['userDetails', 'userName']),

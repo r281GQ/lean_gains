@@ -7,19 +7,21 @@ const REF_KEY = process.env.REACT_APP_NUTRITIONIX_REF_KEY;
 const APP_KEY = process.env.REACT_APP_NUTRITIONIX_APP_KEY;
 const APP_ID = process.env.REACT_APP_NUTRITIONIX_APP_ID;
 
-const prepareAPI = query =>
-  axios({
-    url: API_ENDPOINT,
-    method: 'POST',
-    data: {
-      query
-    },
-    headers: {
-      'x-app-id': APP_ID,
-      'x-app-key': APP_KEY,
-      'x-remote-user-id': REF_KEY
-    }
-  });
+export default query =>
+  new Promise((resolve, reject) =>
+    axios
+      .post(API_ENDPOINT, query, {
+        headers: {
+          'x-app-id': APP_ID,
+          'x-app-key': APP_KEY,
+          'x-remote-user-id': REF_KEY
+        }
+      })
+      .then(response => {
+        resolve(mapValues(formatResponse(response)));
+      })
+      .catch(error => reject(error))
+  );
 
 const mapValues = raw =>
   fromJS({
@@ -58,45 +60,43 @@ const formatResponse = response =>
     )
   )[0];
 
-const mock = () => ({
-  serving_weight_grams: 182,
-  nf_protein: 0.47,
-  food_name: 'apple',
-  nf_total_carbohydrate: 25.13,
-  serving_unit: 'medium',
-  nf_total_fat: 0.31,
-  alt_measures: {
-    0: {
-      serving_weight: 242,
-      measure: 'NLEA serving',
-      seq: 7,
-      qty: 1
-    },
-    2: {
-      serving_weight: 182,
-      measure: 'medium',
-      seq: 7,
-      qty: 1
-    },
-    1: {
-      serving_weight: 149,
-      measure: 'small (2-3/4',
-      seq: 5,
-      qty: 1
-    }
-  },
-  photo: {
-    thumb: 'https://d2xdmhkmkbyw75.cloudfront.net/384_thumb.jpg',
-    highres: 'https://d2xdmhkmkbyw75.cloudfront.net/384_highres.jpg'
-  },
-  tags: {
-    item: 'apple',
-    measure: null,
-    quantity: '1.0',
-    tag_id: 384
-  },
-  nf_calories: 94.64,
-  quantity: 1
-});
-
-export { mapValues, formatResponse, mock, prepareAPI };
+// const mock = () => ({
+//   serving_weight_grams: 182,
+//   nf_protein: 0.47,
+//   food_name: 'apple',
+//   nf_total_carbohydrate: 25.13,
+//   serving_unit: 'medium',
+//   nf_total_fat: 0.31,
+//   alt_measures: {
+//     0: {
+//       serving_weight: 242,
+//       measure: 'NLEA serving',
+//       seq: 7,
+//       qty: 1
+//     },
+//     2: {
+//       serving_weight: 182,
+//       measure: 'medium',
+//       seq: 7,
+//       qty: 1
+//     },
+//     1: {
+//       serving_weight: 149,
+//       measure: 'small (2-3/4',
+//       seq: 5,
+//       qty: 1
+//     }
+//   },
+//   photo: {
+//     thumb: 'https://d2xdmhkmkbyw75.cloudfront.net/384_thumb.jpg',
+//     highres: 'https://d2xdmhkmkbyw75.cloudfront.net/384_highres.jpg'
+//   },
+//   tags: {
+//     item: 'apple',
+//     measure: null,
+//     quantity: '1.0',
+//     tag_id: 384
+//   },
+//   nf_calories: 94.64,
+//   quantity: 1
+// });

@@ -3,7 +3,6 @@ import moment from 'moment';
 
 const datesWithLogs = type => state => state.getIn([type, 'dates']);
 
-//checks whether the chosen type of logs exists in the state
 const isTodaysLogExists = datesWithWorkoutLogs =>
   datesWithWorkoutLogs.find(value => moment(value).isSame(moment(), 'day'))
     ? true

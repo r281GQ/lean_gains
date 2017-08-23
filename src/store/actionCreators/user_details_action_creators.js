@@ -1,53 +1,63 @@
-/*eslint no-console: off*/
 import request from './../../services/request';
 import * as userDetails from './../actions/user_details_actions';
 import * as app from './../actions/app_actions';
 
-export const createKcalTarget = calorieTarget => dispatch =>
-  request
+export const createCalorieTarget = calorieTarget => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .post('/api/calorietargets', calorieTarget)
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_KCAL_TARGETS,
         payload: data
       });
+      dispatch({ type: app.CLOSE_API });
     })
-    .catch(error => console.log(error));
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
 
-export const createWorkoutTarget = workoutLog => dispatch =>
-  request
+export const createWorkoutTarget = workoutLog => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .post('/api/workouttargets', workoutLog)
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_WORKOUT_TARGET,
         payload: data
       });
+      dispatch({ type: app.CLOSE_API });
     })
-    .catch(error => console.log(error));
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
 
 export const updateWorkoutTarget = workoutLog => dispatch => {
-  request
+  dispatch({ type: app.INIT_API });
+  return request
     .put('/api/workouttargets', workoutLog)
     .then(({ data }) => {
       dispatch({
         type: userDetails.WRITE_WORKOUT_TARGET,
         payload: data
       });
+      dispatch({ type: app.CLOSE_API });
     })
-    .catch(error => console.log(error));
+    .catch(() => dispatch({ type: app.CLOSE_API }));
 };
 
-export const deleteWorkoutTarget = _id => dispatch =>
-  request
+export const deleteWorkoutTarget = _id => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .delete(`/api/workouttargets/${_id}`)
-    .then(() =>
-      dispatch({ type: userDetails.DELETE_WORKOUT_TARGET, payload: _id })
-    )
-    .catch(error => console.log(error));
+    .then(() => {
+      dispatch({ type: userDetails.DELETE_WORKOUT_TARGET, payload: _id });
+      dispatch({ type: app.CLOSE_API });
+    })
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
 
 export const initFetch = () => dispatch => {
-  dispatch({ type: app.INIT_FETCH });
-  request
+  dispatch({ type: app.INIT_API });
+  return request
     .get('/api/calorietargets')
     .then(({ data }) => {
       dispatch({
@@ -72,15 +82,18 @@ export const initFetch = () => dispatch => {
     })
     .then(({ data }) => {
       dispatch({ type: userDetails.WRITE_LATEST, payload: data });
-      dispatch({ type: app.CLOSE_FETCH });
+      dispatch({ type: app.CLOSE_API });
     })
-    .catch(error => console.log(error));
+    .catch(() => dispatch({ type: app.CLOSE_API }));
 };
 
-export const updateUserDetails = userDetailsInfo => dispatch =>
-  request
+export const updateUserDetails = userDetailsInfo => dispatch => {
+  dispatch({ type: app.INIT_API });
+  return request
     .put(`/api/userdetails`, userDetailsInfo)
-    .then(({ data }) =>
-      dispatch({ type: userDetails.WRITE_USER_DETAILS, payload: data })
-    )
-    .catch(error => console.log(error));
+    .then(({ data }) => {
+      dispatch({ type: userDetails.WRITE_USER_DETAILS, payload: data });
+      dispatch({ type: app.CLOSE_API });
+    })
+    .catch(() => dispatch({ type: app.CLOSE_API }));
+};
