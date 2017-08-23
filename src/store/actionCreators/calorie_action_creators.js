@@ -14,7 +14,7 @@ import * as app from './../actions/app_actions';
 export const updateCalorieLog = (items, day, nextDay) => dispatch => {
   dispatch({ type: app.INIT_API });
   if (nextDay) {
-    request
+    return request
       .put(
         '/api/calorielogs',
         _.map(items, item => ({ ...item, measures: _.toArray(item.measures) })),
@@ -45,7 +45,7 @@ export const updateCalorieLog = (items, day, nextDay) => dispatch => {
         dispatch({ type: app.CLOSE_API });
       });
   } else {
-    request
+    return request
       .put(
         '/api/calorielogs',
         _.map(items, item => ({ ...item, measures: _.toArray(item.measures) })),

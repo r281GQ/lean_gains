@@ -1,18 +1,8 @@
 /*eslint no-console: off*/
 import request from './../../services/request';
 import * as auth from './../actions/auth_actions';
-import { initFetch } from './../actionCreators/user_details_action_creators';
 
-export const whoAmI = () => (dispatch, getState) =>
-  request
-    .get(`/api/auth/whoami`)
-    .then(({ data: { name, email, _id } }) => {
-      if (!getState().getIn(['auth', 'authenticated'])) {
-        dispatch({ type: auth.LOGIN_SUCCESS, payload: { name, email, _id } });
-        dispatch(initFetch());
-      }
-    })
-    .catch(() => dispatch({ type: auth.LOG_OUT }));
+import { whoAmI } from './whoAmI';
 
 export const logOut = () => dispatch =>
   request
@@ -28,8 +18,13 @@ export const signUp = userInfo => dispatch =>
     .then(() => dispatch(whoAmI()))
     .catch(error => console.log(error));
 
-export const logIn = userInfo => dispatch =>
+export const logIn = userInfo => dispatch => {
   request
     .post('/api/auth/local/login', userInfo)
-    .then(() => dispatch(whoAmI()))
+    .then(() => {
+      dispatch(whoAmI());
+    })
     .catch(error => console.log(error));
+};
+
+export { whoAmI };

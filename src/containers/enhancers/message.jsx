@@ -9,13 +9,13 @@ import {
 } from './../../store/actionCreators/app_action_creators';
 
 const withMessageBar = WrappedComponent => {
-  const MessageBar = ({ isMessageBarOpen, closeMessageBar, message }) =>
+  const MessageBar = props =>
     <div>
-      <WrappedComponent />
+      <WrappedComponent {...props} />
       <Snackbar
-        open={isMessageBarOpen}
-        message={message}
-        onRequestClose={closeMessageBar}
+        open={props.isMessageBarOpen}
+        message={props.message}
+        onRequestClose={props.closeMessageBar}
         autoHideDuration={5000}
       />
     </div>;

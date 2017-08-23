@@ -26,6 +26,8 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
         .set('openConsentModalDate', undefined);
     case app.SET_MESSAGE:
       return state.set('message', payload);
+    case app.SET_CALORIE_LOG_DAY:
+      return state.set('selectedDayCalorieLog', fromJS(payload));
     case app.OPEN_MESSAGE_BAR:
       return state.set('isMessageBarOpen', true);
     case app.CLOSE_MESSAGE_BAR:

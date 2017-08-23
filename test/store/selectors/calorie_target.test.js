@@ -15,7 +15,6 @@ const formValues = fromJS({
   bodyFat: 15.3,
   trainingFatPercentage: 0,
   fatMethod: 'percentage',
-  // fatMethod: 'grams',
   trainingFatGrams: 0,
   restFatPercentage: 0
 });
