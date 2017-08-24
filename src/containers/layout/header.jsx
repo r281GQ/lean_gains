@@ -11,9 +11,6 @@ import isTrainingDay from './../../store/selectors/exercises';
 import todayMacros from './../../store/selectors/current_macros';
 import UnauthanticatedHeader from './../../components/layout/unauth_header';
 import AuthanticatedHeader from './../../components/layout/authenticated_header';
-// import withDataCheck from './../enhancers/with_data_check';
-
-
 
 const HeaderContainer = ({
   location: { pathname },
@@ -35,7 +32,6 @@ const HeaderContainer = ({
         rel="icon"
         href="https://d30y9cdsu7xlg0.cloudfront.net/png/61493-200.png"
       />
-      <link rel="canonical" href="http://mysite.com/example" />
     </Helmet>
     {!isAuthenticated
       ? <UnauthanticatedHeader pathname={pathname} />

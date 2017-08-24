@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatButton } from 'material-ui';
-
+ 
 const CalorieTargetResultSumLabel = ({ calorieTarget, label }) =>
   <div className="text-align">
     <FlatButton

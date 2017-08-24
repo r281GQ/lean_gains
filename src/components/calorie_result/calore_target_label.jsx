@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatButton } from 'material-ui';
-
+ 
 const CalorieTargetLabel = ({ value }) =>
   value
     ? <FlatButton disabled label={value} />

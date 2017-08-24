@@ -8,7 +8,7 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui';
-
+ 
 import CalorieTargetLabel from './calore_target_label';
 
 const CalorieTargetResultTable = ({ calorieTarget, label }) =>

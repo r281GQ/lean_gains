@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GoogleLoginButton test should render 1`] = `
+<RaisedButton
+  disabled={false}
+  fullWidth={false}
+  href="/api/auth/google"
+  icon={
+    <FontIcon
+      className="fa fa-google"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    />
+  }
+  label="Log in with Google"
+  labelPosition="before"
+  primary={false}
+  secondary={false}
+/>
+`;
