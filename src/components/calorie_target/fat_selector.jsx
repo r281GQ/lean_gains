@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form/immutable';
 
 import CurrentSlider from './../current_slider';
-
+ 
 const FatSelector = ({
   fatMethod,
   maxRestFatGrams,
