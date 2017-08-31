@@ -7,7 +7,6 @@ const mapToValueNamePair = props => path => ({
   name: path.name
 });
 
-//TODO: implement ErrorComponent internally
 const withDataCheck = (WrappedComponent, paths, ErrorComponent, optional) => {
   const DataCheck = props => {
     const errors = _.map(
@@ -18,17 +17,21 @@ const withDataCheck = (WrappedComponent, paths, ErrorComponent, optional) => {
       item => item.name
     );
 
-    if(optional){
-      if(props[optional.name] === false){
-        errors.push('optional.name')
-
+    if (optional) {
+      if (props[optional.name] === false) {
+        errors.push('optional.name');
       }
     }
-    return _.isEmpty(errors) ? <WrappedComponent {...props}/> : <ErrorComponent errors = {errors} />;
+
+    return _.isEmpty(errors) ? (
+      <WrappedComponent {...props} />
+    ) : (
+      <ErrorComponent errors={errors} />
+    );
   };
 
   const mapStateToProps = paths => state => ({
-    ..._.mapValues(_.keyBy(paths, 'name'), value => state.getIn(value.path) ),
+    ..._.mapValues(_.keyBy(paths, 'name'), value => state.getIn(value.path)),
     target: state.getIn(['userDetails', 'kcalTargets']).isEmpty
   });
 

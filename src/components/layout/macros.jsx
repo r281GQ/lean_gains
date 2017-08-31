@@ -39,15 +39,18 @@ const requirements = [
   },
   { name: 'neck', path: ['userDetails', 'latestMeasurements', 'neck'] }
 ];
-const Macros = ({ todaysMacros, isFetching }) =>
+const Macros = ({ todaysMacros, isFetching }) => (
   <ToolbarGroup>
-    {isFetching
-      ? <CircularProgress />
-      : <ToolbarTitle
-          style={{ color: '#EEEEEE' }}
-          text={`Macros: ${todaysMacros.calorie} P: ${todaysMacros.protein} C: ${todaysMacros.carbohydrate} F: ${todaysMacros.fat}`}
-        />}
-  </ToolbarGroup>;
+    {isFetching ? (
+      <CircularProgress />
+    ) : (
+      <ToolbarTitle
+        style={{ color: '#EEEEEE' }}
+        text={`Macros: ${todaysMacros.calorie} P: ${todaysMacros.protein} C: ${todaysMacros.carbohydrate} F: ${todaysMacros.fat}`}
+      />
+    )}
+  </ToolbarGroup>
+);
 
 Macros.propTypes = {
   isFetching: PropTypes.bool.isRequired,
@@ -62,11 +65,10 @@ Macros.propTypes = {
 export default withDataCheck(
   Macros,
   requirements,
-  () =>
+  () => (
     <ToolbarGroup>
-      <RaisedButton label="aint thtat goood" />
-    </ToolbarGroup>,
+      <RaisedButton label="Missing information" />
+    </ToolbarGroup>
+  ),
   { name: 'target' }
 );
-
-// export default Macros;

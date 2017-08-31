@@ -7,7 +7,7 @@ import sinon from 'sinon';
 import { createStore } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form/immutable';
-
+import { fromJS } from 'immutable';
 import { StaticRouter } from 'react-router-dom';
 
 import { PureMainContainer } from './../../src/containers/main';
@@ -24,7 +24,12 @@ const muiTheme = getMuiTheme();
 //   staticContext: { location: { pathname: '' } }
 // };
 
-const store = createStore(combineReducers({ formReducer }));
+const store = createStore(
+  combineReducers({
+    app: () => fromJS({ isErrorModalOpen: false, message: [''] }),
+    formReducer
+  })
+);
 
 // const _reduxForm = {
 //   getFormState: state => state,
@@ -66,7 +71,6 @@ describe('Main integration test', () => {
       }
     );
 
-
     // expect(
     //   initializeSpy.calledWith(
     //     fromJS({ userName: 'Endre', dob: moment(date).toDate(), sex: 'male' })
@@ -80,7 +84,6 @@ describe('Main integration test', () => {
     component.unmount();
     componentDidMountSpy.restore();
   });
-
 
   it('should render and not call initFetch', () => {
     const initFetchSpy = sinon.spy();
@@ -107,7 +110,6 @@ describe('Main integration test', () => {
         }
       }
     );
-
 
     // expect(
     //   initializeSpy.calledWith(

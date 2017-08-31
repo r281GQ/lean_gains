@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error test should render 1`] = `
+<Dialog
+  actions={
+    Array [
+      <FlatButton
+        disabled={false}
+        fullWidth={false}
+        label="ok"
+        labelPosition="after"
+        labelStyle={Object {}}
+        onClick={[Function]}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
+        primary={false}
+        secondary={false}
+    />,
+    ]
+  }
+  autoDetectWindowHeight={true}
+  autoScrollBodyContent={false}
+  modal={false}
+  open={false}
+  repositionOnUpdate={true}
+  title="The following nformations are missing! You can update them at the daily logs or user details!"
+>
+  <div>
+    test
+  </div>
+</Dialog>
+`;
