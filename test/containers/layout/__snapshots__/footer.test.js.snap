@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header test should render 1`] = `
+<div
+  className="footer__container"
+>
+  <Paper
+    circle={false}
+    className="footer__paper"
+    rounded={true}
+    style={
+      Object {
+        "backgroundColor": "#E0E0E0",
+      }
+    }
+    transitionEnabled={true}
+    zDepth={2}
+  >
+    <IconButton
+      disableTouchRipple={false}
+      disabled={false}
+      href="https://endrevegh.wordpress.com/"
+      iconStyle={Object {}}
+      target="_blank"
+      tooltip="WordPress"
+      tooltipPosition="top-center"
+      touch={false}
+    >
+      <FontIcon
+        className="fa fa-wordpress"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+    </IconButton>
+    <IconButton
+      disableTouchRipple={false}
+      disabled={false}
+      href="https://github.com/r281GQ/lean_gains"
+      iconStyle={Object {}}
+      target="_blank"
+      tooltip="GitHub"
+      tooltipPosition="top-center"
+      touch={false}
+    >
+      <FontIcon
+        className="fa fa-github"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+    </IconButton>
+  </Paper>
+</div>
+`;

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main test should render 1`] = `
+<div
+  className="main-container"
+>
+  <Connect(Error) />
+  <Connect(SideBarContainer) />
+  <Route
+    component={[Function]}
+    path="/app/userdetails"
+  />
+  <Route
+    component={[Function]}
+    path="/app/workoutlogs"
+  />
+  <Route
+    component={[Function]}
+    path="/app/dailylogs"
+  />
+  <Route
+    component={[Function]}
+    path="/app/workouttargets"
+  />
+  <Route
+    component={[Function]}
+    path="/app/kcaltarget"
+  />
+  <Route
+    component={[Function]}
+    path="/app/kcaltracker"
+  />
+</div>
+`;

@@ -2,10 +2,9 @@ import { createStore, applyMiddleware } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { reducer as form } from 'redux-form/immutable';
-import { createLogger } from 'redux-logger';
 import { routing, routerMiddlewareInstance } from './reducers/routing';
 import thunk from 'redux-thunk';
-import Immutable, { Iterable, fromJS, Map, Set } from 'immutable';
+import Immutable, { fromJS, Map, Set } from 'immutable';
 import moment from 'moment';
 
 import { LOG_OUT } from './actions/auth_actions';
@@ -35,7 +34,6 @@ const routingState = Immutable.fromJS({
   location: undefined
 });
 
-
 const dailyLogsState = Map().withMutations(map =>
   map.set('data', Map()).set('dates', Set())
 );
@@ -60,10 +58,6 @@ const INITIAL_STATE = Map().withMutations(map =>
     .set('workoutLogs', workoutLogsState)
 );
 
-const logger = createLogger({
-  stateTransformer: state => (Iterable.isIterable(state) ? state.toJS() : state)
-});
-
 const rootReducer = combineReducers({
   app,
   auth,
@@ -79,10 +73,9 @@ const withLogout = (rootReducer, INITIAL_STATE) => (state, action) =>
     ? (state = INITIAL_STATE)
     : rootReducer(state, action);
 
-//TODO: add undo function to api actions to roll back
 const store = createStore(
   withLogout(rootReducer, INITIAL_STATE),
-  composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance, logger))
+  composeWithDevTools(applyMiddleware(thunk, routerMiddlewareInstance))
 );
 
 export default store;

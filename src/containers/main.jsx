@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import {connect} from 'react-redux';
-import PropTypes  from 'prop-types'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import * as async from './async/containers';
 import SideBarContainer from './layout/side_bar';
 import withMessageBar from './enhancers/message';
 import withDataCheck from './enhancers/with_data_check';
-import * as async from './async/containers';
-
-import {initFetch} from './../store/actionCreators/user_details_action_creators'
-
+import Error from './error';
 import CalorieTargetError from './calorie_target_error';
+
+import { initFetch } from './../store/actionCreators/user_details_action_creators';
 
 const requirements = [
   { name: 'dob', path: ['userDetails', 'dob'] },
@@ -41,18 +41,13 @@ const requirements = [
   },
   { name: 'neck', path: ['userDetails', 'latestMeasurements', 'neck'] }
 ];
-import Error from './error';
-
-/*eslint react/display-name: "off"*/
 
 //TODO implement graphs and charts
-//TODO withDataCheck for every details
-//TODO organise imports
 class MainContainer extends React.PureComponent {
-  componentDidMount(){
-    if(!this.props.initFetchDone)
-      this.props.initFetch();
+  componentDidMount() {
+    if (!this.props.initFetchDone) this.props.initFetch();
   }
+
   render() {
     return (
       <div className="main-container">
@@ -91,12 +86,17 @@ class MainContainer extends React.PureComponent {
 MainContainer.propTypes = {
   initFetchDone: PropTypes.bool,
   initFetch: PropTypes.func
-}
+};
 
 const mapStateToProps = state => {
   return {
-    initFetchDone: typeof state.getIn(['userDetails', 'userName']) !== 'undefined'
-  }
-}
+    initFetchDone:
+      typeof state.getIn(['userDetails', 'userName']) !== 'undefined'
+  };
+};
 
-export default connect(mapStateToProps, {initFetch})(withMessageBar(MainContainer));
+export default connect(mapStateToProps, { initFetch })(
+  withMessageBar(MainContainer)
+);
+
+export { MainContainer as PureMainContainer };

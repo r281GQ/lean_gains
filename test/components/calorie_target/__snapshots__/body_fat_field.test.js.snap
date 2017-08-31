@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BodyFatField test should render 1`] = `
+<Field
+  component={[Function]}
+  floatingLabelText="You can manually enter your bodyfat %"
+  fullWidth={true}
+  max={50}
+  min={0}
+  name="bodyFat"
+  step={0.1}
+  type="number"
+/>
+`;

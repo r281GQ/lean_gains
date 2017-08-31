@@ -1,16 +1,17 @@
-import { fromJS } from 'immutable';
+import { fromJS, List } from 'immutable';
 import moment from 'moment';
 
 import * as app from './../actions/app_actions';
 
 const INITIAL_STATE = fromJS({
   isConfirmDeleteModalOpen: false,
+  isErrorModalOpen: false,
   isSideBarOpen: false,
   isLoading: false,
   isMessageBarOpen: false,
   isFetching: false,
   selectedDayCalorieLog: moment().toDate(),
-  message: '',
+  message: [''],
   isConsentModalOpen: false
 });
 
@@ -24,8 +25,14 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
       return state
         .set('isConsentModalOpen', false)
         .set('openConsentModalDate', undefined);
+    case app.OPEN_ERROR_MODAL:
+      return state.set('isErrorModalOpen', true);
+    case app.CLOSE_ERROR_MODAL:
+      return state.set('isErrorModalOpen', false);
     case app.SET_MESSAGE:
-      return state.set('message', payload);
+      return state.set('message', fromJS(payload));
+    case app.UNSET_MESSAGES:
+      return state.set('message', List().push(''));
     case app.SET_CALORIE_LOG_DAY:
       return state.set('selectedDayCalorieLog', fromJS(payload));
     case app.OPEN_MESSAGE_BAR:

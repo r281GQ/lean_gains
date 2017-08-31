@@ -29,7 +29,7 @@ const withMessageBar = WrappedComponent => {
   const mapStateToProps = state => {
     return {
       isMessageBarOpen: state.getIn(['app', 'isMessageBarOpen']),
-      message: state.getIn(['app', 'message'])
+      message: state.getIn(['app', 'message']).first()
     };
   };
 

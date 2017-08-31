@@ -16,9 +16,20 @@ export const closeWorkoutModal = () => ({
   type: app.CLOSE_CONFIRM_DELETE_MODAL
 });
 
+export const setMessages = messages => ({
+  type: app.SET_MESSAGE,
+  payload: messages
+});
+
+export const unSetMessages = () => ({ type: app.UNSET_MESSAGES });
+
 export const openConsentModal = () => ({ type: app.OPEN_CONSENT_MODAL });
 
 export const closeConsentModal = () => ({ type: app.CLOSE_CONSENT_MODAL });
+
+export const openErrorModal = () => ({ type: app.OPEN_ERROR_MODAL });
+
+export const closeErrorModal = () => ({ type: app.CLOSE_ERROR_MODAL });
 
 export const openSideBar = () => ({ type: app.OPEN_SIDE_BAR });
 

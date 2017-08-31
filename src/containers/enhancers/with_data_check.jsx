@@ -24,7 +24,7 @@ const withDataCheck = (WrappedComponent, paths, ErrorComponent, optional) => {
 
       }
     }
-    return _.isEmpty(errors) ? <WrappedComponent {...props}/> : <ErrorComponent />;
+    return _.isEmpty(errors) ? <WrappedComponent {...props}/> : <ErrorComponent errors = {errors} />;
   };
 
   const mapStateToProps = paths => state => ({

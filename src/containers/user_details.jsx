@@ -15,25 +15,40 @@ class UserDetailsContainer extends PureComponent {
     initialize(fromJS({ userName, dob: moment(dob).toDate(), sex }));
   }
 
-  render() {
-    const { handleSubmit, updateUserDetails } = this.props;
+  constructor(props) {
+    super(props);
+    this._handleFormSubmit = this._handleFormSubmit.bind(this);
+    this._normalizeDate = this._normalizeDate.bind(this);
+  }
 
+  _handleFormSubmit(formProps) {
+    this.props.updateUserDetails({
+      userName: formProps.get('userName'),
+      sex: formProps.get('sex'),
+      dob: moment(formProps.get('dob')).valueOf()
+    });
+  }
+
+  _normalizeDate() {
+    return value => moment(value).valueOf();
+  }
+
+  render() {
+    const { handleSubmit } = this.props;
     return (
       <div className="user-details">
         <UserDetailsForm
           {...this.props}
-          handleUpdateUserDetails={handleSubmit(formProps =>
-            updateUserDetails({
-              userName: formProps.get('userName'),
-              sex: formProps.get('sex'),
-              dob: moment(formProps.get('dob')).valueOf()
-            })
-          )}
-          normalizeDate={value => moment(value).valueOf()}
+          handleUpdateUserDetails={handleSubmit(this._handleFormSubmit)}
+          normalizeDate={this._normalizeDate}
           validators={{
             userName: required,
-            minDate: moment().subtract(110, 'years').toDate(),
-            maxDate: moment().subtract(5, 'years').toDate()
+            minDate: moment()
+              .subtract(110, 'years')
+              .toDate(),
+            maxDate: moment()
+              .subtract(5, 'years')
+              .toDate()
           }}
         />
       </div>
@@ -59,3 +74,5 @@ export default connect(mapStateToProps, { updateUserDetails })(
     form: 'user-details'
   })(UserDetailsContainer)
 );
+
+export { UserDetailsContainer as PureUserDetailsContainer };

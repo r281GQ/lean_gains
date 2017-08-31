@@ -1,110 +1,123 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import { Drawer, MenuItem, Divider, FontIcon } from 'material-ui';
-import PropTypes from 'prop-types';
+
 import { closeSideBar } from './../../store/actionCreators/app_action_creators';
 import { logOut } from './../../store/actionCreators/auth_action_creators';
 
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+class SideBarContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this._handleCloseSideBar = this._handleCloseSideBar.bind(this);
+    this._handleLogOut = this._handleLogOut.bind(this);
+  }
 
-//TODO: implement help sidebar
-const SideBarContainer = ({ isSideBarOpen, closeSideBar, logOut }) => {
-  return (
-    <Drawer
-      open={isSideBarOpen}
-      docked={false}
-      onRequestChange={() => closeSideBar()}
-    >
-      <MenuItem
-        onClick={() => closeSideBar()}
-        primaryText="Close"
-        rightIcon={<ArrowBack />}
-      />
-      <Divider />
-      <Link
-        className="link-no-underline"
-        to="/app/kcaltracker"
-        onClick={() => closeSideBar()}
-      >
-        <MenuItem
-          primaryText="Track calories"
-          rightIcon={<FontIcon className="fa fa-pencil-square-o" />}
-        />
-      </Link>
-      <Link
-        className="link-no-underline"
-        to="/app/workoutlogs"
-        onClick={() => closeSideBar()}
-      >
-        <MenuItem
-          primaryText="Workout logs"
-          rightIcon={<FontIcon className="fa fa-pencil" />}
-        />
-      </Link>
-      <Link
-        className="link-no-underline"
-        to="/app/dailylogs"
-        onClick={() => closeSideBar()}
-      >
-        <MenuItem
-          primaryText="Daily logs"
-          rightIcon={<FontIcon className="fa fa-pencil-square" />}
-        />
-      </Link>
-      <Link
-        className="link-no-underline"
-        to="/app/kcaltarget"
-        onClick={() => closeSideBar()}
-      >
-        <MenuItem
-          primaryText="Set calorie target"
-          rightIcon={<FontIcon className="fa fa-dot-circle-o" />}
-        />
-      </Link>
+  _handleCloseSideBar() {
+    this.props.closeSideBar();
+  }
 
-      <Link
-        className="link-no-underline"
-        to="/app/workouttargets"
-        onClick={() => closeSideBar()}
-      >
-        <MenuItem
-          primaryText="Set workout target"
-          rightIcon={<FontIcon className="fa fa-bullseye" />}
-        />
-      </Link>
+  _handleLogOut() {
+    this.props.logOut();
+  }
 
-      <Link
-        className="link-no-underline"
-        to="/app/userdetails"
-        onClick={() => closeSideBar()}
+  render() {
+    const { isSideBarOpen } = this.props;
+    return (
+      <Drawer
+        open={isSideBarOpen}
+        docked={false}
+        onRequestChange={this._handleCloseSideBar}
       >
         <MenuItem
-          primaryText="Change user details"
-          rightIcon={<FontIcon className="fa fa-user" />}
+          onClick={this._handleCloseSideBar}
+          primaryText="Close"
+          rightIcon={<ArrowBack />}
         />
-      </Link>
-      <Divider />
-      <Link
-        className="link-no-underline"
-        to="/app/about"
-        onClick={() => closeSideBar()}
-      >
+        <Divider />
+        <Link
+          className="link-no-underline"
+          to="/app/kcaltracker"
+          onClick={this._handleCloseSideBar}
+        >
+          <MenuItem
+            primaryText="Track calories"
+            rightIcon={<FontIcon className="fa fa-pencil-square-o" />}
+          />
+        </Link>
+        <Link
+          className="link-no-underline"
+          to="/app/workoutlogs"
+          onClick={this._handleCloseSideBar}
+        >
+          <MenuItem
+            primaryText="Workout logs"
+            rightIcon={<FontIcon className="fa fa-pencil" />}
+          />
+        </Link>
+        <Link
+          className="link-no-underline"
+          to="/app/dailylogs"
+          onClick={this._handleCloseSideBar}
+        >
+          <MenuItem
+            primaryText="Daily logs"
+            rightIcon={<FontIcon className="fa fa-pencil-square" />}
+          />
+        </Link>
+        <Link
+          className="link-no-underline"
+          to="/app/kcaltarget"
+          onClick={this._handleCloseSideBar}
+        >
+          <MenuItem
+            primaryText="Set calorie target"
+            rightIcon={<FontIcon className="fa fa-dot-circle-o" />}
+          />
+        </Link>
+        <Link
+          className="link-no-underline"
+          to="/app/workouttargets"
+          onClick={this._handleCloseSideBar}
+        >
+          <MenuItem
+            primaryText="Set workout target"
+            rightIcon={<FontIcon className="fa fa-bullseye" />}
+          />
+        </Link>
+        <Link
+          className="link-no-underline"
+          to="/app/userdetails"
+          onClick={this._handleCloseSideBar}
+        >
+          <MenuItem
+            primaryText="Change user details"
+            rightIcon={<FontIcon className="fa fa-user" />}
+          />
+        </Link>
+        <Divider />
+        <Link
+          className="link-no-underline"
+          to="/app/about"
+          onClick={this._handleCloseSideBar}
+        >
+          <MenuItem
+            primaryText="About"
+            rightIcon={<FontIcon className="fa fa-info" />}
+          />
+        </Link>
+        <Divider />
         <MenuItem
-          primaryText="About"
-          rightIcon={<FontIcon className="fa fa-info" />}
+          onClick={this._handleLogOut}
+          primaryText="Log out"
+          rightIcon={<FontIcon className="fa fa-sign-out" />}
         />
-      </Link>
-
-      <Divider />
-      <MenuItem
-        onClick={() => logOut()}
-        primaryText="Log out"
-        rightIcon={<FontIcon className="fa fa-sign-out" />}
-      />
-    </Drawer>
-  );
-};
+      </Drawer>
+    );
+  }
+}
 
 SideBarContainer.propTypes = {
   isSideBarOpen: PropTypes.bool,
@@ -119,3 +132,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { closeSideBar, logOut })(
   SideBarContainer
 );
+
+export { SideBarContainer as PureSideBarContainer };

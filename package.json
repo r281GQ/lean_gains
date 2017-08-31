@@ -10,7 +10,8 @@
     "serve:mock": "nodemon mock/server.js",
     "serve:dev": "NODE_ENV=development concurrently \" nodemon server/server.js\"  \"webpack-dev-server --hot --inline\"",
     "build": "NODE_ENV=production webpack -p",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "analyze": "ANALYZE=true NODE_ENV=production webpack -p"
   },
   "author": "Endre Vegh",
   "license": "ISC",
@@ -54,12 +55,20 @@
   "jest": {
     "snapshotSerializers": [
       "<rootDir>/node_modules/enzyme-to-json/serializer"
-    ]
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!iggy-common)"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mock/scss_mock.js",
+      "\\.(css|less)$": "<rootDir>/mock/scss_mock.js"
+    }
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
+    "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-polyfill": "^6.26.0",
@@ -80,6 +89,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^20.0.4",
     "mocha": "^3.5.0",
@@ -93,7 +103,9 @@
     "sinon": "^3.2.1",
     "style-loader": "^0.18.2",
     "testcheck": "^1.0.0-rc.2",
+    "url-loader": "^0.5.9",
     "webpack": "^2.7.0",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.6.1",
     "webpack-hot-middleware": "^2.18.2"
