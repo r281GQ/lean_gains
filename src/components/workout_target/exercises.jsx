@@ -5,7 +5,7 @@ import { FlatButton, Paper } from 'material-ui';
 
 const Exercises = () =>
   <div>
-    <Paper className="workout-target-paper">
+    <Paper className=".workout-target__paper">
       <FieldArray
         name="exercises"
         component={({ fields: { map, remove, insert, length } }) => {

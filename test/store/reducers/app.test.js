@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 
 import reducer from './../../../src/store/reducers/app';
 import * as app from './../../../src/store/actions/app_actions';
@@ -55,6 +55,23 @@ describe('app reducer', () => {
       }
     );
     expect(nextState.get('isConfirmDeleteModalOpen')).toBe(false);
+  });
+
+  it('should set isErrorModalOpen to TRUE on OPEN_ERROR_MODAL', () => {
+    const nextState = reducer(undefined, {
+      type: app.OPEN_ERROR_MODAL
+    });
+    expect(nextState.get('isErrorModalOpen')).toBe(true);
+  });
+
+  it('should set isErrorModalOpen to FALSE on CLOSE_ERROR_MODAL', () => {
+    const nextState = reducer(
+      reducer(undefined, { type: app.OPEN_ERROR_MODAL }),
+      {
+        type: app.CLOSE_ERROR_MODAL
+      }
+    );
+    expect(nextState.get('isErrorModalOpen')).toBe(false);
   });
 
   it('should set selected daily log _id', () => {
@@ -143,5 +160,18 @@ describe('app reducer', () => {
     });
 
     expect(nextState.get('message')).toBe('sample');
+  });
+
+  it(`should unset message to ['']`, () => {
+    const message = reducer(Map(), {
+      type: app.SET_MESSAGE,
+      payload: 'sample'
+    });
+
+    const nextState = reducer(message, {
+      type: app.UNSET_MESSAGES
+    });
+
+    expect(nextState.get('message')).toEqual(List().push(''));
   });
 });
