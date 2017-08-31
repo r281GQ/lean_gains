@@ -9,7 +9,17 @@ import {
 
 class CalorieTargetError extends React.PureComponent {
   componentDidMount() {
-    this.props.setMessages(this.props.errors), this.props.openErrorModal();
+    this._handleOpenErrorModal();
+  }
+
+  constructor(props) {
+    super(props);
+
+  }
+
+  _handleOpenErrorModal() {
+    this.props.setMessages(this.props.errors);
+    this.props.openErrorModal();
   }
 
   render() {
@@ -18,9 +28,9 @@ class CalorieTargetError extends React.PureComponent {
 }
 
 CalorieTargetError.propTypes = {
-  errors: PropTypes.any,
-  openErrorModal: PropTypes.func,
-  setMessages: PropTypes.func
+  errors: PropTypes.arrayOf(PropTypes.string),
+  openErrorModal: PropTypes.func.isRequired,
+  setMessages: PropTypes.func.isRequired
 };
 
 export default connect(null, { openErrorModal, setMessages })(
