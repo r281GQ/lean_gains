@@ -153,9 +153,10 @@ class CalorieTargetCalculator extends Component {
     return (
       <div>
         <form
-          onSubmit={handleSubmit(() =>
-            createCalorieTarget(calorieTarget.get('finalValues').toJS())
-          )}
+          onSubmit={handleSubmit(() =>{
+            console.log(this.props.calorieTarget.get('finalValues').toJS());
+            createCalorieTarget(this.props.calorieTarget.get('finalValues').toJS())
+          })}
         >
           <BMRCalculationSelector />
           <BodyFatField bmrCalculationMethod={bmrCalculationMethod} />
