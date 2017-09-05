@@ -12,7 +12,6 @@ const CalorieTargetContainer = () =>
       <div className="col col-6">
         <CalorieTargetResult />
       </div>
-      <div className="clear" />
     </div>;
   </div>;
 

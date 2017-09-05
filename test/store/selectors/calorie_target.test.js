@@ -145,23 +145,23 @@ describe('calorie target props selector', () => {
   });
 
   describe('max', () => {
-    it('defaultValue => [161.6, 72.1, 161.6, 73.1]', () => {
+    it('defaultValue => [162, 74, 162, 74]', () => {
       const currentState = state;
       expect(Math.abs(selector(currentState).getIn(['max', 'restGram']))).toBe(
-        161.6
+        162
       );
       expect(
         Math.abs(selector(currentState).getIn(['max', 'restPercentage']))
-      ).toBe(73.1);
+      ).toBe(74);
       expect(
         Math.abs(selector(currentState).getIn(['max', 'trainingGram']))
-      ).toBe(161.6);
+      ).toBe(162);
       expect(
         Math.abs(selector(currentState).getIn(['max', 'trainingPercentage']))
-      ).toBe(73.1);
+      ).toBe(74);
     });
 
-    it('increasing dayCalories should increase max values => [250, 80.8, 250, 80.8]', () => {
+    it('increasing dayCalories should increase max values => [250, 81, 250, 81]', () => {
       const currentState = state
         .setIn(['form', 'calorie-target', 'values', 'restDay'], 40)
         .setIn(['form', 'calorie-target', 'values', 'trainingDay'], 40);
@@ -171,33 +171,33 @@ describe('calorie target props selector', () => {
       );
       expect(
         Math.abs(selector(currentState).getIn(['max', 'restPercentage']))
-      ).toBe(80.8);
+      ).toBe(81);
       expect(
         Math.abs(selector(currentState).getIn(['max', 'trainingGram']))
       ).toBe(250);
       expect(
         Math.abs(selector(currentState).getIn(['max', 'trainingPercentage']))
-      ).toBe(80.8);
+      ).toBe(81);
     });
 
-    it('increasing protein should decrease values => [102.2, 46.2, 102.2, 46.2]', () => {
+    it('increasing protein should decrease values => [103, 47, 103, 47]', () => {
       const currentState = state.setIn(
         ['form', 'calorie-target', 'values', 'protein'],
         4
       );
 
       expect(Math.abs(selector(currentState).getIn(['max', 'restGram']))).toBe(
-        102.2
+        103
       );
       expect(
         Math.abs(selector(currentState).getIn(['max', 'restPercentage']))
-      ).toBe(46.2);
+      ).toBe(47);
       expect(
         Math.abs(selector(currentState).getIn(['max', 'trainingGram']))
-      ).toBe(102.2);
+      ).toBe(103);
       expect(
         Math.abs(selector(currentState).getIn(['max', 'trainingPercentage']))
-      ).toBe(46.2);
+      ).toBe(47);
     });
   });
 });

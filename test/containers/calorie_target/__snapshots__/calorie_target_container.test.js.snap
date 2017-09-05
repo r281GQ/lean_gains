@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CalorieTargetContainer test should render 1`] = `
+<div
+  className="calorie-target"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col col-6"
+    >
+      <Connect(ReduxForm) />
+    </div>
+    <div
+      className="col col-6"
+    >
+      <Connect(CalorieTargetResultContainer) />
+    </div>
+  </div>
+  ;
+</div>
+`;
