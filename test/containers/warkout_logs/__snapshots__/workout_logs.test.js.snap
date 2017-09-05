@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkoutLogs test should render 1`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={false}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 2`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={false}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 3`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={false}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 4`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 5`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 6`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 7`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 8`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 9`] = `
+<WorkoutLogForm
+  disabled={true}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 10`] = `
+<WorkoutLogForm
+  disabled={true}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should render 11`] = `
+<WorkoutLogForm
+  disabled={true}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;

@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 };
 
 WorkoutTargetsMainContainer.propTypes = {
-  workoutTargets: ImmutablePropTypes.map,
+  workoutTargets: ImmutablePropTypes.map.isRequired,
   openWorkoutModal: PropTypes.func.isRequired,
   setSelectedWorkoutTarget: PropTypes.func.isRequired
 };
@@ -42,3 +42,5 @@ export default connect(mapStateToProps, {
   setSelectedWorkoutTarget,
   openWorkoutModal
 })(WorkoutTargetsMainContainer);
+
+export {WorkoutTargetsMainContainer as PureWorkoutTargetsMainContainer }

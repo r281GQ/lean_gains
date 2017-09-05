@@ -13,13 +13,17 @@ import {
   updateWorkoutLog
 } from './../../store/actionCreators/workout_log_action_creators';
 
-const mapToBoolean = value => (_.isBoolean(value) ? value : false);
-
+// TODO: move mapStateToProps to selectors
 class WorkoutLogFormContainer extends PureComponent {
   constructor(props) {
     super(props);
     this._disableThese = this._disableThese.bind(this);
+    this._isDisabled = this._isDisabled.bind(this);
+    this._handleFormSubmit = this._handleFormSubmit.bind(this);
+    this._renderDate = this._renderDate.bind(this);
+    this._mapToBoolean = this._mapToBoolean.bind(this);
   }
+
   componentDidMount() {
     if (this.props.match.params.id)
       this.props.initialize(
@@ -31,59 +35,67 @@ class WorkoutLogFormContainer extends PureComponent {
       this.props.initialize(Map().set('createdAt', moment().toDate()));
     }
   }
-  // componentDidMount = () =>
-  //   this.props.match.params.id ? this.props.initialize(
-  //     Map().withMutations(map =>
-  //       map
-  //         .set('createdAt', moment().toDate())
-  //         .set('exercises', this.props.defaultValue),
-  //     ),
-  //   ) : ;
 
-  _disableThese = disableDates => createdAt =>
-    disableDates.find(value => moment(value).isSame(createdAt, 'day'))
+  _mapToBoolean(value) {
+    return _.isBoolean(value) ? value : false;
+  }
+
+  _disableThese(disableDates) {
+    return function(createdAt) {
+      return disableDates.find(value => moment(value).isSame(createdAt, 'day'))
+        ? true
+        : false;
+    };
+  }
+
+  _isDisabled() {
+    const { match, datesWithWorkoutLogs, selectedDate } = this.props;
+    return datesWithWorkoutLogs.find(value =>
+      moment(value).isSame(selectedDate, 'day')
+    ) && !match.params.id
       ? true
       : false;
+  }
+
+  _handleFormSubmit(formProps) {
+    const { match, createWorkoutLog, updateWorkoutLog } = this.props;
+    match.params.id
+      ? updateWorkoutLog({
+          ...formProps.toJS(),
+          _id: match.params.id,
+          createdAt: moment(formProps.get('createdAt')).valueOf()
+        })
+      : createWorkoutLog({
+          ...formProps.toJS(),
+          createdAt: moment(formProps.get('createdAt')).valueOf()
+        });
+  }
+
+  _renderDate() {
+    const { match } = this.props;
+    return match.path ? _.includes(match.path, 'before') : false;
+  }
 
   render() {
     const {
       match,
-      createWorkoutLog,
       handleSubmit,
-      updateWorkoutLog,
       datesWithWorkoutLogs,
-      markerList,
-      selectedDate
+      markerList
     } = this.props;
     return (
       <WorkoutLogForm
-        submitHandler={handleSubmit(
-          formprops =>
-            match.params.id
-              ? updateWorkoutLog({
-                  ...formprops.toJS(),
-                  _id: match.params.id,
-                  createdAt: moment(formprops.get('createdAt')).valueOf()
-                })
-              : createWorkoutLog({
-                  ...formprops.toJS(),
-                  createdAt: moment(formprops.get('createdAt')).valueOf()
-                })
-        )}
-        renderDate={match.path ? _.includes(match.path, 'before') : false}
+        submitHandler={handleSubmit(this._handleFormSubmit)}
+        renderDate={this._renderDate()}
         maxDate={moment().toDate()}
-        minDate={moment().subtract(110, 'years').toDate()}
+        minDate={moment()
+          .subtract(110, 'years')
+          .toDate()}
         formatDate={value => moment(value).toDate()}
         shouldDisableDate={this._disableThese(datesWithWorkoutLogs)}
         passedMarkerList={markerList}
-        normalizeMarker={mapToBoolean}
-        disabled={
-          datesWithWorkoutLogs.find(value =>
-            moment(value).isSame(selectedDate, 'day')
-          ) && !match.params.id
-            ? true
-            : false
-        }
+        normalizeMarker={this._mapToBoolean}
+        disabled={this._isDisabled()}
         label={match.params.id ? 'Update' : 'Create'}
       />
     );
@@ -123,3 +135,5 @@ export default connect(mapStateToProps, { updateWorkoutLog, createWorkoutLog })(
     form: 'workoutLog'
   })(WorkoutLogFormContainer)
 );
+
+export {WorkoutLogFormContainer as PureWorkoutLogFormContainer}

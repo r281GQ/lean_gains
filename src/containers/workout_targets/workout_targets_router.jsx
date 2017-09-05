@@ -45,3 +45,5 @@ WorkoutTargetsRouter.propTypes = {
 export default connect(state => ({
   workoutTargets: state.getIn(['userDetails', 'workoutTargets'])
 }))(WorkoutTargetsRouter);
+
+export {WorkoutTargetsRouter as PureWorkoutTargetsRouter}

@@ -156,10 +156,15 @@ WorkoutTarget.propTypes = {
   isCycledTraining: PropTypes.oneOf(['fix', 'cycle'])
 };
 
-export default connect(null, { createWorkoutTarget, updateWorkoutTarget })(
+const DecoratedWorkoutTarget = connect(null, { createWorkoutTarget, updateWorkoutTarget })(
   reduxForm({
     form: 'workout-target'
   })(formValues('isCycledTraining')(WorkoutTarget))
 );
 
+
+export default DecoratedWorkoutTarget;
+
+
 export { WorkoutTarget as PureWorkoutTarget };
+// export { WorkoutTarget as PureWorkoutTarget };

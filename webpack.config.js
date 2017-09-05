@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const webpack = require('webpack');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 const ENVIRONMENT = process.env.NODE_ENV;
 const DEV =
@@ -16,6 +17,8 @@ const config = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].[hash].js',
+    // filename: '[name]-bundle.js',
+    chunkFilename: '[name].[hash]-chunk.js',
     publicPath: '/'
   },
   devServer: {
@@ -85,7 +88,9 @@ const config = {
         return context && context.indexOf('node_modules') >= 0;
       }
     }),
-
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest'
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       async: 'redux-form',
       minChunks(module, count) {
@@ -101,6 +106,13 @@ const config = {
     })
   ]
 };
+
+if (process.env.NODE_ENV === 'production' || process.env.ANALYZE)
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({ sourceMap: false })
+  );
+
+if (process.env.NODE_ENV === 'development') config.devtool = 'source-map';
 
 if (process.env.NODE_ENV === 'development')
   config.module.rules[0].loaders.unshift('react-hot-loader');

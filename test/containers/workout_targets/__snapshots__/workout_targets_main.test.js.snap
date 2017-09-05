@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`  WorkoutTargetsMain test should render 1`] = `
+<div>
+  <CardList
+    collection={Object {}}
+    editLink="/app/workouttargets/edit/"
+    onModalStateChange={[Function]}
+    setSelectedItem={[Function]}
+  />
+  <CreateButton
+    link="/app/workouttargets/create"
+  />
+</div>
+`;

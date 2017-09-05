@@ -12,7 +12,10 @@ describe('WorkoutTarget test', () => {
   //
   // });
   it('should render', () => {
-
+    const componentDidMountSpy = sinon.spy(
+      PureWorkoutTarget.prototype,
+      'componentDidMount'
+    );
 
     const handleSubmitSpy = sinon.stub().returns(f=>f);
 
@@ -37,6 +40,7 @@ describe('WorkoutTarget test', () => {
       expect(e).toBeInstanceOf(SubmissionError)
     }
 
+    expect(componentDidMountSpy.calledOnce).toBe(false)
     expect(updateWorkoutTarget.calledOnce).toBe(false)
     expect(createWorkoutTarget.calledOnce).toBe(false)
     expect(resetSpy.calledOnce).toBe(false)
