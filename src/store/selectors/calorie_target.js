@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { fromJS } from 'immutable';
 import { formValueSelector } from 'redux-form/immutable';
+import * as _ from 'lodash';
 
 import * as calorieCalculators from './calorie_target/calorie_calculators';
 import ageSelector from './age';
@@ -151,11 +152,15 @@ const values = (
     ),
     minCalorie: calorieCalculators.minCalorie(tdee, proteinTarget),
     max: {
-      restGram: calorieCalculators.unlessItsAbovezero(maxRestGram),
-      restPercentage: calorieCalculators.unlessItsAbovezero(maxRestPercentage),
-      trainingGram: calorieCalculators.unlessItsAbovezero(maxTrainingGram),
-      trainingPercentage: calorieCalculators.unlessItsAbovezero(
-        maxTrainingPercentage
+      restGram: _.ceil(calorieCalculators.unlessItsAbovezero(maxRestGram)),
+      restPercentage: _.ceil(
+        calorieCalculators.unlessItsAbovezero(maxRestPercentage)
+      ),
+      trainingGram: _.ceil(
+        calorieCalculators.unlessItsAbovezero(maxTrainingGram)
+      ),
+      trainingPercentage: _.ceil(
+        calorieCalculators.unlessItsAbovezero(maxTrainingPercentage)
       )
     },
     finalValues: {

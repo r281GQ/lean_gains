@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { reduxForm, formValueSelector, initialize } from 'redux-form/immutable';
+import { reduxForm, formValueSelector } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import { Map } from 'immutable';
 
-import { createKcalTarget } from './../../store/actionCreators/user_details_action_creators';
+import { createCalorieTarget } from './../../store/actionCreators/user_details_action_creators';
 import calorieTarget from './../../store/selectors/calorie_target';
 import BMRCalculationSelector from './../../components/calorie_target/bmr_calculation_selector';
 import BodyFatField from './../../components/calorie_target/body_fat_field';
@@ -62,6 +62,7 @@ class CalorieTargetCalculator extends Component {
 
     if (restFatPercentage > maxRestPercentage)
       change('restFatPercentage', _.floor(maxRestPercentage));
+
     if (trainingFatPercentage > maxTrainingPercentage)
       change('trainingFatPercentage', _.floor(maxTrainingPercentage));
   }
@@ -106,13 +107,38 @@ class CalorieTargetCalculator extends Component {
     return update;
   }
 
+  constructor(props) {
+    super(props);
+    this._handleInitializeForm = this._handleInitializeForm.bind(this);
+  }
+
   componentDidMount() {
-    this.props.initializeForm(this.props);
+    this._handleInitializeForm(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     this._adjustCaloriePercentage(this.props, nextProps);
     this._adjustFatRatio(this.props, nextProps);
+  }
+
+  _handleInitializeForm({ calorieTarget }) {
+    this.props.initialize(
+      Map().withMutations(map =>
+        map
+          .set('bodyFat', calorieTarget.get('bodyFat'))
+          .set('restDay', -20)
+          .set('trainingDay', 20)
+          .set('restFatGrams', 0)
+          .set('trainingFatGrams', 0)
+          .set('restFatPercentage', 0)
+          .set('trainingFatPercentage', 0)
+          .set('fatMethod', 'grams')
+          .set('activity', 1.2)
+          .set('protein', 2)
+          .set('calorieSplit', 'recomp')
+          .set('bmrCalculationMethod', 'harris-benedict')
+      )
+    );
   }
 
   render() {
@@ -175,7 +201,6 @@ CalorieTargetCalculator.propTypes = {
   restFatPercentage: PropTypes.number,
   trainingFatGrams: PropTypes.number,
   trainingFatPercentage: PropTypes.number,
-  initializeForm: PropTypes.func.isRequired,
   fatMethod: PropTypes.string,
   calorieSplit: PropTypes.string,
   bmrCalculationMethod: PropTypes.string,
@@ -208,54 +233,24 @@ CalorieTargetCalculator.propTypes = {
 
 const selector = formValueSelector('calorie-target');
 
-/*eslint no-class-assign: "off"*/
-CalorieTargetCalculator = connect(state => ({
-  activity: selector(state, 'activity'),
-  fatMethod: selector(state, 'fatMethod'),
-  calorieSplit: selector(state, 'calorieSplit'),
-  bmrCalculationMethod: selector(state, 'bmrCalculationMethod'),
-  trainingFatGrams: selector(state, 'trainingFatGrams'),
-  restFatGrams: selector(state, 'restFatGrams'),
-  trainingFatPercentage: selector(state, 'trainingFatPercentage'),
-  restFatPercentage: selector(state, 'restFatPercentage'),
-  restDay: selector(state, 'restDay'),
-  trainingDay: selector(state, 'trainingDay')
-}))(CalorieTargetCalculator);
-
 const mapStateToProps = state => {
   return {
+    activity: selector(state, 'activity'),
+    fatMethod: selector(state, 'fatMethod'),
+    calorieSplit: selector(state, 'calorieSplit'),
+    bmrCalculationMethod: selector(state, 'bmrCalculationMethod'),
+    trainingFatGrams: selector(state, 'trainingFatGrams'),
+    restFatGrams: selector(state, 'restFatGrams'),
+    trainingFatPercentage: selector(state, 'trainingFatPercentage'),
+    restFatPercentage: selector(state, 'restFatPercentage'),
+    restDay: selector(state, 'restDay'),
+    trainingDay: selector(state, 'trainingDay'),
     calorieTarget: calorieTarget(state)
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    initializeForm: ({ calorieTarget }) =>
-      dispatch(
-        initialize(
-          'calorie-target',
-          Map().withMutations(map =>
-            map
-              .set('bodyFat', calorieTarget.get('bodyFat'))
-              .set('restDay', -20)
-              .set('trainingDay', 20)
-              .set('restFatGrams', 0)
-              .set('trainingFatGrams', 0)
-              .set('restFatPercentage', 0)
-              .set('trainingFatPercentage', 0)
-              .set('fatMethod', 'grams')
-              .set('activity', 1.2)
-              .set('protein', 2)
-              .set('calorieSplit', 'recomp')
-              .set('bmrCalculationMethod', 'harris-benedict')
-          )
-        )
-      ),
-    createCalorieTarget: calorieTarget =>
-      dispatch(createKcalTarget(calorieTarget))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps, { createCalorieTarget })(
   reduxForm({ form: 'calorie-target' })(CalorieTargetCalculator)
 );
+
+export { CalorieTargetCalculator as PureCalorieTargetCalculator };

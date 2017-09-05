@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error integration test should render and call initFetch 1`] = `
+<StaticRouter
+  basename=""
+  context={Object {}}
+  location=""
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <Connect(WorkoutLogsRouter)>
+      <WorkoutLogsRouter
+        dispatch={[Function]}
+        exercises={
+          Immutable.List [
+          ]
+        }
+        workoutLogs={
+          Immutable.Map {
+          }
+        }
+      >
+        <div>
+          <Route
+            component={[Function]}
+            exact={true}
+            path="/app/workoutlogs"
+          />
+          <Route
+            exact={true}
+            path="/app/workoutlogs/create/before"
+            render={[Function]}
+          />
+          <Route
+            exact={true}
+            path="/app/workoutlogs/edit/:id"
+            render={[Function]}
+          />
+          <Route
+            exact={true}
+            path="/app/workoutlogs/create"
+            render={[Function]}
+          />
+        </div>
+      </WorkoutLogsRouter>
+    </Connect(WorkoutLogsRouter)>
+  </Router>
+</StaticRouter>
+`;

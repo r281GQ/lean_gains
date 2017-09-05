@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CalorieTargetCalculator test should render 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <BMRCalculationSelector />
+    <BodyFatField />
+    <ActivityLevelSelecor
+      normalize={[Function]}
+    />
+    <CalorieSplitSelector />
+    <CustomCalorieField
+      normalize={[Function]}
+    />
+    <ProteinField />
+    <FatMethodSelector />
+    <FatSelector />
+    <CenteredSubmitButton
+      label="Create calorie target"
+    />
+  </form>
+</div>
+`;
+
+exports[`CalorieTargetCalculator test should shouldComponentUpdate return false when all the important properties are met 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <BMRCalculationSelector />
+    <BodyFatField
+      bmrCalculationMethod="method"
+    />
+    <ActivityLevelSelecor
+      normalize={[Function]}
+    />
+    <CalorieSplitSelector />
+    <CustomCalorieField
+      calorieSplit="split"
+      normalize={[Function]}
+    />
+    <ProteinField />
+    <FatMethodSelector />
+    <FatSelector
+      fatMethod="method"
+    />
+    <CenteredSubmitButton
+      label="Create calorie target"
+    />
+  </form>
+</div>
+`;
+
+exports[`CalorieTargetCalculator test should shouldComponentUpdate return false when all the important properties are met 2`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <BMRCalculationSelector />
+    <BodyFatField
+      bmrCalculationMethod="method"
+    />
+    <ActivityLevelSelecor
+      normalize={[Function]}
+    />
+    <CalorieSplitSelector />
+    <CustomCalorieField
+      calorieSplit="split"
+      normalize={[Function]}
+    />
+    <ProteinField />
+    <FatMethodSelector />
+    <FatSelector
+      fatMethod="method"
+    />
+    <CenteredSubmitButton
+      label="Create calorie target"
+    />
+  </form>
+</div>
+`;
+
+exports[`CalorieTargetCalculator test should shouldComponentUpdate return false when all the important properties are met 3`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <BMRCalculationSelector />
+    <BodyFatField
+      bmrCalculationMethod="method"
+    />
+    <ActivityLevelSelecor
+      normalize={[Function]}
+    />
+    <CalorieSplitSelector />
+    <CustomCalorieField
+      calorieSplit="split"
+      normalize={[Function]}
+    />
+    <ProteinField />
+    <FatMethodSelector />
+    <FatSelector
+      fatMethod="method"
+    />
+    <CenteredSubmitButton
+      label="Create calorie target"
+    />
+  </form>
+</div>
+`;
