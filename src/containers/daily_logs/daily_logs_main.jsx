@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 import CreateButton from './../../components/create_button';
 import CreateButtonMinified from './../../components/create_button_minified';
@@ -26,17 +25,20 @@ const monthsWithDailyLogs = monthLogs('dailyLogs');
 
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import typedDeleteModal from './../enhancers/confirm_delete_modal';
+
+const DeleteModal = typedDeleteModal(
+  'Are you sure you want to delete this?',
+  'dailyLog'
+);
 
 //TODO: refactor these to be more declarative
 class DailyLogMain extends PureComponent {
   componentDidMount() {
-    if (this.props.datesWithDailyLogs.isEmpty()) this.props.getDailyLogDates();
-    if (this.props.dailyLogsForMonth.isEmpty()) {
-      this.props.getLogsForSelectedMonth(moment().format('MM-YYYY'));
+      this.props.getLogsForSelectedMonth(this.props.monthsWithDailyLogs.last());
       this.props.setSelectedMonthForDailyLogs(
         this.props.monthsWithDailyLogs.last()
       );
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,6 +52,9 @@ class DailyLogMain extends PureComponent {
       this.props.setSelectedMonthForDailyLogs(
         nextProps.monthsWithDailyLogs.last()
       );
+
+    // if (this.props.datesWithDailyLogs !== nextProps.datesWithDailyLogs)
+    //   this.props.getLogsForSelectedMonth(nextProps.selectedMonth);
   }
 
   render() {
@@ -65,6 +70,7 @@ class DailyLogMain extends PureComponent {
     } = this.props;
     return (
       <div>
+        <DeleteModal />
         <DateSelector
           months={monthsWithDailyLogs.toJS()}
           selectedMonth={selectedMonth}

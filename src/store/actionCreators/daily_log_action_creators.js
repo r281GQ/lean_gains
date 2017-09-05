@@ -25,6 +25,7 @@ export const createDailyLog = dailyLog => dispatch => {
 };
 
 export const getLogsForSelectedMonth = month => dispatch => {
+  if (!month) return;
   dispatch({ type: app.INIT_API });
   return request
     .get('/api/dailylogs', { params: { month } })

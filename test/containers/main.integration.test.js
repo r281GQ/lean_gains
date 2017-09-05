@@ -47,6 +47,8 @@ injectTapEventPlugin();
 describe('Main integration test', () => {
   it('should render and call initFetch', () => {
     const initFetchSpy = sinon.spy();
+    const getWorkoutLogDatesSpy = sinon.spy();
+    const getDailyLogDatesSpy = sinon.spy();
 
     const componentDidMountSpy = sinon.spy(
       PureMainContainer.prototype,
@@ -59,7 +61,10 @@ describe('Main integration test', () => {
     // if (!this.props.initFetchDone) this.props.initFetch();
     const component = mount(
       <StaticRouter location="" context={{}}>
-        <PureMainContainer initFetchDone={false} initFetch={initFetchSpy} />
+        <PureMainContainer initFetchDone={false} initFetch={initFetchSpy}
+          getWorkoutLogDates ={getWorkoutLogDatesSpy}
+
+          getDailyLogDates ={getDailyLogDatesSpy} />
       </StaticRouter>,
       {
         context: { muiTheme, store },
@@ -78,6 +83,8 @@ describe('Main integration test', () => {
     // ).toBe(true);
 
     expect(initFetchSpy.calledOnce).toBe(true);
+    expect(getDailyLogDatesSpy.calledOnce).toBe(true);
+    expect(getWorkoutLogDatesSpy.calledOnce).toBe(true);
     expect(componentDidMountSpy.calledOnce).toBe(true);
 
     expect(component).toHaveLength(1);

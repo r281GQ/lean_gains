@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  List,
-  ListItem,
-  Card,
-  CardHeader,
-  CardText
-} from 'material-ui';
+import { List, ListItem, Card, CardHeader, CardText } from 'material-ui';
 import * as _ from 'lodash';
 import moment from 'moment';
 
@@ -20,9 +14,9 @@ const CardListLog = ({
   editLink,
   onModalStateChange,
   setSelectedItem
-}) =>
+}) => (
   <List>
-    {_.map(workoutLogs, log =>
+    {_.map(workoutLogs, log => (
       <ListItem key={log._id} disabled={true}>
         <Card>
           <CardHeader
@@ -40,8 +34,9 @@ const CardListLog = ({
           />
         </Card>
       </ListItem>
-    )}
-  </List>;
+    ))}
+  </List>
+);
 
 CardListLog.propTypes = {
   workoutLogs: PropTypes.object,

@@ -14,9 +14,7 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
     case dailyLogs.DELETE_DAILY_LOG_DATE:
       return state.update('dates', set => set.remove(payload));
     case dailyLogs.WRITE_DAILY_LOGS:
-      return state.update('data', value =>
-        value.concat(fromJS(_.keyBy(payload, '_id')))
-      );
+      return state.set('data', fromJS(_.keyBy(payload, '_id')));
     case dailyLogs.WRITE_DAILY_LOG:
       return state.setIn(['data', payload._id], fromJS(payload));
     case dailyLogs.WRITE_DAILY_LOG_DATES:

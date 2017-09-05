@@ -25,12 +25,10 @@ const workoutLogsForMonths = logs('workoutLogs');
 
 describe('months selector', () => {
   it('should return 0 within the list', () => {
-    const logsForMinth = dailyLogsForMonth(state);
-    expect(logsForMinth.size).toBe(0);
+    expect(dailyLogsForMonth(state).size).toBe(0);
   });
 
   it('should return 2 within the list', () => {
-    const logsForMinth = workoutLogsForMonths(state);
-    expect(logsForMinth.size).toBe(2);
+    expect(workoutLogsForMonths(state).size).toBe(2);
   });
 });

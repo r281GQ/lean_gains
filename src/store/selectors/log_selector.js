@@ -13,7 +13,10 @@ const selectedMonth = type => state =>
 
 const logsForMonth = (logs, selectedMonth) => {
   return logs.filter(value =>
-    moment(value.get('date')).isSame(moment(selectedMonth, 'MM-YYYY'), 'month')
+    moment(value.get('createdAt')).isSame(
+      moment(selectedMonth, 'MM-YYYY'),
+      'month'
+    )
   );
 };
 

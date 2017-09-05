@@ -8,18 +8,13 @@ import WorkoutLogsMainContainer from './workout_logs_main';
 import WorkoutLogFormContainer from './workout_log_form';
 import isTrainingDay from './../../store/selectors/exercises';
 
-import withConfirmDeleteModal from './../enhancers/confirm_delete_modal';
 
-const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
+const WorkoutLogsRouter = ({ exercises, workoutLogs }) => (
   <div>
     <Route
       exact
       path={'/app/workoutlogs'}
-      component={withConfirmDeleteModal(
-        WorkoutLogsMainContainer,
-        `Are you sure you want to delete this workout log?`,
-        'workoutLog'
-      )}
+      component={WorkoutLogsMainContainer}
     />
 
     <Route
@@ -70,7 +65,8 @@ const WorkoutLogsRouter = ({ exercises, workoutLogs }) =>
         );
       }}
     />
-  </div>;
+  </div>
+);
 
 WorkoutLogsRouter.propTypes = {
   exercises: ImmutablePropTypes.list,

@@ -1,4 +1,4 @@
-import { fromJS, Map, Set } from 'immutable';
+import { fromJS, Map, OrderedSet } from 'immutable';
 
 import {
   dailyLogDates,
@@ -18,11 +18,17 @@ const workoutLogMonths = months('workoutLogs');
 
 describe('months selector', () => {
   it('should get back 0417 and 0517 on dailyLogs', () => {
-    expect(dailyLogMonths(state)).toEqual(Set().add('04-2017').add('05-2017'));
+    expect(dailyLogMonths(state)).toEqual(
+      OrderedSet()
+        .add('04-2017')
+        .add('05-2017')
+    );
   });
   it('should get back 0417 and 0517 on dailyLogs', () => {
     expect(workoutLogMonths(state)).toEqual(
-      Set().add('07-2017').add('01-2017')
+      OrderedSet()
+        .add('01-2017')
+        .add('07-2017')
     );
   });
 });

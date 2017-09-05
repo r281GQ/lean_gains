@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Dialog, FlatButton } from 'material-ui';
 
-//TODO: refactor to declarative stlye
 const ConfirmDelete = ({ isOpen, close, deleteActions, title }) =>
   <Dialog
     title={title}

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
 import ConfirmDelete from './../../components/confirm_delete';
@@ -9,7 +8,7 @@ import { deleteDailyLog } from './../../store/actionCreators/daily_log_action_cr
 import { deleteWorkoutTarget } from './../../store/actionCreators/user_details_action_creators';
 import { deleteWorkoutLog } from './../../store/actionCreators/workout_log_action_creators';
 
-const withConfirmDeleteModal = (WrappedComponent, title, type) => {
+const withConfirmDeleteModal = ( title, type) => {
   const getItemType = type => {
     switch (type) {
       case 'workoutTarget':
@@ -30,21 +29,15 @@ const withConfirmDeleteModal = (WrappedComponent, title, type) => {
     }
   };
 
-  const ConfirmDeleteModal = ({
-    isModalOpen,
-    closeModal,
-    deleteItem,
-    selectedItem
-  }) => {
+  const ConfirmDeleteModal = props => {
     return (
       <div>
         <ConfirmDelete
           title={title}
-          isOpen={isModalOpen}
-          close={closeModal}
-          deleteActions={[() => deleteItem(selectedItem)]}
+          isOpen={props.isModalOpen}
+          close={props.closeModal}
+          deleteActions={[() => props.deleteItem(props.selectedItem)]}
         />
-        <WrappedComponent />
       </div>
     );
   };

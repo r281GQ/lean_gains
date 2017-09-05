@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PureWorkoutLogsMainContainer test should render 1`] = `
+<div>
+  <Connect(ConfirmDeleteModal) />
+  <DateSelector
+    fetchDataForSelectedMonth={[Function]}
+    months={
+      Array [
+        "01-2017",
+        "02-2017",
+      ]
+    }
+    setSelectedMonth={[Function]}
+  />
+  <CardListLog
+    editLink="/app/workoutlogs/edit/"
+    onModalStateChange={[Function]}
+    setSelectedItem={[Function]}
+    workoutLogs={Object {}}
+  />
+  <CreateButtonMinified
+    link="/app/workoutlogs/create/before"
+  />
+  <CreateButton
+    link="/app/workoutlogs/create"
+  />
+</div>
+`;
+
+exports[`PureWorkoutLogsMainContainer test should render 2`] = `
+<div>
+  <Connect(ConfirmDeleteModal) />
+  <DateSelector
+    fetchDataForSelectedMonth={[Function]}
+    months={
+      Array [
+        "01-2017",
+        "02-2017",
+      ]
+    }
+    setSelectedMonth={[Function]}
+  />
+  <CardListLog
+    editLink="/app/workoutlogs/edit/"
+    onModalStateChange={[Function]}
+    setSelectedItem={[Function]}
+    workoutLogs={Object {}}
+  />
+  <CreateButtonMinified
+    link="/app/workoutlogs/create/before"
+  />
+  <CreateButton
+    link="/app/workoutlogs/create"
+  />
+</div>
+`;
+
+exports[`PureWorkoutLogsMainContainer test should render 3`] = `
+<div>
+  <Connect(ConfirmDeleteModal) />
+  <DateSelector
+    fetchDataForSelectedMonth={[Function]}
+    months={
+      Array [
+        "01-2017",
+        "02-2017",
+      ]
+    }
+    setSelectedMonth={[Function]}
+  />
+  <CardListLog
+    editLink="/app/workoutlogs/edit/"
+    onModalStateChange={[Function]}
+    setSelectedItem={[Function]}
+    workoutLogs={
+      Object {
+        "1": Object {},
+      }
+    }
+  />
+  <CreateButtonMinified
+    link="/app/workoutlogs/create/before"
+  />
+  <CreateButton
+    link="/app/workoutlogs/create"
+  />
+</div>
+`;
+
+exports[`PureWorkoutLogsMainContainer test should render 4`] = `
+<div>
+  <Connect(ConfirmDeleteModal) />
+  <DateSelector
+    fetchDataForSelectedMonth={[Function]}
+    months={
+      Array [
+        "01-2017",
+        "02-2017",
+      ]
+    }
+    selectedMonth="01-2017"
+    setSelectedMonth={[Function]}
+  />
+  <CardListLog
+    editLink="/app/workoutlogs/edit/"
+    onModalStateChange={[Function]}
+    setSelectedItem={[Function]}
+    workoutLogs={
+      Object {
+        "1": Object {},
+      }
+    }
+  />
+  <CreateButtonMinified
+    link="/app/workoutlogs/create/before"
+  />
+  <CreateButton
+    link="/app/workoutlogs/create"
+  />
+</div>
+`;
+
+exports[`PureWorkoutLogsMainContainer test should render 5`] = `
+<div>
+  <Connect(ConfirmDeleteModal) />
+  <DateSelector
+    fetchDataForSelectedMonth={[Function]}
+    months={Array []}
+    selectedMonth="01-2017"
+    setSelectedMonth={[Function]}
+  />
+  <CardListLog
+    editLink="/app/workoutlogs/edit/"
+    onModalStateChange={[Function]}
+    setSelectedItem={[Function]}
+    workoutLogs={
+      Object {
+        "1": Object {},
+      }
+    }
+  />
+  <CreateButtonMinified
+    link="/app/workoutlogs/create/before"
+  />
+  <CreateButton
+    link="/app/workoutlogs/create"
+  />
+</div>
+`;
+
+exports[`PureWorkoutLogsMainContainer test should render 6`] = `
+<div>
+  <Connect(ConfirmDeleteModal) />
+  <DateSelector
+    fetchDataForSelectedMonth={[Function]}
+    months={Array []}
+    selectedMonth=""
+    setSelectedMonth={[Function]}
+  />
+  <CardListLog
+    editLink="/app/workoutlogs/edit/"
+    onModalStateChange={[Function]}
+    setSelectedItem={[Function]}
+    workoutLogs={
+      Object {
+        "1": Object {},
+      }
+    }
+  />
+  <CreateButtonMinified
+    link="/app/workoutlogs/create/before"
+  />
+  <CreateButton
+    link="/app/workoutlogs/create"
+  />
+</div>
+`;

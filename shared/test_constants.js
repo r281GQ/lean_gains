@@ -158,7 +158,7 @@ const workoutLogDates = [
 const workoutLogs = [
   {
     _id: '0_workout_log',
-    date: moment('01-07-2017', 'DD-MM-YYYY').valueOf(),
+    createdAt: moment('01-07-2017', 'DD-MM-YYYY').valueOf(),
     exercises: [
       {
         name: 'deadlift',
@@ -180,7 +180,7 @@ const workoutLogs = [
   },
   {
     _id: '1_0_workout_log',
-    date: moment('02-07-2017', 'DD-MM-YYYY').valueOf(),
+    createdAt: moment('02-07-2017', 'DD-MM-YYYY').valueOf(),
     exercises: [
       {
         name: 'squat',
@@ -197,7 +197,7 @@ const workoutLogs = [
   },
   {
     _id: '2_workout_log',
-    date: moment('01-01-2017', 'DD-MM-YYYY').valueOf(),
+    createdAt: moment('01-01-2017', 'DD-MM-YYYY').valueOf(),
     exercises: [
       {
         name: 'benchpress',

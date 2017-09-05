@@ -18,9 +18,7 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
     case workoutLogs.DELETE_WORKOUT_LOG:
       return state.deleteIn(['data', payload]);
     case workoutLogs.WRITE_WORKOUT_LOGS:
-      return state.update('data', map =>
-        map.concat(fromJS(_.keyBy(payload, '_id')))
-      );
+      return state.set('data', fromJS(_.keyBy(payload, '_id')));
     case workoutLogs.WRITE_WORKOUT_LOG:
       return state.setIn(['data', payload._id], fromJS(payload));
     default:

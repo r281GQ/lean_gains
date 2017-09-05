@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
@@ -24,32 +23,34 @@ import CreateButtonMinified from './../../components/create_button_minified';
 import CardListLog from './../../components/workout_log/card_list_log';
 import DateSelector from './../../components/date_selector';
 
+import typedDeleteModal from './../enhancers/confirm_delete_modal';
+
 const isTodaysWorkoutLogExists = isTodaysLogExists('workoutLogs');
 const workoutLogsForMonth = logsForMonth('workoutLogs');
 const monthsWithWorkoutLogs = monthLogs('workoutLogs');
 
 class WorkoutLogsMainContainer extends PureComponent {
   componentDidMount() {
-    if (this.props.datesWithWorkoutLogs.isEmpty())
-      this.props.getWorkoutLogDates();
-    if (this.props.workoutLogsForMonth.isEmpty()) {
-      this.props.getWorkoutLogsForMonth(moment().format('MM-YYYY'));
-      this.props.setSelectedMonthForWorkoutLogs(
-        this.props.monthsWithWorkoutLogs.last()
-      );
-    }
+    this.props.getWorkoutLogsForMonth(this.props.monthsWithWorkoutLogs.last());
+    this.props.setSelectedMonthForWorkoutLogs(
+      this.props.monthsWithWorkoutLogs.last()
+    );
   }
 
   componentWillReceiveProps(nextProps) {
-    (this.props.monthsWithWorkoutLogs.isEmpty() &&
-      !nextProps.monthsWithWorkoutLogs.isEmpty()) ||
-    nextProps.monthsWithWorkoutLogs.find(
-      value => value === this.props.selectedMonth
-    ) === undefined
-      ? this.props.setSelectedMonthForWorkoutLogs(
-          nextProps.monthsWithWorkoutLogs.last()
-        )
-      : null;
+    if (
+      (this.props.monthsWithWorkoutLogs.isEmpty() &&
+        !nextProps.monthsWithWorkoutLogs.isEmpty()) ||
+      nextProps.monthsWithWorkoutLogs.find(
+        value => value === this.props.selectedMonth
+      ) === undefined
+    ) {
+      this.props.getWorkoutLogsForMonth(nextProps.monthsWithWorkoutLogs.last());
+      this.props.setSelectedMonthForWorkoutLogs(
+        nextProps.monthsWithWorkoutLogs.last()
+      );
+    }
+
   }
 
   render() {
@@ -63,8 +64,14 @@ class WorkoutLogsMainContainer extends PureComponent {
       openWorkoutModal,
       isTodaysWorkoutLogExists
     } = this.props;
+    const DeleteModal = typedDeleteModal(
+      'Are you sure you want to delete this?',
+      'workoutLog'
+    );
     return (
       <div>
+        <DeleteModal />
+
         <DateSelector
           months={monthsWithWorkoutLogs.toJS()}
           selectedMonth={selectedMonth}
@@ -122,3 +129,5 @@ export default connect(mapStateToProps, {
   closeWorkoutModal,
   setSelectedWorkoutLog
 })(WorkoutLogsMainContainer);
+
+export { WorkoutLogsMainContainer as PureWorkoutLogsMainContainer };
