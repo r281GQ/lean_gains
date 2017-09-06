@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Error integration test should render and call initFetch 1`] = `
+exports[`WorkoutLogsRouter integration test should render 1`] = `
 <StaticRouter
   basename=""
   context={Object {}}

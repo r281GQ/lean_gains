@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`  WorkoutTargetsMain test should render 1`] = `
+exports[`WorkoutTargetsMain test should render 1`] = `
 <div>
   <CardList
     collection={Object {}}

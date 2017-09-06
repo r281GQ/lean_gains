@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error integration test should render 1`] = `
+<StaticRouter
+  basename=""
+  context={
+    Object {
+      "action": "REPLACE",
+      "location": Object {
+        "hash": "",
+        "pathname": "/app",
+        "search": "",
+      },
+      "url": "/app",
+    }
+  }
+  location=""
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <CalorieTargetError
+      errorMessages={
+        Immutable.List [
+          "test",
+        ]
+      }
+      isErrorModalOpen={false}
+      openErrorModal={[Function]}
+      setMessages={[Function]}
+    >
+      <Redirect
+        push={false}
+        to="/app"
+      />
+    </CalorieTargetError>
+  </Router>
+</StaticRouter>
+`;

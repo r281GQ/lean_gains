@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import sinon from 'sinon';
+import { mount } from 'enzyme';
 import { createStore } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form/immutable';
@@ -37,8 +37,49 @@ const _reduxForm = {
 /*eslint no-undef: "off"*/
 injectTapEventPlugin();
 
-describe('Header integration test', () => {
+describe('UserDetails integration test', () => {
+
+  let dateStub;
+  beforeEach(() => {
+    dateStub = sinon.stub(Date, 'now').returns(1);
+  });
+
+  afterEach(() => {
+    dateStub.restore();
+  });
+
   it('should render', () => {
+    const updateUserDetailsSpy = sinon.spy();
+
+    const initializeSpy = sinon.stub().callsFake(value => value);
+
+    const date = moment().toDate();
+
+    const component = mount(
+      <PureUserDetailsContainer
+        updateUserDetails={updateUserDetailsSpy}
+        handleSubmit={() => value => value}
+        initialize={initializeSpy}
+        userName="Endre"
+        dob={date}
+        sex="male"
+      />,
+      {
+        context: { muiTheme, router, store, _reduxForm },
+        childContextTypes: {
+          muiTheme: PropTypes.object,
+          router: PropTypes.any,
+          store: PropTypes.object,
+          _reduxForm: PropTypes.object
+        }
+      }
+    );
+
+    expect(component).toHaveLength(1);
+    expect(component).toMatchSnapshot();
+  });
+
+  it('should call initializeSpy with proper arguments on mount', () => {
     const updateUserDetailsSpy = sinon.spy();
 
     const componentDidMountSpy = sinon.spy(
@@ -46,7 +87,7 @@ describe('Header integration test', () => {
       'componentDidMount'
     );
 
-    const initializeSpy = sinon.stub().callsFake(() => '');
+    const initializeSpy = sinon.stub().callsFake(value => value);
 
     const date = moment().toDate();
 
@@ -80,6 +121,7 @@ describe('Header integration test', () => {
     expect(componentDidMountSpy.calledOnce).toBe(true);
 
     expect(component).toHaveLength(1);
+    expect(component).toMatchSnapshot();
     componentDidMountSpy.restore();
   });
 });

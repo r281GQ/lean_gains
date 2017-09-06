@@ -1,56 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`WorkoutLogsRouter test should create the props form of exercise from raw input for create 1`] = `
+<div>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/app/workoutlogs"
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/create/before"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/edit/:id"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/create"
+    render={[Function]}
+  />
+</div>
+`;
+
+exports[`WorkoutLogsRouter test should create the props form of exercise from raw input for create 2`] = `
+<div>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/app/workoutlogs"
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/create/before"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/edit/:id"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/create"
+    render={[Function]}
+  />
+</div>
+`;
+
+exports[`WorkoutLogsRouter test should create the props form of exercise from raw input for edit 1`] = `
+<div>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/app/workoutlogs"
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/create/before"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/edit/:id"
+    render={[Function]}
+  />
+  <Route
+    exact={true}
+    path="/app/workoutlogs/create"
+    render={[Function]}
+  />
+</div>
+`;
+
 exports[`WorkoutLogsRouter test should render 1`] = `
-<div>
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/app/workoutlogs"
-  />
-  <Route
-    exact={true}
-    path="/app/workoutlogs/create/before"
-    render={[Function]}
-  />
-  <Route
-    exact={true}
-    path="/app/workoutlogs/edit/:id"
-    render={[Function]}
-  />
-  <Route
-    exact={true}
-    path="/app/workoutlogs/create"
-    render={[Function]}
-  />
-</div>
-`;
-
-exports[`WorkoutLogsRouter test should render 2`] = `
-<div>
-  <Route
-    component={[Function]}
-    exact={true}
-    path="/app/workoutlogs"
-  />
-  <Route
-    exact={true}
-    path="/app/workoutlogs/create/before"
-    render={[Function]}
-  />
-  <Route
-    exact={true}
-    path="/app/workoutlogs/edit/:id"
-    render={[Function]}
-  />
-  <Route
-    exact={true}
-    path="/app/workoutlogs/create"
-    render={[Function]}
-  />
-</div>
-`;
-
-exports[`WorkoutLogsRouter test should render 3`] = `
 <div>
   <Route
     component={[Function]}

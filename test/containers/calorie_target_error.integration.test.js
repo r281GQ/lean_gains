@@ -14,16 +14,6 @@ import { PureCalorieTargetError } from './../../src/containers/calorie_target_er
 
 const muiTheme = getMuiTheme();
 
-// const router = {
-//   history: {
-//     push: () => undefined,
-//     replace: () => undefined,
-//     createHref: () => undefined
-//   },
-//   route: {},
-//   staticContext: { location: { pathname: '' } }
-// };
-
 const store = createStore(
   combineReducers({
     app: () => fromJS({ isErrorModalOpen: false, message: [''] }),
@@ -31,23 +21,10 @@ const store = createStore(
   })
 );
 
-// const _reduxForm = {
-//   getFormState: state => state,
-//   asyncValidate: state => state,
-//   getValues: state => state,
-//   sectionPrefix: state => state,
-//   register: state => state,
-//   unregister: state => state,
-//   registerInnerOnSubmit: state => state
-// };
-
-/*eslint no-undef: "off"*/
 injectTapEventPlugin();
 
 describe('Error integration test', () => {
-  it('should render and call initFetch', () => {
-    // const initFetchSpy = sinon.spy();
-
+  it('should render', () => {
     const componentDidMountSpy = sinon.spy(
       PureCalorieTargetError.prototype,
       'componentDidMount'
@@ -58,12 +35,9 @@ describe('Error integration test', () => {
       '_handleOpenErrorModal'
     );
 
-    // const initializeSpy = sinon.stub().callsFake(() => '');
-
-    // const date = moment().toDate();
-    // if (!this.props.initFetchDone) this.props.initFetch();
     const openErrorModalSpy = sinon.spy();
     const setMessagesSpy = sinon.spy();
+
     const component = mount(
       <StaticRouter location="" context={{}}>
         <PureCalorieTargetError
@@ -83,58 +57,10 @@ describe('Error integration test', () => {
       }
     );
 
-    // expect(
-    //   initializeSpy.calledWith(
-    //     fromJS({ userName: 'Endre', dob: moment(date).toDate(), sex: 'male' })
-    //   )
-    // ).toBe(true);
-
-    // expect(initFetchSpy.calledOnce).toBe(true);
     expect(componentDidMountSpy.calledOnce).toBe(true);
     expect(_handleSpy.calledOnce).toBe(true);
 
     expect(component).toHaveLength(1);
-    // component.unmount();
-    // componentDidMountSpy.restore();
+    expect(component).toMatchSnapshot();
   });
-
-  // it('should render and not call initFetch', () => {
-  //   const initFetchSpy = sinon.spy();
-  //
-  //   const componentDidMountSpy = sinon.spy(
-  //     PureMainContainer.prototype,
-  //     'componentDidMount'
-  //   );
-  //
-  //   // const initializeSpy = sinon.stub().callsFake(() => '');
-  //
-  //   // const date = moment().toDate();
-  //   // if (!this.props.initFetchDone) this.props.initFetch();
-  //   const component = mount(
-  //     <StaticRouter location="" context={{}}>
-  //       <PureMainContainer initFetchDone initFetch={initFetchSpy} />
-  //     </StaticRouter>,
-  //     {
-  //       context: { muiTheme, store },
-  //       childContextTypes: {
-  //         muiTheme: PropTypes.object,
-  //
-  //         store: PropTypes.object
-  //       }
-  //     }
-  //   );
-  //
-  //   // expect(
-  //   //   initializeSpy.calledWith(
-  //   //     fromJS({ userName: 'Endre', dob: moment(date).toDate(), sex: 'male' })
-  //   //   )
-  //   // ).toBe(true);
-  //
-  //   expect(initFetchSpy.calledOnce).toBe(false);
-  //   expect(componentDidMountSpy.calledOnce).toBe(true);
-  //
-  //   expect(component).toHaveLength(1);
-  //   component.unmount();
-  //   componentDidMountSpy.restore();
-  // });
 });

@@ -1,6 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header test should render 1`] = `
+exports[`UserDetails test should render 1`] = `
+<div
+  className="user-details"
+>
+  <UserDetailsForm
+    handleSubmit={[Function]}
+    handleUpdateUserDetails={[Function]}
+    normalizeDate={[Function]}
+    updateUserDetails={[Function]}
+    validators={
+      Object {
+        "maxDate": 1965-01-01T00:00:00.001Z,
+        "minDate": 1860-01-01T00:00:00.001Z,
+        "userName": [Function],
+      }
+    }
+  />
+</div>
+`;
+
+exports[`UserDetails test should updateUserDetailsSpy be callod when _handleFormSubmit invoked 1`] = `
 <div
   className="user-details"
 >

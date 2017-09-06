@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkoutTargetsMain integration test should render 1`] = `
+<StaticRouter
+  basename=""
+  context={Object {}}
+  location=""
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <WorkoutTargetsMainContainer
+      openWorkoutModal={[Function]}
+      setSelectedWorkoutTarget={[Function]}
+      workoutTargets={
+        Immutable.Map {
+        }
+      }
+    >
+      <div>
+        <CardList
+          collection={Object {}}
+          editLink="/app/workouttargets/edit/"
+          onModalStateChange={[Function]}
+          setSelectedItem={[Function]}
+        >
+          <List>
+            <div
+              style={
+                Object {
+                  "muiPrepared": true,
+                  "padding": "8px 0px 8px 0px",
+                }
+              }
+            />
+          </List>
+        </CardList>
+        <CreateButton
+          link="/app/workouttargets/create"
+        >
+          <Link
+            onClick={[Function]}
+            replace={false}
+            to="/app/workouttargets/create"
+          >
+            <a
+              href="/app/workouttargets/create"
+              onClick={[Function]}
+            >
+              <FloatingActionButton
+                className="fixed-floating-button"
+                disabled={false}
+                mini={false}
+                secondary={false}
+                zDepth={2}
+              >
+                <Paper
+                  circle={true}
+                  className="fixed-floating-button"
+                  rounded={true}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "display": "inline-block",
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                    }
+                  }
+                  transitionEnabled={true}
+                  zDepth={2}
+                >
+                  <div
+                    className="fixed-floating-button"
+                    style={
+                      Object {
+                        "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+                        "backgroundColor": "transparent",
+                        "borderRadius": "50%",
+                        "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
+                               0 3px 10px rgba(0, 0, 0, 0.23)",
+                        "boxSizing": "border-box",
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "display": "inline-block",
+                        "fontFamily": "Roboto, sans-serif",
+                        "muiPrepared": true,
+                        "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      }
+                    }
+                  >
+                    <EnhancedButton
+                      containerElement="button"
+                      disabled={false}
+                      focusRippleColor="#ffffff"
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onKeyUp={[Function]}
+                      onKeyboardFocus={[Function]}
+                      onMouseDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      onMouseUp={[Function]}
+                      onTouchEnd={[Function]}
+                      onTouchStart={[Function]}
+                      onTouchTap={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#00bcd4",
+                          "borderRadius": "50%",
+                          "height": 56,
+                          "overflow": "hidden",
+                          "padding": 0,
+                          "textAlign": "center",
+                          "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                          "verticalAlign": "bottom",
+                          "width": 56,
+                        }
+                      }
+                      tabIndex={0}
+                      touchRippleColor="#ffffff"
+                      type="button"
+                    >
+                      <button
+                        disabled={false}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onKeyDown={[Function]}
+                        onKeyUp={[Function]}
+                        onMouseDown={[Function]}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
+                        onMouseUp={[Function]}
+                        onTouchEnd={[Function]}
+                        onTouchStart={[Function]}
+                        onTouchTap={[Function]}
+                        style={
+                          Object {
+                            "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+                            "backgroundColor": "#00bcd4",
+                            "border": 10,
+                            "borderRadius": "50%",
+                            "boxSizing": "border-box",
+                            "cursor": "pointer",
+                            "display": "inline-block",
+                            "fontFamily": "Roboto, sans-serif",
+                            "fontSize": "inherit",
+                            "fontWeight": "inherit",
+                            "height": 56,
+                            "margin": 0,
+                            "muiPrepared": true,
+                            "outline": "none",
+                            "overflow": "hidden",
+                            "padding": 0,
+                            "position": "relative",
+                            "textAlign": "center",
+                            "textDecoration": "none",
+                            "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                            "verticalAlign": "bottom",
+                            "width": 56,
+                            "zIndex": 1,
+                          }
+                        }
+                        tabIndex={0}
+                        type="button"
+                      >
+                        <TouchRipple
+                          abortOnScroll={true}
+                          color="#ffffff"
+                        >
+                          <div
+                            onMouseDown={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseUp={[Function]}
+                            onTouchEnd={[Function]}
+                            onTouchStart={[Function]}
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "muiPrepared": true,
+                                  "top": 0,
+                                  "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                                }
+                              }
+                            >
+                              <ContentAdd
+                                style={
+                                  Object {
+                                    "color": "#ffffff",
+                                    "fill": "#ffffff",
+                                    "height": 56,
+                                    "lineHeight": "56px",
+                                  }
+                                }
+                              >
+                                <SvgIcon
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  style={
+                                    Object {
+                                      "color": "#ffffff",
+                                      "fill": "#ffffff",
+                                      "height": 56,
+                                      "lineHeight": "56px",
+                                    }
+                                  }
+                                  viewBox="0 0 24 24"
+                                >
+                                  <svg
+                                    onMouseEnter={[Function]}
+                                    onMouseLeave={[Function]}
+                                    style={
+                                      Object {
+                                        "color": "#ffffff",
+                                        "display": "inline-block",
+                                        "fill": "#ffffff",
+                                        "height": 56,
+                                        "lineHeight": "56px",
+                                        "muiPrepared": true,
+                                        "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                                        "userSelect": "none",
+                                        "width": 24,
+                                      }
+                                    }
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                                    />
+                                  </svg>
+                                </SvgIcon>
+                              </ContentAdd>
+                            </div>
+                          </div>
+                        </TouchRipple>
+                      </button>
+                    </EnhancedButton>
+                  </div>
+                </Paper>
+              </FloatingActionButton>
+            </a>
+          </Link>
+        </CreateButton>
+      </div>
+    </WorkoutTargetsMainContainer>
+  </Router>
+</StaticRouter>
+`;

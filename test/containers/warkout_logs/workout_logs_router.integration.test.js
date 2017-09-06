@@ -1,37 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import moment from 'moment';
 import sinon from 'sinon';
-import { createStore, applyMiddleware } from 'redux';
+import { mount } from 'enzyme';
+import { createStore } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form/immutable';
-import { fromJS, List, Map, Set } from 'immutable';
+import { fromJS, Map, Set } from 'immutable';
 import { StaticRouter } from 'react-router-dom';
 
-import moment from 'moment';
-import request from './../../../src/services/request';
-import DureWorkoutTarget, {
-  PureWorkoutLogsRouter
-} from './../../../src/containers/workout_logs/workout_logs_router';
-import DureWorkoutTarget1, {
-  PureWorkoutLogsMainContainer
-} from './../../../src/containers/workout_logs/workout_logs_main';
-// import DureWorkoutTarget from './../../../src/containers/workout_targets/workout_target';
-import thunk from 'redux-thunk';
-
-const muiTheme = getMuiTheme();
-
-// const router = {
-//   history: {
-//     push: () => undefined,
-//     replace: () => undefined,
-//     createHref: () => undefined
-//   },
-//   route: {},
-//   staticContext: { location: { pathname: '' } }
-// };
+import DureWorkoutTarget from './../../../src/containers/workout_logs/workout_logs_router';
+import { PureWorkoutLogsMainContainer } from './../../../src/containers/workout_logs/workout_logs_main';
 
 const store = createStore(
   combineReducers({
@@ -47,36 +28,23 @@ const store = createStore(
         .set('data', Map())
         .set('dates', Set().add(moment('01-01-2017', 'DD-MM-YYYY').toDate())),
     formReducer
-  }),
-  applyMiddleware(thunk)
+  })
 );
 
-// const _reduxForm = {
-//   getFormState: state => state,
-//   asyncValidate: state => state,
-//   getValues: state => state,
-//   sectionPrefix: state => state,
-//   register: state => state,
-//   unregister: state => state,
-//   registerInnerOnSubmit: state => state
-// };
+const muiTheme = getMuiTheme();
 
-/*eslint no-undef: "off"*/
 injectTapEventPlugin();
 
-describe('Error integration test', () => {
-  it('should render and call initFetch', () => {
-    // const initFetchSpy = sinon.spy();
-    const _reduxForm = {
-      getFormState: state => state,
-      asyncValidate: state => state,
-      getValues: state => state,
-      sectionPrefix: state => state,
-      register: state => () => undefined,
-      unregister: state => state,
-      registerInnerOnSubmit: state => () => undefined
-    };
-    const componentDidMountSpy = sinon
+describe('WorkoutLogsRouter integration test', () => {
+  let componentDidMountSpy;
+
+  afterEach(() => {
+    if (componentDidMountSpy) componentDidMountSpy.restore();
+  });
+
+  it('should render', () => {
+    
+    componentDidMountSpy = sinon
       .stub(PureWorkoutLogsMainContainer.prototype, 'componentDidMount')
       .callsFake(() => Promise.resolve({}));
 

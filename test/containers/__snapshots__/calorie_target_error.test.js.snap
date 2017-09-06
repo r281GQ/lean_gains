@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CalorieTargetError test should call openErrorModalSpy & setMessagesSpy on openModal 1`] = `
+<Redirect
+  push={false}
+  to="/app"
+/>
+`;
+
 exports[`CalorieTargetError test should render 1`] = `
 <Redirect
   push={false}

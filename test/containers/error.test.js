@@ -18,6 +18,23 @@ describe('Error test', () => {
       />
     );
 
+    expect(component).toHaveLength(1);
+    expect(component).toMatchSnapshot();
+  });
+
+  it('should call closeErrorModalSpy & unSetMessagesSpy on modalClose', () => {
+    const closeErrorModalSpy = sinon.spy();
+    const unSetMessagesSpy = sinon.spy();
+
+    const component = shallow(
+      <PureError
+        errorMessages={List().push('test')}
+        isErrorModalOpen={false}
+        closeErrorModal={closeErrorModalSpy}
+        unSetMessages={unSetMessagesSpy}
+      />
+    );
+
     component.instance()._handleModalClose();
 
     expect(closeErrorModalSpy.calledOnce).toBe(true);

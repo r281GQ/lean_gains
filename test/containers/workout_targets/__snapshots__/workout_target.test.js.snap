@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WorkoutTarget test should render 1`] = `
+exports[`WorkoutTarget test should call updateWorkoutTarget 1`] = `
 <WorkoutTargetForm
   formatDate={[Function]}
   submitHandler={[Function]}
@@ -8,7 +8,7 @@ exports[`WorkoutTarget test should render 1`] = `
 />
 `;
 
-exports[`WorkoutTarget test should throw error on cycle training days and whenstarting is absent  1`] = `
+exports[`WorkoutTarget test should render  1`] = `
 <WorkoutTargetForm
   formatDate={[Function]}
   submitHandler={[Function]}
@@ -16,7 +16,7 @@ exports[`WorkoutTarget test should throw error on cycle training days and whenst
 />
 `;
 
-exports[`WorkoutTarget test should throw error on cycle training days and whenstarting is absent  2`] = `
+exports[`WorkoutTarget test should throw error on cycle training days and onEveryxDay is absent  1`] = `
 <WorkoutTargetForm
   formatDate={[Function]}
   submitHandler={[Function]}
@@ -24,7 +24,7 @@ exports[`WorkoutTarget test should throw error on cycle training days and whenst
 />
 `;
 
-exports[`WorkoutTarget test should throw error on cycle training days and whenstarting is absent  3`] = `
+exports[`WorkoutTarget test should throw error on cycle training days and when starting day and onEveryxDay are absent 1`] = `
 <WorkoutTargetForm
   formatDate={[Function]}
   submitHandler={[Function]}
@@ -32,23 +32,7 @@ exports[`WorkoutTarget test should throw error on cycle training days and whenst
 />
 `;
 
-exports[`WorkoutTarget test should throw error on cycle training days and whenstarting is absent  4`] = `
-<WorkoutTargetForm
-  formatDate={[Function]}
-  submitHandler={[Function]}
-  validateWorkoutName={[Function]}
-/>
-`;
-
-exports[`WorkoutTarget test should throw error on cycle training days and whenstarting is absent  5`] = `
-<WorkoutTargetForm
-  formatDate={[Function]}
-  submitHandler={[Function]}
-  validateWorkoutName={[Function]}
-/>
-`;
-
-exports[`WorkoutTarget test should throw error on cycle training days and whenstarting is absent  6`] = `
+exports[`WorkoutTarget test should throw error on cycle training days and when starting day is absent  1`] = `
 <WorkoutTargetForm
   formatDate={[Function]}
   submitHandler={[Function]}
@@ -65,6 +49,22 @@ exports[`WorkoutTarget test should throw error on fix training days and when exe
 `;
 
 exports[`WorkoutTarget test should throw error on fix training days and when no days are selected 1`] = `
+<WorkoutTargetForm
+  formatDate={[Function]}
+  submitHandler={[Function]}
+  validateWorkoutName={[Function]}
+/>
+`;
+
+exports[`WorkoutTarget test should throw error on invalid input 1`] = `
+<WorkoutTargetForm
+  formatDate={[Function]}
+  submitHandler={[Function]}
+  validateWorkoutName={[Function]}
+/>
+`;
+
+exports[`WorkoutTarget test should throw error on training days when there is no given exercise 1`] = `
 <WorkoutTargetForm
   formatDate={[Function]}
   submitHandler={[Function]}

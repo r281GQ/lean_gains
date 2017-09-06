@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error integration test should render 1`] = `
+<StaticRouter
+  basename=""
+  context={Object {}}
+  location=""
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <Error
+      closeErrorModal={[Function]}
+      errorMessages={
+        Immutable.List [
+          "test",
+        ]
+      }
+      isErrorModalOpen={false}
+      unSetMessages={[Function]}
+    >
+      <Dialog
+        actions={
+          Array [
+            <FlatButton
+              disabled={false}
+              fullWidth={false}
+              label="ok"
+              labelPosition="after"
+              labelStyle={Object {}}
+              onClick={[Function]}
+              onKeyboardFocus={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onTouchStart={[Function]}
+              primary={false}
+              secondary={false}
+          />,
+          ]
+        }
+        autoDetectWindowHeight={true}
+        autoScrollBodyContent={false}
+        modal={false}
+        open={false}
+        repositionOnUpdate={true}
+        title="The following nformations are missing! You can update them at the daily logs or user details!"
+      >
+        <RenderToLayer
+          open={true}
+          render={[Function]}
+          useLayerForClickAway={false}
+        />
+      </Dialog>
+    </Error>
+  </Router>
+</StaticRouter>
+`;
