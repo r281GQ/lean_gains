@@ -6,6 +6,7 @@ import { shallow } from 'enzyme';
 
 import { PureWorkoutLogsMainContainer } from './../../../src/containers/workout_logs/workout_logs_main';
 
+// TODO: add names
 describe('WorkoutLogsMainContainer test', () => {
   const didMountSpy = sinon.spy(
     PureWorkoutLogsMainContainer.prototype,
