@@ -11,7 +11,7 @@ import { reducer as formReducer } from 'redux-form/immutable';
 import { fromJS, Map, Set } from 'immutable';
 import { StaticRouter } from 'react-router-dom';
 
-import DureWorkoutTarget from './../../../src/containers/workout_logs/workout_logs_router';
+import WorkoutLogsRouter from './../../../src/containers/workout_logs/workout_logs_router';
 import { PureWorkoutLogsMainContainer } from './../../../src/containers/workout_logs/workout_logs_main';
 
 const store = createStore(
@@ -43,14 +43,13 @@ describe('WorkoutLogsRouter integration test', () => {
   });
 
   it('should render', () => {
-    
     componentDidMountSpy = sinon
       .stub(PureWorkoutLogsMainContainer.prototype, 'componentDidMount')
       .callsFake(() => Promise.resolve({}));
 
     const component = mount(
       <StaticRouter location="" context={{}}>
-        <DureWorkoutTarget />
+        <WorkoutLogsRouter />
       </StaticRouter>,
       {
         context: { muiTheme, store },

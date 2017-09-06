@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header test should render 1`] = `
+exports[`Footer test should render 1`] = `
 <div
   className="footer__container"
 >

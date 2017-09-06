@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { mount } from 'enzyme';
 import { PureHeaderContainer } from './../../../src/containers/layout/header';
 
 const muiTheme = getMuiTheme();
@@ -15,7 +15,6 @@ const router = {
   }
 };
 
-/*eslint no-undef: "off"*/
 injectTapEventPlugin();
 
 describe('Header integration test', () => {
@@ -32,5 +31,6 @@ describe('Header integration test', () => {
     );
 
     expect(component).toHaveLength(1);
+    expect(component).toMatchSnapshot();
   });
 });

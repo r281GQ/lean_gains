@@ -1,5 +1,131 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`WorkoutLogs test should call createWorkoutLogSpy when there is no id 1`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should call updateWorkoutLogSpy when there is an id 1`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={false}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should disable create button when the current date is among the logDates 1`] = `
+<WorkoutLogForm
+  disabled={true}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should disable dates in datePicker that are in logDates already 1`] = `
+<WorkoutLogForm
+  disabled={true}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should not disable create button when the current date is empty 1`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should not disable create button when the current date is not among the logDates 1`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should not disable dates in datePicker that are not in logDates 1`] = `
+<WorkoutLogForm
+  disabled={true}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={true}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should not render datePicker when path doesn't exists 1`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Create"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={false}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
+exports[`WorkoutLogs test should not render datePicker when path doesn't match 'before' 1`] = `
+<WorkoutLogForm
+  disabled={false}
+  formatDate={[Function]}
+  label="Update"
+  maxDate={1970-01-01T00:00:00.001Z}
+  minDate={1860-01-01T00:00:00.001Z}
+  normalizeMarker={[Function]}
+  renderDate={false}
+  shouldDisableDate={[Function]}
+  submitHandler={[Function]}
+/>
+`;
+
 exports[`WorkoutLogs test should render 1`] = `
 <WorkoutLogForm
   disabled={false}
@@ -16,104 +142,6 @@ exports[`WorkoutLogs test should render 1`] = `
 
 exports[`WorkoutLogs test should render 2`] = `
 <WorkoutLogForm
-  disabled={false}
-  formatDate={[Function]}
-  label="Update"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={false}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 3`] = `
-<WorkoutLogForm
-  disabled={false}
-  formatDate={[Function]}
-  label="Create"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={false}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 4`] = `
-<WorkoutLogForm
-  disabled={false}
-  formatDate={[Function]}
-  label="Update"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={true}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 5`] = `
-<WorkoutLogForm
-  disabled={false}
-  formatDate={[Function]}
-  label="Update"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={true}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 6`] = `
-<WorkoutLogForm
-  disabled={false}
-  formatDate={[Function]}
-  label="Create"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={true}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 7`] = `
-<WorkoutLogForm
-  disabled={false}
-  formatDate={[Function]}
-  label="Create"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={true}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 8`] = `
-<WorkoutLogForm
-  disabled={false}
-  formatDate={[Function]}
-  label="Update"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={true}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 9`] = `
-<WorkoutLogForm
   disabled={true}
   formatDate={[Function]}
   label="Create"
@@ -126,25 +154,11 @@ exports[`WorkoutLogs test should render 9`] = `
 />
 `;
 
-exports[`WorkoutLogs test should render 10`] = `
+exports[`WorkoutLogs test should render datePicker when path matches 'before' 1`] = `
 <WorkoutLogForm
-  disabled={true}
+  disabled={false}
   formatDate={[Function]}
-  label="Create"
-  maxDate={1970-01-01T00:00:00.001Z}
-  minDate={1860-01-01T00:00:00.001Z}
-  normalizeMarker={[Function]}
-  renderDate={true}
-  shouldDisableDate={[Function]}
-  submitHandler={[Function]}
-/>
-`;
-
-exports[`WorkoutLogs test should render 11`] = `
-<WorkoutLogForm
-  disabled={true}
-  formatDate={[Function]}
-  label="Create"
+  label="Update"
   maxDate={1970-01-01T00:00:00.001Z}
   minDate={1860-01-01T00:00:00.001Z}
   normalizeMarker={[Function]}

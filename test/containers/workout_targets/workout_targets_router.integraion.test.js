@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import sinon from 'sinon';
+import { mount } from 'enzyme';
 import { createStore } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form/immutable';
@@ -23,6 +24,12 @@ const store = createStore(
 injectTapEventPlugin();
 
 describe('WorkoutTargetsRouter integration test', () => {
+  const dateStub = sinon.stub(Date, 'now').returns(1);
+
+  afterAll(() => {
+    dateStub.restore();
+  });
+
   it('should render', () => {
     const component = mount(
       <StaticRouter location="" context={{}}>
@@ -38,6 +45,5 @@ describe('WorkoutTargetsRouter integration test', () => {
     );
 
     expect(component).toHaveLength(1);
-    expect(component).toMatchSnapshot();
   });
 });

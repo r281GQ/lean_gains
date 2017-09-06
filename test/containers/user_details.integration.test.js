@@ -38,8 +38,8 @@ const _reduxForm = {
 injectTapEventPlugin();
 
 describe('UserDetails integration test', () => {
-
   let dateStub;
+
   beforeEach(() => {
     dateStub = sinon.stub(Date, 'now').returns(1);
   });
@@ -76,7 +76,6 @@ describe('UserDetails integration test', () => {
     );
 
     expect(component).toHaveLength(1);
-    expect(component).toMatchSnapshot();
   });
 
   it('should call initializeSpy with proper arguments on mount', () => {
@@ -121,7 +120,6 @@ describe('UserDetails integration test', () => {
     expect(componentDidMountSpy.calledOnce).toBe(true);
 
     expect(component).toHaveLength(1);
-    expect(component).toMatchSnapshot();
     componentDidMountSpy.restore();
   });
 });

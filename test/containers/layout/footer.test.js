@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Footer from './../../../src/containers/layout/footer';
 
-describe('Header test', () => {
+describe('Footer test', () => {
   it('should render', () => {
     const component = shallow(<Footer />);
 

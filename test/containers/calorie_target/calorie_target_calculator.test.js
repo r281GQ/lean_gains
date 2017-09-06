@@ -2,6 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { fromJS } from 'immutable';
+
 import { PureCalorieTargetCalculator } from './../../../src/containers/calorie_target/calorie_target_calculator';
 
 const calorieTarget = fromJS({

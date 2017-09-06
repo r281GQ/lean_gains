@@ -1,6 +1,317 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header test should render 1`] = `
+exports[`SideBar test should call logOutSpy & closeSideBarSpy 1`] = `
+<Drawer
+  disableSwipeToOpen={false}
+  docked={false}
+  onRequestChange={[Function]}
+  open={null}
+  openSecondary={false}
+  swipeAreaWidth={30}
+  width={null}
+  zDepth={2}
+>
+  <MenuItem
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    checked={false}
+    desktop={false}
+    disabled={false}
+    focusState="none"
+    insetChildren={false}
+    onClick={[Function]}
+    primaryText="Close"
+    rightIcon={<NavigationArrowBack />}
+    targetOrigin={
+      Object {
+        "horizontal": "left",
+        "vertical": "top",
+      }
+    }
+  />
+  <Divider
+    inset={false}
+  />
+  <Link
+    className="link-no-underline"
+    onClick={[Function]}
+    replace={false}
+    to="/app/kcaltracker"
+  >
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="Track calories"
+      rightIcon={
+        <FontIcon
+          className="fa fa-pencil-square-o"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      }
+      targetOrigin={
+        Object {
+          "horizontal": "left",
+          "vertical": "top",
+        }
+      }
+    />
+  </Link>
+  <Link
+    className="link-no-underline"
+    onClick={[Function]}
+    replace={false}
+    to="/app/workoutlogs"
+  >
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="Workout logs"
+      rightIcon={
+        <FontIcon
+          className="fa fa-pencil"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      }
+      targetOrigin={
+        Object {
+          "horizontal": "left",
+          "vertical": "top",
+        }
+      }
+    />
+  </Link>
+  <Link
+    className="link-no-underline"
+    onClick={[Function]}
+    replace={false}
+    to="/app/dailylogs"
+  >
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="Daily logs"
+      rightIcon={
+        <FontIcon
+          className="fa fa-pencil-square"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      }
+      targetOrigin={
+        Object {
+          "horizontal": "left",
+          "vertical": "top",
+        }
+      }
+    />
+  </Link>
+  <Link
+    className="link-no-underline"
+    onClick={[Function]}
+    replace={false}
+    to="/app/kcaltarget"
+  >
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="Set calorie target"
+      rightIcon={
+        <FontIcon
+          className="fa fa-dot-circle-o"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      }
+      targetOrigin={
+        Object {
+          "horizontal": "left",
+          "vertical": "top",
+        }
+      }
+    />
+  </Link>
+  <Link
+    className="link-no-underline"
+    onClick={[Function]}
+    replace={false}
+    to="/app/workouttargets"
+  >
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="Set workout target"
+      rightIcon={
+        <FontIcon
+          className="fa fa-bullseye"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      }
+      targetOrigin={
+        Object {
+          "horizontal": "left",
+          "vertical": "top",
+        }
+      }
+    />
+  </Link>
+  <Link
+    className="link-no-underline"
+    onClick={[Function]}
+    replace={false}
+    to="/app/userdetails"
+  >
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="Change user details"
+      rightIcon={
+        <FontIcon
+          className="fa fa-user"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      }
+      targetOrigin={
+        Object {
+          "horizontal": "left",
+          "vertical": "top",
+        }
+      }
+    />
+  </Link>
+  <Divider
+    inset={false}
+  />
+  <Link
+    className="link-no-underline"
+    onClick={[Function]}
+    replace={false}
+    to="/app/about"
+  >
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="About"
+      rightIcon={
+        <FontIcon
+          className="fa fa-info"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      }
+      targetOrigin={
+        Object {
+          "horizontal": "left",
+          "vertical": "top",
+        }
+      }
+    />
+  </Link>
+  <Divider
+    inset={false}
+  />
+  <MenuItem
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    checked={false}
+    desktop={false}
+    disabled={false}
+    focusState="none"
+    insetChildren={false}
+    onClick={[Function]}
+    primaryText="Log out"
+    rightIcon={
+      <FontIcon
+        className="fa fa-sign-out"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      />
+    }
+    targetOrigin={
+      Object {
+        "horizontal": "left",
+        "vertical": "top",
+      }
+    }
+  />
+</Drawer>
+`;
+
+exports[`SideBar test should render 1`] = `
 <Drawer
   disableSwipeToOpen={false}
   docked={false}

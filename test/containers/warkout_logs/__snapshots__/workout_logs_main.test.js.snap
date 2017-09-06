@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PureWorkoutLogsMainContainer test should render 1`] = `
+exports[`WorkoutLogsMainContainer test should render 1`] = `
 <div>
   <Connect(ConfirmDeleteModal) />
   <DateSelector
@@ -28,7 +28,7 @@ exports[`PureWorkoutLogsMainContainer test should render 1`] = `
 </div>
 `;
 
-exports[`PureWorkoutLogsMainContainer test should render 2`] = `
+exports[`WorkoutLogsMainContainer test should render 2`] = `
 <div>
   <Connect(ConfirmDeleteModal) />
   <DateSelector
@@ -56,7 +56,7 @@ exports[`PureWorkoutLogsMainContainer test should render 2`] = `
 </div>
 `;
 
-exports[`PureWorkoutLogsMainContainer test should render 3`] = `
+exports[`WorkoutLogsMainContainer test should render 3`] = `
 <div>
   <Connect(ConfirmDeleteModal) />
   <DateSelector
@@ -88,7 +88,7 @@ exports[`PureWorkoutLogsMainContainer test should render 3`] = `
 </div>
 `;
 
-exports[`PureWorkoutLogsMainContainer test should render 4`] = `
+exports[`WorkoutLogsMainContainer test should render 4`] = `
 <div>
   <Connect(ConfirmDeleteModal) />
   <DateSelector
@@ -121,7 +121,7 @@ exports[`PureWorkoutLogsMainContainer test should render 4`] = `
 </div>
 `;
 
-exports[`PureWorkoutLogsMainContainer test should render 5`] = `
+exports[`WorkoutLogsMainContainer test should render 5`] = `
 <div>
   <Connect(ConfirmDeleteModal) />
   <DateSelector
@@ -149,7 +149,7 @@ exports[`PureWorkoutLogsMainContainer test should render 5`] = `
 </div>
 `;
 
-exports[`PureWorkoutLogsMainContainer test should render 6`] = `
+exports[`WorkoutLogsMainContainer test should render 6`] = `
 <div>
   <Connect(ConfirmDeleteModal) />
   <DateSelector

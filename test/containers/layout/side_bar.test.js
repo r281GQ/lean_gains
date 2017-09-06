@@ -1,11 +1,22 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import { PureSideBarContainer } from './../../../src/containers/layout/side_bar';
 
-describe('Header test', () => {
+describe('SideBar test', () => {
   it('should render', () => {
+    const logOutSpy = sinon.spy();
+    const closeSideBarSpy = sinon.spy();
+    const component = shallow(
+      <PureSideBarContainer logOut={logOutSpy} closeSideBar={closeSideBarSpy} />
+    );
+
+    expect(component).toHaveLength(1);
+    expect(component).toMatchSnapshot();
+  });
+
+  it('should call logOutSpy & closeSideBarSpy', () => {
     const logOutSpy = sinon.spy();
     const closeSideBarSpy = sinon.spy();
     const component = shallow(

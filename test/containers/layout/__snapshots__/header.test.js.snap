@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Header test should call openSideBarSpy on _handleOpenSideBar 1`] = `
+<div>
+  <HelmetWrapper
+    encodeSpecialCharacters={true}
+  >
+    <meta
+      charSet="utf-8"
+    />
+    <title>
+      LeanGains
+    </title>
+    <link
+      href="[object Object]"
+      rel="icon"
+    />
+  </HelmetWrapper>
+  <UnauthanticatedHeader
+    pathname=""
+  />
+</div>
+`;
+
 exports[`Header test should render 1`] = `
 <div>
   <HelmetWrapper

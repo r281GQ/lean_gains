@@ -70,7 +70,6 @@ describe('WorkoutTarget integration test', () => {
     expect(handleSpy.calledOnce).toBe(true);
 
     expect(component).toHaveLength(1);
-    expect(component).toMatchSnapshot();
   });
 
   it('should _handleInitializeComponent', () => {
@@ -101,6 +100,5 @@ describe('WorkoutTarget integration test', () => {
     expect(handleSpy.calledOnce).toBe(true);
 
     expect(component).toHaveLength(1);
-    expect(component).toMatchSnapshot();
   });
 });

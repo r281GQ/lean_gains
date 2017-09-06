@@ -16,10 +16,9 @@ const router = {
   }
 };
 
-/*eslint no-undef: "off"*/
 injectTapEventPlugin();
 
-describe('Header integration test', () => {
+describe('SideBar integration test', () => {
   it('should render', () => {
     const logOutSpy = sinon.spy();
     const closeSideBarSpy = sinon.spy();
